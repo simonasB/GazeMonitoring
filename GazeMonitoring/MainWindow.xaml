@@ -18,10 +18,10 @@
         </ObjectDataProvider>
     </Window.Resources>
     <Grid>
-        <ComboBox Name="CmbDataStreams" HorizontalAlignment="Left" Margin="33,30,0,0" VerticalAlignment="Top" Width="277" SelectionChanged="CmbDataStreams_SelectionChanged" ItemsSource="{Binding Source={StaticResource dataFromEnum}}">
+        <ComboBox Name="CmbDataStreams" HorizontalAlignment="Left" Margin="33,30,0,0" VerticalAlignment="Top" Width="277" SelectionChanged="CmbDataStreams_SelectionChanged" ItemsSource="{Binding Source={StaticResource dataFromEnum}}" SelectedIndex="0">
         </ComboBox>
         <Button Name ="BtnStart" Content="Start" HorizontalAlignment="Left" Margin="33,71,0,0" VerticalAlignment="Top" Width="75" Click="BtnStart_Click"/>
-        <Button Name ="BtnStop" Content="Stop" HorizontalAlignment="Left" Margin="130,71,0,0" VerticalAlignment="Top" Width="75" Click="BtnStop_Click"/>
+        <Button Name ="BtnStop" Content="Stop" HorizontalAlignment="Left" Margin="130,71,0,0" VerticalAlignment="Top" Width="75" Click="BtnStop_Click" IsEnabled="False"/>
 
     </Grid>
 </Window>

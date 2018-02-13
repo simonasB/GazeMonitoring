@@ -19,7 +19,7 @@ namespace TobiiCoreMonitoring.csv
 
         public void Write() {
             _fixationDataCsvWriterProvider.CsvWriter.WriteHeader<FixationData>();
-            _saccadesCsvWriterProvider.CsvWriter.NextRecord();
+            _fixationDataCsvWriterProvider.CsvWriter.NextRecord();
 
             _saccadesCsvWriterProvider.CsvWriter.WriteHeader<Saccade>();
             _saccadesCsvWriterProvider.CsvWriter.NextRecord();
@@ -35,9 +35,8 @@ namespace TobiiCoreMonitoring.csv
 
         private void OnGazePointData(object sender, StreamData<FixationData> data) {
             FixationData currentFixationData = data.Data;
-
             _fixationDataCsvWriterProvider.CsvWriter.WriteRecord(currentFixationData);
-            _saccadesCsvWriterProvider.CsvWriter.NextRecord();
+            _fixationDataCsvWriterProvider.CsvWriter.NextRecord();
 
             if (_previousFixationData == null) {
                 _previousFixationData = currentFixationData;

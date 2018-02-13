@@ -51,17 +51,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="csv\GazePointDataMap.cs" />
-    <Compile Include="DataStreamToCsvWriterFactory.cs" />
-    <Compile Include="DataStream.cs" />
-    <Compile Include="FileName.cs" />
-    <Compile Include="FixationDataStreamToCsvWriter.cs" />
-    <Compile Include="GazeDataStreamToCsvWriter.cs" />
+    <Compile Include="Csv\GazePointDataMap.cs" />
+    <Compile Include="Csv\DataStreamToCsvWriterFactory.cs" />
+    <Compile Include="Entities\DataStream.cs" />
+    <Compile Include="Entities\FileName.cs" />
+    <Compile Include="Csv\FixationDataStreamToCsvWriter.cs" />
+    <Compile Include="Csv\GazeDataStreamToCsvWriter.cs" />
     <Compile Include="IDataStreamToExternalStorageWriterFactory.cs" />
     <Compile Include="IDataStreamToExternalStorageWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Saccade.cs" />
-    <Compile Include="CsvWriterProvider.cs" />
+    <Compile Include="Entities\Saccade.cs" />
+    <Compile Include="Csv\CsvWriterProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

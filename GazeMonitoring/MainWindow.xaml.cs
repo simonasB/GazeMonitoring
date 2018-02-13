@@ -25,15 +25,21 @@ namespace GazeMonitoring
         }
 
         private void CmbDataStreams_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            _externalStorageWriter = _externalStorageWriterFactory.GetWriter((DataStream) CmbDataStreams.SelectedItem);
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e) {
+            _externalStorageWriter = _externalStorageWriterFactory.GetWriter((DataStream)CmbDataStreams.SelectedItem);
             _externalStorageWriter?.Write();
+            BtnStart.IsEnabled = false;
+            CmbDataStreams.IsEnabled = false;
+            BtnStop.IsEnabled = true;
         }
 
         private void BtnStop_Click(object sender, RoutedEventArgs e) {
             _externalStorageWriter?.Dispose();
+            BtnStart.IsEnabled = true;
+            CmbDataStreams.IsEnabled = true;
+            BtnStop.IsEnabled = false;
         }
     }
 }

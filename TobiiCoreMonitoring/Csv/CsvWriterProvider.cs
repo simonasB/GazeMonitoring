@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using CsvHelper;
+using TobiiCoreMonitoring.Entities;
 
 namespace TobiiCoreMonitoring.csv {
     public class CsvWriterProvider : IDisposable {
@@ -27,8 +28,8 @@ namespace TobiiCoreMonitoring.csv {
         }
 
         public void Dispose() {
-            _textWriter?.Dispose();
             CsvWriter?.Dispose();
+            _textWriter?.Dispose();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Tobii.Interaction;
 using Tobii.Interaction.Framework;
+using TobiiCoreMonitoring.Entities;
 
 namespace TobiiCoreMonitoring.csv {
     public class DataStreamToCsvWriterFactory : IDataStreamToExternalStorageWriterFactory
@@ -25,8 +26,8 @@ namespace TobiiCoreMonitoring.csv {
                     return new GazeDataStreamToCsvWriter(new CsvWriterProvider(fileNameData), _host,
                         GazePointDataMode.LightlyFiltered);
                 case DataStream.SensitiveFixation:
-                    fileNameData = new FileName { DataStream = DataStream.LightlyFilteredGaze.ToString() };
-                    fileNameSaccades = new FileName { DataStream = $"{DataStream.LightlyFilteredGaze}_Saccades"};                    
+                    fileNameData = new FileName { DataStream = DataStream.SensitiveFixation.ToString() };
+                    fileNameSaccades = new FileName { DataStream = $"{DataStream.SensitiveFixation}_Saccades"};                    
                     return new FixationDataStreamToCsvWriter(new CsvWriterProvider(fileNameSaccades), new CsvWriterProvider(fileNameData), _host, FixationDataMode.Sensitive);
                 case DataStream.SlowFixation:
                     fileNameData = new FileName { DataStream = DataStream.SlowFixation.ToString() };
