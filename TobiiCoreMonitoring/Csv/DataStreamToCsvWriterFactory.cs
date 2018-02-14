@@ -32,7 +32,7 @@ namespace TobiiCoreMonitoring.csv {
                 case DataStream.SlowFixation:
                     fileNameData = new FileName { DataStream = DataStream.SlowFixation.ToString() };
                     fileNameSaccades = new FileName { DataStream = $"{DataStream.SlowFixation}_Saccades" };
-                    return new FixationDataStreamToCsvWriter(new CsvWriterProvider(fileNameData), new CsvWriterProvider(fileNameSaccades), _host, FixationDataMode.Slow);
+                    return new FixationDataStreamToCsvWriter(new CsvWriterProvider(fileNameSaccades), new CsvWriterProvider(fileNameData), _host, FixationDataMode.Slow);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(dataStream), dataStream, null);
             }
