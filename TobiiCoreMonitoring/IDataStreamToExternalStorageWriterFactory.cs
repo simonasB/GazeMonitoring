@@ -1,4 +1,4 @@
-using TobiiCoreMonitoring.Entities;
+using GazeMonitoring.Common.Entities;
 
 namespace TobiiCoreMonitoring {
     public interface IDataStreamToExternalStorageWriterFactory {

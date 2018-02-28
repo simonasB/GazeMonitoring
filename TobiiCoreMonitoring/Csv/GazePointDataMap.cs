@@ -1,7 +1,7 @@
 ﻿using CsvHelper.Configuration;
 using Tobii.Interaction;
 
-namespace TobiiCoreMonitoring.csv {
+namespace TobiiCoreMonitoring.Csv {
     public class GazePointDataMap : ClassMap<GazePointData> {
         public GazePointDataMap() {
             Map(m => m.X).Name(GazePointDataColumns.X);

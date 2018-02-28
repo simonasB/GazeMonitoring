@@ -1,4 +1,4 @@
-﻿namespace TobiiCoreMonitoring.Entities {
+﻿namespace GazeMonitoring.Common.Entities {
     public enum DataStream {
         UnfilteredGaze,
         LightlyFilteredGaze,

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using CsvHelper;
-using TobiiCoreMonitoring.Entities;
+using GazeMonitoring.Common.Entities;
 
-namespace TobiiCoreMonitoring.csv {
+namespace TobiiCoreMonitoring.Csv {
     public class CsvWriterProvider : IDisposable {
         private readonly FileName _fileName;
         private CsvWriter _csvWriter;

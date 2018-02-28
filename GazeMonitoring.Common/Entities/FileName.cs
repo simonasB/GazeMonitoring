@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace TobiiCoreMonitoring.Entities {
+namespace GazeMonitoring.Common.Entities {
     public class FileName {
         public string DataStream { get; set; }
         public DateTime DateTime { get; set; }

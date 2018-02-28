@@ -1,9 +1,9 @@
 ﻿using System;
+using GazeMonitoring.Common.Entities;
 using Tobii.Interaction;
 using Tobii.Interaction.Framework;
-using TobiiCoreMonitoring.Entities;
 
-namespace TobiiCoreMonitoring.csv {
+namespace TobiiCoreMonitoring.Csv {
     public class DataStreamToCsvWriterFactory : IDataStreamToExternalStorageWriterFactory
     {
         private readonly Host _host;

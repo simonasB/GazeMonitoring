@@ -1,4 +1,4 @@
-﻿namespace TobiiCoreMonitoring.Entities {
+﻿namespace GazeMonitoring.Common.Entities {
     public class Saccade {
         /// <summary>
         /// kampas tarp dviejų gretimų fixation location

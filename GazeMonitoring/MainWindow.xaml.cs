@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using GazeMonitoring.Common.Entities;
 using Tobii.Interaction;
 using TobiiCoreMonitoring;
-using TobiiCoreMonitoring.csv;
-using TobiiCoreMonitoring.Entities;
+using TobiiCoreMonitoring.Csv;
 
 namespace GazeMonitoring
 {

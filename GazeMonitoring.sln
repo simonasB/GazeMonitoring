@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring", "GazeMonit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TobiiCoreMonitoring", "TobiiCoreMonitoring\TobiiCoreMonitoring.csproj", "{523C4922-424A-4843-B560-0CB2781722D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheEyeTribeMonitoring", "TheEyeTribeMonitoring\TheEyeTribeMonitoring.csproj", "{F1C9FA6B-755D-442E-B6B6-B7CDDD88CD62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Common", "GazeMonitoring.Common\GazeMonitoring.Common.csproj", "{ACBA8D12-A538-4AB9-9D12-59227821E7AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{523C4922-424A-4843-B560-0CB2781722D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{523C4922-424A-4843-B560-0CB2781722D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{523C4922-424A-4843-B560-0CB2781722D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1C9FA6B-755D-442E-B6B6-B7CDDD88CD62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1C9FA6B-755D-442E-B6B6-B7CDDD88CD62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1C9FA6B-755D-442E-B6B6-B7CDDD88CD62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1C9FA6B-755D-442E-B6B6-B7CDDD88CD62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACBA8D12-A538-4AB9-9D12-59227821E7AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACBA8D12-A538-4AB9-9D12-59227821E7AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACBA8D12-A538-4AB9-9D12-59227821E7AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACBA8D12-A538-4AB9-9D12-59227821E7AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

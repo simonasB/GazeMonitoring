@@ -1,7 +1,7 @@
 ﻿using Tobii.Interaction;
 using Tobii.Interaction.Framework;
 
-namespace TobiiCoreMonitoring.csv {
+namespace TobiiCoreMonitoring.Csv {
     public class GazeDataStreamToCsvWriter : IDataStreamToExternalStorageWriter {
         private readonly CsvWriterProvider _csvWriterProvider;
         private readonly GazePointDataStream _gazePointDataStream;
