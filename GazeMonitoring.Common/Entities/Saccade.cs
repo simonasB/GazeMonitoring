@@ -1,5 +1,5 @@
 ﻿namespace GazeMonitoring.Common.Entities {
-    public class Saccade {
+    public class Saccade : IGazeData {
         /// <summary>
         /// kampas tarp dviejų gretimų fixation location
         /// </summary>
