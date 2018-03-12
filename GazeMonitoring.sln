@@ -11,6 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheEyeTribeMonitoring", "Th
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Common", "GazeMonitoring.Common\GazeMonitoring.Common.csproj", "{ACBA8D12-A538-4AB9-9D12-59227821E7AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Data", "GazeMonitoring.Data\GazeMonitoring.Data.csproj", "{A425261F-E463-4EB1-B237-597509E25C39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Data.Csv", "GazeMonitoring.Data.Csv\GazeMonitoring.Data.Csv.csproj", "{70BB2194-ACC0-44F6-9264-11251485ECC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Data.Xml", "GazeMonitoring.Data.Xml\GazeMonitoring.Data.Xml.csproj", "{1BB84589-22EA-4F07-BF68-C39577AEBC21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Data.MongoDB", "GazeMonitoring.Data.MongoDB\GazeMonitoring.Data.MongoDB.csproj", "{CE78FEB5-3DA0-40CF-B721-3F5C32411EFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +41,22 @@ Global
 		{ACBA8D12-A538-4AB9-9D12-59227821E7AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACBA8D12-A538-4AB9-9D12-59227821E7AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACBA8D12-A538-4AB9-9D12-59227821E7AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A425261F-E463-4EB1-B237-597509E25C39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A425261F-E463-4EB1-B237-597509E25C39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A425261F-E463-4EB1-B237-597509E25C39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A425261F-E463-4EB1-B237-597509E25C39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70BB2194-ACC0-44F6-9264-11251485ECC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70BB2194-ACC0-44F6-9264-11251485ECC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70BB2194-ACC0-44F6-9264-11251485ECC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70BB2194-ACC0-44F6-9264-11251485ECC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BB84589-22EA-4F07-BF68-C39577AEBC21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BB84589-22EA-4F07-BF68-C39577AEBC21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BB84589-22EA-4F07-BF68-C39577AEBC21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BB84589-22EA-4F07-BF68-C39577AEBC21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE78FEB5-3DA0-40CF-B721-3F5C32411EFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE78FEB5-3DA0-40CF-B721-3F5C32411EFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE78FEB5-3DA0-40CF-B721-3F5C32411EFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE78FEB5-3DA0-40CF-B721-3F5C32411EFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

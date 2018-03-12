@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
-using GazeMonitoring.Common.Entities;
 
 namespace GazeMonitoring.Data.Csv {
-    public class CsvGazeDataRepository<TEntity> : IGazeDataRepository<TEntity> where TEntity : IGazeData {
-        private readonly CsvWriterProvider<TEntity> _csvWriterProvider;
+    public class CsvGazeDataRepository : IGazeDataRepository {
+        private readonly CsvWritersManager _csvWritersManager;
 
-        public CsvGazeDataRepository(CsvWriterProvider<TEntity> csvWriterProvider) {
-            _csvWriterProvider = csvWriterProvider;
+        public CsvGazeDataRepository(CsvWritersManager csvWritersManager) {
+            _csvWritersManager = csvWritersManager;
         }
 
-        public void SaveOne(TEntity entity) {
-            _csvWriterProvider.CsvWriter.WriteRecord(entity);
-            _csvWriterProvider.CsvWriter.NextRecord();
+        public void SaveOne<TEntity>(TEntity entity) {
+            _csvWritersManager.GetCsvWriter<TEntity>().WriteRecord(entity);
+            _csvWritersManager.GetCsvWriter<TEntity>().NextRecord();
         }
 
-        public void SaveMany(IEnumerable<TEntity> entities) {
-            _csvWriterProvider.CsvWriter.WriteRecords(entities);
+        public void SaveMany<TEntity>(IEnumerable<TEntity> entities) {
+            _csvWritersManager.GetCsvWriter<TEntity>().WriteRecords(entities);
         }
     }
 }

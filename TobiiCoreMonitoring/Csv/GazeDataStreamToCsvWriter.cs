@@ -13,6 +13,7 @@ namespace TobiiCoreMonitoring.Csv {
 
         public void Dispose() {
             _gazePointDataStream.Next -= OnGazePointData;
+            // TODO: this object cannot be disposed here. The object creator should dispose this object.
             _csvWriterProvider.Dispose();
         }
 

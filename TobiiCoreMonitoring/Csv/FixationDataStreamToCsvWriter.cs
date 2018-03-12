@@ -38,6 +38,8 @@ namespace TobiiCoreMonitoring.Csv
             _fixationDataCsvWriterProvider.CsvWriter.WriteRecord(currentFixationData);
             _fixationDataCsvWriterProvider.CsvWriter.NextRecord();
 
+            // TODO: move this logic to separate class
+
             if (_previousFixationData == null) {
                 _previousFixationData = currentFixationData;
             } else {

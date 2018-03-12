@@ -13,7 +13,7 @@ namespace TobiiCoreMonitoring.Csv {
             get
             {
                 if (_csvWriter == null) {
-                    _fileName.DateTime = DateTime.Now;
+                    //_fileName.DateTime = DateTime.Now;
                     _textWriter = File.CreateText(Path.Combine(Directory.GetCurrentDirectory(), _fileName.ToString()));
                     _csvWriter = new CsvWriter(_textWriter);
                 }

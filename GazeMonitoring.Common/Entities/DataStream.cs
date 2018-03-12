@@ -1,6 +1,6 @@
 ﻿namespace GazeMonitoring.Common.Entities {
     public enum DataStream {
-        UnfilteredGaze,
+        UnfilteredGaze, //raw
         LightlyFilteredGaze,
         SensitiveFixation,
         SlowFixation

@@ -107,6 +107,18 @@
       <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
       <Name>GazeMonitoring.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Data.Csv\GazeMonitoring.Data.Csv.csproj">
+      <Project>{70BB2194-ACC0-44F6-9264-11251485ECC2}</Project>
+      <Name>GazeMonitoring.Data.Csv</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
+      <Project>{A425261F-E463-4EB1-B237-597509E25C39}</Project>
+      <Name>GazeMonitoring.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TheEyeTribeMonitoring\TheEyeTribeMonitoring.csproj">
+      <Project>{f1c9fa6b-755d-442e-b6b6-b7cddd88cd62}</Project>
+      <Name>TheEyeTribeMonitoring</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TobiiCoreMonitoring\TobiiCoreMonitoring.csproj">
       <Project>{523c4922-424a-4843-b560-0cb2781722d3}</Project>
       <Name>TobiiCoreMonitoring</Name>

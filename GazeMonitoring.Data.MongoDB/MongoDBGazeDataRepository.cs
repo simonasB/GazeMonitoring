@@ -3,18 +3,18 @@ using GazeMonitoring.Common.Entities;
 using MongoDB.Driver;
 
 namespace GazeMonitoring.Data.MongoDB {
-    public class MongoDBGazeDataRepository<TEntity> : IGazeDataRepository<TEntity> where TEntity : IGazeData {
+    public class MongoDBGazeDataRepository : IGazeDataRepository {
         private readonly IMongoDatabase _mongoDatabase;
 
         public MongoDBGazeDataRepository(IMongoDatabase mongoDatabase) {
             _mongoDatabase = mongoDatabase;
         }
-        public void SaveMany(IEnumerable<TEntity> entities)
+        public void SaveMany<TEntity>(IEnumerable<TEntity> entities)
         {
             GetCollection<TEntity>().InsertMany(entities);
         }
 
-        public void SaveOne(TEntity entity)
+        public void SaveOne<TEntity>(TEntity entity)
         {
             GetCollection<TEntity>().InsertOne(entity);
         }

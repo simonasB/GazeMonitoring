@@ -40,17 +40,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicSaccadeCalculator.cs" />
+    <Compile Include="GazeDataMonitor.cs" />
+    <Compile Include="GazeDataWriterFactory.cs" />
+    <Compile Include="MultipleSourcesGazeDataWriter.cs" />
+    <Compile Include="SaccadesWriter.cs" />
+    <Compile Include="GazePointWriter.cs" />
     <Compile Include="DiscoveryResult.cs" />
     <Compile Include="Entities\DataStream.cs" />
     <Compile Include="Entities\FileName.cs" />
     <Compile Include="Entities\GazePoint.cs" />
     <Compile Include="Entities\GazePointReceivedEventArgs.cs" />
+    <Compile Include="Entities\IGazeData.cs" />
     <Compile Include="Entities\Saccade.cs" />
+    <Compile Include="FileNameFormatter.cs" />
     <Compile Include="IDiscoverable.cs" />
     <Compile Include="IEyeTrackerInitializer.cs" />
     <Compile Include="GazePointStream.cs" />
+    <Compile Include="IFileNameFormatter.cs" />
+    <Compile Include="IGazeDataWriter.cs" />
     <Compile Include="IGazePointStreamFactory.cs" />
+    <Compile Include="ISaccadeCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
+      <Project>{A425261F-E463-4EB1-B237-597509E25C39}</Project>
+      <Name>GazeMonitoring.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

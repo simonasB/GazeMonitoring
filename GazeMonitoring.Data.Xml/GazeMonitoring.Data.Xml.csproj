@@ -40,9 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlGazeDataRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GazeMonitoring.Common\GazeMonitoring.Common.csproj">
+      <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
+      <Name>GazeMonitoring.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
+      <Project>{A425261F-E463-4EB1-B237-597509E25C39}</Project>
+      <Name>GazeMonitoring.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
