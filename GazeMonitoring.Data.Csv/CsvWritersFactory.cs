@@ -8,9 +8,11 @@ using GazeMonitoring.Common.Entities;
 namespace GazeMonitoring.Data.Csv {
     public class CsvWritersFactory {
         private readonly IFileNameFormatter _fileNameFormatter;
+        private readonly SubjectInfo _subjectInfo;
 
-        public CsvWritersFactory(IFileNameFormatter fileNameFormatter) {
+        public CsvWritersFactory(IFileNameFormatter fileNameFormatter, SubjectInfo subjectInfo) {
             _fileNameFormatter = fileNameFormatter;
+            _subjectInfo = subjectInfo;
         }
 
         public Dictionary<Type, CsvWriterWrapper> GetCsvWriters(DataStream dataStream) {
@@ -18,18 +20,18 @@ namespace GazeMonitoring.Data.Csv {
 
             switch (dataStream) {
                 case DataStream.UnfilteredGaze:
-                    csvWriters.Add(typeof(GazePoint), CreateCsvWriter(dataStream.ToString()));
+                    csvWriters.Add(typeof(GazePoint), CreateCsvWriter<GazePoint>(dataStream.ToString()));
                     break;
                 case DataStream.LightlyFilteredGaze:
-                    csvWriters.Add(typeof(GazePoint), CreateCsvWriter(dataStream.ToString()));
+                    csvWriters.Add(typeof(GazePoint), CreateCsvWriter<GazePoint>(dataStream.ToString()));
                     break;
                 case DataStream.SensitiveFixation:
-                    csvWriters.Add(typeof(GazePoint), CreateCsvWriter(dataStream.ToString()));
-                    csvWriters.Add(typeof(Saccade), CreateCsvWriter($"{dataStream}_Saccades"));
+                    csvWriters.Add(typeof(GazePoint), CreateCsvWriter<GazePoint>(dataStream.ToString()));
+                    csvWriters.Add(typeof(Saccade), CreateCsvWriter<Saccade>($"{dataStream}_Saccades"));
                     break;
                 case DataStream.SlowFixation:
-                    csvWriters.Add(typeof(GazePoint), CreateCsvWriter(dataStream.ToString()));
-                    csvWriters.Add(typeof(Saccade), CreateCsvWriter($"{dataStream}_Saccades"));
+                    csvWriters.Add(typeof(GazePoint), CreateCsvWriter<GazePoint>(dataStream.ToString()));
+                    csvWriters.Add(typeof(Saccade), CreateCsvWriter<Saccade>($"{dataStream}_Saccades"));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(dataStream), dataStream, null);
@@ -38,10 +40,24 @@ namespace GazeMonitoring.Data.Csv {
             return csvWriters;
         }
 
-        private CsvWriterWrapper CreateCsvWriter(string dataStream) {
+        private CsvWriterWrapper CreateCsvWriter<T>(string dataStream) {
             var fileName = new FileName { DataStream = dataStream };
             var textWriter = File.CreateText(Path.Combine(Directory.GetCurrentDirectory(), _fileNameFormatter.Format(fileName)));
+            var csvWriter = new CsvWriter(textWriter);
+
+            Initialize<T>(csvWriter);
             return new CsvWriterWrapper(textWriter, new CsvWriter(textWriter));
+        }
+
+        private void Initialize<T>(CsvWriter csvWriter) {
+            csvWriter.WriteHeader<SubjectInfo>();
+            csvWriter.NextRecord();
+
+            csvWriter.WriteRecord(_subjectInfo);
+            csvWriter.NextRecord();
+
+            csvWriter.WriteHeader<T>();
+            csvWriter.NextRecord();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System.Linq;
+using Autofac;
+using Autofac.Core;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Entities;
 
@@ -7,7 +9,13 @@ namespace GazeMonitoring.Data.Csv {
         protected override void Load(ContainerBuilder builder) {
             builder.RegisterType<FileNameFormatter>().As<IFileNameFormatter>();
             builder.RegisterType(typeof(CsvWritersFactory));
-            builder.Register((c, p) => new CsvGazeDataRepository(c.Resolve<CsvWritersFactory>(), p.Named<DataStream>(Constants.DataStreamParameterName)))
+            builder.Register((c, p) => new CsvWritersFactory(c.Resolve<IFileNameFormatter>(), p.Named<SubjectInfo>(Constants.SubjectInfoParameterName)));
+            builder.Register((c, p) => {
+                    var parameters = p as Parameter[] ?? p.ToArray();
+                    return new CsvGazeDataRepository(
+                        c.Resolve<CsvWritersFactory>(new NamedParameter(Constants.SubjectInfoParameterName, parameters.Named<SubjectInfo>(Constants.SubjectInfoParameterName))),
+                        parameters.Named<DataStream>(Constants.DataStreamParameterName));
+                })
                 .As<IGazeDataRepository>();
         }
     }

@@ -22,5 +22,9 @@ namespace GazeMonitoring.Data.MongoDB {
         private IMongoCollection<T> GetCollection<T>() {
             return _mongoDatabase.GetCollection<T>(typeof(T).Name);
         }
+
+        public void Dispose() {
+            throw new System.NotImplementedException();
+        }
     }
 }

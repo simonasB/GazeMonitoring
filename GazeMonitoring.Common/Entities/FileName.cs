@@ -5,7 +5,7 @@ namespace GazeMonitoring.Common.Entities {
     public class FileName {
         public string DataStream { get; set; }
 
-        public DateTime DateTime => DateTime.UtcNow; 
+        public DateTime DateTime => DateTime.Now; 
 
         // Separate service. Bridge/strategy
         public override string ToString() {

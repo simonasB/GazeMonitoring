@@ -30,7 +30,7 @@ namespace GazeMonitoring
             config.AddJsonFile("config.json");
             var configurationRoot = config.Build();
             if (!bool.TryParse(configurationRoot["autoDiscover"], out var autoDiscover)) {
-
+                // log info message
             }
 
             var builder = new ContainerBuilder();
@@ -53,7 +53,17 @@ namespace GazeMonitoring
 
         private void BtnStart_Click(object sender, RoutedEventArgs e) {
             _lifetimeScope = _container.BeginLifetimeScope();
-            _gazeDataMonitor = _container.Resolve<GazeDataMonitor>(new NamedParameter(Constants.DataStreamParameterName, CmbDataStreams.SelectedItem));
+
+            var subjectInfo = new SubjectInfo {
+                Age = 10,
+                Details = "testing",
+                Name = "default",
+                DataStream = (DataStream) CmbDataStreams.SelectedItem
+            };
+
+            _gazeDataMonitor = _lifetimeScope.Resolve<GazeDataMonitor>(
+                new NamedParameter(Constants.DataStreamParameterName, CmbDataStreams.SelectedItem),
+                new NamedParameter(Constants.SubjectInfoParameterName, subjectInfo));
 
             _gazeDataMonitor.Start();
 
