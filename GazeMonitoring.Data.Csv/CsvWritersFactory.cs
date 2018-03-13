@@ -13,7 +13,7 @@ namespace GazeMonitoring.Data.Csv {
             _fileNameFormatter = fileNameFormatter;
         }
 
-        public Dictionary<Type, CsvWriterWrapper> GetCsvWriterProvider(DataStream dataStream) {
+        public Dictionary<Type, CsvWriterWrapper> GetCsvWriters(DataStream dataStream) {
             var csvWriters = new Dictionary<Type, CsvWriterWrapper>();
 
             switch (dataStream) {

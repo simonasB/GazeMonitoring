@@ -1,5 +1,7 @@
-﻿namespace GazeMonitoring.Common {
+﻿using Autofac;
+
+namespace GazeMonitoring.Common {
     public interface IDiscoverable {
-        DiscoveryResult Discover();
+        DiscoveryResult Discover(ContainerBuilder container);
     }
 }

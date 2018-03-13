@@ -1,0 +1,11 @@
+﻿{
+  "autoDiscover": false,  
+  "modules": [
+    {
+      "type": "TobiiCoreMonitoring.TobiiCoreModule, TobiiCoreMonitoring"
+    },
+    {
+      "type": "GazeMonitoring.Data.Csv.CsvModule, GazeMonitoring.Data.Csv"
+    }
+  ]
+}
