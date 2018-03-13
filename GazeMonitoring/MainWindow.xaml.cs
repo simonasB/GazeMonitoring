@@ -7,6 +7,7 @@ using Autofac.Configuration;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Entities;
 using Microsoft.Extensions.Configuration;
+using MockMonitoring;
 using TheEyeTribeMonitoring;
 using TobiiCoreMonitoring;
 
@@ -24,6 +25,7 @@ namespace GazeMonitoring
             InitializeComponent();
             EyeTribeInitializer.Init();
             TobiiCoreInitializer.Init();
+            MockInitializer.Init();
 
             var config = new ConfigurationBuilder();
 

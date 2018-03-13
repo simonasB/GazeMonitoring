@@ -158,6 +158,10 @@
       <Project>{A425261F-E463-4EB1-B237-597509E25C39}</Project>
       <Name>GazeMonitoring.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MockMonitoring\MockMonitoring.csproj">
+      <Project>{60f20997-4a0b-4769-879b-d270b35ac149}</Project>
+      <Name>MockMonitoring</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TheEyeTribeMonitoring\TheEyeTribeMonitoring.csproj">
       <Project>{f1c9fa6b-755d-442e-b6b6-b7cddd88cd62}</Project>
       <Name>TheEyeTribeMonitoring</Name>

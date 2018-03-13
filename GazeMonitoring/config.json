@@ -2,7 +2,7 @@
   "autoDiscover": false,  
   "modules": [
     {
-      "type": "TobiiCoreMonitoring.TobiiCoreModule, TobiiCoreMonitoring"
+      "type": "MockMonitoring.MockModule, MockMonitoring"
     },
     {
       "type": "GazeMonitoring.Data.Csv.CsvModule, GazeMonitoring.Data.Csv"

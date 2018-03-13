@@ -4,7 +4,7 @@ using Tobii.Interaction;
 using Tobii.Interaction.Framework;
 
 namespace TobiiCoreMonitoring.GazeStreams {
-    public class UnfilteredGazeStream : GazePointStream {
+    public sealed class UnfilteredGazeStream : GazePointStream {
         public UnfilteredGazeStream(Host host) {
             host.Streams.CreateGazePointDataStream(GazePointDataMode.Unfiltered).Next += (sender, data) => {
                 OnGazePointReceived(new GazePointReceivedEventArgs {
