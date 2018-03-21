@@ -3,6 +3,5 @@
         public int Age { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }
-        public DataStream DataStream { get; set; }
     }
 }

@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CsvFileNameFormatter.cs" />
     <Compile Include="CsvModule.cs" />
     <Compile Include="CsvGazeDataRepository.cs" />
     <Compile Include="CsvWritersFactory.cs" />

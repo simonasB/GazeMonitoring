@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml;
+using System.Xml.Serialization;
 using Autofac;
 using Autofac.Configuration;
 using GazeMonitoring.Common;
@@ -23,9 +26,48 @@ namespace GazeMonitoring
 
         public MainWindow() {
             InitializeComponent();
+
+            FileStream fileStream =
+                File.Create(Path.Combine(Directory.GetCurrentDirectory(), "test.xml"));
+            XmlWriter writer = XmlWriter.Create(fileStream);
+
+            writer.WriteStartDocument();
+
+            writer.WriteStartElement("GazeData");
+
+            writer.WriteStartElement("SubjectInfo");
+
+            writer.WriteElementString(nameof(SubjectInfo.Age), "1");
+            writer.WriteElementString(nameof(SubjectInfo.Name), "Name");
+            writer.WriteElementString(nameof(SubjectInfo.Details), "Details");
+            
+            writer.WriteEndElement();
+
+            writer.WriteStartElement("Saccades");
+
+            var saccade = new Saccade {
+                Amplitude = 1,
+                Direction = 2,
+                EndTimeStamp = 4,
+                StartTimeStamp = 3,
+                Velocity = 5
+            };
+
+            var serializer = new XmlSerializer(saccade.GetType(), new XmlRootAttribute("Saccade"));
+            serializer.Serialize(writer, saccade);
+
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+
+            writer.WriteEndDocument();
+
+            writer.Dispose();
+            fileStream.Dispose();
+
             EyeTribeInitializer.Init();
             TobiiCoreInitializer.Init();
             MockInitializer.Init();
+
 
             var config = new ConfigurationBuilder();
 
@@ -60,7 +102,6 @@ namespace GazeMonitoring
                 Age = 10,
                 Details = "testing",
                 Name = "default",
-                DataStream = (DataStream) CmbDataStreams.SelectedItem
             };
 
             _gazeDataMonitor = _lifetimeScope.Resolve<GazeDataMonitor>(

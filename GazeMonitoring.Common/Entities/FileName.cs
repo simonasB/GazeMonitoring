@@ -9,7 +9,7 @@ namespace GazeMonitoring.Common.Entities {
 
         // Separate service. Bridge/strategy
         public override string ToString() {
-            return $"log_{DataStream}_{DateTime.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.csv";
+            return $"log_{DataStream}_{DateTime.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}";
         }
     }
 }

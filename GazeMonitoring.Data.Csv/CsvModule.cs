@@ -7,7 +7,7 @@ using GazeMonitoring.Common.Entities;
 namespace GazeMonitoring.Data.Csv {
     public class CsvModule : Module {
         protected override void Load(ContainerBuilder builder) {
-            builder.RegisterType<FileNameFormatter>().As<IFileNameFormatter>();
+            builder.RegisterType<CsvFileNameFormatter>().As<IFileNameFormatter>();
             builder.RegisterType(typeof(CsvWritersFactory));
             builder.Register((c, p) => new CsvWritersFactory(c.Resolve<IFileNameFormatter>(), p.Named<SubjectInfo>(Constants.SubjectInfoParameterName)));
             builder.Register((c, p) => {
