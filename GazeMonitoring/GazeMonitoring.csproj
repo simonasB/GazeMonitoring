@@ -154,6 +154,10 @@
       <Project>{70BB2194-ACC0-44F6-9264-11251485ECC2}</Project>
       <Name>GazeMonitoring.Data.Csv</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Data.PostgreSQL\GazeMonitoring.Data.PostgreSQL.csproj">
+      <Project>{B6FE1338-3086-4B01-B2F7-DA0CB1679175}</Project>
+      <Name>GazeMonitoring.Data.PostgreSQL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.Data.Xml\GazeMonitoring.Data.Xml.csproj">
       <Project>{1bb84589-22ea-4f07-bf68-c39577aebc21}</Project>
       <Name>GazeMonitoring.Data.Xml</Name>

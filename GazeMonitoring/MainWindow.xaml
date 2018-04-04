@@ -8,7 +8,7 @@
         xmlns:tobiiCoreMonitoring="clr-namespace:TobiiCoreMonitoring;assembly=TobiiCoreMonitoring"
         xmlns:entities1="clr-namespace:GazeMonitoring.Common.Entities;assembly=GazeMonitoring.Common"
         mc:Ignorable="d"
-        Title="MainWindow" Height="157.121" Width="333.205">
+        Title="MainWindow" Height="269.449" Width="263.604">
     <Window.Resources>
         <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}">
@@ -17,11 +17,21 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </Window.Resources>
-    <Grid>
-        <ComboBox Name="CmbDataStreams" HorizontalAlignment="Left" Margin="33,30,0,0" VerticalAlignment="Top" Width="277" SelectionChanged="CmbDataStreams_SelectionChanged" ItemsSource="{Binding Source={StaticResource dataFromEnum}}" SelectedIndex="0">
-        </ComboBox>
-        <Button Name ="BtnStart" Content="Start" HorizontalAlignment="Left" Margin="33,71,0,0" VerticalAlignment="Top" Width="75" Click="BtnStart_Click"/>
-        <Button Name ="BtnStop" Content="Stop" HorizontalAlignment="Left" Margin="130,71,0,0" VerticalAlignment="Top" Width="75" Click="BtnStop_Click" IsEnabled="False"/>
+    <Grid Margin="0,0,2,-1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="315*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <ComboBox Name="CmbDataStreams" HorizontalAlignment="Left" Margin="35,154,0,0" VerticalAlignment="Top" Width="181" SelectionChanged="CmbDataStreams_SelectionChanged" ItemsSource="{Binding Source={StaticResource dataFromEnum}}" SelectedIndex="0" Height="22"/>
+        <Button Name ="BtnStart" Content="Start" HorizontalAlignment="Left" Margin="35,193,0,0" VerticalAlignment="Top" Width="75" Click="BtnStart_Click" Height="20"/>
+        <Button Name ="BtnStop" Content="Stop" HorizontalAlignment="Left" Margin="141,193,0,0" VerticalAlignment="Top" Width="75" Click="BtnStop_Click" IsEnabled="False" Height="20"/>
+        <CheckBox Content="Anonymous" HorizontalAlignment="Left" Margin="35,18,0,0" VerticalAlignment="Top" Height="15" Width="83"/>
+        <TextBlock HorizontalAlignment="Left" Margin="35,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="32"><Run Text="Name"/><LineBreak/><Run/></TextBlock>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="96,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" IsEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="35,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="15" Width="120"><Run Text="Details"/><LineBreak/><Run/></TextBlock>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="96,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBlock HorizontalAlignment="Left" Margin="35,79,0,0" TextWrapping="Wrap" Text="Age" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="96,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_1" IsEnabled="False"/>
 
     </Grid>
 </Window>
