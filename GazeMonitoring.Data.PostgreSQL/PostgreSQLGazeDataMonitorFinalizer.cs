@@ -6,10 +6,10 @@ using GazeMonitoring.Common.Entities;
 
 namespace GazeMonitoring.Data.PostgreSQL {
     public class PostgreSQLGazeDataMonitorFinalizer : IGazeDataMonitorFinalizer {
-        private readonly DatabaseRepository _databaseRepository;
+        private readonly IDatabaseRepository _databaseRepository;
         private readonly SubjectInfo _subjectInfo;
 
-        public PostgreSQLGazeDataMonitorFinalizer(DatabaseRepository databaseRepository, SubjectInfo subjectInfo) {
+        public PostgreSQLGazeDataMonitorFinalizer(IDatabaseRepository databaseRepository, SubjectInfo subjectInfo) {
             _databaseRepository = databaseRepository;
             _subjectInfo = subjectInfo;
         }
@@ -37,6 +37,8 @@ namespace GazeMonitoring.Data.PostgreSQL {
 
                     _databaseRepository.BinaryInsertGazePoints(gazePoints, _subjectInfo.SessionId, savedSubjectInfo?.Id, DateTime.UtcNow);
                 }
+
+                File.Delete(gazePointsFilePath);
             }
 
             if (File.Exists(saccadesFilePath)) {
@@ -51,6 +53,8 @@ namespace GazeMonitoring.Data.PostgreSQL {
 
                     _databaseRepository.BinaryInsertSaccades(saccades, _subjectInfo.SessionId, savedSubjectInfo?.Id, DateTime.UtcNow);
                 }
+
+                File.Delete(saccadesFilePath);
             }
         }
     }

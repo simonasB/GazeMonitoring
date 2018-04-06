@@ -64,7 +64,6 @@
     <Compile Include="GazeStreams\UnfilteredGazeStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TobiiCoreGazePointStreamFactory.cs" />
-    <Compile Include="TobiiCoreInitializer.cs" />
     <Compile Include="TobiiCoreModule.cs" />
     <Compile Include="TobiiDiscovery.cs" />
   </ItemGroup>

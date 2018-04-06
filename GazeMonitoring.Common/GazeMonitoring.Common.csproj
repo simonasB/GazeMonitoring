@@ -34,6 +34,7 @@
       <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
@@ -55,6 +56,7 @@
     <Compile Include="GazeDataWriterFactory.cs" />
     <Compile Include="IGazeDataMonitorFinalizer.cs" />
     <Compile Include="MultipleSourcesGazeDataWriter.cs" />
+    <Compile Include="NullGazeDataMonitorFinalizer.cs" />
     <Compile Include="SaccadesWriter.cs" />
     <Compile Include="GazePointWriter.cs" />
     <Compile Include="DiscoveryResult.cs" />

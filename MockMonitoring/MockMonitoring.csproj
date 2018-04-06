@@ -54,7 +54,6 @@
     <Compile Include="GazeStreams\UnfilteredGazeStream.cs" />
     <Compile Include="MockDiscovery.cs" />
     <Compile Include="MockGazePointStreamFactory.cs" />
-    <Compile Include="MockInitializer.cs" />
     <Compile Include="MockModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

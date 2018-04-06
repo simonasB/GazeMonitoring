@@ -20,6 +20,7 @@ namespace GazeMonitoring.Common {
                         c.Resolve<IGazePointStreamFactory>().GetGazePointStream(dataStream),
                         new GazeDataWriterFactory(repository, c.Resolve<ISaccadeCalculator>()).GetGazeDataWriter(dataStream));
             }).As<GazeDataMonitor>();
+            builder.RegisterType<NullGazeDataMonitorFinalizer>().As<IGazeDataMonitorFinalizer>();
         }
     }
 }

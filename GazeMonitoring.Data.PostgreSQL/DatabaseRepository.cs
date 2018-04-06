@@ -7,7 +7,8 @@ using Npgsql;
 using NpgsqlTypes;
 
 namespace GazeMonitoring.Data.PostgreSQL {
-    public class DatabaseRepository {
+    public class DatabaseRepository : IDatabaseRepository
+    {
         private readonly string _connectionString;
 
         private static readonly string _subjectInfoTableName = "gaze_monitoring.subject_info";
@@ -33,7 +34,7 @@ namespace GazeMonitoring.Data.PostgreSQL {
         };
 
         public DatabaseRepository(string connectionString) {
-            _connectionString = connectionString;
+            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }
 
         public SubjectInfo RetrieveSubjectInfo(string sessionId) {
