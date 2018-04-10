@@ -5,6 +5,9 @@
       "type": "MockMonitoring.MockModule, MockMonitoring"
     },
     {
+      "type": "GazeMonitoring.Data.Csv.CsvModule, GazeMonitoring.Data.Csv"
+    },
+    {
       "type": "GazeMonitoring.Data.PostgreSQL.PostgreSQLModule, GazeMonitoring.Data.PostgreSQL"
     }
   ],

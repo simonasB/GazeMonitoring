@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Core;
 using GazeMonitoring.Common.Entities;
 using GazeMonitoring.Data;
+using GazeMonitoring.Logging;
 
 namespace GazeMonitoring.Common {
     public class CommonModule : Module {
@@ -21,6 +22,7 @@ namespace GazeMonitoring.Common {
                         new GazeDataWriterFactory(repository, c.Resolve<ISaccadeCalculator>()).GetGazeDataWriter(dataStream));
             }).As<GazeDataMonitor>();
             builder.RegisterType<NullGazeDataMonitorFinalizer>().As<IGazeDataMonitorFinalizer>();
+            builder.RegisterType<XmlLog4NetLoggerFactory>().As<ILoggerFactory>().SingleInstance();
         }
     }
 }

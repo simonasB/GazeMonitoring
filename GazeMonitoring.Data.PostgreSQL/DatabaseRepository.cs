@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Logging;
 using Npgsql;
 using NpgsqlTypes;
 
@@ -33,22 +34,22 @@ namespace GazeMonitoring.Data.PostgreSQL {
             "direction", "amplitude", "velocity", "start_timestamp", "end_timestamp", "session_id", "subject_info_id", "sample_time"
         };
 
-        public DatabaseRepository(string connectionString) {
+        private readonly ILogger _logger;
+
+        public DatabaseRepository(string connectionString, ILoggerFactory loggerFactory) {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            _logger = loggerFactory.GetLogger(typeof(DatabaseRepository));
         }
 
         public SubjectInfo RetrieveSubjectInfo(string sessionId) {
-            using (var connection = Common.CreateConnection(_connectionString))
-            {
+            using (var connection = Common.CreateConnection(_connectionString)) {
                 string columns = string.Join(",", _allSubjectInfoColumns);
                 string commandText = $"SELECT {columns} FROM {_subjectInfoTableName} " +
                                      "WHERE session_id=@session_id";
-                using (var command = new NpgsqlCommand(commandText, connection))
-                {
+                using (var command = new NpgsqlCommand(commandText, connection)) {
                     command.Parameters.AddWithValue("@session_id", NpgsqlDbType.Uuid, sessionId);
 
-                    try
-                    {
+                    try {
                         using (DbDataReader reader = command.ExecuteReader()) {
                             if (reader.Read()) {
                                 return new SubjectInfo {
@@ -60,10 +61,8 @@ namespace GazeMonitoring.Data.PostgreSQL {
                                 };
                             }
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        // log error
+                    } catch (Exception e) {
+                        _logger.Error(e);
                     }
                 }
             }

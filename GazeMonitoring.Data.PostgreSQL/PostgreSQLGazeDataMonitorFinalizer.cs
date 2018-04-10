@@ -3,24 +3,25 @@ using System.IO;
 using CsvHelper;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Logging;
 
 namespace GazeMonitoring.Data.PostgreSQL {
     public class PostgreSQLGazeDataMonitorFinalizer : IGazeDataMonitorFinalizer {
         private readonly IDatabaseRepository _databaseRepository;
         private readonly SubjectInfo _subjectInfo;
+        private ILogger _logger;
 
-        public PostgreSQLGazeDataMonitorFinalizer(IDatabaseRepository databaseRepository, SubjectInfo subjectInfo) {
+        public PostgreSQLGazeDataMonitorFinalizer(IDatabaseRepository databaseRepository, SubjectInfo subjectInfo, ILoggerFactory loggerFactory) {
+            _logger = loggerFactory.GetLogger(typeof(PostgreSQLGazeDataMonitorFinalizer));
             _databaseRepository = databaseRepository;
             _subjectInfo = subjectInfo;
         }
 
         public void FinalizeMonitoring() {
+            _logger.Information("Starting finalization process of gaze data monitoring.");
+
             _databaseRepository.SaveSubjectInfo(_subjectInfo);
             var savedSubjectInfo = _databaseRepository.RetrieveSubjectInfo(_subjectInfo.SessionId);
-
-            if (savedSubjectInfo == null) {
-                // Something went wrong. 
-            }
 
             var saccadesFilePath = Path.Combine(Directory.GetCurrentDirectory(), Constants.SaccadesTempCsvFileName);
             var gazePointsFilePath = Path.Combine(Directory.GetCurrentDirectory(), Constants.GazePointsTempCsvFileName);
@@ -56,6 +57,8 @@ namespace GazeMonitoring.Data.PostgreSQL {
 
                 File.Delete(saccadesFilePath);
             }
+
+            _logger.Information("Finalization process of gaze data monitoring ended.");
         }
     }
 }

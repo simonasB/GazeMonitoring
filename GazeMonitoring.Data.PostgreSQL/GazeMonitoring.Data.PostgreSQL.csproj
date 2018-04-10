@@ -103,6 +103,10 @@
       <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
       <Name>GazeMonitoring.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Logging\GazeMonitoring.Logging.csproj">
+      <Project>{D54C6080-859C-4E1E-A4CE-B5407E474326}</Project>
+      <Name>GazeMonitoring.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

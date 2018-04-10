@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Core;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Logging;
 using Microsoft.Extensions.Configuration;
 
 namespace GazeMonitoring.Data.PostgreSQL {
@@ -11,8 +12,9 @@ namespace GazeMonitoring.Data.PostgreSQL {
             builder.RegisterType<PostgreSQLFileNameFormatter>().As<IFileNameFormatter>();
             builder.Register((c, p) => {
                 var parameters = p as Parameter[] ?? p.ToArray();
-                return new PostgreSQLGazeDataMonitorFinalizer(new DatabaseRepository(GetPostgreSQLConnectionString()),
-                    parameters.Named<SubjectInfo>(GazeMonitoring.Common.Constants.SubjectInfoParameterName));
+                var loggerFactory = c.Resolve<ILoggerFactory>();
+                return new PostgreSQLGazeDataMonitorFinalizer(new DatabaseRepository(GetPostgreSQLConnectionString(), loggerFactory),
+                    parameters.Named<SubjectInfo>(GazeMonitoring.Common.Constants.SubjectInfoParameterName), c.Resolve<ILoggerFactory>());
             }).As<IGazeDataMonitorFinalizer>();
         }
 
