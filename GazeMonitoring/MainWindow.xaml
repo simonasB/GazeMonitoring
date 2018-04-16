@@ -8,7 +8,12 @@
         xmlns:tobiiCoreMonitoring="clr-namespace:TobiiCoreMonitoring;assembly=TobiiCoreMonitoring"
         xmlns:entities1="clr-namespace:GazeMonitoring.Common.Entities;assembly=GazeMonitoring.Common"
         mc:Ignorable="d"
-        Title="MainWindow" Height="269.449" Width="263.604">
+        WindowStyle="None"
+        Title="MainWindow" Height="269.449" Width="263.604"
+        Deactivated="Window_Deactivated"
+        Loaded="Window_Loaded"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}">

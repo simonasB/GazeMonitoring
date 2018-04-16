@@ -9,6 +9,7 @@ namespace GazeMonitoring {
     /// in App.xaml.cs could have created this view model, and assigned it to the NotifyIcon.
     /// </summary>
     public class NotifyIconViewModel {
+        private readonly Lazy<MainWindow> _mainWindow = new Lazy<MainWindow>(() => new MainWindow());
         /// <summary>
         /// Shows a window, if none is already open.
         /// </summary>
@@ -16,9 +17,9 @@ namespace GazeMonitoring {
             get
             {
                 return new DelegateCommand {
-                    CanExecuteFunc = () => Application.Current.MainWindow == null,
+                    CanExecuteFunc = () => Application.Current.MainWindow?.IsVisible != true,
                     CommandAction = () => {
-                        Application.Current.MainWindow = new MainWindow();
+                        Application.Current.MainWindow = _mainWindow.Value;
                         Application.Current.MainWindow.Show();
                     }
                 };
@@ -32,8 +33,8 @@ namespace GazeMonitoring {
             get
             {
                 return new DelegateCommand {
-                    CommandAction = () => Application.Current.MainWindow.Close(),
-                    CanExecuteFunc = () => Application.Current.MainWindow != null
+                    CommandAction = () => Application.Current.MainWindow?.Hide(),
+                    CanExecuteFunc = () => Application.Current.MainWindow?.IsVisible == true
                 };
             }
         }

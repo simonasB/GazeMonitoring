@@ -100,6 +100,16 @@ namespace GazeMonitoring {
             CmbDataStreams.IsEnabled = isEnabled;
             CheckBoxAnonymous.IsEnabled = isEnabled;
             BtnStop.IsEnabled = !isEnabled;
-        } 
+        }
+
+        private void Window_Deactivated(object sender, EventArgs e) {
+            Hide();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+            var desktopWorkingArea = System.Windows.SystemParameters.WorkArea;
+            this.Left = desktopWorkingArea.Right - this.Width;
+            this.Top = desktopWorkingArea.Bottom - this.Height;
+        }
     }
 }
