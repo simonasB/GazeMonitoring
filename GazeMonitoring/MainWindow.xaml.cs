@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Autofac;
-using Autofac.Configuration;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Entities;
-using Microsoft.Extensions.Configuration;
 using Constants = GazeMonitoring.Common.Constants;
 
 namespace GazeMonitoring {
@@ -15,34 +14,16 @@ namespace GazeMonitoring {
     /// </summary>
     public partial class MainWindow : Window {
         private GazeDataMonitor _gazeDataMonitor;
-        private static IContainer _container;
+        private readonly IContainer _container;
         private static ILifetimeScope _lifetimeScope;
         private SubjectInfo _subjectInfo;
+        private Task _monitoringTask;
 
-        public MainWindow() {
+        public MainWindow(IContainer container) {
+            _container = container;
             InitializeComponent();
 
-            var config = new ConfigurationBuilder();
-
-            config.AddJsonFile("config.json");
-            var configurationRoot = config.Build();
-            if (!bool.TryParse(configurationRoot["autoDiscover"], out var autoDiscover)) {
-                // log info message
-            }
-
-            var builder = new ContainerBuilder();
-            var module = new ConfigurationModule(configurationRoot);
-            builder.RegisterModule<CommonModule>();
-            builder.RegisterModule(module);
-
-            if (autoDiscover) {
-                var discoveryManager = new TrackerDiscoveryManager();
-                discoveryManager.Discover(builder);
-            }
-
             CmbDataStreams.ItemsSource = Enum.GetValues(typeof(DataStream)).Cast<DataStream>();
-
-            _container = builder.Build();
         }
 
         private void CmbDataStreams_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -52,35 +33,41 @@ namespace GazeMonitoring {
             _lifetimeScope = _container.BeginLifetimeScope();
             _subjectInfo = new SubjectInfo();
 
+            int.TryParse(TextBoxAge.Text, out var age);
+
             if (CheckBoxAnonymous.IsChecked != true) {
                 _subjectInfo = new SubjectInfo {
                     Name = TextBoxName.Text,
-                    Age = int.Parse(TextBoxAge.Text),
+                    Age = age,
                     Details = TextBoxDetails.Text,
                 };
             }
 
             _subjectInfo.SessionId = Guid.NewGuid().ToString();
-
+            _subjectInfo.SessionStartTimestamp = DateTime.UtcNow;
             _gazeDataMonitor = _lifetimeScope.Resolve<GazeDataMonitor>(
                 new NamedParameter(Constants.DataStreamParameterName, CmbDataStreams.SelectedItem),
                 new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
-
             _gazeDataMonitor.Start();
 
             ToggleFieldsOnStartAndStop(false);
         }
 
-        private void BtnStop_Click(object sender, RoutedEventArgs e) {
+        private async void BtnStop_Click(object sender, RoutedEventArgs e) {
             _gazeDataMonitor.Stop();
             _lifetimeScope.Dispose();
+            _subjectInfo.SessionEndTimeStamp = DateTime.UtcNow;
 
-            using (var lifetimeScope = _container.BeginLifetimeScope()) {
-                var finalizer = lifetimeScope.Resolve<IGazeDataMonitorFinalizer>(
-                    new NamedParameter(Constants.DataStreamParameterName, CmbDataStreams.SelectedItem),
-                    new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
-                finalizer.FinalizeMonitoring();
-            }
+            var selectedItem = CmbDataStreams.SelectedItem;
+
+            await Task.Run(() => {
+                using (var lifetimeScope = _container.BeginLifetimeScope()) {
+                    var finalizer = lifetimeScope.Resolve<IGazeDataMonitorFinalizer>(
+                        new NamedParameter(Constants.DataStreamParameterName, selectedItem),
+                        new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
+                    finalizer.FinalizeMonitoring();
+                }
+            });
 
             ToggleFieldsOnStartAndStop(true);
         }

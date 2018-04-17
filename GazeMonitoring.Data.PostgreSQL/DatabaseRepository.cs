@@ -19,7 +19,7 @@ namespace GazeMonitoring.Data.PostgreSQL {
         };
 
         private static readonly string[] _subjectInfoColumnsForSave = {
-            "session_id", "name", "age", "details"
+            "session_id", "name", "age", "details", "session_start_timestamp", "session_end_timestamp"
         };
 
         private static readonly string _gazePointTableName = "gaze_monitoring.gaze_point";
@@ -79,11 +79,15 @@ namespace GazeMonitoring.Data.PostgreSQL {
                     command.Parameters.Add(new NpgsqlParameter("@name", NpgsqlDbType.Text));
                     command.Parameters.Add(new NpgsqlParameter("@age", NpgsqlDbType.Integer));
                     command.Parameters.Add(new NpgsqlParameter("@details", NpgsqlDbType.Text));
+                    command.Parameters.Add(new NpgsqlParameter("@session_start_timestamp", NpgsqlDbType.Timestamp));
+                    command.Parameters.Add(new NpgsqlParameter("@session_end_timestamp", NpgsqlDbType.Timestamp));
 
                     command.Parameters[0].Value = Common.ReplaceNullToDbNull(subjectInfo.SessionId);
                     command.Parameters[1].Value = Common.ReplaceNullToDbNull(subjectInfo.Name);
                     command.Parameters[2].Value = Common.ReplaceNullToDbNull(subjectInfo.Age);
                     command.Parameters[3].Value = Common.ReplaceNullToDbNull(subjectInfo.Details);
+                    command.Parameters[4].Value = Common.ReplaceNullToDbNull(subjectInfo.SessionStartTimestamp);
+                    command.Parameters[5].Value = Common.ReplaceNullToDbNull(subjectInfo.SessionEndTimeStamp);
                     command.ExecuteNonQuery();
                 }
             }

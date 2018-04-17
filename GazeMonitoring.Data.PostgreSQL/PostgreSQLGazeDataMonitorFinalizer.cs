@@ -9,7 +9,7 @@ namespace GazeMonitoring.Data.PostgreSQL {
     public class PostgreSQLGazeDataMonitorFinalizer : IGazeDataMonitorFinalizer {
         private readonly IDatabaseRepository _databaseRepository;
         private readonly SubjectInfo _subjectInfo;
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         public PostgreSQLGazeDataMonitorFinalizer(IDatabaseRepository databaseRepository, SubjectInfo subjectInfo, ILoggerFactory loggerFactory) {
             _logger = loggerFactory.GetLogger(typeof(PostgreSQLGazeDataMonitorFinalizer));
