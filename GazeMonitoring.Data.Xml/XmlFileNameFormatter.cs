@@ -1,5 +1,4 @@
-﻿using GazeMonitoring.Common.Misc;
-using GazeMonitoring.Model;
+﻿using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Xml {
     public class XmlFileNameFormatter : IFileNameFormatter {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using CsvHelper;
-using GazeMonitoring.Common.Misc;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Csv {

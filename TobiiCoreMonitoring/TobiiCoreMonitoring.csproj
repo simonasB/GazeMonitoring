@@ -35,9 +35,6 @@
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="CsvHelper, Version=6.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
-      <HintPath>..\packages\CsvHelper.6.1.1\lib\net45\CsvHelper.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -71,10 +68,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GazeMonitoring.Common\GazeMonitoring.Common.csproj">
-      <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
-      <Name>GazeMonitoring.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj">
       <Project>{333EB528-1F08-411D-9AF2-83DC0F475121}</Project>
       <Name>GazeMonitoring.EyeTracker.Core</Name>

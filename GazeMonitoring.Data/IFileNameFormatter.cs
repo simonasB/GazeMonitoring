@@ -1,6 +1,6 @@
 ﻿using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common.Misc {
+namespace GazeMonitoring.Data {
     public interface IFileNameFormatter {
         string Format(FileName fileName);
     }

@@ -2,7 +2,6 @@
 using Autofac;
 using Autofac.Core;
 using GazeMonitoring.Common.Finalizers;
-using GazeMonitoring.Common.Misc;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Model;
 using Microsoft.Extensions.Configuration;

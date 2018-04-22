@@ -68,10 +68,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GazeMonitoring.Common\GazeMonitoring.Common.csproj">
-      <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
-      <Name>GazeMonitoring.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj">
       <Project>{333EB528-1F08-411D-9AF2-83DC0F475121}</Project>
       <Name>GazeMonitoring.EyeTracker.Core</Name>

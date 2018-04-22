@@ -2,7 +2,6 @@
 using Autofac;
 using Autofac.Core;
 using GazeMonitoring.Common;
-using GazeMonitoring.Common.Misc;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Xml {

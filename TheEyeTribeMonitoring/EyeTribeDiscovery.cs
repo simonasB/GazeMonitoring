@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using EyeTribe.ClientSdk;
-using GazeMonitoring.Common;
 using GazeMonitoring.EyeTracker.Core.Discovery;
 using GazeMonitoring.EyeTracker.Core.Streams;
 

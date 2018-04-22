@@ -40,8 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileNameFormatter.cs" />
+    <Compile Include="IFileNameFormatter.cs" />
     <Compile Include="IGazeDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
+      <Project>{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}</Project>
+      <Name>GazeMonitoring.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

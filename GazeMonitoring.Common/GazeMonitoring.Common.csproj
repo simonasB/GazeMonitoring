@@ -58,8 +58,6 @@
     <Compile Include="Finalizers\NullGazeDataMonitorFinalizer.cs" />
     <Compile Include="Writers\SaccadesWriter.cs" />
     <Compile Include="Writers\GazePointWriter.cs" />
-    <Compile Include="Misc\FileNameFormatter.cs" />
-    <Compile Include="Misc\IFileNameFormatter.cs" />
     <Compile Include="Writers\IGazeDataWriter.cs" />
     <Compile Include="Calculations\ISaccadeCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
