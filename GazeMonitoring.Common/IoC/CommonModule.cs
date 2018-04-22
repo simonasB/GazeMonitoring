@@ -1,11 +1,15 @@
 ﻿using System.Linq;
 using Autofac;
 using Autofac.Core;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Common.Calculations;
+using GazeMonitoring.Common.Finalizers;
+using GazeMonitoring.Common.Streams;
+using GazeMonitoring.Common.Writers;
 using GazeMonitoring.Data;
 using GazeMonitoring.Logging;
+using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common {
+namespace GazeMonitoring.Common.IoC {
     public class CommonModule : Module {
         protected override void Load(ContainerBuilder builder) {
             builder.RegisterType<BasicSaccadeCalculator>().As<ISaccadeCalculator>();

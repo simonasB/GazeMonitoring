@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using Autofac;
 using Autofac.Core;
-using GazeMonitoring.Common;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Common.Finalizers;
+using GazeMonitoring.Common.Misc;
 using GazeMonitoring.Logging;
+using GazeMonitoring.Model;
 using Microsoft.Extensions.Configuration;
 
 namespace GazeMonitoring.Data.PostgreSQL {

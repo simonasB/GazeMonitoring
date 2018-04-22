@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CsvHelper;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Csv {
     public class CsvGazeDataRepository : IGazeDataRepository, IDisposable {

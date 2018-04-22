@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Xml {
     public class XmlGazeDataRepository : IGazeDataRepository, IDisposable {

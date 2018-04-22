@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common {
+namespace GazeMonitoring.Common.Writers {
     public class MultipleSourcesGazeDataWriter : IGazeDataWriter {
         private readonly List<IGazeDataWriter> _gazeDataWriters;
 

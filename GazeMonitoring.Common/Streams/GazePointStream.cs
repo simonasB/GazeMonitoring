@@ -1,7 +1,7 @@
 ﻿using System;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common {
+namespace GazeMonitoring.Common.Streams {
     public abstract class GazePointStream {
         public event EventHandler<GazePointReceivedEventArgs> GazePointReceived;
 

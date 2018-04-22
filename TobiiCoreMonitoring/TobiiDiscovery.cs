@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using GazeMonitoring.Common;
+using GazeMonitoring.Common.Discovery;
+using GazeMonitoring.Common.Streams;
 using Tobii.Interaction;
 using Tobii.Interaction.Client;
 

@@ -102,8 +102,8 @@ CREATE TABLE IF NOT EXISTS gaze_monitoring.subject_info
 	age integer,
 	details text,
 	id serial,
-	--session_start_timestamp timestamp,
-	--session_end_timestamp timestamp,
+	session_start_timestamp timestamp,
+	session_end_timestamp timestamp,
 	PRIMARY KEY(id)
 );
 

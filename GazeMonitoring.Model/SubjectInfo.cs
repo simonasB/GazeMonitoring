@@ -1,7 +1,7 @@
 ﻿using System;
 
-namespace GazeMonitoring.Common.Entities {
-    public class SubjectInfo : IGazeData {
+namespace GazeMonitoring.Model {
+    public class SubjectInfo {
         public int? Age { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }

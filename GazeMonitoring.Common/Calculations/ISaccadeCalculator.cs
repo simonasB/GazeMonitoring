@@ -1,6 +1,6 @@
-﻿using GazeMonitoring.Common.Entities;
+﻿using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common {
+namespace GazeMonitoring.Common.Calculations {
     public interface ISaccadeCalculator {
         Saccade Calculate(GazePoint previousPoint, GazePoint currentPoint);
     }

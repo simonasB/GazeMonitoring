@@ -1,7 +1,7 @@
 ﻿using System;
 using EyeTribe.ClientSdk;
-using GazeMonitoring.Common;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Common.Streams;
+using GazeMonitoring.Model;
 using TheEyeTribeMonitoring.GazeStreams;
 
 namespace TheEyeTribeMonitoring {

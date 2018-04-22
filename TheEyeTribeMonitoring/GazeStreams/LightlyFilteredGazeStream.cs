@@ -1,6 +1,6 @@
 ﻿using EyeTribe.ClientSdk.Data;
-using GazeMonitoring.Common;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Common.Streams;
+using GazeMonitoring.Model;
 
 namespace TheEyeTribeMonitoring.GazeStreams {
     public class LightlyFilteredGazeStream : GazePointStream, IFilteredGazeDataPublisher {

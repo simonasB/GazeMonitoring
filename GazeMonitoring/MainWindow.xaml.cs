@@ -5,7 +5,8 @@ using System.Windows;
 using System.Windows.Controls;
 using Autofac;
 using GazeMonitoring.Common;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Common.Finalizers;
+using GazeMonitoring.Model;
 using Constants = GazeMonitoring.Common.Constants;
 
 namespace GazeMonitoring {
@@ -17,7 +18,6 @@ namespace GazeMonitoring {
         private readonly IContainer _container;
         private static ILifetimeScope _lifetimeScope;
         private SubjectInfo _subjectInfo;
-        private Task _monitoringTask;
 
         public MainWindow(IContainer container) {
             _container = container;

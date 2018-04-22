@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Data.Postgre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Logging", "GazeMonitoring.Logging\GazeMonitoring.Logging.csproj", "{D54C6080-859C-4E1E-A4CE-B5407E474326}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Model", "GazeMonitoring.Model\GazeMonitoring.Model.csproj", "{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{D54C6080-859C-4E1E-A4CE-B5407E474326}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D54C6080-859C-4E1E-A4CE-B5407E474326}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D54C6080-859C-4E1E-A4CE-B5407E474326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

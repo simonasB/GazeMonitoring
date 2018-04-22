@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using CsvHelper;
-using GazeMonitoring.Common;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Common.Misc;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Csv {
     public class CsvWritersFactory {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using CsvHelper;
-using GazeMonitoring.Common;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.Logging;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.PostgreSQL {
     public class PostgreSQLGazeDataMonitorFinalizer : IGazeDataMonitorFinalizer {

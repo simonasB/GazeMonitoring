@@ -1,5 +1,5 @@
-﻿using GazeMonitoring.Common;
-using GazeMonitoring.Common.Entities;
+﻿using GazeMonitoring.Common.Misc;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.PostgreSQL {
     public class PostgreSQLFileNameFormatter : IFileNameFormatter {

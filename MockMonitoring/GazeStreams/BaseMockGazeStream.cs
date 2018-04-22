@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using GazeMonitoring.Common;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Common.Streams;
+using GazeMonitoring.Model;
 
 namespace MockMonitoring.GazeStreams {
     public abstract class BaseMockGazeStream : GazePointStream {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using GazeMonitoring.Common;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Common.Misc;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Xml {
     public class XmlWritersFactory {

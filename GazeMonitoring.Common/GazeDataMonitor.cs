@@ -1,4 +1,6 @@
-﻿using GazeMonitoring.Common.Entities;
+﻿using GazeMonitoring.Common.Streams;
+using GazeMonitoring.Common.Writers;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Common {
     public class GazeDataMonitor {

@@ -1,6 +1,6 @@
-﻿using GazeMonitoring.Common.Entities;
+﻿using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common {
+namespace GazeMonitoring.Common.Streams {
     public interface IGazePointStreamFactory {
         GazePointStream GetGazePointStream(DataStream dataStream);
     }

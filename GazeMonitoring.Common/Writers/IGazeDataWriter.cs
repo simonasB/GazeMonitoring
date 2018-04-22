@@ -1,6 +1,6 @@
-﻿using GazeMonitoring.Common.Entities;
+﻿using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common {
+namespace GazeMonitoring.Common.Writers {
     public interface IGazeDataWriter {
         void Write(GazePoint gazePoint);
     }

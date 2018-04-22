@@ -48,33 +48,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicSaccadeCalculator.cs" />
-    <Compile Include="CommonModule.cs" />
+    <Compile Include="Calculations\BasicSaccadeCalculator.cs" />
+    <Compile Include="IoC\CommonModule.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Entities\SubjectInfo.cs" />
     <Compile Include="GazeDataMonitor.cs" />
-    <Compile Include="GazeDataWriterFactory.cs" />
-    <Compile Include="IGazeDataMonitorFinalizer.cs" />
-    <Compile Include="MultipleSourcesGazeDataWriter.cs" />
-    <Compile Include="NullGazeDataMonitorFinalizer.cs" />
-    <Compile Include="SaccadesWriter.cs" />
-    <Compile Include="GazePointWriter.cs" />
-    <Compile Include="DiscoveryResult.cs" />
-    <Compile Include="Entities\DataStream.cs" />
-    <Compile Include="Entities\FileName.cs" />
-    <Compile Include="Entities\GazePoint.cs" />
-    <Compile Include="Entities\GazePointReceivedEventArgs.cs" />
-    <Compile Include="Entities\IGazeData.cs" />
-    <Compile Include="Entities\Saccade.cs" />
-    <Compile Include="FileNameFormatter.cs" />
-    <Compile Include="IDiscoverable.cs" />
-    <Compile Include="GazePointStream.cs" />
-    <Compile Include="IFileNameFormatter.cs" />
-    <Compile Include="IGazeDataWriter.cs" />
-    <Compile Include="IGazePointStreamFactory.cs" />
-    <Compile Include="ISaccadeCalculator.cs" />
+    <Compile Include="Writers\GazeDataWriterFactory.cs" />
+    <Compile Include="Finalizers\IGazeDataMonitorFinalizer.cs" />
+    <Compile Include="Writers\MultipleSourcesGazeDataWriter.cs" />
+    <Compile Include="Finalizers\NullGazeDataMonitorFinalizer.cs" />
+    <Compile Include="Writers\SaccadesWriter.cs" />
+    <Compile Include="Writers\GazePointWriter.cs" />
+    <Compile Include="Discovery\DiscoveryResult.cs" />
+    <Compile Include="Misc\FileNameFormatter.cs" />
+    <Compile Include="Discovery\IDiscoverable.cs" />
+    <Compile Include="Streams\GazePointStream.cs" />
+    <Compile Include="Misc\IFileNameFormatter.cs" />
+    <Compile Include="Writers\IGazeDataWriter.cs" />
+    <Compile Include="Streams\IGazePointStreamFactory.cs" />
+    <Compile Include="Calculations\ISaccadeCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TrackerDiscoveryManager.cs" />
+    <Compile Include="Discovery\TrackerDiscoveryManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
@@ -84,6 +77,10 @@
     <ProjectReference Include="..\GazeMonitoring.Logging\GazeMonitoring.Logging.csproj">
       <Project>{D54C6080-859C-4E1E-A4CE-B5407E474326}</Project>
       <Name>GazeMonitoring.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
+      <Project>{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}</Project>
+      <Name>GazeMonitoring.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

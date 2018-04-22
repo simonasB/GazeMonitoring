@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace GazeMonitoring.Common.Entities {
+namespace GazeMonitoring.Model {
     public class FileName {
         public string DataStream { get; set; }
 

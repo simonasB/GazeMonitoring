@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GazeMonitoring.Common.Entities {
+namespace GazeMonitoring.Model {
     public class GazePointReceivedEventArgs : EventArgs {
         public GazePoint GazePoint { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿namespace GazeMonitoring.Common.Entities {
+﻿namespace GazeMonitoring.Model {
     public enum DataStream {
         UnfilteredGaze, //raw
         LightlyFilteredGaze,

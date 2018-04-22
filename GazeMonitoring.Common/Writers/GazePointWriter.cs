@@ -1,7 +1,7 @@
-﻿using GazeMonitoring.Common.Entities;
-using GazeMonitoring.Data;
+﻿using GazeMonitoring.Data;
+using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common {
+namespace GazeMonitoring.Common.Writers {
     public class GazePointWriter : IGazeDataWriter {
         private readonly IGazeDataRepository _repository;
 

@@ -1,5 +1,5 @@
-﻿using GazeMonitoring.Common;
-using GazeMonitoring.Common.Entities;
+﻿using GazeMonitoring.Common.Streams;
+using GazeMonitoring.Model;
 using Tobii.Interaction;
 using Tobii.Interaction.Framework;
 

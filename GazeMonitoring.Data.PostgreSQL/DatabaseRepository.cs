@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
-using GazeMonitoring.Common.Entities;
 using GazeMonitoring.Logging;
+using GazeMonitoring.Model;
 using Npgsql;
 using NpgsqlTypes;
 

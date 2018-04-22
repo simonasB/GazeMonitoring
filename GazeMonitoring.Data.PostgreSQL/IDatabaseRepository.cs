@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using GazeMonitoring.Common.Entities;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.PostgreSQL {
     public interface IDatabaseRepository {

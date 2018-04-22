@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using GazeMonitoring.Common;
+using GazeMonitoring.Common.Streams;
 using Tobii.Interaction;
 
 namespace TobiiCoreMonitoring {

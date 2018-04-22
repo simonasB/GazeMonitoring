@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using EyeTribe.ClientSdk;
 using GazeMonitoring.Common;
+using GazeMonitoring.Common.Streams;
 
 namespace TheEyeTribeMonitoring {
     public class EyeTribeModule : Module {
