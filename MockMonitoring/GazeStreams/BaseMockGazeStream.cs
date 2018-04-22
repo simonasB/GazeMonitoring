@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using GazeMonitoring.Common.Streams;
+using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
 
 namespace MockMonitoring.GazeStreams {

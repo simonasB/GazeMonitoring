@@ -1,7 +1,6 @@
 ﻿using Autofac;
-using GazeMonitoring.Common;
-using GazeMonitoring.Common.Discovery;
-using GazeMonitoring.Common.Streams;
+using GazeMonitoring.EyeTracker.Core.Discovery;
+using GazeMonitoring.EyeTracker.Core.Streams;
 
 namespace MockMonitoring {
     public class MockDiscovery : IDiscoverable {

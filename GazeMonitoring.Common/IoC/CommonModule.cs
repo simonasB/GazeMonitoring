@@ -3,9 +3,9 @@ using Autofac;
 using Autofac.Core;
 using GazeMonitoring.Common.Calculations;
 using GazeMonitoring.Common.Finalizers;
-using GazeMonitoring.Common.Streams;
 using GazeMonitoring.Common.Writers;
 using GazeMonitoring.Data;
+using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Model;
 

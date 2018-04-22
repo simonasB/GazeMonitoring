@@ -1,5 +1,5 @@
 ﻿using EyeTribe.ClientSdk.Data;
-using GazeMonitoring.Common.Streams;
+using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
 
 namespace TheEyeTribeMonitoring.GazeStreams {

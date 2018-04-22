@@ -2,7 +2,7 @@
   "autoDiscover": true,
   "modules": [
     {
-      "type": "MockMonitoring.MockModule, MockMonitoring"
+      "type": "TobiiCoreMonitoring.TobiiCoreModule, TobiiCoreMonitoring"
     },
     {
       "type": "GazeMonitoring.Data.Csv.CsvModule, GazeMonitoring.Data.Csv"
@@ -11,5 +11,5 @@
       "type": "GazeMonitoring.Data.PostgreSQL.PostgreSQLModule, GazeMonitoring.Data.PostgreSQL"
     }
   ],
-  "PostgreSQL": "Server=localhost;Port=5432;Database=gazemonitoring;User Id=gazemonitoring;Password=Password1"
+  "PostgreSQL": "Server=192.168.0.101;Port=5432;Database=gazemonitoring;User Id=gazemonitoring;Password=Password1"
 }

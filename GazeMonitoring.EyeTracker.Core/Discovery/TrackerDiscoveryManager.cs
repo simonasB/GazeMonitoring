@@ -3,7 +3,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using Autofac;
 
-namespace GazeMonitoring.Common.Discovery {
+namespace GazeMonitoring.EyeTracker.Core.Discovery {
     public class TrackerDiscoveryManager {
         public void Discover(ContainerBuilder container) {
             // Force all referenced assemblies to be loaded into the app domain

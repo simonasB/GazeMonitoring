@@ -1,5 +1,5 @@
-﻿using GazeMonitoring.Common.Streams;
-using GazeMonitoring.Common.Writers;
+﻿using GazeMonitoring.Common.Writers;
+using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Common {

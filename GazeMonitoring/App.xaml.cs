@@ -1,9 +1,8 @@
 ﻿using System.Windows;
 using Autofac;
 using Autofac.Configuration;
-using GazeMonitoring.Common;
-using GazeMonitoring.Common.Discovery;
 using GazeMonitoring.Common.IoC;
+using GazeMonitoring.EyeTracker.Core.Discovery;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.Configuration;
 

@@ -1,6 +1,6 @@
 ﻿using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common.Streams {
+namespace GazeMonitoring.EyeTracker.Core.Streams {
     public interface IGazePointStreamFactory {
         GazePointStream GetGazePointStream(DataStream dataStream);
     }

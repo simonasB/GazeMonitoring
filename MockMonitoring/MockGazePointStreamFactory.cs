@@ -1,5 +1,5 @@
 ﻿using System;
-using GazeMonitoring.Common.Streams;
+using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
 using MockMonitoring.GazeStreams;
 

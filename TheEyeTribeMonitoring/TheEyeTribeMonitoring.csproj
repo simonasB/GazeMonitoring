@@ -72,6 +72,10 @@
       <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
       <Name>GazeMonitoring.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj">
+      <Project>{333EB528-1F08-411D-9AF2-83DC0F475121}</Project>
+      <Name>GazeMonitoring.EyeTracker.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
       <Project>{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}</Project>
       <Name>GazeMonitoring.Model</Name>

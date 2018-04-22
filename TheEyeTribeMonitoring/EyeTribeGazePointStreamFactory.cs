@@ -1,6 +1,6 @@
 ﻿using System;
 using EyeTribe.ClientSdk;
-using GazeMonitoring.Common.Streams;
+using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
 using TheEyeTribeMonitoring.GazeStreams;
 
