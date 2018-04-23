@@ -6,6 +6,7 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:GazeMonitoring"
         xmlns:tobiiCoreMonitoring="clr-namespace:TobiiCoreMonitoring;assembly=TobiiCoreMonitoring"
+        xmlns:entities1="clr-namespace:GazeMonitoring.Model;assembly=GazeMonitoring.Model"
         mc:Ignorable="d"
         WindowStyle="None"
         Title="MainWindow" Height="269.449" Width="263.604"
