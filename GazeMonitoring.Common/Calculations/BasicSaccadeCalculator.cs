@@ -19,7 +19,7 @@ namespace GazeMonitoring.Common.Calculations {
             var deltaTimeStamp = currentPoint.Timestamp -
                                  previousPoint.Timestamp;
 
-            saccade.Velocity = Math.Abs(deltaTimeStamp) < 0.0001
+            saccade.Velocity = deltaTimeStamp == 0
                 ? saccade.Amplitude
                 : saccade.Amplitude / (deltaTimeStamp);
 

@@ -104,7 +104,7 @@ namespace GazeMonitoring.Data.PostgreSQL {
                         npgsqlBinaryImporter.StartRow();
                         npgsqlBinaryImporter.Write(gazePoint.X, NpgsqlDbType.Double);
                         npgsqlBinaryImporter.Write(gazePoint.Y, NpgsqlDbType.Double);
-                        npgsqlBinaryImporter.Write(gazePoint.Timestamp, NpgsqlDbType.Double);
+                        npgsqlBinaryImporter.Write(gazePoint.Timestamp, NpgsqlDbType.Bigint);
                         npgsqlBinaryImporter.Write(sessionId, NpgsqlDbType.Uuid);
                         npgsqlBinaryImporter.Write(subjectInfoId, NpgsqlDbType.Integer);
                         npgsqlBinaryImporter.Write(sampleTime, NpgsqlDbType.Timestamp);
@@ -125,8 +125,8 @@ namespace GazeMonitoring.Data.PostgreSQL {
                         npgsqlBinaryImporter.Write(saccade.Direction, NpgsqlDbType.Double);
                         npgsqlBinaryImporter.Write(saccade.Amplitude, NpgsqlDbType.Double);
                         npgsqlBinaryImporter.Write(saccade.Velocity, NpgsqlDbType.Double);
-                        npgsqlBinaryImporter.Write(saccade.StartTimeStamp, NpgsqlDbType.Double);
-                        npgsqlBinaryImporter.Write(saccade.EndTimeStamp, NpgsqlDbType.Double);
+                        npgsqlBinaryImporter.Write(saccade.StartTimeStamp, NpgsqlDbType.Bigint);
+                        npgsqlBinaryImporter.Write(saccade.EndTimeStamp, NpgsqlDbType.Bigint);
                         npgsqlBinaryImporter.Write(sessionId, NpgsqlDbType.Uuid);
                         npgsqlBinaryImporter.Write(subjectInfoId, NpgsqlDbType.Integer);
                         npgsqlBinaryImporter.Write(sampleTime, NpgsqlDbType.Timestamp);

@@ -13,7 +13,7 @@
         /// </summary>
         public double Velocity { get; set; }
 
-        public double StartTimeStamp { get; set; }
-        public double EndTimeStamp { get; set; }
+        public long StartTimeStamp { get; set; }
+        public long EndTimeStamp { get; set; }
     }
 }

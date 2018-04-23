@@ -18,8 +18,8 @@ namespace GazeMonitoring.Common.Writers {
                 _previousGazePoint = gazePoint;
             } else {
                 _repository.SaveOne(_saccadeCalculator.Calculate(_previousGazePoint, gazePoint));
+                _previousGazePoint = gazePoint;
             }
-            _previousGazePoint = gazePoint;
         }
     }
 }
