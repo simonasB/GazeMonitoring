@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -7,6 +8,7 @@ using Autofac;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.Model;
+using GazeMonitoring.ScreenCapture;
 using Constants = GazeMonitoring.Common.Constants;
 
 namespace GazeMonitoring {
@@ -18,6 +20,7 @@ namespace GazeMonitoring {
         private readonly IContainer _container;
         private static ILifetimeScope _lifetimeScope;
         private SubjectInfo _subjectInfo;
+        private IScreenRecorder _screenRecorder;
 
         public MainWindow(IContainer container) {
             _container = container;
@@ -50,6 +53,15 @@ namespace GazeMonitoring {
                 new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
             _gazeDataMonitor.Start();
 
+            var recordScreen = true;
+
+            if (recordScreen) {
+                _screenRecorder = _lifetimeScope.Resolve<IScreenRecorder>(
+                    new NamedParameter(Constants.DataStreamParameterName, CmbDataStreams.SelectedItem),
+                    new NamedParameter(Constants.RecorderParamsParameterName, new RecorderParams($"video_{CmbDataStreams.SelectedItem}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi", 10, 50)));
+                _screenRecorder.StartRecording();
+            }
+
             ToggleFieldsOnStartAndStop(false);
         }
 
@@ -67,6 +79,8 @@ namespace GazeMonitoring {
                         new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
                     finalizer.FinalizeMonitoring();
                 }
+
+                _screenRecorder.StopRecording();
             });
 
             ToggleFieldsOnStartAndStop(true);

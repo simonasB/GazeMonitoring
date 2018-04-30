@@ -182,6 +182,14 @@
       <Project>{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}</Project>
       <Name>GazeMonitoring.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.ScreenCapture.SharpAvi\GazeMonitoring.ScreenCapture.SharpAvi.csproj">
+      <Project>{70ff8f72-379e-4e23-b864-892fcb8af93d}</Project>
+      <Name>GazeMonitoring.ScreenCapture.SharpAvi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.ScreenCapture\GazeMonitoring.ScreenCapture.csproj">
+      <Project>{1368F8C5-AB06-4211-94A2-A44CA3A1E291}</Project>
+      <Name>GazeMonitoring.ScreenCapture</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MockMonitoring\MockMonitoring.csproj">
       <Project>{60f20997-4a0b-4769-879b-d270b35ac149}</Project>
       <Name>MockMonitoring</Name>

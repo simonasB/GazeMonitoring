@@ -21,7 +21,7 @@ namespace MockMonitoring.GazeStreams {
                             Timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds()
                         }
                     });
-                    Thread.Sleep(5);
+                    Thread.Sleep(10);
                 }
             });
         }

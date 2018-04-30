@@ -3,5 +3,6 @@
         public const string DataStreamParameterName = "dataStream";
         public const string SubjectInfoParameterName = "subjectInfo";
         public const string ConfigFileName = "config.json";
+        public const string RecorderParamsParameterName = "recorderParams";
     }
 }

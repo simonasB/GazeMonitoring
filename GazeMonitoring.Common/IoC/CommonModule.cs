@@ -16,15 +16,22 @@ namespace GazeMonitoring.Common.IoC {
             builder.Register((c, p) => {
                 var parameters = p as Parameter[] ?? p.ToArray();
                 var dataStream = parameters.Named<DataStream>(Constants.DataStreamParameterName);
+                return c.Resolve<IGazePointStreamFactory>().GetGazePointStream(dataStream);
+            }).As<GazePointStream>().SingleInstance();
+
+            builder.Register((c, p) => {
+                var parameters = p as Parameter[] ?? p.ToArray();
+                var dataStream = parameters.Named<DataStream>(Constants.DataStreamParameterName);
                 var subjectInfo = parameters.Named<SubjectInfo>(Constants.SubjectInfoParameterName);
                 var repository = c.Resolve<IGazeDataRepository>(
                     new NamedParameter(Constants.DataStreamParameterName, dataStream),
                     new NamedParameter(Constants.SubjectInfoParameterName, subjectInfo));
                 return
                     new GazeDataMonitor(
-                        c.Resolve<IGazePointStreamFactory>().GetGazePointStream(dataStream),
+                        c.Resolve<GazePointStream>(new NamedParameter(Constants.DataStreamParameterName, dataStream)),
                         new GazeDataWriterFactory(repository, c.Resolve<ISaccadeCalculator>()).GetGazeDataWriter(dataStream));
             }).As<GazeDataMonitor>();
+
             builder.RegisterType<NullGazeDataMonitorFinalizer>().As<IGazeDataMonitorFinalizer>();
             builder.RegisterType<XmlLog4NetLoggerFactory>().As<ILoggerFactory>().SingleInstance();
         }

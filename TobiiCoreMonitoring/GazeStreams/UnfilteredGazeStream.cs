@@ -4,14 +4,14 @@ using Tobii.Interaction;
 using Tobii.Interaction.Framework;
 
 namespace TobiiCoreMonitoring.GazeStreams {
-    public sealed class UnfilteredGazeStream : GazePointStream {
+    public sealed class UnfilteredGazeStream : TobiiCoreBaseGazeStream {
         public UnfilteredGazeStream(Host host) {
             host.Streams.CreateGazePointDataStream(GazePointDataMode.Unfiltered).Next += (sender, data) => {
                 OnGazePointReceived(new GazePointReceivedEventArgs {
                     GazePoint = new GazePoint {
                         X = data.Data.X,
                         Y = data.Data.Y,
-                        Timestamp = (long)(data.Data.Timestamp * 1000)
+                        Timestamp = (long) data.Data.Timestamp
                     }
                 });
             };

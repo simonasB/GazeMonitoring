@@ -29,6 +29,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Model", "Gaz
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.EyeTracker.Core", "GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj", "{333EB528-1F08-411D-9AF2-83DC0F475121}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.ScreenCapture", "GazeMonitoring.ScreenCapture\GazeMonitoring.ScreenCapture.csproj", "{1368F8C5-AB06-4211-94A2-A44CA3A1E291}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.ConsoleApp", "GazeMonitoring.ConsoleApp\GazeMonitoring.ConsoleApp.csproj", "{5ACCD054-EBA1-423E-B9FD-AA52B85E5B20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.ScreenCapture.SharpAvi", "GazeMonitoring.ScreenCapture.SharpAvi\GazeMonitoring.ScreenCapture.SharpAvi.csproj", "{70FF8F72-379E-4E23-B864-892FCB8AF93D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +93,18 @@ Global
 		{333EB528-1F08-411D-9AF2-83DC0F475121}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{333EB528-1F08-411D-9AF2-83DC0F475121}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{333EB528-1F08-411D-9AF2-83DC0F475121}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1368F8C5-AB06-4211-94A2-A44CA3A1E291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1368F8C5-AB06-4211-94A2-A44CA3A1E291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1368F8C5-AB06-4211-94A2-A44CA3A1E291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1368F8C5-AB06-4211-94A2-A44CA3A1E291}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ACCD054-EBA1-423E-B9FD-AA52B85E5B20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ACCD054-EBA1-423E-B9FD-AA52B85E5B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ACCD054-EBA1-423E-B9FD-AA52B85E5B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ACCD054-EBA1-423E-B9FD-AA52B85E5B20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70FF8F72-379E-4E23-B864-892FCB8AF93D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70FF8F72-379E-4E23-B864-892FCB8AF93D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70FF8F72-379E-4E23-B864-892FCB8AF93D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70FF8F72-379E-4E23-B864-892FCB8AF93D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
