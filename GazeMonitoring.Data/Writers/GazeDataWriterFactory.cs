@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using GazeMonitoring.Common.Calculations;
-using GazeMonitoring.Data;
 using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common.Writers {
+namespace GazeMonitoring.Data.Writers {
     public class GazeDataWriterFactory {
         private readonly IGazeDataRepository _repository;
         private readonly ISaccadeCalculator _saccadeCalculator;

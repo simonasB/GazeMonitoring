@@ -49,28 +49,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculations\BasicSaccadeCalculator.cs" />
-    <Compile Include="IoC\CommonModule.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="GazeDataMonitor.cs" />
-    <Compile Include="Writers\GazeDataWriterFactory.cs" />
     <Compile Include="Finalizers\IGazeDataMonitorFinalizer.cs" />
-    <Compile Include="Writers\MultipleSourcesGazeDataWriter.cs" />
     <Compile Include="Finalizers\NullGazeDataMonitorFinalizer.cs" />
-    <Compile Include="Writers\SaccadesWriter.cs" />
-    <Compile Include="Writers\GazePointWriter.cs" />
-    <Compile Include="Writers\IGazeDataWriter.cs" />
     <Compile Include="Calculations\ISaccadeCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
-      <Project>{A425261F-E463-4EB1-B237-597509E25C39}</Project>
-      <Name>GazeMonitoring.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj">
-      <Project>{333EB528-1F08-411D-9AF2-83DC0F475121}</Project>
-      <Name>GazeMonitoring.EyeTracker.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.Logging\GazeMonitoring.Logging.csproj">
       <Project>{D54C6080-859C-4E1E-A4CE-B5407E474326}</Project>
       <Name>GazeMonitoring.Logging</Name>

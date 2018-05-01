@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.ScreenCaptur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.ScreenCapture.SharpAvi", "GazeMonitoring.ScreenCapture.SharpAvi\GazeMonitoring.ScreenCapture.SharpAvi.csproj", "{70FF8F72-379E-4E23-B864-892FCB8AF93D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Logging.Log4Net", "GazeMonitoring.Logging.Log4Net\GazeMonitoring.Logging.Log4Net.csproj", "{AE99D690-A9A5-4018-BEC2-E9C04AD8CEF8}"
+EndProject
 Global
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
@@ -102,11 +104,18 @@ Global
 		{70FF8F72-379E-4E23-B864-892FCB8AF93D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70FF8F72-379E-4E23-B864-892FCB8AF93D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70FF8F72-379E-4E23-B864-892FCB8AF93D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE99D690-A9A5-4018-BEC2-E9C04AD8CEF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE99D690-A9A5-4018-BEC2-E9C04AD8CEF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE99D690-A9A5-4018-BEC2-E9C04AD8CEF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE99D690-A9A5-4018-BEC2-E9C04AD8CEF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3DD04FD0-1A02-47C3-8561-6125068D20FA}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

@@ -1,8 +1,8 @@
-﻿using GazeMonitoring.Common.Writers;
+﻿using GazeMonitoring.Data.Writers;
 using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common {
+namespace GazeMonitoring {
     public class GazeDataMonitor {
         private readonly GazePointStream _gazePointStream;
         private readonly IGazeDataWriter _gazeDataWriter;

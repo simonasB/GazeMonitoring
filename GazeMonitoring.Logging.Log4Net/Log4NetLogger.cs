@@ -1,7 +1,7 @@
 ﻿using System;
 using log4net;
 
-namespace GazeMonitoring.Logging {
+namespace GazeMonitoring.Logging.Log4Net {
     public class Log4NetLogger : ILogger {
         private readonly ILog _logger;
 

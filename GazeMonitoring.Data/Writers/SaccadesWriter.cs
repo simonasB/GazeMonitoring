@@ -1,8 +1,7 @@
 ﻿using GazeMonitoring.Common.Calculations;
-using GazeMonitoring.Data;
 using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common.Writers {
+namespace GazeMonitoring.Data.Writers {
     public class SaccadesWriter : IGazeDataWriter {
         private readonly IGazeDataRepository _repository;
         private readonly ISaccadeCalculator _saccadeCalculator;

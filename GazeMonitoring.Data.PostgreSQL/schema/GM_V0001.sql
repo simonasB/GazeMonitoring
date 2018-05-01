@@ -8,7 +8,7 @@
 \set ON_ERROR_STOP on
 
 
-\connect gazemonitoring
+\connect gazemonitoring2
 
 
 
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS gaze_monitoring.gaze_point
 (
 	x float8,
 	y float8,
-	timestamp float8,
+	timestamp bigint,
 	id bigserial,
 	session_id uuid,
 	subject_info_id integer,
@@ -130,8 +130,8 @@ CREATE TABLE IF NOT EXISTS gaze_monitoring.saccade
 	direction float8,
 	amplitude float8,
 	velocity float8,
-	start_timestamp float8,
-	end_timestamp float8,
+	start_timestamp bigint,
+	end_timestamp bigint,
 	id bigserial,
 	session_id uuid,
 	subject_info_id integer,
@@ -148,17 +148,17 @@ CREATE INDEX IF NOT EXISTS saccade_sesion_idx ON gaze_monitoring.gaze_point (ses
 DO $$
 BEGIN
     IF NOT EXISTS (
-        SELECT TRUE FROM pg_group WHERE groname = 'g_monitor'
+        SELECT TRUE FROM pg_group WHERE groname = 'g_monitor2'
     ) THEN
 
         RAISE NOTICE 'Creating ''g_monitor'' group role...';
 
-        CREATE ROLE g_monitor;
+        CREATE ROLE g_monitor2;
         
-        GRANT CONNECT ON DATABASE gazemonitoring TO g_monitor;
-        GRANT USAGE ON SCHEMA gaze_monitoring TO g_monitor;
-        GRANT SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA gaze_monitoring TO g_monitor;
-        GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA gaze_monitoring TO g_monitor;
+        GRANT CONNECT ON DATABASE gazemonitoring2 TO g_monitor2;
+        GRANT USAGE ON SCHEMA gaze_monitoring TO g_monitor2;
+        GRANT SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA gaze_monitoring TO g_monitor2;
+        GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA gaze_monitoring TO g_monitor2;
 
         RAISE NOTICE 'Group role completed successfully!';
 
@@ -201,7 +201,7 @@ BEGIN
     
     	IF NOT FOUND THEN        
         	EXECUTE format('CREATE TABLE gaze_monitoring.%I (CHECK (sample_time >= %L AND sample_time < %L)) INHERITS (gaze_monitoring.gaze_point)', _tablename, _partition_date_from, _partition_date_to);     
-        	EXECUTE format('ALTER TABLE gaze_monitoring.%I OWNER TO g_monitor', _tablename);
+        	EXECUTE format('ALTER TABLE gaze_monitoring.%I OWNER TO g_monitor2', _tablename);
 			EXECUTE format('ALTER TABLE gaze_monitoring.%I ADD CONSTRAINT %I_pkey PRIMARY KEY (id)', _tablename, _tablename);
 			EXECUTE format('ALTER TABLE gaze_monitoring.%I ADD FOREIGN KEY (subject_info_id) REFERENCES gaze_monitoring.subject_info (id)', _tablename, _tablename, _tablename);
 			EXECUTE format('CREATE INDEX %I_sesion_idx ON gaze_monitoring.%I (session_id)', _tablename, _tablename);
@@ -219,7 +219,7 @@ BEGIN
     
     	IF NOT FOUND THEN        
         	EXECUTE format('CREATE TABLE gaze_monitoring.%I (CHECK (sample_time >= %L AND sample_time < %L)) INHERITS (gaze_monitoring.saccade)', _tablename, _partition_date_from, _partition_date_to);     
-        	EXECUTE format('ALTER TABLE gaze_monitoring.%I OWNER TO g_monitor', _tablename);
+        	EXECUTE format('ALTER TABLE gaze_monitoring.%I OWNER TO g_monitor2', _tablename);
 			EXECUTE format('ALTER TABLE gaze_monitoring.%I ADD CONSTRAINT %I_pkey PRIMARY KEY (id)', _tablename, _tablename);
 			EXECUTE format('ALTER TABLE gaze_monitoring.%I ADD FOREIGN KEY (subject_info_id) REFERENCES gaze_monitoring.subject_info (id)', _tablename, _tablename);
 			EXECUTE format('CREATE INDEX %I_sesion_idx ON gaze_monitoring.%I (session_id)', _tablename, _tablename);

@@ -1,7 +1,6 @@
-﻿using GazeMonitoring.Data;
-using GazeMonitoring.Model;
+﻿using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Common.Writers {
+namespace GazeMonitoring.Data.Writers {
     public class GazePointWriter : IGazeDataWriter {
         private readonly IGazeDataRepository _repository;
 

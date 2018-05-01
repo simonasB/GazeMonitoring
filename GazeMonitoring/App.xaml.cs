@@ -1,8 +1,12 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using Autofac;
 using Autofac.Configuration;
-using GazeMonitoring.Common.IoC;
+using Autofac.Core;
+using GazeMonitoring.Data.Writers;
 using GazeMonitoring.EyeTracker.Core.Discovery;
+using GazeMonitoring.EyeTracker.Core.Streams;
+using GazeMonitoring.IoC;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.Configuration;
 
@@ -45,6 +49,10 @@ namespace GazeMonitoring
             var module = new ConfigurationModule(configurationRoot);
             builder.RegisterModule<CommonModule>();
             builder.RegisterModule(module);
+            builder.Register((c, p) => {
+                var parameters = p as Parameter[] ?? p.ToArray();
+                return new GazeDataMonitor(c.Resolve<GazePointStream>(parameters), c.Resolve<IGazeDataWriter>(parameters));
+            }).As<GazeDataMonitor>();
 
             if (autoDiscover) {
                 var discoveryManager = new TrackerDiscoveryManager();
