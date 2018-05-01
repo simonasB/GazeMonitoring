@@ -34,6 +34,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.ScreenCapture.SharpAvi", "GazeMonitoring.ScreenCapture.SharpAvi\GazeMonitoring.ScreenCapture.SharpAvi.csproj", "{70FF8F72-379E-4E23-B864-892FCB8AF93D}"
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

@@ -1,6 +1,4 @@
-﻿using GazeMonitoring.Model;
-
-namespace GazeMonitoring.Data {
+﻿namespace GazeMonitoring.Data {
     public class FileNameFormatter : IFileNameFormatter {
         public string Format(FileName fileName) {
             return fileName.ToString();

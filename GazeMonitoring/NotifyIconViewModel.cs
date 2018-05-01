@@ -25,6 +25,7 @@ namespace GazeMonitoring {
                     CommandAction = () => {
                         Application.Current.MainWindow = _mainWindow;
                         Application.Current.MainWindow.Show();
+                        Application.Current.MainWindow.Topmost = true;
                     }
                 };
             }

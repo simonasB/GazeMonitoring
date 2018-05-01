@@ -41,7 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStream.cs" />
-    <Compile Include="FileName.cs" />
     <Compile Include="GazePoint.cs" />
     <Compile Include="GazePointReceivedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

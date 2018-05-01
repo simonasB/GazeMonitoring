@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileName.cs" />
     <Compile Include="FileNameFormatter.cs" />
     <Compile Include="IFileNameFormatter.cs" />
     <Compile Include="IGazeDataRepository.cs" />

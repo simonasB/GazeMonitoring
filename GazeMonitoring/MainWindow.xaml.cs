@@ -53,7 +53,7 @@ namespace GazeMonitoring {
                 new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
             _gazeDataMonitor.Start();
 
-            if (CheckBoxAnonymous.IsChecked == true) {
+            if (CheckBoxRecordScreen.IsChecked == true) {
                 _screenRecorder = _lifetimeScope.Resolve<IScreenRecorder>(
                     new NamedParameter(Constants.DataStreamParameterName, CmbDataStreams.SelectedItem),
                     new NamedParameter(Constants.RecorderParamsParameterName, new RecorderParams($"video_{CmbDataStreams.SelectedItem}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi", 10, 50)));
@@ -68,6 +68,7 @@ namespace GazeMonitoring {
             _subjectInfo.SessionEndTimeStamp = DateTime.UtcNow;
 
             var selectedItem = CmbDataStreams.SelectedItem;
+            var isScreenRecorded = CheckBoxRecordScreen.IsChecked;
 
             this.BusyIndicator.IsBusy = true;
 
@@ -79,7 +80,7 @@ namespace GazeMonitoring {
                     finalizer.FinalizeMonitoring();
                 }
 
-                if (CheckBoxAnonymous.IsChecked == true) {
+                if (isScreenRecorded == true) {
                     _screenRecorder?.StopRecording();
                 }
             });
@@ -94,7 +95,6 @@ namespace GazeMonitoring {
                 TextBoxAge.IsEnabled = isEnabled;
                 TextBoxDetails.IsEnabled = isEnabled;
                 TextBoxName.IsEnabled = isEnabled;
-                CheckBoxRecordScreen.IsEnabled = isEnabled;
             }
 
             ToggleFields(CheckBoxAnonymous.IsChecked != true);

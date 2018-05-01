@@ -6,7 +6,9 @@ namespace GazeMonitoring.EyeTracker.Core.Streams {
         public event EventHandler<GazePointReceivedEventArgs> GazePointReceived;
 
         protected virtual void OnGazePointReceived(GazePointReceivedEventArgs e) {
-            GazePointReceived?.Invoke(this, e);
+            if (!double.IsNaN(e.GazePoint.X) && !double.IsNaN(e.GazePoint.Y)) {
+                GazePointReceived?.Invoke(this, e);
+            }
         }
     }
 }
