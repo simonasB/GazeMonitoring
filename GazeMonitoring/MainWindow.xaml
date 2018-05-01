@@ -4,12 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:GazeMonitoring"
         xmlns:tobiiCoreMonitoring="clr-namespace:TobiiCoreMonitoring;assembly=TobiiCoreMonitoring"
         xmlns:entities1="clr-namespace:GazeMonitoring.Model;assembly=GazeMonitoring.Model"
         mc:Ignorable="d"
         WindowStyle="None"
-        Title="MainWindow" Height="269.449" Width="263.604"
+        Title="MainWindow" Height="261.498" Width="248.586"
         Deactivated="Window_Deactivated"
         Loaded="Window_Loaded"
         ResizeMode="NoResize"
@@ -22,21 +24,23 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </Window.Resources>
-    <Grid Margin="0,0,2,-1">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="315*"/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <ComboBox Name="CmbDataStreams" HorizontalAlignment="Left" Margin="35,154,0,0" VerticalAlignment="Top" Width="181" SelectionChanged="CmbDataStreams_SelectionChanged" ItemsSource="{Binding Source={StaticResource dataFromEnum}}" SelectedIndex="0" Height="22"/>
-        <Button Name ="BtnStart" Content="Start" HorizontalAlignment="Left" Margin="35,193,0,0" VerticalAlignment="Top" Width="75" Click="BtnStart_Click" Height="20"/>
-        <Button Name ="BtnStop" Content="Stop" HorizontalAlignment="Left" Margin="141,193,0,0" VerticalAlignment="Top" Width="75" Click="BtnStop_Click" IsEnabled="False" Height="20"/>
-        <CheckBox Name="CheckBoxAnonymous" Content="Anonymous" HorizontalAlignment="Left" Margin="35,18,0,0" VerticalAlignment="Top" Height="15" Width="83" Checked="CheckBoxAnonymousChanged" Unchecked="CheckBoxAnonymousChanged"/>
-        <TextBlock Name="TextBlockName" HorizontalAlignment="Left" Margin="35,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="32"><Run Text="Name"/><LineBreak/><Run/></TextBlock>
-        <TextBox Name="TextBoxName" HorizontalAlignment="Left" Height="23" Margin="96,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBlock Name="TextBlockDetails" HorizontalAlignment="Left" Margin="35,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="15" Width="120"><Run Text="Details"/><LineBreak/><Run/></TextBlock>
-        <TextBox Name="TextBoxDetails" HorizontalAlignment="Left" Height="23" Margin="96,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBlock Name="TextBlockAge" HorizontalAlignment="Left" Margin="35,79,0,0" TextWrapping="Wrap" Text="Age" VerticalAlignment="Top"/>
-        <TextBox Name="TextBoxAge" HorizontalAlignment="Left" Height="23" Margin="96,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-
-    </Grid>
+    <xctk:BusyIndicator IsBusy="false" x:Name="BusyIndicator">
+        <Grid Margin="0,0,2,-1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="315*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox Name="CmbDataStreams" HorizontalAlignment="Left" Margin="35,176,0,0" VerticalAlignment="Top" Width="181" SelectionChanged="CmbDataStreams_SelectionChanged" ItemsSource="{Binding Source={StaticResource dataFromEnum}}" SelectedIndex="0" Height="22"/>
+            <Button Name ="BtnStart" Content="Start" HorizontalAlignment="Left" Margin="35,215,0,0" VerticalAlignment="Top" Width="75" Click="BtnStart_Click" Height="20"/>
+            <Button Name ="BtnStop" Content="Stop" HorizontalAlignment="Left" Margin="141,215,0,0" VerticalAlignment="Top" Width="75" Click="BtnStop_Click" IsEnabled="False" Height="20"/>
+            <CheckBox Name="CheckBoxAnonymous" Content="Anonymous" HorizontalAlignment="Left" Margin="35,18,0,0" VerticalAlignment="Top" Height="15" Width="83" Checked="CheckBoxAnonymousChanged" Unchecked="CheckBoxAnonymousChanged"/>
+            <TextBlock Name="TextBlockName" HorizontalAlignment="Left" Margin="35,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="32"><Run Text="Name"/><LineBreak/><Run/></TextBlock>
+            <TextBox Name="TextBoxName" HorizontalAlignment="Left" Height="23" Margin="96,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBlock Name="TextBlockDetails" HorizontalAlignment="Left" Margin="35,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="15" Width="120"><Run Text="Details"/><LineBreak/><Run/></TextBlock>
+            <TextBox Name="TextBoxDetails" HorizontalAlignment="Left" Height="23" Margin="96,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBlock Name="TextBlockAge" HorizontalAlignment="Left" Margin="35,79,0,0" TextWrapping="Wrap" Text="Age" VerticalAlignment="Top"/>
+            <TextBox Name="TextBoxAge" HorizontalAlignment="Left" Height="23" Margin="96,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <CheckBox x:Name="CheckBoxRecordScreen" Content="Record screen" HorizontalAlignment="Left" Margin="35,141,0,0" VerticalAlignment="Top"/>
+        </Grid>
+    </xctk:BusyIndicator>
 </Window>

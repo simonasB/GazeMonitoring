@@ -53,15 +53,12 @@ namespace GazeMonitoring {
                 new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
             _gazeDataMonitor.Start();
 
-            var recordScreen = true;
-
-            if (recordScreen) {
+            if (CheckBoxAnonymous.IsChecked == true) {
                 _screenRecorder = _lifetimeScope.Resolve<IScreenRecorder>(
                     new NamedParameter(Constants.DataStreamParameterName, CmbDataStreams.SelectedItem),
                     new NamedParameter(Constants.RecorderParamsParameterName, new RecorderParams($"video_{CmbDataStreams.SelectedItem}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi", 10, 50)));
                 _screenRecorder.StartRecording();
             }
-
             ToggleFieldsOnStartAndStop(false);
         }
 
@@ -72,6 +69,8 @@ namespace GazeMonitoring {
 
             var selectedItem = CmbDataStreams.SelectedItem;
 
+            this.BusyIndicator.IsBusy = true;
+
             await Task.Run(() => {
                 using (var lifetimeScope = _container.BeginLifetimeScope()) {
                     var finalizer = lifetimeScope.Resolve<IGazeDataMonitorFinalizer>(
@@ -80,8 +79,12 @@ namespace GazeMonitoring {
                     finalizer.FinalizeMonitoring();
                 }
 
-                _screenRecorder.StopRecording();
+                if (CheckBoxAnonymous.IsChecked == true) {
+                    _screenRecorder?.StopRecording();
+                }
             });
+
+            this.BusyIndicator.IsBusy = false;
 
             ToggleFieldsOnStartAndStop(true);
         }
@@ -91,6 +94,7 @@ namespace GazeMonitoring {
                 TextBoxAge.IsEnabled = isEnabled;
                 TextBoxDetails.IsEnabled = isEnabled;
                 TextBoxName.IsEnabled = isEnabled;
+                CheckBoxRecordScreen.IsEnabled = isEnabled;
             }
 
             ToggleFields(CheckBoxAnonymous.IsChecked != true);
@@ -101,6 +105,7 @@ namespace GazeMonitoring {
             CmbDataStreams.IsEnabled = isEnabled;
             CheckBoxAnonymous.IsEnabled = isEnabled;
             BtnStop.IsEnabled = !isEnabled;
+            CheckBoxRecordScreen.IsEnabled = isEnabled;
         }
 
         private void Window_Deactivated(object sender, EventArgs e) {
