@@ -36,7 +36,7 @@ namespace GazeMonitoring
             base.OnExit(e);
         }
 
-        private void Init() {
+        private static void Init() {
             var config = new ConfigurationBuilder();
 
             config.AddJsonFile("config.json");

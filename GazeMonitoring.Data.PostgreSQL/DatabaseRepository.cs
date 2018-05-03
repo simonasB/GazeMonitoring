@@ -37,11 +37,23 @@ namespace GazeMonitoring.Data.PostgreSQL {
         private readonly ILogger _logger;
 
         public DatabaseRepository(string connectionString, ILoggerFactory loggerFactory) {
-            _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            if (connectionString == null) {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
+
+            if (loggerFactory == null) {
+                throw new ArgumentNullException(nameof(loggerFactory));
+            }
+
+            _connectionString = connectionString;
             _logger = loggerFactory.GetLogger(typeof(DatabaseRepository));
         }
 
         public SubjectInfo RetrieveSubjectInfo(string sessionId) {
+            if (sessionId == null) {
+                throw new ArgumentNullException(nameof(sessionId));
+            }
+
             using (var connection = Common.CreateConnection(_connectionString)) {
                 string columns = string.Join(",", _allSubjectInfoColumns);
                 string commandText = $"SELECT {columns} FROM {_subjectInfoTableName} " +
@@ -70,6 +82,10 @@ namespace GazeMonitoring.Data.PostgreSQL {
         }
 
         public void SaveSubjectInfo(SubjectInfo subjectInfo) {
+            if (subjectInfo == null) {
+                throw new ArgumentNullException(nameof(subjectInfo));
+            }
+
             string columns = string.Join(",", _subjectInfoColumnsForSave);
             string values = string.Join(",", _subjectInfoColumnsForSave.Select(c => "@" + c));
             string insertText = $"INSERT INTO {_subjectInfoTableName} ({columns}) VALUES ({values})";
@@ -94,6 +110,10 @@ namespace GazeMonitoring.Data.PostgreSQL {
         }
 
         public void BinaryInsertGazePoints(IEnumerable<GazePoint> gazePoints, string sessionId, int? subjectInfoId, DateTime sampleTime) {
+            if (gazePoints == null) {
+                throw new ArgumentNullException(nameof(gazePoints));
+            }
+
             using (var connection = Common.CreateConnection(_connectionString)) {
                 var partitionName = Common.GetPartitionName(sampleTime);
 

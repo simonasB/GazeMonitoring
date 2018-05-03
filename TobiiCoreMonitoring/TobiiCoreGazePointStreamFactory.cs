@@ -9,6 +9,10 @@ namespace TobiiCoreMonitoring {
         private readonly Host _host;
 
         public TobiiCoreGazePointStreamFactory(Host host) {
+            if (host == null) {
+                throw new ArgumentNullException(nameof(host));
+            }
+
             _host = host;
         }
 

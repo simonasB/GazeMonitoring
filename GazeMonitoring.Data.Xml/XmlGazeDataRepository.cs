@@ -10,15 +10,19 @@ namespace GazeMonitoring.Data.Xml {
         private readonly Dictionary<Type, XmlSerializer> _xmlSerializers;
 
         public XmlGazeDataRepository(XmlWritersFactory xmlWritersFactory, DataStream dataStream) {
+            if (xmlWritersFactory == null) {
+                throw new ArgumentNullException(nameof(xmlWritersFactory));
+            }
+
             _xmlWriterWrappers = xmlWritersFactory.GetXmlWriters(dataStream);
             _xmlSerializers = _xmlWriterWrappers.ToDictionary(kvp => kvp.Key, kvp => new XmlSerializer(kvp.Key, new XmlRootAttribute(kvp.Key.Name)));
         }
 
-        public void SaveMany<TEntity>(IEnumerable<TEntity> entities) {
-            throw new System.NotImplementedException();
-        }
-
         public void SaveOne<TEntity>(TEntity entity) {
+            if (entity == null) {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
             Write(entity);
         }
 

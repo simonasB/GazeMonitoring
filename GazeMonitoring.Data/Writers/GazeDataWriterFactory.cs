@@ -9,6 +9,14 @@ namespace GazeMonitoring.Data.Writers {
         private readonly ISaccadeCalculator _saccadeCalculator;
 
         public GazeDataWriterFactory(IGazeDataRepository repository, ISaccadeCalculator saccadeCalculator) {
+            if (repository == null) {
+                throw new ArgumentNullException(nameof(repository));
+            }
+
+            if (saccadeCalculator == null) {
+                throw new ArgumentNullException(nameof(saccadeCalculator));
+            }
+
             _repository = repository;
             _saccadeCalculator = saccadeCalculator;
         }

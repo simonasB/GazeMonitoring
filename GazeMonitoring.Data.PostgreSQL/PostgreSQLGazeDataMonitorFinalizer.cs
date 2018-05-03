@@ -12,6 +12,18 @@ namespace GazeMonitoring.Data.PostgreSQL {
         private readonly ILogger _logger;
 
         public PostgreSQLGazeDataMonitorFinalizer(IDatabaseRepository databaseRepository, SubjectInfo subjectInfo, ILoggerFactory loggerFactory) {
+            if (databaseRepository == null) {
+                throw new ArgumentNullException(nameof(databaseRepository));
+            }
+
+            if (subjectInfo == null) {
+                throw new ArgumentNullException(nameof(subjectInfo));
+            }
+
+            if (loggerFactory == null) {
+                throw new ArgumentNullException(nameof(loggerFactory));
+            }
+
             _logger = loggerFactory.GetLogger(typeof(PostgreSQLGazeDataMonitorFinalizer));
             _databaseRepository = databaseRepository;
             _subjectInfo = subjectInfo;
@@ -34,6 +46,7 @@ namespace GazeMonitoring.Data.PostgreSQL {
                     reader.ReadLine();
                     // now initialize the CsvReader
                     var parser = new CsvReader(reader);
+                    
                     var gazePoints = parser.GetRecords<GazePoint>();
 
                     _databaseRepository.BinaryInsertGazePoints(gazePoints, _subjectInfo.SessionId, savedSubjectInfo?.Id, DateTime.UtcNow);

@@ -12,6 +12,14 @@ namespace GazeMonitoring.Data.Xml {
 
         public XmlWritersFactory(IFileNameFormatter fileNameFormatter, SubjectInfo subjectInfo)
         {
+            if (fileNameFormatter == null) {
+                throw new ArgumentNullException(nameof(fileNameFormatter));
+            }
+
+            if (subjectInfo == null) {
+                throw new ArgumentNullException(nameof(subjectInfo));
+            }
+
             _fileNameFormatter = fileNameFormatter;
             _subjectInfo = subjectInfo;
         }
@@ -45,7 +53,7 @@ namespace GazeMonitoring.Data.Xml {
 
         private XmlWriterWrapper CreateXmlWriter<T>(string dataStream)
         {
-            var fileName = new FileName { DataStream = dataStream };
+            var fileName = new FileName { DataStream = dataStream, DateTime = DateTime.Now };
             var fileStream = File.Create(Path.Combine(Directory.GetCurrentDirectory(), _fileNameFormatter.Format(fileName)));
             var xmlWriter = XmlWriter.Create(fileStream); ;
 

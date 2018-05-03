@@ -1,4 +1,5 @@
-﻿using EyeTribe.ClientSdk;
+﻿using System;
+using EyeTribe.ClientSdk;
 using EyeTribe.ClientSdk.Data;
 
 namespace TheEyeTribeMonitoring {
@@ -6,6 +7,9 @@ namespace TheEyeTribeMonitoring {
         private readonly IFilteredGazeDataPublisher _filteredGazeDataPublisher;
 
         public GazeListener(IFilteredGazeDataPublisher filteredGazeDataPublisher) {
+            if (filteredGazeDataPublisher == null) {
+                throw new ArgumentNullException(nameof(filteredGazeDataPublisher));
+            }
             _filteredGazeDataPublisher = filteredGazeDataPublisher;
         }
 

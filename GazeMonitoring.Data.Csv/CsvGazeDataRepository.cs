@@ -8,16 +8,20 @@ namespace GazeMonitoring.Data.Csv {
         private readonly Dictionary<Type, CsvWriterWrapper> _csvWriterWrappers;
 
         public CsvGazeDataRepository(CsvWritersFactory csvWritersFactory, DataStream dataStream) {
+            if (csvWritersFactory == null) {
+                throw new ArgumentNullException(nameof(csvWritersFactory));
+            }
+
             _csvWriterWrappers = csvWritersFactory.GetCsvWriters(dataStream);
         }
 
         public void SaveOne<TEntity>(TEntity entity) {
+            if (entity == null) {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
             GetCsvWriter<TEntity>().WriteRecord(entity);
             GetCsvWriter<TEntity>().NextRecord();
-        }
-
-        public void SaveMany<TEntity>(IEnumerable<TEntity> entities) {
-            GetCsvWriter<TEntity>().WriteRecords(entities);
         }
 
         private CsvWriter GetCsvWriter<T>() {

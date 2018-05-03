@@ -8,6 +8,14 @@ namespace GazeMonitoring.Data.Xml {
         public XmlWriter XmlWriter { get; }
 
         public XmlWriterWrapper(FileStream fileStream, XmlWriter xmlWriter) {
+            if (fileStream == null) {
+                throw new ArgumentNullException(nameof(fileStream));
+            }
+
+            if (xmlWriter == null) {
+                throw new ArgumentNullException(nameof(xmlWriter));
+            }
+
             _fileStream = fileStream;
             XmlWriter = xmlWriter;
         }

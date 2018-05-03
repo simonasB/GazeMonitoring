@@ -6,8 +6,8 @@ namespace TobiiCoreMonitoring {
     public class TobiiCoreBaseGazeStream : GazePointStream {
         private const int DefaultTimestampValue = -1;
 
-        protected static long _firstReceivedUnixTimestamp = DefaultTimestampValue;
-        protected static long _firstReceivedTrackerTimestamp = DefaultTimestampValue;
+        private static long _firstReceivedUnixTimestamp = DefaultTimestampValue;
+        private static long _firstReceivedTrackerTimestamp = DefaultTimestampValue;
 
         protected override void OnGazePointReceived(GazePointReceivedEventArgs e) {
             if (_firstReceivedUnixTimestamp == -1) {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using CsvHelper;
 using GazeMonitoring.Model;
@@ -10,11 +11,23 @@ namespace GazeMonitoring.Data.Csv {
         private readonly SubjectInfo _subjectInfo;
 
         public CsvWritersFactory(IFileNameFormatter fileNameFormatter, SubjectInfo subjectInfo) {
+            if (fileNameFormatter == null) {
+                throw new ArgumentNullException(nameof(fileNameFormatter));
+            }
+
+            if (subjectInfo == null) {
+                throw new ArgumentNullException(nameof(subjectInfo));
+            }
+
             _fileNameFormatter = fileNameFormatter;
             _subjectInfo = subjectInfo;
         }
 
         public Dictionary<Type, CsvWriterWrapper> GetCsvWriters(DataStream dataStream) {
+            if (!Enum.IsDefined(typeof(DataStream), dataStream)) {
+                throw new InvalidEnumArgumentException(nameof(dataStream), (int) dataStream, typeof(DataStream));
+            }
+
             var csvWriters = new Dictionary<Type, CsvWriterWrapper>();
 
             switch (dataStream) {
@@ -40,7 +53,7 @@ namespace GazeMonitoring.Data.Csv {
         }
 
         private CsvWriterWrapper CreateCsvWriter<T>(string dataStream) {
-            var fileName = new FileName { DataStream = dataStream };
+            var fileName = new FileName { DataStream = dataStream, DateTime = DateTime.Now};
             var textWriter = File.CreateText(Path.Combine(Directory.GetCurrentDirectory(), _fileNameFormatter.Format(fileName)));
             var csvWriter = new CsvWriter(textWriter);
 

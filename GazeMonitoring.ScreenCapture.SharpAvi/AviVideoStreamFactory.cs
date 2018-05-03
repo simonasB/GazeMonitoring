@@ -1,11 +1,19 @@
-﻿using SharpAvi;
+﻿using System;
+using SharpAvi;
 using SharpAvi.Codecs;
 using SharpAvi.Output;
 
 namespace GazeMonitoring.ScreenCapture.SharpAvi {
     public class AviVideoStreamFactory {
-        public IAviVideoStream CreateVideoStream(AviWriter writer, RecorderParams recorderParams, FourCC codec)
-        {
+        public IAviVideoStream CreateVideoStream(AviWriter writer, RecorderParams recorderParams, FourCC codec) {
+            if (writer == null) {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (recorderParams == null) {
+                throw new ArgumentNullException(nameof(recorderParams));
+            }
+
             // Select encoder type based on FOURCC of codec
             if (codec == KnownFourCCs.Codecs.Uncompressed)
                 return writer.AddUncompressedVideoStream(recorderParams.Width, recorderParams.Height);

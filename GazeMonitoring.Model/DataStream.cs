@@ -1,6 +1,6 @@
 ﻿namespace GazeMonitoring.Model {
     public enum DataStream {
-        UnfilteredGaze, //raw
+        UnfilteredGaze,
         LightlyFilteredGaze,
         SensitiveFixation,
         SlowFixation

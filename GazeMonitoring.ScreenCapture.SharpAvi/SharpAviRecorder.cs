@@ -28,6 +28,18 @@ namespace GazeMonitoring.ScreenCapture.SharpAvi {
         }
 
         public SharpAviRecorder(RecorderParams Params, AviVideoStreamFactory videoStreamFactory, GazePointStream gazePointStream) {
+            if (Params == null) {
+                throw new ArgumentNullException(nameof(Params));
+            }
+
+            if (videoStreamFactory == null) {
+                throw new ArgumentNullException(nameof(videoStreamFactory));
+            }
+
+            if (gazePointStream == null) {
+                throw new ArgumentNullException(nameof(gazePointStream));
+            }
+
             _params = Params;
             _videoStreamFactory = videoStreamFactory;
             _gazePointStream = gazePointStream;
