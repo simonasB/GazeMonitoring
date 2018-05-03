@@ -18,5 +18,23 @@ namespace GazeMonitoring.Tests {
             Assert.AreEqual(expectedGazePoint.Y, expectedGazePoint.Y, delta, "Y values should match");
             Assert.AreEqual(expectedGazePoint.Timestamp, expectedGazePoint.Timestamp, "Timestamp values should match");
         }
+
+        public static void AssertTwoSaccades(Saccade expectedSaccade, Saccade actualSaccade) {
+            const double delta = 0.001;
+
+            Assert.AreEqual(expectedSaccade.Amplitude, actualSaccade.Amplitude, delta, "#1");
+            Assert.AreEqual(expectedSaccade.Direction, actualSaccade.Direction, delta, "#2");
+            Assert.AreEqual(expectedSaccade.StartTimeStamp, actualSaccade.StartTimeStamp, delta, "#3");
+            Assert.AreEqual(expectedSaccade.EndTimeStamp, actualSaccade.EndTimeStamp, "#4");
+            Assert.AreEqual(expectedSaccade.Velocity, actualSaccade.Velocity, delta, "#5");
+        }
+
+        public static void AssertTwoListsOfSaccades(List<Saccade> expectedSaccades, List<Saccade> actualSaccades) {
+            Assert.AreEqual(expectedSaccades.Count, actualSaccades.Count, "GazePoints count should match.");
+
+            for (int i = 0; i < expectedSaccades.Count; i++) {
+                AssertTwoSaccades(expectedSaccades[i], actualSaccades[i]);
+            }
+        }
     }
 }

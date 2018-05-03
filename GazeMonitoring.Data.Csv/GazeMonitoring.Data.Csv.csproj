@@ -55,6 +55,7 @@
     <Compile Include="CsvGazeDataRepository.cs" />
     <Compile Include="CsvWritersFactory.cs" />
     <Compile Include="CsvWriterWrapper.cs" />
+    <Compile Include="ICsvWritersFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -65,6 +65,9 @@
     <Compile Include="Common\BasicSaccadeCalculatorTests_Unit.cs" />
     <Compile Include="Data.Csv\CsvFileNameFormatterTests_Unit.cs" />
     <Compile Include="Data.Csv\CsvGazeDataRepositoryTests_Integration.cs" />
+    <Compile Include="Data.Csv\CsvGazeDataRepositoryTests_Unit.cs" />
+    <Compile Include="Data.Csv\CsvWritersFactoryTests_Unit.cs" />
+    <Compile Include="Data.Csv\CsvWriterWrapperTests_Unit.cs" />
     <Compile Include="Data\Writers\GazePointWriterTests_Unit.cs" />
     <Compile Include="Data\Writers\MultipleSourcesGazeDataWriterTests_Unit.cs" />
     <Compile Include="Data\Writers\SaccadesWriterTests_Unit.cs" />

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using CsvHelper;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Csv {
-    public class CsvWritersFactory {
+    public class CsvWritersFactory : ICsvWritersFactory {
         private readonly IFileNameFormatter _fileNameFormatter;
         private readonly SubjectInfo _subjectInfo;
 
@@ -24,10 +23,6 @@ namespace GazeMonitoring.Data.Csv {
         }
 
         public Dictionary<Type, CsvWriterWrapper> GetCsvWriters(DataStream dataStream) {
-            if (!Enum.IsDefined(typeof(DataStream), dataStream)) {
-                throw new InvalidEnumArgumentException(nameof(dataStream), (int) dataStream, typeof(DataStream));
-            }
-
             var csvWriters = new Dictionary<Type, CsvWriterWrapper>();
 
             switch (dataStream) {
@@ -45,8 +40,6 @@ namespace GazeMonitoring.Data.Csv {
                     csvWriters.Add(typeof(GazePoint), CreateCsvWriter<GazePoint>(dataStream.ToString()));
                     csvWriters.Add(typeof(Saccade), CreateCsvWriter<Saccade>($"{dataStream}_Saccades"));
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(dataStream), dataStream, null);
             }
 
             return csvWriters;

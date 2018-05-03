@@ -9,7 +9,7 @@ namespace GazeMonitoring.Data.Csv {
         protected override void Load(ContainerBuilder builder) {
             builder.RegisterType<CsvFileNameFormatter>().As<IFileNameFormatter>();
             builder.RegisterType(typeof(CsvWritersFactory));
-            builder.Register((c, p) => new CsvWritersFactory(c.Resolve<IFileNameFormatter>(), p.Named<SubjectInfo>(Constants.SubjectInfoParameterName)));
+            builder.Register((c, p) => new CsvWritersFactory(c.Resolve<IFileNameFormatter>(), p.Named<SubjectInfo>(Constants.SubjectInfoParameterName))).As<ICsvWritersFactory>();
             builder.Register((c, p) => {
                     var parameters = p as Parameter[] ?? p.ToArray();
                     return new CsvGazeDataRepository(
