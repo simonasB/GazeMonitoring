@@ -1,4 +1,5 @@
-﻿using GazeMonitoring.Data.Writers;
+﻿using System;
+using GazeMonitoring.Data.Writers;
 using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
 
@@ -8,6 +9,12 @@ namespace GazeMonitoring {
         private readonly IGazeDataWriter _gazeDataWriter;
 
         public GazeDataMonitor(GazePointStream gazePointStream, IGazeDataWriter gazeDataWriter) {
+            if (gazePointStream == null) {
+                throw new ArgumentNullException(nameof(gazePointStream));
+            }
+            if (gazeDataWriter == null) {
+                throw new ArgumentNullException(nameof(gazeDataWriter));
+            }
             _gazePointStream = gazePointStream;
             _gazeDataWriter = gazeDataWriter;
         }
