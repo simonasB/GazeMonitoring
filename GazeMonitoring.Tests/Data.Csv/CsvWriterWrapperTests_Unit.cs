@@ -1,10 +1,7 @@
 ﻿using System;
 using System.IO;
 using CsvHelper;
-using GazeMonitoring.Data;
 using GazeMonitoring.Data.Csv;
-using GazeMonitoring.Model;
-using Moq;
 using NUnit.Framework;
 
 namespace GazeMonitoring.Tests.Data.Csv {

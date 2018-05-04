@@ -1,10 +1,5 @@
-﻿using GazeMonitoring.Common;
-
-namespace MockMonitoring.GazeStreams {
+﻿namespace MockMonitoring.GazeStreams {
     public sealed class SensitiveFixationGazeStream : BaseMockGazeStream
     {
-        public SensitiveFixationGazeStream() {
-            
-        }
     }
 }

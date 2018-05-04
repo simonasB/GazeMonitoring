@@ -10,7 +10,7 @@ namespace GazeMonitoring.Data.Xml {
         {
             builder.RegisterType<XmlFileNameFormatter>().As<IFileNameFormatter>();
             builder.RegisterType(typeof(XmlWritersFactory));
-            builder.Register((c, p) => new XmlWritersFactory(c.Resolve<IFileNameFormatter>(), p.Named<SubjectInfo>(Constants.SubjectInfoParameterName)));
+            builder.Register((c, p) => new XmlWritersFactory(c.Resolve<IFileNameFormatter>(), p.Named<SubjectInfo>(Constants.SubjectInfoParameterName))).As<IXmlWritersFactory>();
             builder.Register((c, p) => {
                     var parameters = p as Parameter[] ?? p.ToArray();
                     return new XmlGazeDataRepository(

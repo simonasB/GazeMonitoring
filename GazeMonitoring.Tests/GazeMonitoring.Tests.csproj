@@ -42,9 +42,13 @@
     <Reference Include="Moq, Version=4.8.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.8.2\lib\net45\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Npgsql, Version=3.2.7.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.3.2.7\lib\net451\Npgsql.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="SharpAvi, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -68,16 +72,35 @@
     <Compile Include="Data.Csv\CsvGazeDataRepositoryTests_Unit.cs" />
     <Compile Include="Data.Csv\CsvWritersFactoryTests_Unit.cs" />
     <Compile Include="Data.Csv\CsvWriterWrapperTests_Unit.cs" />
+    <Compile Include="Data.PostgreSQL\DatabaseRepositoryTests_Integration.cs" />
+    <Compile Include="Data.PostgreSQL\DatabaseRepositoryTests_Unit.cs" />
+    <Compile Include="Data.PostgreSQL\PostgreSQLFileNameFormatterTests_Unit.cs" />
+    <Compile Include="Data.PostgreSQL\PostgreSQLGazeMonitorFinalizerTests_Integration.cs" />
+    <Compile Include="Data.PostgreSQL\PostgreSQLGazeMonitorFinalizerTests_Unit.cs" />
+    <Compile Include="Data.PostgreSQL\TestDatabaseRepository.cs" />
+    <Compile Include="Data.Xml\GazePointsData.cs" />
+    <Compile Include="Data.Xml\SaccadesData.cs" />
+    <Compile Include="Data.Xml\XmlFileNameFormatterTests_Unit.cs" />
+    <Compile Include="Data.Xml\XmlGazeDataRepositoryTests_Integration.cs" />
+    <Compile Include="Data.Xml\XmlGazeDataRepositoryTests_Unit.cs" />
     <Compile Include="Data\Writers\GazePointWriterTests_Unit.cs" />
     <Compile Include="Data\Writers\MultipleSourcesGazeDataWriterTests_Unit.cs" />
     <Compile Include="Data\Writers\SaccadesWriterTests_Unit.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="ScreenCapture.SharpAvi\AviVideoStreamFactoryTests_Unit.cs" />
+    <Compile Include="ScreenCapture.SharpAvi\SharpAviRecorderTests_Integration.cs" />
+    <Compile Include="ScreenCapture.SharpAvi\SharpAviRecorderTests_Unit.cs" />
+    <Compile Include="ScreenCapture\RecorderParamsTests_Unit.cs" />
     <Compile Include="TestCategory.cs" />
     <Compile Include="Data\StandardFileNameFormatterTests_Unit.cs" />
     <Compile Include="Common\NullGazeDataMonitorFinalizerTest_Unit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="ConnectionStrings.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -89,13 +112,41 @@
       <Project>{70bb2194-acc0-44f6-9264-11251485ecc2}</Project>
       <Name>GazeMonitoring.Data.Csv</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Data.PostgreSQL\GazeMonitoring.Data.PostgreSQL.csproj">
+      <Project>{B6FE1338-3086-4B01-B2F7-DA0CB1679175}</Project>
+      <Name>GazeMonitoring.Data.PostgreSQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Data.Xml\GazeMonitoring.Data.Xml.csproj">
+      <Project>{1bb84589-22ea-4f07-bf68-c39577aebc21}</Project>
+      <Name>GazeMonitoring.Data.Xml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
       <Project>{a425261f-e463-4eb1-b237-597509e25c39}</Project>
       <Name>GazeMonitoring.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj">
+      <Project>{333EB528-1F08-411D-9AF2-83DC0F475121}</Project>
+      <Name>GazeMonitoring.EyeTracker.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Logging\GazeMonitoring.Logging.csproj">
+      <Project>{D54C6080-859C-4E1E-A4CE-B5407E474326}</Project>
+      <Name>GazeMonitoring.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
       <Project>{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}</Project>
       <Name>GazeMonitoring.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.ScreenCapture.SharpAvi\GazeMonitoring.ScreenCapture.SharpAvi.csproj">
+      <Project>{70ff8f72-379e-4e23-b864-892fcb8af93d}</Project>
+      <Name>GazeMonitoring.ScreenCapture.SharpAvi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.ScreenCapture\GazeMonitoring.ScreenCapture.csproj">
+      <Project>{1368f8c5-ab06-4211-94a2-a44ca3a1e291}</Project>
+      <Name>GazeMonitoring.ScreenCapture</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MockMonitoring\MockMonitoring.csproj">
+      <Project>{60f20997-4a0b-4769-879b-d270b35ac149}</Project>
+      <Name>MockMonitoring</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,7 +9,7 @@ namespace GazeMonitoring.Data.Xml {
         private readonly Dictionary<Type, XmlWriterWrapper> _xmlWriterWrappers;
         private readonly Dictionary<Type, XmlSerializer> _xmlSerializers;
 
-        public XmlGazeDataRepository(XmlWritersFactory xmlWritersFactory, DataStream dataStream) {
+        public XmlGazeDataRepository(IXmlWritersFactory xmlWritersFactory, DataStream dataStream) {
             if (xmlWritersFactory == null) {
                 throw new ArgumentNullException(nameof(xmlWritersFactory));
             }

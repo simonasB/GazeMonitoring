@@ -1,29 +1,29 @@
 ﻿using System;
 using GazeMonitoring.Data;
-using GazeMonitoring.Data.Csv;
+using GazeMonitoring.Data.Xml;
 using GazeMonitoring.Model;
 using NUnit.Framework;
 
-namespace GazeMonitoring.Tests.Data.Csv {
+namespace GazeMonitoring.Tests.Data.Xml {
     [TestFixture(Category = TestCategory.UNIT)]
-    public class CsvFileNameFormatterTests_Unit {
+    public class XmlFileNameFormatterTests_Unit {
         [Test]
         public void Format_NullFileName() {
-            var formatter = new CsvFileNameFormatter();
+            var formatter = new XmlFileNameFormatter();
 
             Assert.Throws<ArgumentNullException>(() => formatter.Format(null));
         }
 
         [Test]
         public void Format_CorrectlyFormatted() {
-            var formatter = new CsvFileNameFormatter();
+            var formatter = new XmlFileNameFormatter();
 
             var formattedName = formatter.Format(new FileName {
                 DataStream = DataStream.LightlyFilteredGaze.ToString(),
                 DateTime = DateTime.UtcNow
             });
 
-            Assert.True(formattedName.EndsWith(".csv"));
+            Assert.True(formattedName.EndsWith(".xml"));
         }
     }
 }

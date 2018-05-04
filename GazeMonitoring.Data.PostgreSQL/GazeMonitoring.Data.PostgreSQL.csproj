@@ -87,6 +87,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="DbGazePoint.cs" />
+    <Compile Include="DbSaccade.cs" />
     <Compile Include="IDatabaseRepository.cs" />
     <Compile Include="PostgreSQLFileNameFormatter.cs" />
     <Compile Include="PostgreSQLGazeDataMonitorFinalizer.cs" />

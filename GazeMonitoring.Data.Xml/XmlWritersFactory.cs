@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Xml {
-    public class XmlWritersFactory {
+    public class XmlWritersFactory : IXmlWritersFactory {
         private readonly IFileNameFormatter _fileNameFormatter;
         private readonly SubjectInfo _subjectInfo;
 
@@ -64,7 +64,7 @@ namespace GazeMonitoring.Data.Xml {
         private void Initialize<T>(XmlWriter writer)
         {
             writer.WriteStartDocument();
-            writer.WriteStartElement("GazeData");
+            writer.WriteStartElement($"{typeof(T).Name}sData");
 
             var serializer = new XmlSerializer(_subjectInfo.GetType(), new XmlRootAttribute(nameof(SubjectInfo)));
             serializer.Serialize(writer, _subjectInfo);
