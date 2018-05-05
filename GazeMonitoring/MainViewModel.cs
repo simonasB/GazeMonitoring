@@ -8,6 +8,7 @@ using GazeMonitoring.Common;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.Model;
 using GazeMonitoring.ScreenCapture;
+using Hardcodet.Wpf.TaskbarNotification;
 using IContainer = Autofac.IContainer;
 
 namespace GazeMonitoring {
@@ -18,12 +19,14 @@ namespace GazeMonitoring {
         private bool _isBusy;
         private GazeDataMonitor _gazeDataMonitor;
         private readonly IContainer _container;
+        private readonly TaskbarIcon _notifyIcon;
         private static ILifetimeScope _lifetimeScope;
         private IScreenRecorder _screenRecorder;
         private SubjectInfo _subjectInfo;
 
-        public MainViewModel(IContainer container) {
+        public MainViewModel(IContainer container, TaskbarIcon notifyIcon) {
             _container = container;
+            _notifyIcon = notifyIcon;
             StartCommand = new RelayCommand(OnStart, CanStart);
             StopCommand = new RelayCommand(OnStop, CanStop);
             SubjectInfoWrapper = new SubjectInfoWrapper();
@@ -101,25 +104,27 @@ namespace GazeMonitoring {
         }
 
         private async void OnStop() {
-            _gazeDataMonitor.Stop();
-            _lifetimeScope.Dispose();
-            _subjectInfo.SessionEndTimeStamp = DateTime.UtcNow;
-
             IsBusy = true;
+            try {
+                _gazeDataMonitor.Stop();
+                _lifetimeScope.Dispose();
+                _subjectInfo.SessionEndTimeStamp = DateTime.UtcNow;
 
-            await Task.Run(() => {
-                using (var lifetimeScope = _container.BeginLifetimeScope())
-                {
-                    var finalizer = lifetimeScope.Resolve<IGazeDataMonitorFinalizer>(
-                        new NamedParameter(Constants.DataStreamParameterName, SubjectInfoWrapper.DataStream),
-                        new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
-                    finalizer.FinalizeMonitoring();
-                }
+                await Task.Run(() => {
+                    using (var lifetimeScope = _container.BeginLifetimeScope()) {
+                        var finalizer = lifetimeScope.Resolve<IGazeDataMonitorFinalizer>(
+                            new NamedParameter(Constants.DataStreamParameterName, SubjectInfoWrapper.DataStream),
+                            new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
+                        finalizer.FinalizeMonitoring();
+                    }
 
-                if (IsScreenRecorded) {
-                    _screenRecorder?.StopRecording();
-                }
-            });
+                    if (IsScreenRecorded) {
+                        _screenRecorder?.StopRecording();
+                    }
+                });
+            } catch {
+                ShowErrorBalloon();
+            }
 
             IsBusy = false;
             IsStarted = false;
@@ -134,33 +139,44 @@ namespace GazeMonitoring {
                 return;
             }
 
-            _lifetimeScope = _container.BeginLifetimeScope();
+            IsBusy = true;
 
-            _subjectInfo = new SubjectInfo {
-                SessionId = Guid.NewGuid().ToString(),
-                SessionStartTimestamp = DateTime.UtcNow
-            };
-            
-            if (!IsAnonymous) {
-                _subjectInfo.Name = SubjectInfoWrapper.Name;
-                _subjectInfo.Age = SubjectInfoWrapper.Age;
-                _subjectInfo.Details = SubjectInfoWrapper.Details;
-            }
+            try
+            {
+                _lifetimeScope = _container.BeginLifetimeScope();
 
-            _gazeDataMonitor = _lifetimeScope.Resolve<GazeDataMonitor>(
-                new NamedParameter(Constants.DataStreamParameterName, SubjectInfoWrapper.DataStream),
-                new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
-            _gazeDataMonitor.Start();
+                _subjectInfo = new SubjectInfo {
+                    SessionId = Guid.NewGuid().ToString(),
+                    SessionStartTimestamp = DateTime.UtcNow
+                };
 
-            if (IsScreenRecorded) {
-                _screenRecorder = _lifetimeScope.Resolve<IScreenRecorder>(
+                if (!IsAnonymous) {
+                    _subjectInfo.Name = SubjectInfoWrapper.Name;
+                    _subjectInfo.Age = SubjectInfoWrapper.Age;
+                    _subjectInfo.Details = SubjectInfoWrapper.Details;
+                }
+
+                _gazeDataMonitor = _lifetimeScope.Resolve<GazeDataMonitor>(
                     new NamedParameter(Constants.DataStreamParameterName, SubjectInfoWrapper.DataStream),
-                    new NamedParameter(Constants.RecorderParamsParameterName,
-                        new RecorderParams($"video_{SubjectInfoWrapper.DataStream}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi", 10,
-                            50)));
-                _screenRecorder.StartRecording();
+                    new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
+                _gazeDataMonitor.Start();
+
+                if (IsScreenRecorded) {
+                    _screenRecorder = _lifetimeScope.Resolve<IScreenRecorder>(
+                        new NamedParameter(Constants.DataStreamParameterName, SubjectInfoWrapper.DataStream),
+                        new NamedParameter(Constants.RecorderParamsParameterName,
+                            new RecorderParams($"video_{SubjectInfoWrapper.DataStream}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi", 10,
+                                50)));
+                    _screenRecorder.StartRecording();
+                }
+            } catch {
+                ShowErrorBalloon();
+                IsBusy = false;
+                _lifetimeScope.Dispose();
+                return;
             }
 
+            IsBusy = false;
             IsStarted = true;
         }
 
@@ -186,6 +202,10 @@ namespace GazeMonitoring {
             }
 
             return isFormValid;
+        }
+
+        private void ShowErrorBalloon() {
+            _notifyIcon.ShowBalloonTip("Error", "Unrecoverable error occurred.", BalloonIcon.Error);
         }
     }
 }

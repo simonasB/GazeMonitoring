@@ -9,6 +9,7 @@ using GazeMonitoring.Common;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.Model;
 using GazeMonitoring.ScreenCapture;
+using Hardcodet.Wpf.TaskbarNotification;
 using Constants = GazeMonitoring.Common.Constants;
 
 namespace GazeMonitoring {
@@ -16,8 +17,8 @@ namespace GazeMonitoring {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        public MainWindow(IContainer container) {
-            this.DataContext = new MainViewModel(container);
+        public MainWindow(IContainer container, TaskbarIcon notifyIcon) {
+            this.DataContext = new MainViewModel(container, notifyIcon);
             InitializeComponent();
             CmbDataStreams.ItemsSource = Enum.GetValues(typeof(DataStream)).Cast<DataStream>();
         }

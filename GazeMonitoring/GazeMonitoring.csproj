@@ -222,6 +222,10 @@
       <Project>{3B15219E-FEB5-471D-BA9B-06EC67320A52}</Project>
       <Name>GazeMonitoring.IoC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Logging\GazeMonitoring.Logging.csproj">
+      <Project>{D54C6080-859C-4E1E-A4CE-B5407E474326}</Project>
+      <Name>GazeMonitoring.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
       <Project>{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}</Project>
       <Name>GazeMonitoring.Model</Name>
