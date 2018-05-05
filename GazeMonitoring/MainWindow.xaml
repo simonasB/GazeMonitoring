@@ -24,6 +24,16 @@
                 <x:Type TypeName="entities1:DataStream"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError"
+                         Value="true">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static RelativeSource.Self}, 
+                                    Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <xctk:BusyIndicator IsBusy="{Binding IsBusy}" x:Name="BusyIndicator">
         <Grid Margin="0,0,2,-1">
@@ -36,11 +46,11 @@
             <Button Name ="BtnStop" Command="{Binding StopCommand}" Content="Stop" HorizontalAlignment="Left" Margin="183,266,0,0" VerticalAlignment="Top" Width="75" Height="20"/>
             <CheckBox Name="CheckBoxAnonymous" IsEnabled="{c:Binding '!IsStarted'}" IsChecked="{Binding IsAnonymous}" Content="Anonymous" HorizontalAlignment="Left" Margin="21,18,0,0" VerticalAlignment="Top" Height="15" Width="83" />
             <TextBlock Name="TextBlockName" HorizontalAlignment="Left" Margin="21,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="32"><Run Text="Name"/><LineBreak/><Run/></TextBlock>
-            <TextBox Name="TextBoxName" IsEnabled="{c:Binding '!IsStarted and !IsAnonymous and !IsBusy'}" Text="{Binding SubjectInfoWrapper.Name}" HorizontalAlignment="Left" Height="26" Margin="82,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"></TextBox>
+            <TextBox Name="TextBoxName" IsEnabled="{c:Binding '!IsStarted and !IsAnonymous and !IsBusy'}" Text="{Binding SubjectInfoWrapper.Name, ValidatesOnNotifyDataErrors=true}" HorizontalAlignment="Left" Height="26" Margin="82,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"></TextBox>
             <TextBlock Name="TextBlockAge" HorizontalAlignment="Left" Margin="21,79,0,0" TextWrapping="Wrap" Text="Age" VerticalAlignment="Top"/>
-            <TextBox Name="TextBoxAge" IsEnabled="{c:Binding '!IsStarted and !IsAnonymous and !IsBusy'}" Text="{Binding SubjectInfoWrapper.Age}" HorizontalAlignment="Left" Height="25" Margin="82,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"/>
+            <TextBox Name="TextBoxAge" IsEnabled="{c:Binding '!IsStarted and !IsAnonymous and !IsBusy'}" Text="{Binding SubjectInfoWrapper.Age, ValidatesOnNotifyDataErrors=true}" HorizontalAlignment="Left" Height="25" Margin="82,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"/>
             <TextBlock Name="TextBlockDetails" HorizontalAlignment="Left" Margin="21,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="15" Width="120"><Run Text="Details"/><LineBreak/><Run/></TextBlock>
-            <TextBox Name="TextBoxDetails" IsEnabled="{c:Binding '!IsStarted and !IsAnonymous and !IsBusy'}" Text="{Binding SubjectInfoWrapper.Details}" HorizontalAlignment="Left" Height="57" Margin="82,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"/>
+            <TextBox Name="TextBoxDetails" IsEnabled="{c:Binding '!IsStarted and !IsAnonymous and !IsBusy'}" Text="{Binding SubjectInfoWrapper.Details, ValidatesOnNotifyDataErrors=true}" HorizontalAlignment="Left" Height="57" Margin="82,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"/>
             <CheckBox x:Name="CheckBoxRecordScreen" IsEnabled="{c:Binding '!IsStarted'}" IsChecked="{Binding IsScreenRecorded}" Content="Record screen" HorizontalAlignment="Left" Margin="21,180,0,0" VerticalAlignment="Top"/>
             <TextBlock HorizontalAlignment="Left" Text="Data stream type" Margin="21,207,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         </Grid>

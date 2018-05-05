@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Autofac;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Finalizers;
@@ -37,6 +36,14 @@ namespace GazeMonitoring {
                 if (_isAnonymous != value) {
                     _isAnonymous = value;
                     OnPropertyChanged();
+                }
+
+                if (value) {
+                    SubjectInfoWrapper.Name = null;
+                    SubjectInfoWrapper.Age = 0;
+                    SubjectInfoWrapper.Age = null;
+                    SubjectInfoWrapper.Details = null;
+                    SubjectInfoWrapper.ResetErrors();
                 }
             }
         }
@@ -123,13 +130,17 @@ namespace GazeMonitoring {
         }
 
         private void OnStart() {
+            if (!IsFormValid()) {
+                return;
+            }
+
             _lifetimeScope = _container.BeginLifetimeScope();
 
             _subjectInfo = new SubjectInfo {
                 SessionId = Guid.NewGuid().ToString(),
                 SessionStartTimestamp = DateTime.UtcNow
             };
-
+            
             if (!IsAnonymous) {
                 _subjectInfo.Name = SubjectInfoWrapper.Name;
                 _subjectInfo.Age = SubjectInfoWrapper.Age;
@@ -151,6 +162,30 @@ namespace GazeMonitoring {
             }
 
             IsStarted = true;
+        }
+
+        private bool IsFormValid() {
+            var isFormValid = true;
+
+            if (!IsAnonymous) {
+
+                if (string.IsNullOrEmpty(SubjectInfoWrapper.Name)) {
+                    SubjectInfoWrapper.Name = null;
+                    isFormValid = false;
+                }
+
+                if (SubjectInfoWrapper.Age == null) {
+                    SubjectInfoWrapper.Age = null;
+                    isFormValid = false;
+                }
+
+                if (string.IsNullOrEmpty(SubjectInfoWrapper.Details)) {
+                    SubjectInfoWrapper.Details = null;
+                    isFormValid = false;
+                }
+            }
+
+            return isFormValid;
         }
     }
 }

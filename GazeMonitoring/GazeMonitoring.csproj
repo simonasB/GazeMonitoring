@@ -82,6 +82,7 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
@@ -133,10 +134,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindableBase.cs" />
     <Compile Include="BooleanAndConverter.cs" />
     <Compile Include="MainWindow.xaml.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="SubjectInfoWrapper.cs" />
+    <Compile Include="ValidatableBindableBase.cs" />
     <Page Include="MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
