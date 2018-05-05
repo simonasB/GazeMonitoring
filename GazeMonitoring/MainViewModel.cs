@@ -59,6 +59,8 @@ namespace GazeMonitoring {
                 if (_isStarted != value) {
                     _isStarted = value;
                     OnPropertyChanged();
+                    StartCommand.RaiseCanExecuteChanged();
+                    StopCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -72,12 +74,14 @@ namespace GazeMonitoring {
                 if (_isBusy != value) {
                     _isBusy = value;
                     OnPropertyChanged();
+                    StartCommand.RaiseCanExecuteChanged();
+                    StopCommand.RaiseCanExecuteChanged();
                 }
             }
         }
 
-        public ICommand StartCommand { get; }
-        public ICommand StopCommand { get; }
+        public RelayCommand StartCommand { get; }
+        public RelayCommand StopCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -111,6 +115,7 @@ namespace GazeMonitoring {
             });
 
             IsBusy = false;
+            IsStarted = false;
         }
 
         private bool CanStart() {
