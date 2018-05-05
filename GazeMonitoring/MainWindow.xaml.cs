@@ -16,96 +16,10 @@ namespace GazeMonitoring {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        private GazeDataMonitor _gazeDataMonitor;
-        private readonly IContainer _container;
-        private static ILifetimeScope _lifetimeScope;
-        private SubjectInfo _subjectInfo;
-        private IScreenRecorder _screenRecorder;
-
         public MainWindow(IContainer container) {
-            _container = container;
+            this.DataContext = new MainViewModel(container);
             InitializeComponent();
-
             CmbDataStreams.ItemsSource = Enum.GetValues(typeof(DataStream)).Cast<DataStream>();
-        }
-
-        private void CmbDataStreams_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-        }
-
-        private void BtnStart_Click(object sender, RoutedEventArgs e) {
-            _lifetimeScope = _container.BeginLifetimeScope();
-            _subjectInfo = new SubjectInfo();
-
-            int.TryParse(TextBoxAge.Text, out var age);
-
-            if (CheckBoxAnonymous.IsChecked != true) {
-                _subjectInfo = new SubjectInfo {
-                    Name = TextBoxName.Text,
-                    Age = age,
-                    Details = TextBoxDetails.Text,
-                };
-            }
-
-            _subjectInfo.SessionId = Guid.NewGuid().ToString();
-            _subjectInfo.SessionStartTimestamp = DateTime.UtcNow;
-            _gazeDataMonitor = _lifetimeScope.Resolve<GazeDataMonitor>(
-                new NamedParameter(Constants.DataStreamParameterName, CmbDataStreams.SelectedItem),
-                new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
-            _gazeDataMonitor.Start();
-
-            if (CheckBoxRecordScreen.IsChecked == true) {
-                _screenRecorder = _lifetimeScope.Resolve<IScreenRecorder>(
-                    new NamedParameter(Constants.DataStreamParameterName, CmbDataStreams.SelectedItem),
-                    new NamedParameter(Constants.RecorderParamsParameterName, new RecorderParams($"video_{CmbDataStreams.SelectedItem}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi", 10, 50)));
-                _screenRecorder.StartRecording();
-            }
-            ToggleFieldsOnStartAndStop(false);
-        }
-
-        private async void BtnStop_Click(object sender, RoutedEventArgs e) {
-            _gazeDataMonitor.Stop();
-            _lifetimeScope.Dispose();
-            _subjectInfo.SessionEndTimeStamp = DateTime.UtcNow;
-
-            var selectedItem = CmbDataStreams.SelectedItem;
-            var isScreenRecorded = CheckBoxRecordScreen.IsChecked;
-
-            this.BusyIndicator.IsBusy = true;
-
-            await Task.Run(() => {
-                using (var lifetimeScope = _container.BeginLifetimeScope()) {
-                    var finalizer = lifetimeScope.Resolve<IGazeDataMonitorFinalizer>(
-                        new NamedParameter(Constants.DataStreamParameterName, selectedItem),
-                        new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
-                    finalizer.FinalizeMonitoring();
-                }
-
-                if (isScreenRecorded == true) {
-                    _screenRecorder?.StopRecording();
-                }
-            });
-
-            this.BusyIndicator.IsBusy = false;
-
-            ToggleFieldsOnStartAndStop(true);
-        }
-
-        private void CheckBoxAnonymousChanged(object sender, RoutedEventArgs e) {
-            void ToggleFields(bool isEnabled) {
-                TextBoxAge.IsEnabled = isEnabled;
-                TextBoxDetails.IsEnabled = isEnabled;
-                TextBoxName.IsEnabled = isEnabled;
-            }
-
-            ToggleFields(CheckBoxAnonymous.IsChecked != true);
-        }
-
-        private void ToggleFieldsOnStartAndStop(bool isEnabled) {
-            BtnStart.IsEnabled = isEnabled;
-            CmbDataStreams.IsEnabled = isEnabled;
-            CheckBoxAnonymous.IsEnabled = isEnabled;
-            BtnStop.IsEnabled = !isEnabled;
-            CheckBoxRecordScreen.IsEnabled = isEnabled;
         }
 
         private void Window_Deactivated(object sender, EventArgs e) {
