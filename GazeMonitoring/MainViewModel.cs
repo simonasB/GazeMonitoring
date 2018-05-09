@@ -2,10 +2,13 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Autofac;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Finalizers;
+using GazeMonitoring.EyeTracker.Core;
 using GazeMonitoring.Model;
 using GazeMonitoring.ScreenCapture;
 using Hardcodet.Wpf.TaskbarNotification;
@@ -23,6 +26,9 @@ namespace GazeMonitoring {
         private static ILifetimeScope _lifetimeScope;
         private IScreenRecorder _screenRecorder;
         private SubjectInfo _subjectInfo;
+        private readonly IEyeTrackerStatusProvider _eyeTrackerStatusProvider;
+        private bool _isAvailable;
+        private const int PollIntervalSeconds = 5;
 
         public MainViewModel(IContainer container, TaskbarIcon notifyIcon) {
             _container = container;
@@ -30,6 +36,11 @@ namespace GazeMonitoring {
             StartCommand = new RelayCommand(OnStart, CanStart);
             StopCommand = new RelayCommand(OnStop, CanStop);
             SubjectInfoWrapper = new SubjectInfoWrapper();
+            _eyeTrackerStatusProvider = _container.Resolve<IEyeTrackerStatusProvider>();
+            InvokeEyeTrackerStatusPolling();
+            EyeTrackerStatusWrapper = new EyeTrackerStatusWrapper(StartCommand, StopCommand) {
+                EyeTrackerName = CommonConstants.DefaultEyeTrackerName
+            };
         }
 
         public bool IsAnonymous {
@@ -52,7 +63,7 @@ namespace GazeMonitoring {
         }
 
         public bool IsScreenRecorded {
-            get { return _isScreenRecorded; }
+            get => _isScreenRecorded;
             set
             {
                 if (_isScreenRecorded != value) {
@@ -63,7 +74,7 @@ namespace GazeMonitoring {
         }
 
         public bool IsStarted {
-            get { return _isStarted; }
+            get => _isStarted;
             set
             {
                 if (_isStarted != value) {
@@ -90,7 +101,10 @@ namespace GazeMonitoring {
             }
         }
 
+        public EyeTrackerStatusWrapper EyeTrackerStatusWrapper { get; set; }
+
         public RelayCommand StartCommand { get; }
+
         public RelayCommand StopCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -100,7 +114,7 @@ namespace GazeMonitoring {
         }
 
         private bool CanStop() {
-            return IsStarted && !IsBusy;
+            return IsStarted && !IsBusy && EyeTrackerStatusWrapper.IsAvailable;
         }
 
         private async void OnStop() {
@@ -131,7 +145,7 @@ namespace GazeMonitoring {
         }
 
         private bool CanStart() {
-            return !IsStarted && !IsBusy;
+            return !IsStarted && !IsBusy && EyeTrackerStatusWrapper.IsAvailable;
         }
 
         private void OnStart() {
@@ -206,6 +220,23 @@ namespace GazeMonitoring {
 
         private void ShowErrorBalloon() {
             _notifyIcon.ShowBalloonTip("Error", "Unrecoverable error occurred.", BalloonIcon.Error);
+        }
+
+        private void InvokeEyeTrackerStatusPolling() {
+            Task.Factory.StartNew(async () => {
+                while (true) {
+                    var status = await _eyeTrackerStatusProvider.GetStatusAsync();
+                    await Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                        EyeTrackerStatusWrapper.IsAvailable = status.IsAvailable;
+                        EyeTrackerStatusWrapper.EyeTrackerName = EyeTrackerStatusWrapper.IsAvailable ? status.Name : CommonConstants.DefaultEyeTrackerName;
+                        if (!status.IsAvailable && IsStarted) {
+                            OnStop();
+                        }
+                    }));
+
+                    await Task.Delay(TimeSpan.FromSeconds(PollIntervalSeconds));
+                }
+            }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
     }
 }

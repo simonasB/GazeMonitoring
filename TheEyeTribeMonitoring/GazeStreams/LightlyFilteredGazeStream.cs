@@ -8,8 +8,8 @@ namespace TheEyeTribeMonitoring.GazeStreams {
             OnGazePointReceived(new GazePointReceivedEventArgs {
                 GazePoint = new GazePoint {
                     Timestamp = gazeData.TimeStamp,
-                    X = gazeData.RawCoordinates.X,
-                    Y = gazeData.RawCoordinates.Y
+                    X = gazeData.SmoothedCoordinates.X,
+                    Y = gazeData.SmoothedCoordinates.Y
                 }
             });
         }

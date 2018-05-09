@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using EyeTribe.ClientSdk;
+using GazeMonitoring.EyeTracker.Core;
 using GazeMonitoring.EyeTracker.Core.Streams;
 
 namespace TheEyeTribeMonitoring {
@@ -7,6 +8,7 @@ namespace TheEyeTribeMonitoring {
         protected override void Load(ContainerBuilder builder) {
             GazeManager.Instance.Activate(GazeManagerCore.ApiVersion.VERSION_1_0);
             builder.RegisterType<EyeTribeGazePointStreamFactory>().As<IGazePointStreamFactory>();
+            builder.RegisterType<EyeTribeStatusProvider>().As<IEyeTrackerStatusProvider>();
         }
     }
 }
