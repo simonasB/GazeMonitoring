@@ -27,15 +27,20 @@ namespace GazeMonitoring
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            Init();
-            //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
-            _notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
-            
-            _notifyIcon.DataContext = new NotifyIconViewModel(new MainWindow(_container, _notifyIcon));
+            try {
+                Init();
+                //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
+                _notifyIcon = (TaskbarIcon) FindResource("NotifyIcon");
 
-            _logger = _container.Resolve<ILoggerFactory>().GetLogger(typeof(App));
+                _notifyIcon.DataContext = new NotifyIconViewModel(new MainWindow(_container, _notifyIcon));
 
-            SetupExceptionHandling();
+                _logger = _container.Resolve<ILoggerFactory>().GetLogger(typeof(App));
+                SetupExceptionHandling();
+            } catch (Exception ex) {
+                _logger?.Error(ex);
+                MessageBox.Show("Could not launch GazeMonitoring application.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Current.Shutdown();
+            }
         }
 
         private void SetupExceptionHandling() {
@@ -54,6 +59,7 @@ namespace GazeMonitoring
             try {
                 System.Reflection.AssemblyName assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
                 message = string.Format("Unhandled exception in {0} v{1}", assemblyName.Name, assemblyName.Version);
+                _logger.Error(message);
             } catch (Exception ex) {
                 _logger.Error(ex);
             } finally {
@@ -63,17 +69,17 @@ namespace GazeMonitoring
 
         protected override void OnExit(ExitEventArgs e)
         {
-            _notifyIcon.Dispose(); //the icon would clean up automatically, but this is cleaner
+            _notifyIcon?.Dispose(); //the icon would clean up automatically, but this is cleaner
             base.OnExit(e);
         }
 
-        private static void Init() {
+        private void Init() {
             var config = new ConfigurationBuilder();
 
             config.AddJsonFile("config.json");
             var configurationRoot = config.Build();
             if (!bool.TryParse(configurationRoot["autoDiscover"], out var autoDiscover)) {
-                // log info message
+                _logger.Debug("AutoDiscovery set to false");
             }
 
             var builder = new ContainerBuilder();
@@ -90,7 +96,6 @@ namespace GazeMonitoring
                 var discoveryManager = new TrackerDiscoveryManager();
                 discoveryManager.Discover(builder);
             }
-
             _container = builder.Build();
         }
     }
