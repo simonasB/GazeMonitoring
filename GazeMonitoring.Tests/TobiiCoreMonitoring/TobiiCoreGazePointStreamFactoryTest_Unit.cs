@@ -7,7 +7,7 @@ namespace GazeMonitoring.Tests.TobiiCoreMonitoring {
     public class TobiiCoreGazePointStreamFactoryTest_Unit {
         [Test]
         public void NullConstructorParameters_ThrowsException() {
-            Assert.Throws<ArgumentNullException>(() => new TobiiCoreGazePointStreamFactory(null));
+            Assert.Throws<ArgumentNullException>(() => new TobiiCoreGazePointStreamFactory(null, null));
         }
     }
 }

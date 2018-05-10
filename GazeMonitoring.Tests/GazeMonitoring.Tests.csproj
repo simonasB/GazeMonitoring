@@ -83,7 +83,6 @@
     <Compile Include="Data.PostgreSQL\PostgreSQLFileNameFormatterTests_Unit.cs" />
     <Compile Include="Data.PostgreSQL\PostgreSQLGazeMonitorFinalizerTests_Integration.cs" />
     <Compile Include="Data.PostgreSQL\PostgreSQLGazeMonitorFinalizerTests_Unit.cs" />
-    <Compile Include="Data.PostgreSQL\TestDatabaseRepository.cs" />
     <Compile Include="Data.Xml\GazePointsData.cs" />
     <Compile Include="Data.Xml\SaccadesData.cs" />
     <Compile Include="Data.Xml\XmlFileNameFormatterTests_Unit.cs" />

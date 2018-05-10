@@ -141,6 +141,7 @@
     <Compile Include="BindableBase.cs" />
     <Compile Include="BooleanAndConverter.cs" />
     <Compile Include="CommonConstants.cs" />
+    <Compile Include="DefaultScreenParametersProvider.cs" />
     <Compile Include="EyeTrackerStatusWrapper.cs" />
     <Compile Include="MainWindow.xaml.cs" />
     <Compile Include="RelayCommand.cs" />

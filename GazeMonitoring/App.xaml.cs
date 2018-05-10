@@ -5,6 +5,7 @@ using System.Windows;
 using Autofac;
 using Autofac.Configuration;
 using Autofac.Core;
+using GazeMonitoring.Common;
 using GazeMonitoring.Data.Writers;
 using GazeMonitoring.EyeTracker.Core.Discovery;
 using GazeMonitoring.EyeTracker.Core.Streams;
@@ -83,6 +84,7 @@ namespace GazeMonitoring
                 var parameters = p as Parameter[] ?? p.ToArray();
                 return new GazeDataMonitor(c.Resolve<GazePointStream>(parameters), c.Resolve<IGazeDataWriter>(parameters));
             }).As<GazeDataMonitor>();
+            builder.RegisterType<DefaultScreenParametersProvider>().As<IScreenParametersProvider>();
 
             if (autoDiscover) {
                 var discoveryManager = new TrackerDiscoveryManager();

@@ -27,7 +27,6 @@ namespace GazeMonitoring {
         private IScreenRecorder _screenRecorder;
         private SubjectInfo _subjectInfo;
         private readonly IEyeTrackerStatusProvider _eyeTrackerStatusProvider;
-        private bool _isAvailable;
         private const int PollIntervalSeconds = 5;
 
         public MainViewModel(IContainer container, TaskbarIcon notifyIcon) {

@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using Autofac;
-using GazeMonitoring.Common;
-using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.Model;
-using GazeMonitoring.ScreenCapture;
 using Hardcodet.Wpf.TaskbarNotification;
-using Constants = GazeMonitoring.Common.Constants;
 
 namespace GazeMonitoring {
     /// <summary>
