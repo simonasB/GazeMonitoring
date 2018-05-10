@@ -82,11 +82,11 @@ namespace GazeMonitoring.Tests.Data.PostgreSQL {
             var csvWritersFactory = new CsvWritersFactory(new PostgreSQLFileNameFormatter(), subjectInfo);
             using (var csvRepository = new CsvGazeDataRepository(csvWritersFactory, DataStream.SlowFixation)) {
                 foreach (var gazePoint in expectedGazePoints) {
-                    csvRepository.SaveOne(gazePoint);
+                    csvRepository.SaveGazePoint(gazePoint);
                 }
 
                 expectedSaccades.ForEach(saccade => {
-                    csvRepository.SaveOne(saccade);
+                    csvRepository.SaveSaccade(saccade);
                 });
             }
 

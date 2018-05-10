@@ -18,12 +18,20 @@ namespace GazeMonitoring.Data.Xml {
             _xmlSerializers = _xmlWriterWrappers.ToDictionary(kvp => kvp.Key, kvp => new XmlSerializer(kvp.Key, new XmlRootAttribute(kvp.Key.Name)));
         }
 
-        public void SaveOne<TEntity>(TEntity entity) {
-            if (entity == null) {
-                throw new ArgumentNullException(nameof(entity));
+        public void SaveGazePoint(GazePoint gazePoint) {
+            if (gazePoint == null) {
+                throw new ArgumentNullException(nameof(gazePoint));
             }
 
-            Write(entity);
+            Write(gazePoint);
+        }
+
+        public void SaveSaccade(Saccade saccade) {
+            if (saccade == null) {
+                throw new ArgumentNullException(nameof(saccade));
+            }
+
+            Write(saccade);
         }
 
         public void Dispose() {

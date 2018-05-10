@@ -96,7 +96,7 @@ namespace GazeMonitoring.Tests.Data.Csv {
             var csvWritersFactory = new CsvWritersFactory(_mockFileNameFormatter.Object, subjectInfo);
             using (var csvRepository = new CsvGazeDataRepository(csvWritersFactory, dataStream)) {
                 foreach (var gazePoint in expectedGazePoints) {
-                    csvRepository.SaveOne(gazePoint);
+                    csvRepository.SaveGazePoint(gazePoint);
                 }
             }
 
@@ -157,7 +157,7 @@ namespace GazeMonitoring.Tests.Data.Csv {
             var csvWritersFactory = new CsvWritersFactory(_mockFileNameFormatter.Object, subjectInfo);
             using (var csvRepository = new CsvGazeDataRepository(csvWritersFactory, dataStream)) {
                 foreach (var saccade in expectedSaccades) {
-                    csvRepository.SaveOne(saccade);
+                    csvRepository.SaveSaccade(saccade);
                 }
             }
 

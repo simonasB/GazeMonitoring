@@ -8,15 +8,18 @@ namespace GazeMonitoring.Tests.Data.Xml {
     [TestFixture(Category = TestCategory.UNIT)]
     public class XmlGazeDataRepositoryTests_Unit {
         [Test]
-        public void NullConstructorParameters_ThrowsException()
-        {
+        public void NullConstructorParameters_ThrowsException() {
             Assert.Throws<ArgumentNullException>(() => new XmlGazeDataRepository(null, DataStream.UnfilteredGaze));
         }
 
         [Test]
-        public void SaveOne_NullEntity()
-        {
-            Assert.Throws<ArgumentNullException>(() => new XmlGazeDataRepository(new Mock<IXmlWritersFactory>().Object, DataStream.UnfilteredGaze).SaveOne((GazePoint)null));
+        public void SaveGazePoint_Null_ThrowsException() {
+            Assert.Throws<ArgumentNullException>(() => new XmlGazeDataRepository(new Mock<IXmlWritersFactory>().Object, DataStream.UnfilteredGaze).SaveGazePoint(null));
+        }
+
+        [Test]
+        public void SaveSaccade_Null_ThrowsException() {
+            Assert.Throws<ArgumentNullException>(() => new XmlGazeDataRepository(new Mock<IXmlWritersFactory>().Object, DataStream.UnfilteredGaze).SaveSaccade(null));
         }
     }
 }

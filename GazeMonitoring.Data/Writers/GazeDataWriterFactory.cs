@@ -20,6 +20,7 @@ namespace GazeMonitoring.Data.Writers {
             _repository = repository;
             _saccadeCalculator = saccadeCalculator;
         }
+
         public IGazeDataWriter GetGazeDataWriter(DataStream dataStream) {
             switch (dataStream) {
                 case DataStream.UnfilteredGaze:

@@ -1,5 +1,8 @@
-﻿namespace GazeMonitoring.Data {
+﻿using GazeMonitoring.Model;
+
+namespace GazeMonitoring.Data {
     public interface IGazeDataRepository {
-        void SaveOne<TEntity>(TEntity entity);
+        void SaveGazePoint(GazePoint gazePoint);
+        void SaveSaccade(Saccade saccade);
     }
 }

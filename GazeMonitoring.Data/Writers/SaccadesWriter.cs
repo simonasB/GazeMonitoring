@@ -29,7 +29,7 @@ namespace GazeMonitoring.Data.Writers {
             if (_previousGazePoint == null) {
                 _previousGazePoint = gazePoint;
             } else {
-                _repository.SaveOne(_saccadeCalculator.Calculate(_previousGazePoint, gazePoint));
+                _repository.SaveSaccade(_saccadeCalculator.Calculate(_previousGazePoint, gazePoint));
                 _previousGazePoint = gazePoint;
             }
         }

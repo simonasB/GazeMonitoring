@@ -18,7 +18,7 @@ namespace GazeMonitoring.Data.Writers {
                 throw new ArgumentNullException(nameof(gazePoint));
             }
 
-            _repository.SaveOne(gazePoint);
+            _repository.SaveGazePoint(gazePoint);
         }
     }
 }

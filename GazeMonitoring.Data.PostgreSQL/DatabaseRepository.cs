@@ -205,7 +205,7 @@ namespace GazeMonitoring.Data.PostgreSQL {
                     }
                     catch (Exception e)
                     {
-                        //_logger.Error(e);
+                        _logger.Error(e);
                     }
                 }
             }
@@ -247,7 +247,7 @@ namespace GazeMonitoring.Data.PostgreSQL {
                     }
                     catch (Exception e)
                     {
-                        //_logger.Error(e);
+                        _logger.Error(e);
                     }
                 }
             }

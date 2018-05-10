@@ -99,7 +99,7 @@ namespace GazeMonitoring.Tests.Data.Xml {
             var xmlWritersFactory = new XmlWritersFactory(_mockFileNameFormatter.Object, expectedSubjectInfo);
             using (var xmlGazeDataRepository = new XmlGazeDataRepository(xmlWritersFactory, dataStream)) {
                 foreach (var gazePoint in expectedGazePoints) {
-                    xmlGazeDataRepository.SaveOne(gazePoint);
+                    xmlGazeDataRepository.SaveGazePoint(gazePoint);
                 }
             }
 
@@ -155,7 +155,7 @@ namespace GazeMonitoring.Tests.Data.Xml {
             var csvWritersFactory = new XmlWritersFactory(_mockFileNameFormatter.Object, expectedSubjectInfo);
             using (var csvRepository = new XmlGazeDataRepository(csvWritersFactory, dataStream)) {
                 foreach (var saccade in expectedSaccades) {
-                    csvRepository.SaveOne(saccade);
+                    csvRepository.SaveSaccade(saccade);
                 }
             }
             XmlSerializer serializer = new XmlSerializer(typeof(SaccadesData));

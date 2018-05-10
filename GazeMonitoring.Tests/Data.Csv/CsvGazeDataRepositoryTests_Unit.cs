@@ -13,8 +13,13 @@ namespace GazeMonitoring.Tests.Data.Csv {
         }
 
         [Test]
-        public void SaveOne_NullEntity() {
-            Assert.Throws<ArgumentNullException>(() => new CsvGazeDataRepository(new Mock<ICsvWritersFactory>().Object, DataStream.UnfilteredGaze).SaveOne((GazePoint)null));
+        public void SaveGazePoint_Null_ThrowsException() {
+            Assert.Throws<ArgumentNullException>(() => new CsvGazeDataRepository(new Mock<ICsvWritersFactory>().Object, DataStream.UnfilteredGaze).SaveGazePoint(null));
+        }
+
+        [Test]
+        public void SaveSaccade_Null_ThrowsException() {
+            Assert.Throws<ArgumentNullException>(() => new CsvGazeDataRepository(new Mock<ICsvWritersFactory>().Object, DataStream.UnfilteredGaze).SaveSaccade(null));
         }
     }
 }
