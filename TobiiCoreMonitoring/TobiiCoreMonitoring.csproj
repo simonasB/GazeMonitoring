@@ -65,7 +65,6 @@
     <Compile Include="TobiiCoreModule.cs" />
     <Compile Include="TobiiDiscovery.cs" />
     <Compile Include="TobiiStatusProvider.cs" />
-    <Compile Include="TxEyeTrackingDeviceStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
