@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using GazeMonitoring.Commands;
 
 namespace GazeMonitoring {
     /// <summary>
@@ -20,14 +21,13 @@ namespace GazeMonitoring {
         public ICommand ShowWindowCommand {
             get
             {
-                return new DelegateCommand {
-                    CanExecuteFunc = () => Application.Current.MainWindow?.IsVisible != true,
-                    CommandAction = () => {
+                return new DelegateCommand(
+                    () => {
                         Application.Current.MainWindow = _mainWindow;
                         Application.Current.MainWindow.Show();
                         Application.Current.MainWindow.Topmost = true;
-                    }
-                };
+                    },
+                    () => Application.Current.MainWindow?.IsVisible != true);
             }
         }
 
@@ -37,41 +37,18 @@ namespace GazeMonitoring {
         public ICommand HideWindowCommand {
             get
             {
-                return new DelegateCommand {
-                    CommandAction = () => Application.Current.MainWindow?.Hide(),
-                    CanExecuteFunc = () => Application.Current.MainWindow?.IsVisible == true
-                };
+                return new DelegateCommand(
+                    () => Application.Current.MainWindow?.Hide(),
+                    () => Application.Current.MainWindow?.IsVisible == true
+                );
             }
         }
-
 
         /// <summary>
         /// Shuts down the application.
         /// </summary>
         public ICommand ExitApplicationCommand {
-            get { return new DelegateCommand {CommandAction = () => Application.Current.Shutdown()}; }
-        }
-    }
-
-
-    /// <summary>
-    /// Simplistic delegate command for the demo.
-    /// </summary>
-    public class DelegateCommand : ICommand {
-        public Action CommandAction { get; set; }
-        public Func<bool> CanExecuteFunc { get; set; }
-
-        public void Execute(object parameter) {
-            CommandAction();
-        }
-
-        public bool CanExecute(object parameter) {
-            return CanExecuteFunc == null || CanExecuteFunc();
-        }
-
-        public event EventHandler CanExecuteChanged {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            get { return new DelegateCommand(() => Application.Current.Shutdown()); }
         }
     }
 }

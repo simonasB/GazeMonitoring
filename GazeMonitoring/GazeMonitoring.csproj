@@ -138,13 +138,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\AwaitableDelegateCommand.cs" />
     <Compile Include="BindableBase.cs" />
     <Compile Include="BooleanAndConverter.cs" />
+    <Compile Include="Commands\CommandExtensions.cs" />
+    <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="CommonConstants.cs" />
     <Compile Include="DefaultScreenParametersProvider.cs" />
     <Compile Include="EyeTrackerStatusWrapper.cs" />
+    <Compile Include="Commands\IAsyncCommand.cs" />
+    <Compile Include="Commands\IRaiseCanExecuteChanged.cs" />
     <Compile Include="MainWindow.xaml.cs" />
-    <Compile Include="RelayCommand.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="SubjectInfoWrapper.cs" />
     <Compile Include="ValidatableBindableBase.cs" />
     <Page Include="MainView.xaml">

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace GazeMonitoring {
+namespace GazeMonitoring.Commands {
     public class RelayCommand : ICommand {
         private readonly Action _targetExecuteMethod;
         private readonly Func<bool> _targetCanExecuteMethod;

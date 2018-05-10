@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Autofac;
+using GazeMonitoring.Commands;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.EyeTracker.Core;
@@ -33,7 +34,7 @@ namespace GazeMonitoring {
             _container = container;
             _notifyIcon = notifyIcon;
             StartCommand = new RelayCommand(OnStart, CanStart);
-            StopCommand = new RelayCommand(OnStop, CanStop);
+            StopCommand = new AwaitableDelegateCommand(OnStop, CanStop);
             SubjectInfoWrapper = new SubjectInfoWrapper();
             _eyeTrackerStatusProvider = _container.Resolve<IEyeTrackerStatusProvider>();
             InvokeEyeTrackerStatusPolling();
@@ -104,7 +105,7 @@ namespace GazeMonitoring {
 
         public RelayCommand StartCommand { get; }
 
-        public RelayCommand StopCommand { get; }
+        public AwaitableDelegateCommand StopCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -116,7 +117,7 @@ namespace GazeMonitoring {
             return IsStarted && !IsBusy && EyeTrackerStatusWrapper.IsAvailable;
         }
 
-        private async void OnStop() {
+        private async Task OnStop() {
             IsBusy = true;
             try {
                 _gazeDataMonitor.Stop();
@@ -154,8 +155,7 @@ namespace GazeMonitoring {
 
             IsBusy = true;
 
-            try
-            {
+            try {
                 _lifetimeScope = _container.BeginLifetimeScope();
 
                 _subjectInfo = new SubjectInfo {
@@ -223,13 +223,20 @@ namespace GazeMonitoring {
 
         private void InvokeEyeTrackerStatusPolling() {
             Task.Factory.StartNew(async () => {
+
                 while (true) {
-                    var status = await _eyeTrackerStatusProvider.GetStatusAsync();
-                    await Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+                    var status = new EyeTrackerStatus();
+                    try {
+                        status = await _eyeTrackerStatusProvider.GetStatusAsync();
+                    } catch {
+                        status.IsAvailable = false;
+                        status.Name = CommonConstants.DefaultEyeTrackerName;
+                    }
+                    await Application.Current.Dispatcher.BeginInvoke(new Action(async () => {
                         EyeTrackerStatusWrapper.IsAvailable = status.IsAvailable;
                         EyeTrackerStatusWrapper.EyeTrackerName = EyeTrackerStatusWrapper.IsAvailable ? status.Name : CommonConstants.DefaultEyeTrackerName;
                         if (!status.IsAvailable && IsStarted) {
-                            OnStop();
+                            await OnStop();
                         }
                     }));
 
