@@ -89,7 +89,7 @@ namespace GazeMonitoring
             builder.Register((c, p) => {
                 var parameters = p as Parameter[] ?? p.ToArray();
                 return new GazeDataMonitor(c.Resolve<GazePointStream>(parameters), c.Resolve<IGazeDataWriter>(parameters));
-            }).As<GazeDataMonitor>();
+            }).As<IGazeDataMonitor>();
             builder.RegisterType<DefaultScreenParametersProvider>().As<IScreenParametersProvider>();
 
             if (autoDiscover) {

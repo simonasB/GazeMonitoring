@@ -4,7 +4,7 @@ using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring {
-    public class GazeDataMonitor {
+    public class GazeDataMonitor : IGazeDataMonitor {
         private readonly GazePointStream _gazePointStream;
         private readonly IGazeDataWriter _gazeDataWriter;
 

@@ -21,7 +21,7 @@ namespace GazeMonitoring {
         private bool _isScreenRecorded;
         private bool _isStarted;
         private bool _isBusy;
-        private GazeDataMonitor _gazeDataMonitor;
+        private IGazeDataMonitor _gazeDataMonitor;
         private readonly IContainer _container;
         private readonly TaskbarIcon _notifyIcon;
         private static ILifetimeScope _lifetimeScope;
@@ -120,22 +120,29 @@ namespace GazeMonitoring {
         private async Task OnStop() {
             IsBusy = true;
             try {
-                _gazeDataMonitor.Stop();
-                _lifetimeScope.Dispose();
-                _subjectInfo.SessionEndTimeStamp = DateTime.UtcNow;
-
                 await Task.Run(() => {
+                    _gazeDataMonitor.Stop();
+                    _lifetimeScope.Dispose();
+                    _subjectInfo.SessionEndTimeStamp = DateTime.UtcNow;
+                });
+                
+
+                var finalizationTask = Task.Run(() => {
                     using (var lifetimeScope = _container.BeginLifetimeScope()) {
                         var finalizer = lifetimeScope.Resolve<IGazeDataMonitorFinalizer>(
                             new NamedParameter(Constants.DataStreamParameterName, SubjectInfoWrapper.DataStream),
                             new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
                         finalizer.FinalizeMonitoring();
                     }
+                });
 
+                var stopRecordingTask = Task.Run(() => {
                     if (IsScreenRecorded) {
                         _screenRecorder?.StopRecording();
                     }
                 });
+
+                await Task.WhenAll(finalizationTask, stopRecordingTask);
             } catch {
                 ShowErrorBalloon();
             }
@@ -169,7 +176,7 @@ namespace GazeMonitoring {
                     _subjectInfo.Details = SubjectInfoWrapper.Details;
                 }
 
-                _gazeDataMonitor = _lifetimeScope.Resolve<GazeDataMonitor>(
+                _gazeDataMonitor = _lifetimeScope.Resolve<IGazeDataMonitor>(
                     new NamedParameter(Constants.DataStreamParameterName, SubjectInfoWrapper.DataStream),
                     new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
                 _gazeDataMonitor.Start();

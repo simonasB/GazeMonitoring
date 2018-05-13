@@ -148,6 +148,7 @@
     <Compile Include="EyeTrackerStatusWrapper.cs" />
     <Compile Include="Commands\IAsyncCommand.cs" />
     <Compile Include="Commands\IRaiseCanExecuteChanged.cs" />
+    <Compile Include="IGazeDataMonitor.cs" />
     <Compile Include="MainWindow.xaml.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="SubjectInfoWrapper.cs" />

@@ -55,6 +55,7 @@
     <Compile Include="MockDiscovery.cs" />
     <Compile Include="MockGazePointStreamFactory.cs" />
     <Compile Include="MockModule.cs" />
+    <Compile Include="MockStatusProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
