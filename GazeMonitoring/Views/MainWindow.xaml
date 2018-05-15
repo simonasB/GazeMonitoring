@@ -156,6 +156,11 @@
                 <ColumnDefinition Width="315*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
+            <Image Margin="0,-50,170.6,329">
+                <Image.Source>
+                    <BitmapImage  UriSource="/images/gm_logo.png" />
+                </Image.Source>
+            </Image>
             <ComboBox Style="{StaticResource ComboBoxTest2}" Name="CmbDataStreams" IsEnabled="{c:Binding '!IsStarted and EyeTrackerStatusWrapper.IsAvailable'}" SelectedItem="{Binding SubjectInfoWrapper.DataStream}" HorizontalAlignment="Left" Margin="21,327,0,0" VerticalAlignment="Top" Width="259" SelectedIndex="0" Height="22" ItemsSource="{Binding Source={StaticResource dataFromEnum}}" Foreground="#FFADADAD" />
             <Button Style="{StaticResource DisabledButtonStyle}" Name="BtnStart" Command="{Binding StartCommand}" Content="Start" HorizontalAlignment="Left" Margin="35,370,0,0" VerticalAlignment="Top" Width="85" Height="25" BorderBrush="#FF4D4D4D" FontSize="14"></Button>
             <Button Style="{StaticResource DisabledButtonStyle}" Name ="BtnStop" Command="{Binding StopCommand}" Content="Stop" HorizontalAlignment="Left" Margin="176,370,0,0" VerticalAlignment="Top" Width="85" Height="25" BorderBrush="#FF4D4D4D" FontSize="14"></Button>
