@@ -58,9 +58,9 @@
     <Compile Include="GazeStreams\LightlyFilteredGazeStream.cs" />
     <Compile Include="GazeStreams\SensitiveFixationGazeStream.cs" />
     <Compile Include="GazeStreams\SlowFixationGazeStream.cs" />
+    <Compile Include="GazeStreams\TobiiCoreBaseGazeStream.cs" />
     <Compile Include="GazeStreams\UnfilteredGazeStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TobiiCoreBaseGazeStream.cs" />
     <Compile Include="TobiiCoreGazePointStreamFactory.cs" />
     <Compile Include="TobiiCoreModule.cs" />
     <Compile Include="TobiiDiscovery.cs" />

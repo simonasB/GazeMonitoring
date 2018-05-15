@@ -58,6 +58,7 @@
     <Compile Include="EyeTribeGazePointStreamFactory.cs" />
     <Compile Include="EyeTribeStatusProvider.cs" />
     <Compile Include="GazeListener.cs" />
+    <Compile Include="GazeStreams\EyeTribeBaseGazeStream.cs" />
     <Compile Include="IFilteredGazeDataPublisher.cs" />
     <Compile Include="GazeStreams\LightlyFilteredGazeStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

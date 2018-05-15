@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using GazeMonitoring.EyeTracker.Core;
+using GazeMonitoring.EyeTracker.Core.Status;
 
 namespace MockMonitoring {
     public class MockStatusProvider : IEyeTrackerStatusProvider {

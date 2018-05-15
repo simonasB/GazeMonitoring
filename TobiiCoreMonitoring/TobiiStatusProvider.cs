@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using GazeMonitoring.EyeTracker.Core;
+using GazeMonitoring.EyeTracker.Core.Status;
 using Tobii.Interaction;
 using Tobii.Interaction.Framework;
 

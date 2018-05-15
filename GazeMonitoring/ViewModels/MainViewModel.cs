@@ -11,6 +11,7 @@ using GazeMonitoring.Commands;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.EyeTracker.Core;
+using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.Model;
 using GazeMonitoring.ScreenCapture;
 using GazeMonitoring.Wrappers;

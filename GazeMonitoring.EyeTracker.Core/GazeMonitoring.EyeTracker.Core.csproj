@@ -51,9 +51,9 @@
     <Compile Include="Discovery\DiscoveryResult.cs" />
     <Compile Include="Discovery\IDiscoverable.cs" />
     <Compile Include="Discovery\TrackerDiscoveryManager.cs" />
-    <Compile Include="EyeTrackerStatus.cs" />
-    <Compile Include="IEyeTrackerStatusProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Status\EyeTrackerStatus.cs" />
+    <Compile Include="Status\IEyeTrackerStatusProvider.cs" />
     <Compile Include="Streams\GazePointStream.cs" />
     <Compile Include="Streams\IGazePointStreamFactory.cs" />
   </ItemGroup>
@@ -66,5 +66,6 @@
       <Name>GazeMonitoring.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
