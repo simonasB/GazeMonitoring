@@ -139,44 +139,37 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\AwaitableDelegateCommand.cs" />
-    <Compile Include="BindableBase.cs" />
-    <Compile Include="BooleanAndConverter.cs" />
+    <Compile Include="Base\BindableBase.cs" />
+    <Compile Include="Base\BooleanAndConverter.cs" />
     <Compile Include="Commands\CommandExtensions.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
-    <Compile Include="CommonConstants.cs" />
+    <Compile Include="Base\CommonConstants.cs" />
     <Compile Include="DefaultScreenParametersProvider.cs" />
-    <Compile Include="EyeTrackerStatusWrapper.cs" />
+    <Compile Include="Wrappers\EyeTrackerStatusWrapper.cs" />
     <Compile Include="Commands\IAsyncCommand.cs" />
     <Compile Include="Commands\IRaiseCanExecuteChanged.cs" />
     <Compile Include="IGazeDataMonitor.cs" />
-    <Compile Include="MainWindow.xaml.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="SubjectInfoWrapper.cs" />
-    <Compile Include="ValidatableBindableBase.cs" />
-    <Page Include="MainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="Wrappers\SubjectInfoWrapper.cs" />
+    <Compile Include="Base\ValidatableBindableBase.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GazeDataMonitor.cs" />
-    <Compile Include="MainView.xaml.cs">
-      <DependentUpon>MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainViewModel.cs" />
-    <Page Include="MainWindow.xaml">
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="NotifyIconResources.xaml">
+    <Page Include="Views\NotifyIconResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NotifyIconViewModel.cs" />
+    <Compile Include="ViewModels\NotifyIconViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

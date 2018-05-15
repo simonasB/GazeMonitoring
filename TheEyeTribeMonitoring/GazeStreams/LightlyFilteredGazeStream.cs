@@ -1,10 +1,9 @@
 ﻿using EyeTribe.ClientSdk.Data;
-using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
 
 namespace TheEyeTribeMonitoring.GazeStreams {
-    public class LightlyFilteredGazeStream : GazePointStream, IFilteredGazeDataPublisher {
-        public void PublishFilteredData(GazeData gazeData) {
+    public class LightlyFilteredGazeStream : EyeTribeBaseGazeStream {
+        public override void PublishFilteredData(GazeData gazeData) {
             OnGazePointReceived(new GazePointReceivedEventArgs {
                 GazePoint = new GazePoint {
                     Timestamp = gazeData.TimeStamp,

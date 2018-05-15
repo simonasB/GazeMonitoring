@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace GazeMonitoring {
+namespace GazeMonitoring.Base {
     public class ValidatableBindableBase : BindableBase, INotifyDataErrorInfo {
         protected readonly Dictionary<string, List<string>> Errors = new Dictionary<string, List<string>>();
 

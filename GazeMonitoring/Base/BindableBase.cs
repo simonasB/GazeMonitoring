@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace GazeMonitoring {
+namespace GazeMonitoring.Base {
     public class BindableBase : INotifyPropertyChanged {
         protected virtual void SetProperty<T>(ref T member, T val,
             [CallerMemberName] string propertyName = null) {

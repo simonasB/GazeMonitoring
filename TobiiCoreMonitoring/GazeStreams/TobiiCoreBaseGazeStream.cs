@@ -3,7 +3,7 @@ using GazeMonitoring.Common;
 using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
 
-namespace TobiiCoreMonitoring {
+namespace TobiiCoreMonitoring.GazeStreams {
     public abstract class TobiiCoreBaseGazeStream : GazePointStream {
         private readonly IScreenParametersProvider _screenParametersProvider;
         private const int DefaultTimestampValue = -1;

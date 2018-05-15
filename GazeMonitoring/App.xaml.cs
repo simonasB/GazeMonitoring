@@ -11,6 +11,7 @@ using GazeMonitoring.EyeTracker.Core.Discovery;
 using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.IoC;
 using GazeMonitoring.Logging;
+using GazeMonitoring.ViewModels;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.Configuration;
 
@@ -32,7 +33,7 @@ namespace GazeMonitoring
                 //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
                 _notifyIcon = (TaskbarIcon) FindResource("NotifyIcon");
 
-                _notifyIcon.DataContext = new NotifyIconViewModel(new MainWindow(_container, _notifyIcon));
+                _notifyIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, _notifyIcon));
 
                 _logger = _container.Resolve<ILoggerFactory>().GetLogger(typeof(App));
                 SetupExceptionHandling();

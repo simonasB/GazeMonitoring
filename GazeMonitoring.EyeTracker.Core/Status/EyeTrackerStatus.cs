@@ -1,4 +1,4 @@
-﻿namespace GazeMonitoring.EyeTracker.Core {
+﻿namespace GazeMonitoring.EyeTracker.Core.Status {
     public class EyeTrackerStatus {
         public bool IsAvailable { get; set; }
 

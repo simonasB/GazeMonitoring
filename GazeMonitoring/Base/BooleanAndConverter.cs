@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace GazeMonitoring {
+namespace GazeMonitoring.Base {
     public class BooleanAndConverter : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture) {
             if (values == null) {

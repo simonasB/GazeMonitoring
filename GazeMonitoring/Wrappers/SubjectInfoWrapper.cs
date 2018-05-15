@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using GazeMonitoring.Base;
 using GazeMonitoring.Model;
 
-namespace GazeMonitoring {
+namespace GazeMonitoring.Wrappers {
     public class SubjectInfoWrapper : ValidatableBindableBase {
         private string _name;
         private int? _age;

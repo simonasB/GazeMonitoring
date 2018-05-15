@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using EyeTribe.ClientSdk;
 using GazeMonitoring.EyeTracker.Core;
+using GazeMonitoring.EyeTracker.Core.Status;
 
 namespace TheEyeTribeMonitoring {
     public class EyeTribeStatusProvider : IEyeTrackerStatusProvider {

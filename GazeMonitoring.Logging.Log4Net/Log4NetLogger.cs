@@ -13,40 +13,20 @@ namespace GazeMonitoring.Logging.Log4Net {
             _logger.Debug(message);
         }
 
-        public void DebugFormat(string message, params object[] args) {
-            _logger.DebugFormat(message, args);
-        }
-
         public void Information(object message) {
             _logger.Info(message);
-        }
-
-        public void InformationFormat(string message, params object[] args) {
-            _logger.InfoFormat(message, args);
         }
 
         public void Warning(object message) {
             _logger.Warn(message);
         }
 
-        public void WarningFormat(string message, params object[] args) {
-            _logger.WarnFormat(message, args);
-        }
-
         public void Error(object message) {
             _logger.Error(message);
         }
 
-        public void ErrorFormat(string message, params object[] args) {
-            _logger.ErrorFormat(message, args);
-        }
-
         public void Fatal(object message) {
             _logger.Fatal(message);
-        }
-
-        public void FatalFormat(string message, params object[] args) {
-            _logger.FatalFormat(message, args);
         }
 
         public bool IsDebugEnabled => _logger.IsDebugEnabled;

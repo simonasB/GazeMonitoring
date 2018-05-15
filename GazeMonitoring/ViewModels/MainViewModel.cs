@@ -6,16 +6,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Autofac;
+using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.EyeTracker.Core;
 using GazeMonitoring.Model;
 using GazeMonitoring.ScreenCapture;
+using GazeMonitoring.Wrappers;
 using Hardcodet.Wpf.TaskbarNotification;
 using IContainer = Autofac.IContainer;
 
-namespace GazeMonitoring {
+namespace GazeMonitoring.ViewModels {
     public class MainViewModel : INotifyPropertyChanged {
         private bool _isAnonymous;
         private bool _isScreenRecorded;

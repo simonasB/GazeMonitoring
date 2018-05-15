@@ -1,18 +1,17 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using GazeMonitoring.Commands;
 
-namespace GazeMonitoring {
+namespace GazeMonitoring.ViewModels {
     /// <summary>
     /// Provides bindable properties and commands for the NotifyIcon. In this sample, the
     /// view model is assigned to the NotifyIcon in XAML. Alternatively, the startup routing
     /// in App.xaml.cs could have created this view model, and assigned it to the NotifyIcon.
     /// </summary>
     public class NotifyIconViewModel {
-        private readonly MainWindow _mainWindow;
+        private readonly Views.MainWindow _mainWindow;
 
-        public NotifyIconViewModel(MainWindow mainWindow) {
+        public NotifyIconViewModel(Views.MainWindow mainWindow) {
             _mainWindow = mainWindow;
         }
         /// <summary>

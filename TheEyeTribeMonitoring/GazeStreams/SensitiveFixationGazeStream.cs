@@ -1,10 +1,9 @@
 ﻿using EyeTribe.ClientSdk.Data;
-using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
 
 namespace TheEyeTribeMonitoring.GazeStreams {
-    public class SensitiveFixationGazeStream : GazePointStream, IFilteredGazeDataPublisher {
-        public void PublishFilteredData(GazeData gazeData) {
+    public class SensitiveFixationGazeStream : EyeTribeBaseGazeStream {
+        public override void PublishFilteredData(GazeData gazeData) {
             if (gazeData.IsFixated) {
                 OnGazePointReceived(new GazePointReceivedEventArgs {
                     GazePoint = new GazePoint {

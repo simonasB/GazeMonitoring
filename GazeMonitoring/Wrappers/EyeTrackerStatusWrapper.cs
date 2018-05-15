@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using GazeMonitoring.Commands;
 
-namespace GazeMonitoring {
+namespace GazeMonitoring.Wrappers {
     public class EyeTrackerStatusWrapper : INotifyPropertyChanged {
         private readonly RelayCommand _startCommand;
         private readonly AwaitableDelegateCommand _stopCommand;
