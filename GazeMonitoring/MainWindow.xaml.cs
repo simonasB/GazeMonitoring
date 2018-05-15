@@ -25,5 +25,15 @@ namespace GazeMonitoring {
             this.Left = desktopWorkingArea.Right - this.Width;
             this.Top = desktopWorkingArea.Bottom - this.Height;
         }
+
+        private void BtnStop_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CmbDataStreams_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
