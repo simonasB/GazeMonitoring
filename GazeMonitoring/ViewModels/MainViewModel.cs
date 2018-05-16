@@ -10,7 +10,6 @@ using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Finalizers;
-using GazeMonitoring.EyeTracker.Core;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.Model;
 using GazeMonitoring.ScreenCapture;
@@ -215,11 +214,6 @@ namespace GazeMonitoring.ViewModels {
 
                 if (SubjectInfoWrapper.Age == null) {
                     SubjectInfoWrapper.Age = null;
-                    isFormValid = false;
-                }
-
-                if (string.IsNullOrEmpty(SubjectInfoWrapper.Details)) {
-                    SubjectInfoWrapper.Details = null;
                     isFormValid = false;
                 }
             }
