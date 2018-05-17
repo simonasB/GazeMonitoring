@@ -264,6 +264,9 @@
     <Resource Include="Images\gm_logo32.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Images\gm_logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
