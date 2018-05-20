@@ -37,7 +37,7 @@ namespace GazeMonitoring.Common.Calculations {
             }
 
             if (currentPoint == null) {
-                throw new ArgumentNullException(nameof(previousPoint));
+                throw new ArgumentNullException(nameof(currentPoint));
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using GazeMonitoring.EyeTracker.Core;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
 

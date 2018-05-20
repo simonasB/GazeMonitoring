@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using GazeMonitoring.EyeTracker.Core.Discovery;
+using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
 
 namespace MockMonitoring {
@@ -11,8 +12,10 @@ namespace MockMonitoring {
             }
 
             container.RegisterType<MockGazePointStreamFactory>().As<IGazePointStreamFactory>();
+            container.RegisterType<MockStatusProvider>().As<IEyeTrackerStatusProvider>();
+
             return new DiscoveryResult {
-                IsActive = true
+                IsActive = false
             };
         }
     }

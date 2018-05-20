@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using EyeTribe.ClientSdk;
 using GazeMonitoring.EyeTracker.Core.Discovery;
+using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
 
 namespace TheEyeTribeMonitoring {
@@ -12,6 +13,7 @@ namespace TheEyeTribeMonitoring {
             if (GazeManager.Instance.Trackerstate == GazeManagerCore.TrackerState.TRACKER_CONNECTED) {
                 discoveryResult.IsActive = true;
                 container.RegisterType<EyeTribeGazePointStreamFactory>().As<IGazePointStreamFactory>();
+                container.RegisterType<EyeTribeStatusProvider>().As<IEyeTrackerStatusProvider>();
             } else {
                 discoveryResult.IsActive = false;
                 GazeManager.Instance.Deactivate();

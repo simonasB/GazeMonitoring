@@ -22,7 +22,7 @@ namespace GazeMonitoring
     /// </summary>
     public partial class App : Application
     {
-        private TaskbarIcon _notifyIcon;
+        private TaskbarIcon _taskbarIcon;
         private static IContainer _container;
         private ILogger _logger;
         protected override void OnStartup(StartupEventArgs e)
@@ -31,9 +31,9 @@ namespace GazeMonitoring
             try {
                 Init();
                 //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
-                _notifyIcon = (TaskbarIcon) FindResource("NotifyIcon");
+                _taskbarIcon = (TaskbarIcon) FindResource("NotifyIcon");
 
-                _notifyIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, _notifyIcon));
+                _taskbarIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, new BalloonService(_taskbarIcon)));
 
                 _logger = _container.Resolve<ILoggerFactory>().GetLogger(typeof(App));
                 SetupExceptionHandling();
@@ -70,7 +70,7 @@ namespace GazeMonitoring
 
         protected override void OnExit(ExitEventArgs e)
         {
-            _notifyIcon?.Dispose(); //the icon would clean up automatically, but this is cleaner
+            _taskbarIcon?.Dispose(); //the icon would clean up automatically, but this is cleaner
             base.OnExit(e);
         }
 

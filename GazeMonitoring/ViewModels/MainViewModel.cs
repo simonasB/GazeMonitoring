@@ -25,16 +25,16 @@ namespace GazeMonitoring.ViewModels {
         private bool _isBusy;
         private IGazeDataMonitor _gazeDataMonitor;
         private readonly IContainer _container;
-        private readonly TaskbarIcon _notifyIcon;
+        private readonly IBalloonService _balloonService;
         private static ILifetimeScope _lifetimeScope;
         private IScreenRecorder _screenRecorder;
         private SubjectInfo _subjectInfo;
         private readonly IEyeTrackerStatusProvider _eyeTrackerStatusProvider;
         private const int PollIntervalSeconds = 5;
 
-        public MainViewModel(IContainer container, TaskbarIcon notifyIcon) {
+        public MainViewModel(IContainer container, IBalloonService balloonService) {
             _container = container;
-            _notifyIcon = notifyIcon;
+            _balloonService = balloonService;
             StartCommand = new RelayCommand(OnStart, CanStart);
             StopCommand = new AwaitableDelegateCommand(OnStop, CanStop);
             SubjectInfoWrapper = new SubjectInfoWrapper();
@@ -222,7 +222,7 @@ namespace GazeMonitoring.ViewModels {
         }
 
         private void ShowErrorBalloon() {
-            _notifyIcon.ShowBalloonTip("Error", "Unrecoverable error occurred.", BalloonIcon.Error);
+            _balloonService.ShowBalloonTip("Error", "Unrecoverable error occurred.", BalloonIcon.Error);
         }
 
         private void InvokeEyeTrackerStatusPolling() {

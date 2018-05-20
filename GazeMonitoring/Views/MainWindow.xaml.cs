@@ -11,8 +11,8 @@ namespace GazeMonitoring.Views {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        public MainWindow(IContainer container, TaskbarIcon notifyIcon) {
-            this.DataContext = new MainViewModel(container, notifyIcon);
+        public MainWindow(IContainer container, IBalloonService balloonService) {
+            this.DataContext = new MainViewModel(container, balloonService);
             InitializeComponent();
             CmbDataStreams.ItemsSource = Enum.GetValues(typeof(DataStream)).Cast<DataStream>();
         }

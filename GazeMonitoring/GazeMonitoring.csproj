@@ -138,6 +138,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BalloonService.cs" />
     <Compile Include="Commands\AwaitableDelegateCommand.cs" />
     <Compile Include="Base\BindableBase.cs" />
     <Compile Include="Base\BooleanAndConverter.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Base\CommonConstants.cs" />
     <Compile Include="DefaultScreenParametersProvider.cs" />
+    <Compile Include="IBalloonService.cs" />
     <Compile Include="Wrappers\EyeTrackerStatusWrapper.cs" />
     <Compile Include="Commands\IAsyncCommand.cs" />
     <Compile Include="Commands\IRaiseCanExecuteChanged.cs" />
