@@ -46,7 +46,10 @@ namespace GazeMonitoring.Data.PostgreSQL {
                     reader.ReadLine();
                     // now initialize the CsvReader
                     var parser = new CsvReader(reader);
-                    
+                    parser.Configuration.ReadingExceptionOccurred = null;
+                    parser.Configuration.BadDataFound = null;
+                    parser.Configuration.MissingFieldFound = null;
+
                     var gazePoints = parser.GetRecords<GazePoint>();
 
                     _databaseRepository.BinaryInsertGazePoints(gazePoints, _subjectInfo.SessionId, savedSubjectInfo?.Id, DateTime.UtcNow);
@@ -63,6 +66,10 @@ namespace GazeMonitoring.Data.PostgreSQL {
                     reader.ReadLine();
                     // now initialize the CsvReader
                     var parser = new CsvReader(reader);
+                    parser.Configuration.ReadingExceptionOccurred = null;
+                    parser.Configuration.BadDataFound = null;
+                    parser.Configuration.MissingFieldFound = null;
+
                     var saccades = parser.GetRecords<Saccade>();
 
                     _databaseRepository.BinaryInsertSaccades(saccades, _subjectInfo.SessionId, savedSubjectInfo?.Id, DateTime.UtcNow);

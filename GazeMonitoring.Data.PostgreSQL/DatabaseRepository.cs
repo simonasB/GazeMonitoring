@@ -110,22 +110,26 @@ namespace GazeMonitoring.Data.PostgreSQL {
                 throw new ArgumentNullException(nameof(gazePoints));
             }
 
-            using (var connection = Common.CreateConnection(_connectionString)) {
-                var partitionName = Common.GetPartitionName(sampleTime);
+            try {
+                using (var connection = Common.CreateConnection(_connectionString)) {
+                    var partitionName = Common.GetPartitionName(sampleTime);
 
-                string copyFromCommand = $"COPY {Constants.GazePointTableName}_{partitionName} ({string.Join(",", _gazePointsColumn)}) FROM STDIN (FORMAT BINARY)";
+                    string copyFromCommand = $"COPY {Constants.GazePointTableName}_{partitionName} ({string.Join(",", _gazePointsColumn)}) FROM STDIN (FORMAT BINARY)";
 
-                using (NpgsqlBinaryImporter npgsqlBinaryImporter = connection.BeginBinaryImport(copyFromCommand)) {
-                    foreach (var gazePoint in gazePoints) {
-                        npgsqlBinaryImporter.StartRow();
-                        npgsqlBinaryImporter.Write(gazePoint.X, NpgsqlDbType.Double);
-                        npgsqlBinaryImporter.Write(gazePoint.Y, NpgsqlDbType.Double);
-                        npgsqlBinaryImporter.Write(gazePoint.Timestamp, NpgsqlDbType.Bigint);
-                        npgsqlBinaryImporter.Write(sessionId, NpgsqlDbType.Uuid);
-                        npgsqlBinaryImporter.Write(subjectInfoId, NpgsqlDbType.Integer);
-                        npgsqlBinaryImporter.Write(sampleTime, NpgsqlDbType.Timestamp);
+                    using (NpgsqlBinaryImporter npgsqlBinaryImporter = connection.BeginBinaryImport(copyFromCommand)) {
+                        foreach (var gazePoint in gazePoints) {
+                            npgsqlBinaryImporter.StartRow();
+                            npgsqlBinaryImporter.Write(gazePoint.X, NpgsqlDbType.Double);
+                            npgsqlBinaryImporter.Write(gazePoint.Y, NpgsqlDbType.Double);
+                            npgsqlBinaryImporter.Write(gazePoint.Timestamp, NpgsqlDbType.Bigint);
+                            npgsqlBinaryImporter.Write(sessionId, NpgsqlDbType.Uuid);
+                            npgsqlBinaryImporter.Write(subjectInfoId, NpgsqlDbType.Integer);
+                            npgsqlBinaryImporter.Write(sampleTime, NpgsqlDbType.Timestamp);
+                        }
                     }
                 }
+            } catch(Exception ex) {
+                _logger.Error(ex);
             }
         }
 
@@ -133,25 +137,28 @@ namespace GazeMonitoring.Data.PostgreSQL {
             if (saccades == null) {
                 throw new ArgumentNullException(nameof(saccades));
             }
+            try {
+                using (var connection = Common.CreateConnection(_connectionString)) {
+                    var partitionName = Common.GetPartitionName(sampleTime);
 
-            using (var connection = Common.CreateConnection(_connectionString)) {
-                var partitionName = Common.GetPartitionName(sampleTime);
+                    string copyFromCommand = $"COPY {Constants.SaccadeTableName}_{partitionName} ({string.Join(",", _saccadeColumns)}) FROM STDIN (FORMAT BINARY)";
 
-                string copyFromCommand = $"COPY {Constants.SaccadeTableName}_{partitionName} ({string.Join(",", _saccadeColumns)}) FROM STDIN (FORMAT BINARY)";
-
-                using (NpgsqlBinaryImporter npgsqlBinaryImporter = connection.BeginBinaryImport(copyFromCommand)) {
-                    foreach (var saccade in saccades) {
-                        npgsqlBinaryImporter.StartRow();
-                        npgsqlBinaryImporter.Write(saccade.Direction, NpgsqlDbType.Double);
-                        npgsqlBinaryImporter.Write(saccade.Amplitude, NpgsqlDbType.Double);
-                        npgsqlBinaryImporter.Write(saccade.Velocity, NpgsqlDbType.Double);
-                        npgsqlBinaryImporter.Write(saccade.StartTimeStamp, NpgsqlDbType.Bigint);
-                        npgsqlBinaryImporter.Write(saccade.EndTimeStamp, NpgsqlDbType.Bigint);
-                        npgsqlBinaryImporter.Write(sessionId, NpgsqlDbType.Uuid);
-                        npgsqlBinaryImporter.Write(subjectInfoId, NpgsqlDbType.Integer);
-                        npgsqlBinaryImporter.Write(sampleTime, NpgsqlDbType.Timestamp);
+                    using (NpgsqlBinaryImporter npgsqlBinaryImporter = connection.BeginBinaryImport(copyFromCommand)) {
+                        foreach (var saccade in saccades) {
+                            npgsqlBinaryImporter.StartRow();
+                            npgsqlBinaryImporter.Write(saccade.Direction, NpgsqlDbType.Double);
+                            npgsqlBinaryImporter.Write(saccade.Amplitude, NpgsqlDbType.Double);
+                            npgsqlBinaryImporter.Write(saccade.Velocity, NpgsqlDbType.Double);
+                            npgsqlBinaryImporter.Write(saccade.StartTimeStamp, NpgsqlDbType.Bigint);
+                            npgsqlBinaryImporter.Write(saccade.EndTimeStamp, NpgsqlDbType.Bigint);
+                            npgsqlBinaryImporter.Write(sessionId, NpgsqlDbType.Uuid);
+                            npgsqlBinaryImporter.Write(subjectInfoId, NpgsqlDbType.Integer);
+                            npgsqlBinaryImporter.Write(sampleTime, NpgsqlDbType.Timestamp);
+                        }
                     }
                 }
+            } catch (Exception ex) {
+                _logger.Error(ex);
             }
         }
 

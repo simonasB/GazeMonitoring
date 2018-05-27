@@ -10,12 +10,17 @@ namespace GazeMonitoring.Common.Calculations {
             var deltaY = currentPoint.Y - previousPoint.Y;
 
             var saccade = new Saccade {
-                Direction = RadianToDegree(Math.Atan(Math.Abs(deltaY) /
-                                      Math.Abs(deltaX))),
                 Amplitude = Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2)),
                 StartTimeStamp = previousPoint.Timestamp,
                 EndTimeStamp = currentPoint.Timestamp
             };
+
+            if (Math.Abs(deltaX) > 0.0001) {
+                saccade.Direction = RadianToDegree(Math.Atan(Math.Abs(deltaY) /
+                                                             Math.Abs(deltaX)));
+            } else {
+                saccade.Direction = 0;
+            }
 
             var deltaTimeStamp = currentPoint.Timestamp -
                                  previousPoint.Timestamp;

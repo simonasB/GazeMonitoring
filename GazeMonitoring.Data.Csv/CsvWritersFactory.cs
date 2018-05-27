@@ -55,6 +55,8 @@ namespace GazeMonitoring.Data.Csv {
         }
 
         private void Initialize<T>(CsvWriter csvWriter) {
+            csvWriter.Configuration.RegisterClassMap<SubjectInfoMap>();
+
             csvWriter.WriteHeader<SubjectInfo>();
             csvWriter.NextRecord();
 

@@ -8,8 +8,8 @@ namespace TobiiCoreMonitoring.GazeStreams {
         private readonly IScreenParametersProvider _screenParametersProvider;
         private const int DefaultTimestampValue = -1;
 
-        private static long _firstReceivedUnixTimestamp = DefaultTimestampValue;
-        private static long _firstReceivedTrackerTimestamp = DefaultTimestampValue;
+        private long _firstReceivedUnixTimestamp = DefaultTimestampValue;
+        private long _firstReceivedTrackerTimestamp = DefaultTimestampValue;
 
         protected TobiiCoreBaseGazeStream(IScreenParametersProvider screenParametersProvider) {
             _screenParametersProvider = screenParametersProvider;

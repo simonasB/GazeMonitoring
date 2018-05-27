@@ -246,10 +246,6 @@
       <Project>{1368F8C5-AB06-4211-94A2-A44CA3A1E291}</Project>
       <Name>GazeMonitoring.ScreenCapture</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MockMonitoring\MockMonitoring.csproj">
-      <Project>{60f20997-4a0b-4769-879b-d270b35ac149}</Project>
-      <Name>MockMonitoring</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TheEyeTribeMonitoring\TheEyeTribeMonitoring.csproj">
       <Project>{f1c9fa6b-755d-442e-b6b6-b7cddd88cd62}</Project>
       <Name>TheEyeTribeMonitoring</Name>

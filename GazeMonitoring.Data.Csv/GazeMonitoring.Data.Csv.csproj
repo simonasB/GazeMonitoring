@@ -57,6 +57,7 @@
     <Compile Include="CsvWriterWrapper.cs" />
     <Compile Include="ICsvWritersFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubjectInfoMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
