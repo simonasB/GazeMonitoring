@@ -12,7 +12,7 @@ namespace TobiiCoreMonitoring.GazeStreams {
                     GazePoint = new GazePoint {
                         X = x,
                         Y = y,
-                        Timestamp = (long) (timestamp * 1000)
+                        Timestamp = (long) (timestamp)
                     }
                 });
             });
@@ -22,7 +22,7 @@ namespace TobiiCoreMonitoring.GazeStreams {
                     GazePoint = new GazePoint {
                         X = x,
                         Y = y,
-                        Timestamp = (long) (timestamp * 1000)
+                        Timestamp = (long) (timestamp)
                     }
                 });
             });

@@ -11,7 +11,7 @@ namespace TobiiCoreMonitoring.GazeStreams {
                     GazePoint = new GazePoint {
                         X = data.Data.X,
                         Y = data.Data.Y,
-                        Timestamp = (long)(data.Data.Timestamp * 1000)
+                        Timestamp = (long)(data.Data.Timestamp)
                     }
                 });
             };

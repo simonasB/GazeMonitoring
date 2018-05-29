@@ -14,7 +14,7 @@ namespace TobiiCoreMonitoring.GazeStreams {
                     {
                         X = x,
                         Y = y,
-                        Timestamp = (long)(timestamp * 1000)
+                        Timestamp = (long)(timestamp)
                     }
                 });
             });
@@ -26,7 +26,7 @@ namespace TobiiCoreMonitoring.GazeStreams {
                     {
                         X = x,
                         Y = y,
-                        Timestamp = (long)(timestamp * 1000)
+                        Timestamp = (long)(timestamp)
                     }
                 });
             });
