@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -184,10 +185,14 @@ namespace GazeMonitoring.ViewModels {
                 _gazeDataMonitor.Start();
 
                 if (IsScreenRecorded) {
+                    const string videoFolderName = "recorded_videos";
+                    if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), videoFolderName))) {
+                        Directory.CreateDirectory(videoFolderName);
+                    }
                     _screenRecorder = _lifetimeScope.Resolve<IScreenRecorder>(
                         new NamedParameter(Constants.DataStreamParameterName, SubjectInfoWrapper.DataStream),
                         new NamedParameter(Constants.RecorderParamsParameterName,
-                            new RecorderParams($"video_{SubjectInfoWrapper.DataStream}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi", 10,
+                            new RecorderParams($"{videoFolderName}/video_{SubjectInfoWrapper.DataStream}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi", 10,
                                 50)));
                     _screenRecorder.StartRecording();
                 }

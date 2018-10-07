@@ -33,9 +33,9 @@ namespace GazeMonitoring
                 //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
                 _taskbarIcon = (TaskbarIcon) FindResource("NotifyIcon");
 
+                _logger = _container.Resolve<ILoggerFactory>().GetLogger(typeof(App));
                 _taskbarIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, new BalloonService(_taskbarIcon)));
 
-                _logger = _container.Resolve<ILoggerFactory>().GetLogger(typeof(App));
                 SetupExceptionHandling();
             } catch (Exception ex) {
                 _logger?.Error(ex);

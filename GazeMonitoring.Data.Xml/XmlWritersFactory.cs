@@ -54,8 +54,16 @@ namespace GazeMonitoring.Data.Xml {
         private XmlWriterWrapper CreateXmlWriter<T>(string dataStream)
         {
             var fileName = new FileName { DataStream = dataStream, DateTime = DateTime.Now };
-            var fileStream = File.Create(Path.Combine(Directory.GetCurrentDirectory(), _fileNameFormatter.Format(fileName)));
-            var xmlWriter = XmlWriter.Create(fileStream); ;
+
+            const string xmlFolderName = "data_xml";
+            var xmlFolderPath = Path.Combine(Directory.GetCurrentDirectory(), xmlFolderName);
+
+            if (!Directory.Exists(xmlFolderPath)) {
+                Directory.CreateDirectory(xmlFolderPath);
+            }
+
+            var fileStream = File.Create(Path.Combine(xmlFolderPath, _fileNameFormatter.Format(fileName)));
+            var xmlWriter = XmlWriter.Create(fileStream);
 
             Initialize<T>(xmlWriter);
             return new XmlWriterWrapper(fileStream, xmlWriter);
