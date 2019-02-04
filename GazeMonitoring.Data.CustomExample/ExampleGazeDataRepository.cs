@@ -18,6 +18,10 @@ namespace GazeMonitoring.Data.CustomExample {
             if (saccade == null) throw new ArgumentNullException(nameof(saccade));
             _writer.Write(saccade);
         }
+
+        public void SaveFixationPoint(FixationPoint point) {
+            throw new NotImplementedException();
+        }
     }
 
     public interface IExampleWriter {

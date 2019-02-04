@@ -44,5 +44,15 @@ namespace GazeMonitoring.Data.Csv {
             csvWriter.WriteRecord(saccade);
             csvWriter.NextRecord();
         }
+
+        public void SaveFixationPoint(FixationPoint point) {
+            if (point == null) {
+                throw new ArgumentNullException(nameof(point));
+            }
+
+            var csvWriter = GetCsvWriter(typeof(FixationPoint));
+            csvWriter.WriteRecord(point);
+            csvWriter.NextRecord();
+        }
     }
 }

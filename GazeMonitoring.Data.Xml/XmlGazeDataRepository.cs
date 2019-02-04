@@ -34,6 +34,10 @@ namespace GazeMonitoring.Data.Xml {
             Write(saccade);
         }
 
+        public void SaveFixationPoint(FixationPoint point) {
+            throw new NotImplementedException();
+        }
+
         public void Dispose() {
             foreach (var xmlWriterWrapper in _xmlWriterWrappers) {
                 xmlWriterWrapper.Value?.Dispose();

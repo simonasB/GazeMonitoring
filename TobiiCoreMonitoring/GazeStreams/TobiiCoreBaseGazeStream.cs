@@ -21,7 +21,7 @@ namespace TobiiCoreMonitoring.GazeStreams {
                 _firstReceivedTrackerTimestamp = e.GazePoint.Timestamp;
             }
             e.GazePoint.Timestamp = _firstReceivedUnixTimestamp + e.GazePoint.Timestamp - _firstReceivedTrackerTimestamp;
-            e.GazePoint.Y = _screenParametersProvider.Height - e.GazePoint.Y;
+            //e.GazePoint.Y = _screenParametersProvider.Height - e.GazePoint.Y;
             base.OnGazePointReceived(e);
         }
     }

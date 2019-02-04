@@ -33,11 +33,11 @@ namespace GazeMonitoring.Data.Csv {
                     csvWriters.Add(typeof(GazePoint), CreateCsvWriter<GazePoint>(dataStream.ToString()));
                     break;
                 case DataStream.SensitiveFixation:
-                    csvWriters.Add(typeof(GazePoint), CreateCsvWriter<GazePoint>(dataStream.ToString()));
+                    csvWriters.Add(typeof(FixationPoint), CreateCsvWriter<FixationPoint>(dataStream.ToString()));
                     csvWriters.Add(typeof(Saccade), CreateCsvWriter<Saccade>($"{dataStream}_Saccades"));
                     break;
                 case DataStream.SlowFixation:
-                    csvWriters.Add(typeof(GazePoint), CreateCsvWriter<GazePoint>(dataStream.ToString()));
+                    csvWriters.Add(typeof(FixationPoint), CreateCsvWriter<FixationPoint>(dataStream.ToString()));
                     csvWriters.Add(typeof(Saccade), CreateCsvWriter<Saccade>($"{dataStream}_Saccades"));
                     break;
             }

@@ -45,6 +45,7 @@
     <Compile Include="IFileNameFormatter.cs" />
     <Compile Include="IGazeDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Writers\FixationPointsWriter.cs" />
     <Compile Include="Writers\GazeDataWriterFactory.cs" />
     <Compile Include="Writers\GazePointWriter.cs" />
     <Compile Include="Writers\IGazeDataWriter.cs" />

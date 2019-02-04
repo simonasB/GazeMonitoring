@@ -30,7 +30,7 @@ namespace GazeMonitoring.Data.Writers {
                 case DataStream.SensitiveFixation:
                 case DataStream.SlowFixation:
                     var gazeDataWriters = new List<IGazeDataWriter>();
-                    gazeDataWriters.Add(new GazePointWriter(_repository));
+                    gazeDataWriters.Add(new FixationPointsWriter(_repository));
                     gazeDataWriters.Add(new SaccadesWriter(_repository, _saccadeCalculator));
                     return new MultipleSourcesGazeDataWriter(gazeDataWriters);
                 default:
