@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring", "GazeMonitoring\GazeMonitoring.csproj", "{D5944506-6871-440A-A210-D71C7ABA2BDA}"
 EndProject
@@ -25,10 +25,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Data.Postgre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Logging", "GazeMonitoring.Logging\GazeMonitoring.Logging.csproj", "{D54C6080-859C-4E1E-A4CE-B5407E474326}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Model", "GazeMonitoring.Model\GazeMonitoring.Model.csproj", "{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.EyeTracker.Core", "GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj", "{333EB528-1F08-411D-9AF2-83DC0F475121}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.ScreenCapture", "GazeMonitoring.ScreenCapture\GazeMonitoring.ScreenCapture.csproj", "{1368F8C5-AB06-4211-94A2-A44CA3A1E291}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.ScreenCapture.SharpAvi", "GazeMonitoring.ScreenCapture.SharpAvi\GazeMonitoring.ScreenCapture.SharpAvi.csproj", "{70FF8F72-379E-4E23-B864-892FCB8AF93D}"
@@ -38,6 +34,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Tests", "GazeMonitoring.Tests\GazeMonitoring.Tests.csproj", "{0B3424A5-753D-47C5-B315-23CFC5C22021}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Data.CustomExample", "GazeMonitoring.Data.CustomExample\GazeMonitoring.Data.CustomExample.csproj", "{3FA0B2D3-F486-4688-9EFE-4D49F98F6F56}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GazeMonitoring.Model", "GazeMonitoring.Model\GazeMonitoring.Model.csproj", "{7AB3272C-2C51-440D-8C40-EA88D3B8501A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GazeMonitoring.EyeTracker.Core", "GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj", "{24F906AF-DF04-4A59-9215-47186318F9B5}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "GazeMonitoring.Installer", "GazeMonitoring.Installer\GazeMonitoring.Installer.vdproj", "{A4D9620A-AA32-432D-977B-E01DFBA2FD43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,14 +91,6 @@ Global
 		{D54C6080-859C-4E1E-A4CE-B5407E474326}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D54C6080-859C-4E1E-A4CE-B5407E474326}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D54C6080-859C-4E1E-A4CE-B5407E474326}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93C19BF7-10EF-4B45-A27E-3CC69DCBAEDE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{333EB528-1F08-411D-9AF2-83DC0F475121}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{333EB528-1F08-411D-9AF2-83DC0F475121}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{333EB528-1F08-411D-9AF2-83DC0F475121}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{333EB528-1F08-411D-9AF2-83DC0F475121}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1368F8C5-AB06-4211-94A2-A44CA3A1E291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1368F8C5-AB06-4211-94A2-A44CA3A1E291}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1368F8C5-AB06-4211-94A2-A44CA3A1E291}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -117,6 +111,16 @@ Global
 		{3FA0B2D3-F486-4688-9EFE-4D49F98F6F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FA0B2D3-F486-4688-9EFE-4D49F98F6F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FA0B2D3-F486-4688-9EFE-4D49F98F6F56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AB3272C-2C51-440D-8C40-EA88D3B8501A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AB3272C-2C51-440D-8C40-EA88D3B8501A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AB3272C-2C51-440D-8C40-EA88D3B8501A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AB3272C-2C51-440D-8C40-EA88D3B8501A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24F906AF-DF04-4A59-9215-47186318F9B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F906AF-DF04-4A59-9215-47186318F9B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F906AF-DF04-4A59-9215-47186318F9B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F906AF-DF04-4A59-9215-47186318F9B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4D9620A-AA32-432D-977B-E01DFBA2FD43}.Debug|Any CPU.ActiveCfg = Debug
+		{A4D9620A-AA32-432D-977B-E01DFBA2FD43}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

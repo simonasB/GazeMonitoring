@@ -8,7 +8,7 @@ namespace TobiiCoreMonitoring.GazeStreams {
         private double _lastFixationStartTime;
         private FixationPoint _lastFixationPoint;
 
-        public SlowFixationGazeStream(Host host, IScreenParametersProvider screenParametersProvider) : base(screenParametersProvider) {
+        public SlowFixationGazeStream(Host host, IScreenParameters screenParameters) : base(screenParameters) {
             var stream = host.Streams.CreateFixationDataStream(FixationDataMode.Slow);
             stream.Begin((x, y, timestamp) => {
                 _lastFixationPoint = new FixationPoint {
@@ -20,10 +20,14 @@ namespace TobiiCoreMonitoring.GazeStreams {
             });
 
             stream.End((x, y, timestamp) => {
-                _lastFixationPoint.DurationInMillis = (long)(timestamp - _lastFixationStartTime);
-                OnGazePointReceived(new GazePointReceivedEventArgs {
-                    GazePoint = _lastFixationPoint
-                });
+                if (_lastFixationPoint != null)
+                {
+                    _lastFixationPoint.DurationInMillis = (long) (timestamp - _lastFixationStartTime);
+                    OnGazePointReceived(new GazePointReceivedEventArgs
+                    {
+                        GazePoint = _lastFixationPoint
+                    });
+                }
             });
         }
     }

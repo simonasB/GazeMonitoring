@@ -12,6 +12,7 @@ using GazeMonitoring.Commands;
 using GazeMonitoring.Common;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.EyeTracker.Core.Status;
+using GazeMonitoring.Logging;
 using GazeMonitoring.Model;
 using GazeMonitoring.ScreenCapture;
 using GazeMonitoring.Wrappers;
@@ -32,6 +33,7 @@ namespace GazeMonitoring.ViewModels {
         private SubjectInfo _subjectInfo;
         private readonly IEyeTrackerStatusProvider _eyeTrackerStatusProvider;
         private const int PollIntervalSeconds = 5;
+        private readonly ILogger _logger;
 
         public MainViewModel(IContainer container, IBalloonService balloonService) {
             _container = container;
@@ -44,6 +46,7 @@ namespace GazeMonitoring.ViewModels {
             EyeTrackerStatusWrapper = new EyeTrackerStatusWrapper(StartCommand, StopCommand) {
                 EyeTrackerName = CommonConstants.DefaultEyeTrackerName
             };
+            _logger = container.Resolve<ILoggerFactory>().GetLogger(typeof(MainViewModel));
         }
 
         public bool IsAnonymous {
@@ -146,7 +149,8 @@ namespace GazeMonitoring.ViewModels {
                 });
 
                 await Task.WhenAll(finalizationTask, stopRecordingTask);
-            } catch {
+            } catch (Exception ex) {
+                _logger.Error($"Unhandled error occured on stop. Ex: {ex}");
                 ShowErrorBalloon();
             }
 
@@ -196,7 +200,8 @@ namespace GazeMonitoring.ViewModels {
                                 50)));
                     _screenRecorder.StartRecording();
                 }
-            } catch {
+            } catch (Exception ex){
+                _logger.Error($"Unhandled exception occured on start. {ex}");
                 ShowErrorBalloon();
                 IsBusy = false;
                 _lifetimeScope.Dispose();

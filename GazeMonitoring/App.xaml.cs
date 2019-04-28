@@ -7,7 +7,7 @@ using Autofac.Configuration;
 using Autofac.Core;
 using GazeMonitoring.Common;
 using GazeMonitoring.Data.Writers;
-using GazeMonitoring.EyeTracker.Core.Discovery;
+using GazeMonitoring.Discovery;
 using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.IoC;
 using GazeMonitoring.Logging;
@@ -37,9 +37,10 @@ namespace GazeMonitoring
                 _taskbarIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, new BalloonService(_taskbarIcon)));
 
                 SetupExceptionHandling();
-            } catch (Exception ex) {
+            } catch (Exception ex)
+            {
                 _logger?.Error(ex);
-                MessageBox.Show("Could not launch GazeMonitoring application.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Could not launch GazeMonitoring application.{ex}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Current.Shutdown();
             }
         }
@@ -91,7 +92,7 @@ namespace GazeMonitoring
                 var parameters = p as Parameter[] ?? p.ToArray();
                 return new GazeDataMonitor(c.Resolve<GazePointStream>(parameters), c.Resolve<IGazeDataWriter>(parameters));
             }).As<IGazeDataMonitor>();
-            builder.RegisterType<DefaultScreenParametersProvider>().As<IScreenParametersProvider>();
+            builder.RegisterType<DefaultScreenParameters>().As<IScreenParameters>();
 
             if (autoDiscover) {
                 var discoveryManager = new TrackerDiscoveryManager();

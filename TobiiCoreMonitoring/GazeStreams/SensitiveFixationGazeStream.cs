@@ -8,7 +8,7 @@ namespace TobiiCoreMonitoring.GazeStreams {
         private double _lastFixationStartTime;
         private FixationPoint _lastFixationPoint;
 
-        public SensitiveFixationGazeStream(Host host, IScreenParametersProvider screenParametersProvider) : base(screenParametersProvider) {
+        public SensitiveFixationGazeStream(Host host, IScreenParameters screenParameters) : base(screenParameters) {
             var stream = host.Streams.CreateFixationDataStream(FixationDataMode.Sensitive);
             stream.Begin((x, y, timestamp) => {
                 _lastFixationPoint = new FixationPoint

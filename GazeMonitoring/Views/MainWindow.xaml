@@ -7,7 +7,6 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:GazeMonitoring"
-        xmlns:tobiiCoreMonitoring="clr-namespace:TobiiCoreMonitoring;assembly=TobiiCoreMonitoring"
         xmlns:entities1="clr-namespace:GazeMonitoring.Model;assembly=GazeMonitoring.Model"
         xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
         mc:Ignorable="d"

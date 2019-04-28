@@ -5,14 +5,14 @@ using GazeMonitoring.Model;
 
 namespace TobiiCoreMonitoring.GazeStreams {
     public abstract class TobiiCoreBaseGazeStream : GazePointStream {
-        private readonly IScreenParametersProvider _screenParametersProvider;
+        private readonly IScreenParameters _screenParameters;
         private const int DefaultTimestampValue = -1;
 
         private long _firstReceivedUnixTimestamp = DefaultTimestampValue;
         private long _firstReceivedTrackerTimestamp = DefaultTimestampValue;
 
-        protected TobiiCoreBaseGazeStream(IScreenParametersProvider screenParametersProvider) {
-            _screenParametersProvider = screenParametersProvider;
+        protected TobiiCoreBaseGazeStream(IScreenParameters screenParameters) {
+            _screenParameters = screenParameters;
         }
 
         protected override void OnGazePointReceived(GazePointReceivedEventArgs e) {
@@ -21,7 +21,7 @@ namespace TobiiCoreMonitoring.GazeStreams {
                 _firstReceivedTrackerTimestamp = e.GazePoint.Timestamp;
             }
             e.GazePoint.Timestamp = _firstReceivedUnixTimestamp + e.GazePoint.Timestamp - _firstReceivedTrackerTimestamp;
-            //e.GazePoint.Y = _screenParametersProvider.Height - e.GazePoint.Y;
+            //e.GazePoint.Y = _screenParameters.Height - e.GazePoint.Y;
             base.OnGazePointReceived(e);
         }
     }
