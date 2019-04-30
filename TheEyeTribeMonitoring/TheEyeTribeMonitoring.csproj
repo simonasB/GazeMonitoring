@@ -36,8 +36,8 @@
     <Reference Include="EyeTribe.ClientSdk, Version=0.9.77.30231, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EyeTribe.ClientSdk.0.9.77.6\lib\net45\EyeTribe.ClientSdk.dll</HintPath>
     </Reference>
-    <Reference Include="GazeMonitoring.EyeTracker.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.EyeTracker.Core.1.0.0\lib\netstandard2.0\GazeMonitoring.EyeTracker.Core.dll</HintPath>
+    <Reference Include="GazeMonitoring.EyeTracker.Core, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GazeMonitoring.EyeTracker.Core.1.0.1\lib\netstandard2.0\GazeMonitoring.EyeTracker.Core.dll</HintPath>
     </Reference>
     <Reference Include="GazeMonitoring.Model, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GazeMonitoring.Model.1.0.1\lib\netstandard2.0\GazeMonitoring.Model.dll</HintPath>

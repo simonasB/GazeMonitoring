@@ -48,8 +48,8 @@
     <Reference Include="DynamicExpresso.Core, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicExpresso.Core.1.3.0.0\lib\net40\DynamicExpresso.Core.dll</HintPath>
     </Reference>
-    <Reference Include="GazeMonitoring.EyeTracker.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.EyeTracker.Core.1.0.0\lib\netstandard2.0\GazeMonitoring.EyeTracker.Core.dll</HintPath>
+    <Reference Include="GazeMonitoring.EyeTracker.Core, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GazeMonitoring.EyeTracker.Core.1.0.1\lib\netstandard2.0\GazeMonitoring.EyeTracker.Core.dll</HintPath>
     </Reference>
     <Reference Include="GazeMonitoring.Model, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GazeMonitoring.Model.1.0.1\lib\netstandard2.0\GazeMonitoring.Model.dll</HintPath>

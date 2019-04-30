@@ -8,6 +8,7 @@
     <ProjectGuid>{24F906AF-DF04-4A59-9215-47186318F9B5}</ProjectGuid>
     <Authors>Simonas Baltulionis</Authors>
     <Product>GazeMonitoring</Product>
+    <Version>1.0.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />

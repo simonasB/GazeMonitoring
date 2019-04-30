@@ -6,6 +6,7 @@ using GazeMonitoring.Common.Calculations;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.Data;
 using GazeMonitoring.Data.Writers;
+using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Logging.Log4Net;
@@ -30,6 +31,7 @@ namespace GazeMonitoring.IoC {
             }).As<IGazeDataWriter>();
 
             builder.RegisterType<NullGazeDataMonitorFinalizer>().As<IGazeDataMonitorFinalizer>();
+            builder.RegisterType<NullEyeTrackerStatusProvider>().As<IEyeTrackerStatusProvider>();
             builder.RegisterType<XmlLog4NetLoggerFactory>().As<ILoggerFactory>().SingleInstance();
         }
     }

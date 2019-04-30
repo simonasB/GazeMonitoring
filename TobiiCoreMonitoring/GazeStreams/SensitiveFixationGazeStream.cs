@@ -21,11 +21,14 @@ namespace TobiiCoreMonitoring.GazeStreams {
             });
 
             stream.End((x, y, timestamp) => {
-                _lastFixationPoint.DurationInMillis = (long)(timestamp - _lastFixationStartTime);
-                OnGazePointReceived(new GazePointReceivedEventArgs
+                if (_lastFixationPoint != null)
                 {
-                    GazePoint = _lastFixationPoint
-                });
+                    _lastFixationPoint.DurationInMillis = (long) (timestamp - _lastFixationStartTime);
+                    OnGazePointReceived(new GazePointReceivedEventArgs
+                    {
+                        GazePoint = _lastFixationPoint
+                    });
+                }
             });
         }
     }
