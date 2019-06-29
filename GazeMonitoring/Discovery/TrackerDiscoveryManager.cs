@@ -8,7 +8,7 @@ using GazeMonitoring.EyeTracker.Core.Discovery;
 namespace GazeMonitoring.Discovery {
     public class TrackerDiscoveryManager {
         public void Discover(ContainerBuilder container) {
-            // Force all referenced assemblies to be loaded into the app domain
+            // Force all referenced assemblies to be loaded into the app domain 
             //new DirectoryCatalog(".");
 
             var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "eyetracker", "custom", "CustomMonitoring.dll");
