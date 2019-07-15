@@ -11,8 +11,7 @@
         xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
         mc:Ignorable="d"
         WindowStyle="None"
-        Title="MainWindow" Height="420" Width="315
-        "
+        Title="MainWindow" Height="480" Width="315"
         Deactivated="Window_Deactivated"
         Loaded="Window_Loaded"
         ResizeMode="NoResize"
@@ -180,6 +179,7 @@
             <TextBlock HorizontalAlignment="Left" Margin="25,40,0,0" TextWrapping="Wrap" Text="EyeTracker" VerticalAlignment="Top" Height="18" Width="75" Foreground="#FFADADAD" FontSize="14"/>
             <TextBlock HorizontalAlignment="Left" Margin="104,40,0,0" TextWrapping="Wrap" Text="{Binding EyeTrackerStatusWrapper.EyeTrackerName}" VerticalAlignment="Top" Width="176" Height="18" Foreground="#FFADADAD" FontSize="14" FontFamily="Segoe UI Semibold"/>
             <Rectangle HorizontalAlignment="Stretch" Fill="#FF575757" Height="1" Grid.ColumnSpan="2" Margin="0,75,1.2,345"/>
+            <Button x:Name="Capture" Command="{Binding CaptureCommand}" Content="Capture" HorizontalAlignment="Left" Margin="35,424,0,0" VerticalAlignment="Top" Width="85" Height="25" BorderBrush="#FF4D4D4D" FontSize="14"/>
         </Grid>
     </xctk:BusyIndicator>
 </Window>

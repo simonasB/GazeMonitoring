@@ -4,7 +4,6 @@ using System.Windows;
 using Autofac;
 using GazeMonitoring.Model;
 using GazeMonitoring.ViewModels;
-using Hardcodet.Wpf.TaskbarNotification;
 
 namespace GazeMonitoring.Views {
     /// <summary>

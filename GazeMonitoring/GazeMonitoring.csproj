@@ -42,6 +42,9 @@
     <Reference Include="Autofac.Configuration, Version=4.0.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.Configuration.4.0.1\lib\net45\Autofac.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="BlurryControls, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BlurryControls.1.0.24\lib\net452\BlurryControls.dll</HintPath>
+    </Reference>
     <Reference Include="CalcBinding, Version=2.3.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CalcBinding.2.3.0.1\lib\net45\CalcBinding.dll</HintPath>
     </Reference>
@@ -115,6 +118,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Addorners\ResizeRotateAddorner.cs" />
+    <Compile Include="Addorners\ResizeRotateChrome.cs" />
     <Compile Include="BalloonService.cs" />
     <Compile Include="Commands\AwaitableDelegateCommand.cs" />
     <Compile Include="Base\BindableBase.cs" />
@@ -122,9 +127,15 @@
     <Compile Include="Commands\CommandExtensions.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Base\CommonConstants.cs" />
+    <Compile Include="Controls\DesignerItemDecorator.cs" />
+    <Compile Include="Controls\MoveThumb.cs" />
+    <Compile Include="Controls\ResizeThumb.cs" />
     <Compile Include="DefaultScreenParameters.cs" />
     <Compile Include="Discovery\TrackerDiscoveryManager.cs" />
     <Compile Include="IBalloonService.cs" />
+    <Compile Include="Views\ScreenConfigurationWindow.xaml.cs">
+      <DependentUpon>ScreenConfigurationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wrappers\EyeTrackerStatusWrapper.cs" />
     <Compile Include="Commands\IAsyncCommand.cs" />
     <Compile Include="Commands\IRaiseCanExecuteChanged.cs" />
@@ -139,11 +150,27 @@
     </Compile>
     <Compile Include="GazeDataMonitor.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Page Include="Resources\DesignerItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ResizeRotateChrome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\SizeChrome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\NotifyIconResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScreenConfigurationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

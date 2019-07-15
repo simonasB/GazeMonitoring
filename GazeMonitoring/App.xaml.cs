@@ -12,6 +12,7 @@ using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.IoC;
 using GazeMonitoring.Logging;
 using GazeMonitoring.ViewModels;
+using GazeMonitoring.Views;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.Configuration;
 
@@ -35,6 +36,9 @@ namespace GazeMonitoring
 
                 _logger = _container.Resolve<ILoggerFactory>().GetLogger(typeof(App));
                 _taskbarIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, new BalloonService(_taskbarIcon)));
+
+                var screenConfigurationWindow = new ScreenConfigurationWindow();
+                screenConfigurationWindow.Show();
 
                 SetupExceptionHandling();
             } catch (Exception ex)

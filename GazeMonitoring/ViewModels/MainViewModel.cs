@@ -15,6 +15,7 @@ using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Model;
 using GazeMonitoring.ScreenCapture;
+using GazeMonitoring.Views;
 using GazeMonitoring.Wrappers;
 using Hardcodet.Wpf.TaskbarNotification;
 using IContainer = Autofac.IContainer;
@@ -39,6 +40,7 @@ namespace GazeMonitoring.ViewModels {
             _container = container;
             _balloonService = balloonService;
             StartCommand = new RelayCommand(OnStart, CanStart);
+            CaptureCommand = new RelayCommand(OnCapture, CanCapture);
             StopCommand = new AwaitableDelegateCommand(OnStop, CanStop);
             SubjectInfoWrapper = new SubjectInfoWrapper();
             _eyeTrackerStatusProvider = _container.Resolve<IEyeTrackerStatusProvider>();
@@ -110,6 +112,8 @@ namespace GazeMonitoring.ViewModels {
         public EyeTrackerStatusWrapper EyeTrackerStatusWrapper { get; set; }
 
         public RelayCommand StartCommand { get; }
+
+        public RelayCommand CaptureCommand { get; }
 
         public AwaitableDelegateCommand StopCommand { get; }
 
@@ -257,6 +261,18 @@ namespace GazeMonitoring.ViewModels {
                     await Task.Delay(TimeSpan.FromSeconds(PollIntervalSeconds));
                 }
             }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        }
+
+        private void OnCapture()
+        {
+            var screenConfigurationWindow = new ScreenConfigurationWindow();
+            screenConfigurationWindow.InitializeComponent();
+            screenConfigurationWindow.Show();
+        }
+
+        private bool CanCapture()
+        {
+            return true;
         }
     }
 }
