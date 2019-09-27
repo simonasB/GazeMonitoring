@@ -47,12 +47,16 @@ namespace GazeMonitoring.Views
                     IsHitTestVisible = false
                 };
 
+                var grid = new Canvas();
+                grid.Children.Add(rectSelectArea);
+                grid.Children.Add(new TextBox { Text = "Lorem Ipsum" });
+
                 _rectContentControl = new ContentControl();
-                _rectContentControl.Content = rectSelectArea;
+                _rectContentControl.Content = grid;
                 _rectContentControl.Template = (ControlTemplate) this.FindResource("DesignerItemTemplate");
 
                 Canvas.SetLeft(_rectContentControl, startPoint.X);
-                Canvas.SetTop(_rectContentControl, startPoint.X);
+                Canvas.SetTop(_rectContentControl, startPoint.Y);
                 paintSurface.Children.Add(_rectContentControl);
             }
         }
@@ -62,7 +66,10 @@ namespace GazeMonitoring.Views
             if (_activated)
             {
                 if (e.LeftButton == MouseButtonState.Released || rectSelectArea == null)
+                {
+                    _rectContentControl = null;
                     return;
+                }
 
                 var pos = e.GetPosition(paintSurface);
 
@@ -85,6 +92,14 @@ namespace GazeMonitoring.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             _activated = !_activated;
+        }
+
+        private void PaintSurface_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (_activated)
+            {
+                _activated = false;
+            }
         }
     }
 }

@@ -41,6 +41,7 @@
                 <controls:MoveThumb Template="{StaticResource MoveThumbTemplate}" Cursor="SizeAll"/>
                 <ContentPresenter Content="{TemplateBinding ContentControl.Content}"/>
                 <controls:DesignerItemDecorator x:Name="decorator" ShowDecorator="true"/>
+                <Control Template="{StaticResource ResizeDecoratorTemplate}"/>
             </Grid>
             <ControlTemplate.Triggers>
                 <Trigger Property="Selector.IsSelected" Value="True">
@@ -49,7 +50,7 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
     </Window.Resources>
-    <Canvas Name="paintSurface" MouseDown="Canvas_MouseDown_1" MouseMove="Canvas_MouseMove_1" >
+    <Canvas Name="paintSurface" MouseDown="Canvas_MouseDown_1" MouseMove="Canvas_MouseMove_1" MouseLeftButtonUp="PaintSurface_OnMouseLeftButtonUp" >
         <Canvas.Background>
             <SolidColorBrush Color="Gray" Opacity="0.1"/>
         </Canvas.Background>
