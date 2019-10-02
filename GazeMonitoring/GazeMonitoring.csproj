@@ -121,6 +121,7 @@
     <Compile Include="Addorners\ResizeRotateAddorner.cs" />
     <Compile Include="Addorners\ResizeRotateChrome.cs" />
     <Compile Include="BalloonService.cs" />
+    <Compile Include="Base\Hotkey.cs" />
     <Compile Include="Commands\AwaitableDelegateCommand.cs" />
     <Compile Include="Base\BindableBase.cs" />
     <Compile Include="Base\BooleanAndConverter.cs" />
@@ -132,7 +133,16 @@
     <Compile Include="Controls\ResizeThumb.cs" />
     <Compile Include="DefaultScreenParameters.cs" />
     <Compile Include="Discovery\TrackerDiscoveryManager.cs" />
+    <Compile Include="Extensions\MiscExtensions.cs" />
     <Compile Include="IBalloonService.cs" />
+    <Compile Include="Resources\HotkeyEditorControl.xaml.cs">
+      <DependentUpon>HotkeyEditorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Unmanaged\GlobalHotkey.cs" />
+    <Compile Include="ViewModels\OptionsViewModel.cs" />
+    <Compile Include="Views\OptionsWindow.xaml.cs">
+      <DependentUpon>OptionsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ScreenConfigurationWindow.xaml.cs">
       <DependentUpon>ScreenConfigurationWindow.xaml</DependentUpon>
     </Compile>
@@ -154,6 +164,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\HotkeyEditorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\ResizeRotateChrome.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -163,6 +177,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\NotifyIconResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OptionsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using GazeMonitoring.Base;
 
 namespace GazeMonitoring.Views
 {
@@ -18,9 +19,22 @@ namespace GazeMonitoring.Views
         private bool _activated = false;
 
 
-        public ScreenConfigurationWindow()
+        public ScreenConfigurationWindow(IAppLocalContext appLocalContext)
         {
             InitializeComponent();
+
+            this.PreviewKeyDown += HandleEsc;
+        }
+
+        public ScreenConfigurationWindow() : this(new AppLocalContext())
+        {
+            
+        }
+
+        private void HandleEsc(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                Close();
         }
 
         private void Canvas_MouseDown_1(object sender, System.Windows.Input.MouseButtonEventArgs e)

@@ -42,6 +42,11 @@ namespace GazeMonitoring.ViewModels {
             StartCommand = new RelayCommand(OnStart, CanStart);
             CaptureCommand = new RelayCommand(OnCapture, CanCapture);
             StopCommand = new AwaitableDelegateCommand(OnStop, CanStop);
+            OptionsCommand = new RelayCommand(() =>
+            {
+                var screenConfigurationWindow = new OptionsWindow();
+                screenConfigurationWindow.Show();
+            });
             SubjectInfoWrapper = new SubjectInfoWrapper();
             _eyeTrackerStatusProvider = _container.Resolve<IEyeTrackerStatusProvider>();
             InvokeEyeTrackerStatusPolling();
@@ -114,6 +119,8 @@ namespace GazeMonitoring.ViewModels {
         public RelayCommand StartCommand { get; }
 
         public RelayCommand CaptureCommand { get; }
+
+        public RelayCommand OptionsCommand { get; }
 
         public AwaitableDelegateCommand StopCommand { get; }
 

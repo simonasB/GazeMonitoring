@@ -1,0 +1,29 @@
+﻿<Window x:Class="GazeMonitoring.Views.OptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GazeMonitoring.Views"
+        xmlns:resources="clr-namespace:GazeMonitoring.Resources"
+        mc:Ignorable="d"
+        Title="OptionsWindow" Height="400.291" Width="301.599">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Height="19" Margin="25,10,0,0" TextWrapping="Wrap" Text="Hotkeys" VerticalAlignment="Top" Width="90"/>
+        <TextBlock HorizontalAlignment="Left" Margin="25,42,0,0" TextWrapping="Wrap" Text="Capture screen region" VerticalAlignment="Top" Height="19" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="25,69,0,0" TextWrapping="Wrap" Text="Start gaze recording" VerticalAlignment="Top" Height="19" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="25,96,0,0" TextWrapping="Wrap" Text="Stop gaze recording" VerticalAlignment="Top" Height="19" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="25,123,0,0" TextWrapping="Wrap" Text="Create screen configuration" VerticalAlignment="Top" Height="19" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="25,150,0,0" TextWrapping="Wrap" Text="Edit screen configuration" VerticalAlignment="Top" Height="19" Width="150"/>
+
+        <!--<TextBox HorizontalAlignment="Left" Height="19" Margin="182,42,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90"/>
+        <TextBox HorizontalAlignment="Left" Height="19" Margin="182,69,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90"/>
+        <TextBox HorizontalAlignment="Left" Height="19" Margin="182,96,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90"/>-->
+
+        <resources:HotkeyEditorControl Hotkey="{Binding CaptureScreenRegionHotkey}" HorizontalAlignment="Left" Height="19" Margin="182,42,0,0" VerticalAlignment="Top" Width="90"/>
+        <resources:HotkeyEditorControl Hotkey="{Binding StartGazeRecordingHotkey}" HorizontalAlignment="Left" Height="19" Margin="182,69,0,0" VerticalAlignment="Top" Width="90"/>
+        <resources:HotkeyEditorControl Hotkey="{Binding StopGazeRecordingHotkey}" HorizontalAlignment="Left" Height="19" Margin="182,96,0,0" VerticalAlignment="Top" Width="90"/>
+        <resources:HotkeyEditorControl Hotkey="{Binding CreateScreenConfigurationHotkey}" HorizontalAlignment="Left" Height="19" Margin="182,123,0,0" VerticalAlignment="Top" Width="90"/>
+        <resources:HotkeyEditorControl Hotkey="{Binding EditScreenConfigurationHotkey}" HorizontalAlignment="Left" Height="19" Margin="182,150,0,0" VerticalAlignment="Top" Width="90"/>
+
+    </Grid>
+</Window>

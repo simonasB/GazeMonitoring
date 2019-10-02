@@ -2,15 +2,18 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using Autofac;
 using Autofac.Configuration;
 using Autofac.Core;
+using GazeMonitoring.Base;
 using GazeMonitoring.Common;
 using GazeMonitoring.Data.Writers;
 using GazeMonitoring.Discovery;
 using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.IoC;
 using GazeMonitoring.Logging;
+using GazeMonitoring.Unmanaged;
 using GazeMonitoring.ViewModels;
 using GazeMonitoring.Views;
 using Hardcodet.Wpf.TaskbarNotification;
@@ -26,10 +29,17 @@ namespace GazeMonitoring
         private TaskbarIcon _taskbarIcon;
         private static IContainer _container;
         private ILogger _logger;
+
+        private GlobalHotKey _hotKey;
+        private IAppLocalContext _appLocalContext;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            try {
+            _appLocalContext = new AppLocalContext();
+
+            try
+            {
                 Init();
                 //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
                 _taskbarIcon = (TaskbarIcon) FindResource("NotifyIcon");
@@ -37,8 +47,9 @@ namespace GazeMonitoring
                 _logger = _container.Resolve<ILoggerFactory>().GetLogger(typeof(App));
                 _taskbarIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, new BalloonService(_taskbarIcon)));
 
-                var screenConfigurationWindow = new ScreenConfigurationWindow();
-                screenConfigurationWindow.Show();
+
+                //var screenConfigurationWindow = new ScreenConfigurationWindow();
+                //screenConfigurationWindow.Show();
 
                 SetupExceptionHandling();
             } catch (Exception ex)
@@ -47,6 +58,8 @@ namespace GazeMonitoring
                 MessageBox.Show($"Could not launch GazeMonitoring application.{ex}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Current.Shutdown();
             }
+
+            _hotKey = new GlobalHotKey(Key.F9, KeyModifier.None, new EditScreenConfigurationHandler(_appLocalContext));
         }
 
         private void SetupExceptionHandling() {
