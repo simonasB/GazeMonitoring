@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using GazeMonitoring.Unmanaged;
 using GazeMonitoring.ViewModels;
 
 namespace GazeMonitoring.Views
@@ -8,9 +9,9 @@ namespace GazeMonitoring.Views
     /// </summary>
     public partial class OptionsWindow : Window
     {
-        public OptionsWindow()
+        public OptionsWindow(IGlobalHotKeyManager globalHotKeyManager)
         {
-            this.DataContext = new OptionsViewModel();
+            this.DataContext = new OptionsViewModel(globalHotKeyManager);
             InitializeComponent();
         }
     }

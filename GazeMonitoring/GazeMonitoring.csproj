@@ -121,6 +121,7 @@
     <Compile Include="Addorners\ResizeRotateAddorner.cs" />
     <Compile Include="Addorners\ResizeRotateChrome.cs" />
     <Compile Include="BalloonService.cs" />
+    <Compile Include="Base\AppContext.cs" />
     <Compile Include="Base\Hotkey.cs" />
     <Compile Include="Commands\AwaitableDelegateCommand.cs" />
     <Compile Include="Base\BindableBase.cs" />
@@ -138,7 +139,13 @@
     <Compile Include="Resources\HotkeyEditorControl.xaml.cs">
       <DependentUpon>HotkeyEditorControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Unmanaged\GlobalHotkey.cs" />
+    <Compile Include="Unmanaged\CreateScreenConfigurationHandler.cs" />
+    <Compile Include="Unmanaged\EditScreenConfigurationHandler.cs" />
+    <Compile Include="Unmanaged\GlobalHotKey.cs" />
+    <Compile Include="Unmanaged\GlobalHotKeyFactory.cs" />
+    <Compile Include="Unmanaged\GlobalHotKeyHandlerFactory.cs" />
+    <Compile Include="Unmanaged\IGlobalHotKeyHandler.cs" />
+    <Compile Include="Unmanaged\GlobalHotKeyManager.cs" />
     <Compile Include="ViewModels\OptionsViewModel.cs" />
     <Compile Include="Views\OptionsWindow.xaml.cs">
       <DependentUpon>OptionsWindow.xaml</DependentUpon>

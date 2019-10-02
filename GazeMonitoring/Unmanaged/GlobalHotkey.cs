@@ -22,11 +22,11 @@ namespace GazeMonitoring.Unmanaged
         private bool _disposed = false;
 
         public Key Key { get; private set; }
-        public KeyModifier KeyModifiers { get; private set; }
+        public ModifierKeys KeyModifiers { get; private set; }
         public IGlobalHotKeyHandler Handler { get; private set; }
         public int Id { get; set; }
 
-        public GlobalHotKey(Key k, KeyModifier keyModifiers, IGlobalHotKeyHandler handler, bool register = true)
+        public GlobalHotKey(Key k, ModifierKeys keyModifiers, IGlobalHotKeyHandler handler, bool register = true)
         {
             Key = k;
             KeyModifiers = keyModifiers;
@@ -89,16 +89,5 @@ namespace GazeMonitoring.Unmanaged
 
             _disposed = true;
         }
-    }
-
-    [Flags]
-    public enum KeyModifier
-    {
-        None = 0x0000,
-        Alt = 0x0001,
-        Ctrl = 0x0002,
-        NoRepeat = 0x4000,
-        Shift = 0x0004,
-        Win = 0x0008
     }
 }

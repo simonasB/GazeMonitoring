@@ -15,6 +15,7 @@ using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Model;
 using GazeMonitoring.ScreenCapture;
+using GazeMonitoring.Unmanaged;
 using GazeMonitoring.Views;
 using GazeMonitoring.Wrappers;
 using Hardcodet.Wpf.TaskbarNotification;
@@ -44,7 +45,7 @@ namespace GazeMonitoring.ViewModels {
             StopCommand = new AwaitableDelegateCommand(OnStop, CanStop);
             OptionsCommand = new RelayCommand(() =>
             {
-                var screenConfigurationWindow = new OptionsWindow();
+                var screenConfigurationWindow = new OptionsWindow(new GlobalHotKeyManager(new GlobalHotKeyHandlerFactory(new AppLocalContext())));
                 screenConfigurationWindow.Show();
             });
             SubjectInfoWrapper = new SubjectInfoWrapper();

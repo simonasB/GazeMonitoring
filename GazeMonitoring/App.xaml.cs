@@ -59,7 +59,7 @@ namespace GazeMonitoring
                 Current.Shutdown();
             }
 
-            _hotKey = new GlobalHotKey(Key.F9, KeyModifier.None, new EditScreenConfigurationHandler(_appLocalContext));
+            _hotKey = new GlobalHotKey(Key.F9, ModifierKeys.None, new EditScreenConfigurationHandler(_appLocalContext));
         }
 
         private void SetupExceptionHandling() {

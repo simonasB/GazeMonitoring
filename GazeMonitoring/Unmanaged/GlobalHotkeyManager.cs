@@ -4,15 +4,24 @@ using System.Windows.Input;
 
 namespace GazeMonitoring.Unmanaged
 {
-    public class GlobalHotKeyManager
+    public interface IGlobalHotKeyManager
+    {
+        void ChangeGlobalHotKey(EGlobalHotKey eGlobalHotKey, Key key, ModifierKeys keyModifiers);
+    }
+
+    public class GlobalHotKeyManager : IGlobalHotKeyManager
     {
         private readonly IGlobalHotKeyHandlerFactory _globalHotKeyHandlerFactory;
-        private Dictionary<EGlobalHotKey, GlobalHotKey> _globalHotKeys;
+        private readonly Dictionary<EGlobalHotKey, GlobalHotKey> _globalHotKeys;
 
         public GlobalHotKeyManager(IGlobalHotKeyHandlerFactory globalHotKeyHandlerFactory)
         {
             _globalHotKeyHandlerFactory = globalHotKeyHandlerFactory;
-            _globalHotKeys = new Dictionary<EGlobalHotKey, GlobalHotKey>();
+            _globalHotKeys = new Dictionary<EGlobalHotKey, GlobalHotKey>
+            {
+                {EGlobalHotKey.CreateScreenConfiguration, new GlobalHotKey(Key.F6, ModifierKeys.None, _globalHotKeyHandlerFactory.Create(EGlobalHotKey.CreateScreenConfiguration)) },
+                {EGlobalHotKey.EditScreenConfiguration, new GlobalHotKey(Key.F7, ModifierKeys.None, _globalHotKeyHandlerFactory.Create(EGlobalHotKey.EditScreenConfiguration)) }
+            };
         }
 
         public GlobalHotKeyManager(Dictionary<EGlobalHotKey, GlobalHotKey> globalHotKeys)
@@ -20,7 +29,7 @@ namespace GazeMonitoring.Unmanaged
             _globalHotKeys = globalHotKeys;
         }
 
-        public void ChangeGlobalHotKey(EGlobalHotKey eGlobalHotKey, Key key, KeyModifier keyModifiers)
+        public void ChangeGlobalHotKey(EGlobalHotKey eGlobalHotKey, Key key, ModifierKeys keyModifiers)
         {
             if (!_globalHotKeys.TryGetValue(eGlobalHotKey, out var globalHotKey))
             {
