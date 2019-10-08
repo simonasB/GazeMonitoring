@@ -5,7 +5,8 @@
         xmlns:controls="clr-namespace:GazeMonitoring.Controls"
         Title="ScreenConfigurationWindow"
         AllowsTransparency="True" WindowStyle="None" WindowState="Maximized"
-        Background="Transparent">
+        Background="Transparent"
+        Loaded="Window_Loaded">
     <Window.Resources>
 
         <!-- MoveThumb Template -->
@@ -55,5 +56,6 @@
             <SolidColorBrush Color="Gray" Opacity="0.1"/>
         </Canvas.Background>
         <Button Content="Button" Canvas.Left="348" Canvas.Top="477" Width="75" Click="Button_Click"/>
+        <Button Content="Save" Canvas.Left="585" Canvas.Top="477" Width="75" Click="Button_Click_1"/>
     </Canvas>
 </Window>

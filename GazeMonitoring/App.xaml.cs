@@ -13,6 +13,7 @@ using GazeMonitoring.Discovery;
 using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.IoC;
 using GazeMonitoring.Logging;
+using GazeMonitoring.Model;
 using GazeMonitoring.Unmanaged;
 using GazeMonitoring.ViewModels;
 using GazeMonitoring.Views;

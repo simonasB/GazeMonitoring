@@ -2,11 +2,13 @@
 {
     public interface IAppLocalContext
     {
-        int? CurrentConfigurationId { get; set; }
+        string ScreenConfigurationId { get; set; }
+        int? MonitoringConfigurationId { get; set; }
     }
 
     public class AppLocalContext : IAppLocalContext
     {
-        public int? CurrentConfigurationId { get; set; }
+        public string ScreenConfigurationId { get; set; }
+        public int? MonitoringConfigurationId { get; set; }
     }
 }

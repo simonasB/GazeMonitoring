@@ -15,6 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,12 +51,6 @@
     </Reference>
     <Reference Include="DynamicExpresso.Core, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicExpresso.Core.1.3.0.0\lib\net40\DynamicExpresso.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="GazeMonitoring.EyeTracker.Core, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.EyeTracker.Core.1.0.1\lib\netstandard2.0\GazeMonitoring.EyeTracker.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="GazeMonitoring.Model, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.Model.1.0.1\lib\netstandard2.0\GazeMonitoring.Model.dll</HintPath>
     </Reference>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
@@ -244,9 +239,21 @@
       <Project>{1bb84589-22ea-4f07-bf68-c39577aebc21}</Project>
       <Name>GazeMonitoring.Data.Xml</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.DataAccess.LiteDB\GazeMonitoring.DataAccess.LiteDB.csproj">
+      <Project>{E1EC40F3-35C1-4E56-8E66-C21CCF4E6F75}</Project>
+      <Name>GazeMonitoring.DataAccess.LiteDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.DataAccess\GazeMonitoring.DataAccess.csproj">
+      <Project>{4EEA6D8E-90A7-446A-8380-2DAB20A98E07}</Project>
+      <Name>GazeMonitoring.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
       <Project>{A425261F-E463-4EB1-B237-597509E25C39}</Project>
       <Name>GazeMonitoring.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj">
+      <Project>{24F906AF-DF04-4A59-9215-47186318F9B5}</Project>
+      <Name>GazeMonitoring.EyeTracker.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.IoC\GazeMonitoring.IoC.csproj">
       <Project>{3B15219E-FEB5-471D-BA9B-06EC67320A52}</Project>
@@ -259,6 +266,10 @@
     <ProjectReference Include="..\GazeMonitoring.Logging\GazeMonitoring.Logging.csproj">
       <Project>{D54C6080-859C-4E1E-A4CE-B5407E474326}</Project>
       <Name>GazeMonitoring.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
+      <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>
+      <Name>GazeMonitoring.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.ScreenCapture.SharpAvi\GazeMonitoring.ScreenCapture.SharpAvi.csproj">
       <Project>{70ff8f72-379e-4e23-b864-892fcb8af93d}</Project>

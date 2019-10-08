@@ -1,4 +1,5 @@
 ﻿using GazeMonitoring.Base;
+using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Views;
 
 namespace GazeMonitoring.Unmanaged
@@ -14,7 +15,7 @@ namespace GazeMonitoring.Unmanaged
 
         public void Handle()
         {
-            var window = new ScreenConfigurationWindow(_appLocalContext);
+            var window = new ScreenConfigurationWindow(_appLocalContext, new LiteDBConfigurationRepository());
             window.Show();
         }
     }

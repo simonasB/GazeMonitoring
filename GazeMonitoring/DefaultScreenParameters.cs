@@ -1,4 +1,5 @@
 ﻿using GazeMonitoring.Common;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring {
     public class DefaultScreenParameters : IScreenParameters {
