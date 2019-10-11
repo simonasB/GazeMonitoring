@@ -23,10 +23,15 @@ namespace GazeMonitoring.Unmanaged
 
         public Key Key { get; private set; }
         public ModifierKeys KeyModifiers { get; private set; }
-        public IGlobalHotKeyHandler Handler { get; private set; }
+        public Action Handler { get; private set; }
         public int Id { get; set; }
 
-        public GlobalHotKey(Key k, ModifierKeys keyModifiers, IGlobalHotKeyHandler handler, bool register = true)
+        public GlobalHotKey(Key k, ModifierKeys keyModifiers, IGlobalHotKeyHandler handler, bool register = true) : this(k, keyModifiers, handler.Handle, register)
+        {
+
+        }
+
+        public GlobalHotKey(Key k, ModifierKeys keyModifiers, Action handler, bool register = true)
         {
             Key = k;
             KeyModifiers = keyModifiers;
@@ -67,7 +72,7 @@ namespace GazeMonitoring.Unmanaged
         {
             if (!handled && msg.message == WmHotKey && _dictHotKeyToCalBackProc.TryGetValue((int) msg.wParam, out var globalHotkey))
             {
-                globalHotkey.Handler.Handle();
+                globalHotkey.Handler.Invoke();
                 handled = true;
             }
         }

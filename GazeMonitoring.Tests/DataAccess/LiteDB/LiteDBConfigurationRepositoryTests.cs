@@ -17,12 +17,12 @@ namespace GazeMonitoring.Tests.DataAccess.LiteDB
         [Test]
         public void A()
         {
-            var id = _configurationRepository.Save(new MonitoringConfiguration
+            /*var id = _configurationRepository.Save(new MonitoringConfiguration
             {
                 Name = "test"
-            });
+            });*/
 
-            var a = _configurationRepository.Search<MonitoringConfiguration>(id);
+            var a = _configurationRepository.Search<MonitoringConfiguration>(2);
         }
     }
 }

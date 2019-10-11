@@ -37,8 +37,8 @@ namespace GazeMonitoring.Views
             InitializeComponent();
 
             this.PreviewKeyDown += HandleEsc;
-            _appLocalContext.MonitoringConfigurationId = 1;
-            _appLocalContext.ScreenConfigurationId = "eb2502be-c670-45e8-a64e-86afc1f63bc6";
+            _appLocalContext.MonitoringConfigurationId = 2;
+            _appLocalContext.ScreenConfigurationId = "72530e41-0b8d-425f-964d-8c75d4b6007c";
         }
 
         public ScreenConfigurationWindow() : this(new AppLocalContext(), new LiteDBConfigurationRepository())
@@ -74,7 +74,7 @@ namespace GazeMonitoring.Views
                     Fill = new SolidColorBrush(Color.FromRgb(100, 120, 130)) {Opacity = 0},
                     IsHitTestVisible = false
                 });
-                grid.Children.Add(new TextBox { Text = "Lorem Ipsum" });
+                grid.Children.Add(new TextBox { Text = areaOfInterest.Name, Tag = AreaOfInterestTitle});
                 grid.Children.Add(deleteButton);
 
                 var rectContentControl = new ContentControl
@@ -224,13 +224,15 @@ namespace GazeMonitoring.Views
             {
                 _monitoringConfiguration.ScreenConfigurations =
                     _monitoringConfiguration.ScreenConfigurations ?? new List<ScreenConfiguration>();
+                var id = Guid.NewGuid().ToString();
                 _monitoringConfiguration.ScreenConfigurations.Add(new ScreenConfiguration
                 {
                     AreasOfInterest = areasOfInterest,
-                    Id = Guid.NewGuid().ToString(),
+                    Id = id,
                     Name = "test",
                     Number = 1
                 });
+                _appLocalContext.ScreenConfigurationId = id;
             }
             else
             {

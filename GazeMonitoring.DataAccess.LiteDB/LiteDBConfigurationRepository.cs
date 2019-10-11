@@ -1,4 +1,5 @@
-﻿using LiteDB;
+﻿using System.Collections.Generic;
+using LiteDB;
 
 namespace GazeMonitoring.DataAccess.LiteDB
 {
@@ -7,6 +8,16 @@ namespace GazeMonitoring.DataAccess.LiteDB
         public LiteDBConfigurationRepository()
         {
             
+        }
+
+        public int Save<T>(IEnumerable<T> entities)
+        {
+            using (var db = new LiteDatabase(@"C:\Temp\MyData.db"))
+            {
+                var col = db.GetCollection<T>(typeof(T).Name);
+
+                return col.Insert(entities);
+            }
         }
 
         public int Save<T>(T entity)

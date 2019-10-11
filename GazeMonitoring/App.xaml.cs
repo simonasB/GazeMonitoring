@@ -9,11 +9,13 @@ using Autofac.Core;
 using GazeMonitoring.Base;
 using GazeMonitoring.Common;
 using GazeMonitoring.Data.Writers;
+using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Discovery;
 using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.IoC;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Model;
+using GazeMonitoring.Powerpoint;
 using GazeMonitoring.Unmanaged;
 using GazeMonitoring.ViewModels;
 using GazeMonitoring.Views;
@@ -33,6 +35,8 @@ namespace GazeMonitoring
 
         private GlobalHotKey _hotKey;
         private IAppLocalContext _appLocalContext;
+
+        private GlobalHotKey _parseGlobalHotKey;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -61,6 +65,18 @@ namespace GazeMonitoring
             }
 
             _hotKey = new GlobalHotKey(Key.F9, ModifierKeys.None, new EditScreenConfigurationHandler(_appLocalContext));
+            _parseGlobalHotKey = new GlobalHotKey(Key.F10, ModifierKeys.None, () =>
+            {
+                var parser = new PowerpointParser();
+                var configurations = parser.Parse().ToList();
+                var repo = new LiteDBConfigurationRepository();
+                var recordingConfiguration = new MonitoringConfiguration
+                {
+                    Name = "ppt",
+                    ScreenConfigurations = configurations
+                };
+                var id = repo.Save(recordingConfiguration);
+            });
         }
 
         private void SetupExceptionHandling() {
