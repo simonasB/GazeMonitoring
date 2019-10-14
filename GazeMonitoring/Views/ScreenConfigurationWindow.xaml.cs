@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -37,8 +36,8 @@ namespace GazeMonitoring.Views
             InitializeComponent();
 
             this.PreviewKeyDown += HandleEsc;
-            _appLocalContext.MonitoringConfigurationId = 2;
-            _appLocalContext.ScreenConfigurationId = "72530e41-0b8d-425f-964d-8c75d4b6007c";
+            _appLocalContext.MonitoringConfigurationId = 8;
+            _appLocalContext.ScreenConfigurationId = "76edd958-e418-4c37-9f38-b3972c274926";
         }
 
         public ScreenConfigurationWindow() : this(new AppLocalContext(), new LiteDBConfigurationRepository())

@@ -67,7 +67,7 @@ namespace GazeMonitoring
             _hotKey = new GlobalHotKey(Key.F9, ModifierKeys.None, new EditScreenConfigurationHandler(_appLocalContext));
             _parseGlobalHotKey = new GlobalHotKey(Key.F10, ModifierKeys.None, () =>
             {
-                var parser = new PowerpointParser();
+                var parser = new PowerpointParser(new DefaultScreenParameters());
                 var configurations = parser.Parse().ToList();
                 var repo = new LiteDBConfigurationRepository();
                 var recordingConfiguration = new MonitoringConfiguration
