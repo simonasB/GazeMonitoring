@@ -52,10 +52,6 @@ namespace GazeMonitoring
                 _logger = _container.Resolve<ILoggerFactory>().GetLogger(typeof(App));
                 _taskbarIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, new BalloonService(_taskbarIcon)));
 
-
-                //var screenConfigurationWindow = new ScreenConfigurationWindow();
-                //screenConfigurationWindow.Show();
-
                 SetupExceptionHandling();
             } catch (Exception ex)
             {
@@ -91,10 +87,9 @@ namespace GazeMonitoring
         }
 
         private void LogUnhandledException(Exception exception, string source) {
-            string message = $"Unhandled exception ({source})";
             try {
                 System.Reflection.AssemblyName assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
-                message = string.Format("Unhandled exception in {0} v{1}", assemblyName.Name, assemblyName.Version);
+                var message = $"Unhandled exception in {assemblyName.Name} v{assemblyName.Version}";
                 _logger.Error(message);
             } catch (Exception ex) {
                 _logger.Error(ex);

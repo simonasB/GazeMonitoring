@@ -117,6 +117,7 @@
     <Compile Include="Addorners\ResizeRotateChrome.cs" />
     <Compile Include="BalloonService.cs" />
     <Compile Include="Base\AppContext.cs" />
+    <Compile Include="Base\BaseViewModel.cs" />
     <Compile Include="Base\Hotkey.cs" />
     <Compile Include="Commands\AwaitableDelegateCommand.cs" />
     <Compile Include="Base\BindableBase.cs" />
