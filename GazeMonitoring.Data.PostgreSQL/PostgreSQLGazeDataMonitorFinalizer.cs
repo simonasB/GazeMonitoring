@@ -8,16 +8,11 @@ using GazeMonitoring.Model;
 namespace GazeMonitoring.Data.PostgreSQL {
     public class PostgreSQLGazeDataMonitorFinalizer : IGazeDataMonitorFinalizer {
         private readonly IDatabaseRepository _databaseRepository;
-        private readonly SubjectInfo _subjectInfo;
         private readonly ILogger _logger;
 
-        public PostgreSQLGazeDataMonitorFinalizer(IDatabaseRepository databaseRepository, SubjectInfo subjectInfo, ILoggerFactory loggerFactory) {
+        public PostgreSQLGazeDataMonitorFinalizer(IDatabaseRepository databaseRepository, ILoggerFactory loggerFactory) {
             if (databaseRepository == null) {
                 throw new ArgumentNullException(nameof(databaseRepository));
-            }
-
-            if (subjectInfo == null) {
-                throw new ArgumentNullException(nameof(subjectInfo));
             }
 
             if (loggerFactory == null) {
@@ -26,14 +21,13 @@ namespace GazeMonitoring.Data.PostgreSQL {
 
             _logger = loggerFactory.GetLogger(typeof(PostgreSQLGazeDataMonitorFinalizer));
             _databaseRepository = databaseRepository;
-            _subjectInfo = subjectInfo;
         }
 
-        public void FinalizeMonitoring() {
+        public void FinalizeMonitoring(IMonitoringContext monitoringContext) {
             _logger.Information("Starting finalization process of gaze data monitoring.");
 
-            _databaseRepository.SaveSubjectInfo(_subjectInfo);
-            var savedSubjectInfo = _databaseRepository.RetrieveSubjectInfo(_subjectInfo.SessionId);
+            _databaseRepository.SaveSubjectInfo(monitoringContext.SubjectInfo);
+            var savedSubjectInfo = _databaseRepository.RetrieveSubjectInfo(monitoringContext.SubjectInfo.SessionId);
 
             var saccadesFilePath = Path.Combine(Directory.GetCurrentDirectory(), Constants.SaccadesTempCsvFileName);
             var gazePointsFilePath = Path.Combine(Directory.GetCurrentDirectory(), Constants.GazePointsTempCsvFileName);
@@ -52,7 +46,7 @@ namespace GazeMonitoring.Data.PostgreSQL {
 
                     var gazePoints = parser.GetRecords<GazePoint>();
 
-                    _databaseRepository.BinaryInsertGazePoints(gazePoints, _subjectInfo.SessionId, savedSubjectInfo?.Id, DateTime.UtcNow);
+                    _databaseRepository.BinaryInsertGazePoints(gazePoints, monitoringContext.SubjectInfo.SessionId, savedSubjectInfo?.Id, DateTime.UtcNow);
                 }
 
                 File.Delete(gazePointsFilePath);
@@ -72,7 +66,7 @@ namespace GazeMonitoring.Data.PostgreSQL {
 
                     var saccades = parser.GetRecords<Saccade>();
 
-                    _databaseRepository.BinaryInsertSaccades(saccades, _subjectInfo.SessionId, savedSubjectInfo?.Id, DateTime.UtcNow);
+                    _databaseRepository.BinaryInsertSaccades(saccades, monitoringContext.SubjectInfo.SessionId, savedSubjectInfo?.Id, DateTime.UtcNow);
                 }
 
                 File.Delete(saccadesFilePath);

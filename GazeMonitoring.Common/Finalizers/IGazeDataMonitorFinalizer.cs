@@ -1,5 +1,7 @@
-﻿namespace GazeMonitoring.Common.Finalizers {
+﻿using GazeMonitoring.Model;
+
+namespace GazeMonitoring.Common.Finalizers {
     public interface IGazeDataMonitorFinalizer {
-        void FinalizeMonitoring();
+        void FinalizeMonitoring(IMonitoringContext monitoringContext);
     }
 }

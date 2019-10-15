@@ -29,7 +29,7 @@
                          Value="true">
                     <Setter Property="ToolTip"
                             Value="{Binding RelativeSource={x:Static RelativeSource.Self}, 
-                                    Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                                    Path=(Validation.Errors)/ErrorContent}" />
                 </Trigger>
             </Style.Triggers>
         </Style>

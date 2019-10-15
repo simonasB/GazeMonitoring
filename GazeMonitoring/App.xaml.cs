@@ -4,17 +4,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Autofac;
+using Autofac.Builder;
 using Autofac.Configuration;
-using Autofac.Core;
 using GazeMonitoring.Base;
-using GazeMonitoring.Common;
-using GazeMonitoring.Data.Writers;
 using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Discovery;
-using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.IoC;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Model;
+using GazeMonitoring.Monitor;
 using GazeMonitoring.Powerpoint;
 using GazeMonitoring.Unmanaged;
 using GazeMonitoring.ViewModels;
@@ -46,11 +44,10 @@ namespace GazeMonitoring
             try
             {
                 Init();
-                //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
-                _taskbarIcon = (TaskbarIcon) FindResource("NotifyIcon");
-
                 _logger = _container.Resolve<ILoggerFactory>().GetLogger(typeof(App));
-                _taskbarIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, new BalloonService(_taskbarIcon)));
+                //_taskbarIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, new BalloonService(_taskbarIcon)));
+                _taskbarIcon = _container.Resolve<TaskbarIcon>();
+                _taskbarIcon.DataContext = _container.Resolve<NotifyIconViewModel>();
 
                 SetupExceptionHandling();
             } catch (Exception ex)
@@ -117,16 +114,27 @@ namespace GazeMonitoring
             var module = new ConfigurationModule(configurationRoot);
             builder.RegisterModule<CommonModule>();
             builder.RegisterModule(module);
-            builder.Register((c, p) => {
-                var parameters = p as Parameter[] ?? p.ToArray();
-                return new GazeDataMonitor(c.Resolve<GazePointStream>(parameters), c.Resolve<IGazeDataWriter>(parameters));
-            }).As<IGazeDataMonitor>();
             builder.RegisterType<DefaultScreenParameters>().As<IScreenParameters>();
+            builder.RegisterType<GazeDataMonitorFactory>().As<IGazeDataMonitorFactory>();
 
             if (autoDiscover) {
                 var discoveryManager = new TrackerDiscoveryManager();
                 discoveryManager.Discover(builder);
             }
+
+            var notifyIcon = (TaskbarIcon) FindResource("NotifyIcon");
+
+            if (notifyIcon == null)
+            {
+                // fail
+            }
+
+            builder.RegisterInstance(notifyIcon).SingleInstance();
+            builder.RegisterType<BalloonService>().As<IBalloonService>();
+            builder.RegisterType<MainViewModel>();
+            builder.RegisterType<MainWindow>();
+            builder.RegisterType<NotifyIconViewModel>();
+
             _container = builder.Build();
         }
     }

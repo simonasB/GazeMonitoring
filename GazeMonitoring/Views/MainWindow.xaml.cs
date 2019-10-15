@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using Autofac;
 using GazeMonitoring.Model;
 using GazeMonitoring.ViewModels;
 
@@ -10,8 +9,8 @@ namespace GazeMonitoring.Views {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        public MainWindow(IContainer container, IBalloonService balloonService) {
-            this.DataContext = new MainViewModel(container, balloonService);
+        public MainWindow(MainViewModel mainViewModel) {
+            this.DataContext = mainViewModel;
             InitializeComponent();
             CmbDataStreams.ItemsSource = Enum.GetValues(typeof(DataStream)).Cast<DataStream>();
         }

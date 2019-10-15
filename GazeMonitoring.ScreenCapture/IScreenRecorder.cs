@@ -1,6 +1,8 @@
-﻿namespace GazeMonitoring.ScreenCapture {
+﻿using GazeMonitoring.Model;
+
+namespace GazeMonitoring.ScreenCapture {
     public interface IScreenRecorder {
-        void StartRecording();
+        void StartRecording(RecorderParams recorderParams, IMonitoringContext monitoringContext);
         void StopRecording();
     }
 }

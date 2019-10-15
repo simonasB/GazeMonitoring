@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GazeMonitoring.Model, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.Model.1.0.1\lib\netstandard2.0\GazeMonitoring.Model.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileName.cs" />
+    <Compile Include="IGazeDataRepositoryFactory.cs" />
     <Compile Include="StandardFileNameFormatter.cs" />
     <Compile Include="IFileNameFormatter.cs" />
     <Compile Include="IGazeDataRepository.cs" />
@@ -53,6 +51,7 @@
     <Compile Include="Writers\GazePointWriter.cs" />
     <Compile Include="Writers\IGazeDataWriter.cs" />
     <Compile Include="Writers\MultipleSourcesGazeDataWriter.cs" />
+    <Compile Include="Writers\NullGazeDataWriterFactory.cs" />
     <Compile Include="Writers\SaccadesWriter.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -60,9 +59,10 @@
       <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
       <Name>GazeMonitoring.Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
+      <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>
+      <Name>GazeMonitoring.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,6 +12,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
-    <PackageReference Include="GazeMonitoring.Model" Version="1.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj" />
   </ItemGroup>
 </Project>

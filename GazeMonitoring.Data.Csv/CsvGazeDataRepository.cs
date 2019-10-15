@@ -7,12 +7,12 @@ namespace GazeMonitoring.Data.Csv {
     public class CsvGazeDataRepository : IGazeDataRepository, IDisposable {
         private readonly Dictionary<Type, CsvWriterWrapper> _csvWriterWrappers;
 
-        public CsvGazeDataRepository(ICsvWritersFactory csvWritersFactory, DataStream dataStream) {
-            if (csvWritersFactory == null) {
-                throw new ArgumentNullException(nameof(csvWritersFactory));
+        public CsvGazeDataRepository(Dictionary<Type, CsvWriterWrapper> csvWriterWrappers) {
+            if (csvWriterWrappers == null) {
+                throw new ArgumentNullException(nameof(csvWriterWrappers));
             }
 
-            _csvWriterWrappers = csvWritersFactory.GetCsvWriters(dataStream);
+            _csvWriterWrappers = csvWriterWrappers;
         }
 
         private CsvWriter GetCsvWriter(Type type) {

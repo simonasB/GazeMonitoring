@@ -1,6 +1,7 @@
 ﻿using System;
 using GazeMonitoring.Data.Writers;
 using GazeMonitoring.EyeTracker.Core.Streams;
+using GazeMonitoring.Monitor;
 using Moq;
 using NUnit.Framework;
 

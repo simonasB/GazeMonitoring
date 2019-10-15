@@ -132,6 +132,7 @@
     <Compile Include="Discovery\TrackerDiscoveryManager.cs" />
     <Compile Include="Extensions\MiscExtensions.cs" />
     <Compile Include="IBalloonService.cs" />
+    <Compile Include="Monitor\GazeDataMonitorFactory.cs" />
     <Compile Include="Powerpoint\PowerpointParser.cs" />
     <Compile Include="Resources\HotkeyEditorControl.xaml.cs">
       <DependentUpon>HotkeyEditorControl.xaml</DependentUpon>
@@ -153,7 +154,7 @@
     <Compile Include="Wrappers\EyeTrackerStatusWrapper.cs" />
     <Compile Include="Commands\IAsyncCommand.cs" />
     <Compile Include="Commands\IRaiseCanExecuteChanged.cs" />
-    <Compile Include="IGazeDataMonitor.cs" />
+    <Compile Include="Monitor\IGazeDataMonitor.cs" />
     <Compile Include="Views\MainWindow.xaml.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Wrappers\SubjectInfoWrapper.cs" />
@@ -162,7 +163,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GazeDataMonitor.cs" />
+    <Compile Include="Monitor\GazeDataMonitor.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="Resources\DesignerItem.xaml">
       <SubType>Designer</SubType>
@@ -299,5 +300,6 @@
       <Version>15.0.4420.1017</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,12 +14,12 @@ using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Model;
+using GazeMonitoring.Monitor;
 using GazeMonitoring.ScreenCapture;
 using GazeMonitoring.Unmanaged;
 using GazeMonitoring.Views;
 using GazeMonitoring.Wrappers;
 using Hardcodet.Wpf.TaskbarNotification;
-using IContainer = Autofac.IContainer;
 
 namespace GazeMonitoring.ViewModels {
     public class MainViewModel : INotifyPropertyChanged {
@@ -27,19 +27,19 @@ namespace GazeMonitoring.ViewModels {
         private bool _isScreenRecorded;
         private bool _isStarted;
         private bool _isBusy;
-        private IGazeDataMonitor _gazeDataMonitor;
-        private readonly IContainer _container;
         private readonly IBalloonService _balloonService;
-        private static ILifetimeScope _lifetimeScope;
+        private readonly IGazeDataMonitorFactory _gazeDataMonitorFactory;
         private IScreenRecorder _screenRecorder;
         private SubjectInfo _subjectInfo;
         private readonly IEyeTrackerStatusProvider _eyeTrackerStatusProvider;
+        private readonly IGazeDataMonitorFinalizer _gazeDataMonitorFinalizer;
         private const int PollIntervalSeconds = 5;
         private readonly ILogger _logger;
+        private IGazeDataMonitor _gazeDataMonitor;
 
-        public MainViewModel(IContainer container, IBalloonService balloonService) {
-            _container = container;
+        public MainViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, ILoggerFactory loggerFactory) {
             _balloonService = balloonService;
+            _gazeDataMonitorFactory = gazeDataMonitorFactory;
             StartCommand = new RelayCommand(OnStart, CanStart);
             CaptureCommand = new RelayCommand(OnCapture, CanCapture);
             StopCommand = new AwaitableDelegateCommand(OnStop, CanStop);
@@ -49,12 +49,13 @@ namespace GazeMonitoring.ViewModels {
                 screenConfigurationWindow.Show();
             });
             SubjectInfoWrapper = new SubjectInfoWrapper();
-            _eyeTrackerStatusProvider = _container.Resolve<IEyeTrackerStatusProvider>();
+            _eyeTrackerStatusProvider = eyeTrackerStatusProvider;
+            _gazeDataMonitorFinalizer = gazeDataMonitorFinalizer;
             InvokeEyeTrackerStatusPolling();
             EyeTrackerStatusWrapper = new EyeTrackerStatusWrapper(StartCommand, StopCommand) {
                 EyeTrackerName = CommonConstants.DefaultEyeTrackerName
             };
-            _logger = container.Resolve<ILoggerFactory>().GetLogger(typeof(MainViewModel));
+            _logger = loggerFactory.GetLogger(typeof(MainViewModel));
         }
 
         public bool IsAnonymous {
@@ -140,18 +141,15 @@ namespace GazeMonitoring.ViewModels {
             try {
                 await Task.Run(() => {
                     _gazeDataMonitor.Stop();
-                    _lifetimeScope.Dispose();
+                    _gazeDataMonitor = null;
                     _subjectInfo.SessionEndTimeStamp = DateTime.UtcNow;
                 });
-                
 
-                var finalizationTask = Task.Run(() => {
-                    using (var lifetimeScope = _container.BeginLifetimeScope()) {
-                        var finalizer = lifetimeScope.Resolve<IGazeDataMonitorFinalizer>(
-                            new NamedParameter(Constants.DataStreamParameterName, SubjectInfoWrapper.DataStream),
-                            new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
-                        finalizer.FinalizeMonitoring();
-                    }
+
+                var finalizationTask = Task.Run(() =>
+                {
+                    _gazeDataMonitorFinalizer.FinalizeMonitoring(new MonitoringContext
+                        {SubjectInfo = _subjectInfo, DataStream = SubjectInfoWrapper.DataStream});
                 });
 
                 var stopRecordingTask = Task.Run(() => {
@@ -182,8 +180,6 @@ namespace GazeMonitoring.ViewModels {
             IsBusy = true;
 
             try {
-                _lifetimeScope = _container.BeginLifetimeScope();
-
                 _subjectInfo = new SubjectInfo {
                     SessionId = Guid.NewGuid().ToString(),
                     SessionStartTimestamp = DateTime.UtcNow
@@ -195,9 +191,9 @@ namespace GazeMonitoring.ViewModels {
                     _subjectInfo.Details = SubjectInfoWrapper.Details;
                 }
 
-                _gazeDataMonitor = _lifetimeScope.Resolve<IGazeDataMonitor>(
-                    new NamedParameter(Constants.DataStreamParameterName, SubjectInfoWrapper.DataStream),
-                    new NamedParameter(Constants.SubjectInfoParameterName, _subjectInfo));
+                var monitoringContext = new MonitoringContext
+                    {SubjectInfo = _subjectInfo, DataStream = SubjectInfoWrapper.DataStream};
+                _gazeDataMonitor = _gazeDataMonitorFactory.Create(monitoringContext);
                 _gazeDataMonitor.Start();
 
                 if (IsScreenRecorded) {
@@ -205,18 +201,16 @@ namespace GazeMonitoring.ViewModels {
                     if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), videoFolderName))) {
                         Directory.CreateDirectory(videoFolderName);
                     }
-                    _screenRecorder = _lifetimeScope.Resolve<IScreenRecorder>(
-                        new NamedParameter(Constants.DataStreamParameterName, SubjectInfoWrapper.DataStream),
-                        new NamedParameter(Constants.RecorderParamsParameterName,
-                            new RecorderParams($"{videoFolderName}/video_{SubjectInfoWrapper.DataStream}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi", 10,
-                                50)));
-                    _screenRecorder.StartRecording();
+
+                    _screenRecorder.StartRecording(
+                        new RecorderParams(
+                            $"{videoFolderName}/video_{SubjectInfoWrapper.DataStream}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi",
+                            10, 50), monitoringContext);
                 }
             } catch (Exception ex){
                 _logger.Error($"Unhandled exception occured on start. {ex}");
                 ShowErrorBalloon();
                 IsBusy = false;
-                _lifetimeScope.Dispose();
                 return;
             }
 

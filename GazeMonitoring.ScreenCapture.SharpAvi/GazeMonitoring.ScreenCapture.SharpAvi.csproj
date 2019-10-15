@@ -33,12 +33,6 @@
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="GazeMonitoring.EyeTracker.Core, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.EyeTracker.Core.1.0.1\lib\netstandard2.0\GazeMonitoring.EyeTracker.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="GazeMonitoring.Model, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.Model.1.0.1\lib\netstandard2.0\GazeMonitoring.Model.dll</HintPath>
-    </Reference>
     <Reference Include="SharpAvi, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpAvi.2.1.1\lib\net45\SharpAvi.dll</HintPath>
     </Reference>
@@ -68,6 +62,14 @@
     <ProjectReference Include="..\GazeMonitoring.Common\GazeMonitoring.Common.csproj">
       <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
       <Name>GazeMonitoring.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj">
+      <Project>{24F906AF-DF04-4A59-9215-47186318F9B5}</Project>
+      <Name>GazeMonitoring.EyeTracker.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
+      <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>
+      <Name>GazeMonitoring.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.ScreenCapture\GazeMonitoring.ScreenCapture.csproj">
       <Project>{1368F8C5-AB06-4211-94A2-A44CA3A1E291}</Project>

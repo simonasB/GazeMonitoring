@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,8 @@ namespace GazeMonitoring.Tests.DataAccess.LiteDB
                 Name = "test"
             });*/
 
-            var a = _configurationRepository.Search<MonitoringConfiguration>(2);
+            var a = _configurationRepository.Search<MonitoringConfiguration>(8);
+            a.ScreenConfigurations.ForEach(o => Console.WriteLine(o.Id));
         }
     }
 }
