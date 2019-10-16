@@ -133,6 +133,8 @@
     <Compile Include="Discovery\TrackerDiscoveryManager.cs" />
     <Compile Include="Extensions\MiscExtensions.cs" />
     <Compile Include="IBalloonService.cs" />
+    <Compile Include="IoC\CommonModule.cs" />
+    <Compile Include="IoC\ContainerBuilderFactory.cs" />
     <Compile Include="Monitor\GazeDataMonitorFactory.cs" />
     <Compile Include="Powerpoint\PowerpointParser.cs" />
     <Compile Include="Resources\HotkeyEditorControl.xaml.cs">
@@ -258,6 +260,10 @@
     <ProjectReference Include="..\GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj">
       <Project>{24F906AF-DF04-4A59-9215-47186318F9B5}</Project>
       <Name>GazeMonitoring.EyeTracker.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.IoC.Autofac\GazeMonitoring.IoC.Autofac.csproj">
+      <Project>{39F7ACDC-FCAF-4208-A97D-9B5568AAC393}</Project>
+      <Name>GazeMonitoring.IoC.Autofac</Name>
     </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.IoC\GazeMonitoring.IoC.csproj">
       <Project>{3B15219E-FEB5-471D-BA9B-06EC67320A52}</Project>

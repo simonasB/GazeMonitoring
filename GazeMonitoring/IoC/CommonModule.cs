@@ -8,9 +8,12 @@ using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Logging.Log4Net;
 
-namespace GazeMonitoring.IoC {
-    public class CommonModule : Module {
-        protected override void Load(ContainerBuilder builder) {
+namespace GazeMonitoring.IoC
+{
+    public class CommonModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
             builder.RegisterType<BasicSaccadeCalculator>().As<ISaccadeCalculator>();
             builder.RegisterType<NullGazeDataMonitorFinalizer>().As<IGazeDataMonitorFinalizer>();
             builder.RegisterType<NullEyeTrackerStatusProvider>().As<IEyeTrackerStatusProvider>();

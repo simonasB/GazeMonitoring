@@ -18,6 +18,7 @@ using GazeMonitoring.ViewModels;
 using GazeMonitoring.Views;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.Configuration;
+using IContainer = Autofac.IContainer;
 
 namespace GazeMonitoring
 {

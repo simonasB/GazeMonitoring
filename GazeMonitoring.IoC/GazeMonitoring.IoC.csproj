@@ -30,54 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonModule.cs" />
+    <Compile Include="IoCModule.cs" />
+    <Compile Include="IoContainer.cs" />
+    <Compile Include="IoContainerBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GazeMonitoring.Common\GazeMonitoring.Common.csproj">
-      <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
-      <Name>GazeMonitoring.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
-      <Project>{A425261F-E463-4EB1-B237-597509E25C39}</Project>
-      <Name>GazeMonitoring.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj">
-      <Project>{24F906AF-DF04-4A59-9215-47186318F9B5}</Project>
-      <Name>GazeMonitoring.EyeTracker.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GazeMonitoring.Logging.Log4Net\GazeMonitoring.Logging.Log4Net.csproj">
-      <Project>{AE99D690-A9A5-4018-BEC2-E9C04AD8CEF8}</Project>
-      <Name>GazeMonitoring.Logging.Log4Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GazeMonitoring.Logging\GazeMonitoring.Logging.csproj">
-      <Project>{D54C6080-859C-4E1E-A4CE-B5407E474326}</Project>
-      <Name>GazeMonitoring.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
-      <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>
-      <Name>GazeMonitoring.Model</Name>
-    </ProjectReference>
+    <Compile Include="Scope.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
