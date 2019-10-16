@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using GazeMonitoring.Common.Calculations;
 using GazeMonitoring.Common.Finalizers;
+using GazeMonitoring.Data;
 using GazeMonitoring.Data.Writers;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
@@ -14,8 +15,9 @@ namespace GazeMonitoring.IoC {
             builder.RegisterType<NullGazeDataMonitorFinalizer>().As<IGazeDataMonitorFinalizer>();
             builder.RegisterType<NullEyeTrackerStatusProvider>().As<IEyeTrackerStatusProvider>();
             builder.RegisterType<XmlLog4NetLoggerFactory>().As<ILoggerFactory>();
-            builder.RegisterType<NullGazeDataWriterFactory>().As<IGazeDataWriterFactory>();
+            builder.RegisterType<NullGazeDataRepositoryFactory>().As<IGazeDataRepositoryFactory>();
             builder.RegisterType<NullGazePointStreamFactory>().As<IGazePointStreamFactory>();
+            builder.RegisterType<GazeDataWriterFactory>().As<IGazeDataWriterFactory>();
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using GazeMonitoring.Model;
+﻿using System;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data {
-    public interface IGazeDataRepository {
+    public interface IGazeDataRepository : IDisposable
+    {
         void SaveGazePoint(GazePoint gazePoint);
         void SaveSaccade(Saccade saccade);
         void SaveFixationPoint(FixationPoint point);

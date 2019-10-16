@@ -20,5 +20,24 @@ namespace GazeMonitoring.Data.Writers {
 
             _repository.SaveGazePoint(gazePoint);
         }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _repository?.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~GazePointWriter()
+        {
+            Dispose(false);
+        }
     }
 }

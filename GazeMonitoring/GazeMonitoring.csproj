@@ -83,6 +83,7 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml" />
@@ -281,6 +282,10 @@
     <ProjectReference Include="..\GazeMonitoring.ScreenCapture\GazeMonitoring.ScreenCapture.csproj">
       <Project>{1368F8C5-AB06-4211-94A2-A44CA3A1E291}</Project>
       <Name>GazeMonitoring.ScreenCapture</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MockMonitoring\MockMonitoring.csproj">
+      <Project>{60f20997-4a0b-4769-879b-d270b35ac149}</Project>
+      <Name>MockMonitoring</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

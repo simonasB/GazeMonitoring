@@ -22,6 +22,11 @@ namespace GazeMonitoring.Data.CustomExample {
         public void SaveFixationPoint(FixationPoint point) {
             throw new NotImplementedException();
         }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public interface IExampleWriter {

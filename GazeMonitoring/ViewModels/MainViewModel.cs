@@ -6,10 +6,8 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Autofac;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
-using GazeMonitoring.Common;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.Logging;
@@ -29,7 +27,7 @@ namespace GazeMonitoring.ViewModels {
         private bool _isBusy;
         private readonly IBalloonService _balloonService;
         private readonly IGazeDataMonitorFactory _gazeDataMonitorFactory;
-        private IScreenRecorder _screenRecorder;
+        private readonly IScreenRecorder _screenRecorder;
         private SubjectInfo _subjectInfo;
         private readonly IEyeTrackerStatusProvider _eyeTrackerStatusProvider;
         private readonly IGazeDataMonitorFinalizer _gazeDataMonitorFinalizer;
@@ -37,7 +35,7 @@ namespace GazeMonitoring.ViewModels {
         private readonly ILogger _logger;
         private IGazeDataMonitor _gazeDataMonitor;
 
-        public MainViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, ILoggerFactory loggerFactory) {
+        public MainViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, IScreenRecorder screenRecorder, ILoggerFactory loggerFactory) {
             _balloonService = balloonService;
             _gazeDataMonitorFactory = gazeDataMonitorFactory;
             StartCommand = new RelayCommand(OnStart, CanStart);
@@ -51,6 +49,7 @@ namespace GazeMonitoring.ViewModels {
             SubjectInfoWrapper = new SubjectInfoWrapper();
             _eyeTrackerStatusProvider = eyeTrackerStatusProvider;
             _gazeDataMonitorFinalizer = gazeDataMonitorFinalizer;
+            _screenRecorder = screenRecorder;
             InvokeEyeTrackerStatusPolling();
             EyeTrackerStatusWrapper = new EyeTrackerStatusWrapper(StartCommand, StopCommand) {
                 EyeTrackerName = CommonConstants.DefaultEyeTrackerName

@@ -33,5 +33,24 @@ namespace GazeMonitoring.Data.Writers {
                 _previousGazePoint = gazePoint;
             }
         }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _repository.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~SaccadesWriter()
+        {
+            Dispose(false);
+        }
     }
 }

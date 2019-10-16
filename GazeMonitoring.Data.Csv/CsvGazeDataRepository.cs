@@ -4,7 +4,7 @@ using CsvHelper;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Csv {
-    public class CsvGazeDataRepository : IGazeDataRepository, IDisposable {
+    public class CsvGazeDataRepository : IGazeDataRepository {
         private readonly Dictionary<Type, CsvWriterWrapper> _csvWriterWrappers;
 
         public CsvGazeDataRepository(Dictionary<Type, CsvWriterWrapper> csvWriterWrappers) {

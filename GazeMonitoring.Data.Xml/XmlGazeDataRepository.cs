@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Xml {
-    public class XmlGazeDataRepository : IGazeDataRepository, IDisposable {
+    public class XmlGazeDataRepository : IGazeDataRepository {
         private readonly Dictionary<Type, XmlWriterWrapper> _xmlWriterWrappers;
         private readonly Dictionary<Type, XmlSerializer> _xmlSerializers;
 

@@ -6,4 +6,12 @@ namespace GazeMonitoring.Data
     {
         IGazeDataRepository Create(IMonitoringContext monitoringContext);
     }
+
+    public class NullGazeDataRepositoryFactory : IGazeDataRepositoryFactory
+    {
+        public IGazeDataRepository Create(IMonitoringContext monitoringContext)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 }

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Autofac;
-using Autofac.Builder;
 using Autofac.Configuration;
 using GazeMonitoring.Base;
 using GazeMonitoring.DataAccess.LiteDB;

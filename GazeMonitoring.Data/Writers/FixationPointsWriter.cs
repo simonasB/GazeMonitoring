@@ -1,4 +1,5 @@
-﻿using GazeMonitoring.Model;
+﻿using System;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Writers {
     public class FixationPointsWriter : IGazeDataWriter {
@@ -11,6 +12,25 @@ namespace GazeMonitoring.Data.Writers {
         public void Write(GazePoint gazePoint) {
             var fixationPoint = gazePoint as FixationPoint;
             _gazeDataRepository.SaveFixationPoint(fixationPoint);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _gazeDataRepository?.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~FixationPointsWriter()
+        {
+            Dispose(false);
         }
     }
 }

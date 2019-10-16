@@ -23,5 +23,24 @@ namespace GazeMonitoring.Data.Writers {
                 gazeDataWriter.Write(gazePoint);
             }
         }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _gazeDataWriters.ForEach(w => w.Dispose());
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~MultipleSourcesGazeDataWriter()
+        {
+            Dispose(false);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -9,7 +10,7 @@ namespace GazeMonitoring.Discovery {
     public class TrackerDiscoveryManager {
         public void Discover(ContainerBuilder container) {
             // Force all referenced assemblies to be loaded into the app domain
-            //new DirectoryCatalog(".");
+            new DirectoryCatalog(".");
 
             /*var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "eyetracker", "custom", "CustomMonitoring.dll");
 

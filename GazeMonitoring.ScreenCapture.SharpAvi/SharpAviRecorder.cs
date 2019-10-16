@@ -11,7 +11,7 @@ using SharpAvi.Output;
 namespace GazeMonitoring.ScreenCapture.SharpAvi {
     public class SharpAviRecorder : IScreenRecorder {
         private AviWriter _writer;
-        private readonly AviVideoStreamFactory _videoStreamFactory;
+        private readonly IAviVideoStreamFactory _videoStreamFactory;
         private readonly IGazePointStreamFactory _gazePointStreamFactory;
         private GazePointStream _gazePointStream;
         private IAviVideoStream _videoStream;
@@ -27,7 +27,7 @@ namespace GazeMonitoring.ScreenCapture.SharpAvi {
             };
         }
 
-        public SharpAviRecorder(AviVideoStreamFactory videoStreamFactory, IGazePointStreamFactory gazePointStreamFactory) {
+        public SharpAviRecorder(IAviVideoStreamFactory videoStreamFactory, IGazePointStreamFactory gazePointStreamFactory) {
             if (videoStreamFactory == null) {
                 throw new ArgumentNullException(nameof(videoStreamFactory));
             }
