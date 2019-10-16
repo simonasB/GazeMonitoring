@@ -9,12 +9,12 @@ namespace GazeMonitoring.Data.Xml {
         private readonly Dictionary<Type, XmlWriterWrapper> _xmlWriterWrappers;
         private readonly Dictionary<Type, XmlSerializer> _xmlSerializers;
 
-        public XmlGazeDataRepository(IXmlWritersFactory xmlWritersFactory, DataStream dataStream) {
-            if (xmlWritersFactory == null) {
-                throw new ArgumentNullException(nameof(xmlWritersFactory));
+        public XmlGazeDataRepository(Dictionary<Type, XmlWriterWrapper> xmlWriterWrappers) {
+            if (xmlWriterWrappers == null) {
+                throw new ArgumentNullException(nameof(xmlWriterWrappers));
             }
 
-            _xmlWriterWrappers = xmlWritersFactory.GetXmlWriters(dataStream);
+            _xmlWriterWrappers = xmlWriterWrappers;
             _xmlSerializers = _xmlWriterWrappers.ToDictionary(kvp => kvp.Key, kvp => new XmlSerializer(kvp.Key, new XmlRootAttribute(kvp.Key.Name)));
         }
 
@@ -35,7 +35,12 @@ namespace GazeMonitoring.Data.Xml {
         }
 
         public void SaveFixationPoint(FixationPoint point) {
-            throw new NotImplementedException();
+            if (point == null)
+            {
+                throw new ArgumentNullException(nameof(point));
+            }
+
+            Write(point);
         }
 
         public void Dispose() {
