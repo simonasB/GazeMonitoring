@@ -1,5 +1,4 @@
-﻿using Autofac;
-using GazeMonitoring.Common.Calculations;
+﻿using GazeMonitoring.Common.Calculations;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.Data;
 using GazeMonitoring.Data.Writers;
@@ -10,17 +9,17 @@ using GazeMonitoring.Logging.Log4Net;
 
 namespace GazeMonitoring.IoC
 {
-    public class CommonModule : Module
+    public class CommonModule : IoCModule
     {
-        protected override void Load(ContainerBuilder builder)
+        public void Load(IoContainerBuilder builder)
         {
-            builder.RegisterType<BasicSaccadeCalculator>().As<ISaccadeCalculator>();
-            builder.RegisterType<NullGazeDataMonitorFinalizer>().As<IGazeDataMonitorFinalizer>();
-            builder.RegisterType<NullEyeTrackerStatusProvider>().As<IEyeTrackerStatusProvider>();
-            builder.RegisterType<XmlLog4NetLoggerFactory>().As<ILoggerFactory>();
-            builder.RegisterType<NullGazeDataRepositoryFactory>().As<IGazeDataRepositoryFactory>();
-            builder.RegisterType<NullGazePointStreamFactory>().As<IGazePointStreamFactory>();
-            builder.RegisterType<GazeDataWriterFactory>().As<IGazeDataWriterFactory>();
+            builder.Register<ISaccadeCalculator, BasicSaccadeCalculator>();
+            builder.Register<IGazeDataMonitorFinalizer, NullGazeDataMonitorFinalizer>();
+            builder.Register<IEyeTrackerStatusProvider, NullEyeTrackerStatusProvider>();
+            builder.Register<ILoggerFactory, XmlLog4NetLoggerFactory>();
+            builder.Register<IGazeDataRepositoryFactory, NullGazeDataRepositoryFactory>();
+            builder.Register<IGazePointStreamFactory, NullGazePointStreamFactory>();
+            builder.Register<IGazeDataWriterFactory, GazeDataWriterFactory>();
         }
     }
 }

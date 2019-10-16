@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
-    </Reference>
     <Reference Include="EyeTribe.ClientSdk, Version=0.9.77.30231, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EyeTribe.ClientSdk.0.9.77.6\lib\net45\EyeTribe.ClientSdk.dll</HintPath>
     </Reference>
@@ -73,6 +70,10 @@
     <ProjectReference Include="..\GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj">
       <Project>{24F906AF-DF04-4A59-9215-47186318F9B5}</Project>
       <Name>GazeMonitoring.EyeTracker.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.IoC\GazeMonitoring.IoC.csproj">
+      <Project>{3b15219e-feb5-471d-ba9b-06ec67320a52}</Project>
+      <Name>GazeMonitoring.IoC</Name>
     </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
       <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>

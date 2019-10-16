@@ -1,7 +1,8 @@
 ﻿using Autofac;
+using GazeMonitoring.IoC;
 
 namespace GazeMonitoring.EyeTracker.Core.Discovery {
     public interface IDiscoverable {
-        DiscoveryResult Discover(ContainerBuilder container);
+        DiscoveryResult Discover(IoContainerBuilder container);
     }
 }

@@ -3,8 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Autofac;
-using Autofac.Configuration;
 using GazeMonitoring.Base;
 using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Discovery;
@@ -18,7 +16,6 @@ using GazeMonitoring.ViewModels;
 using GazeMonitoring.Views;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.Configuration;
-using IContainer = Autofac.IContainer;
 
 namespace GazeMonitoring
 {
@@ -28,7 +25,7 @@ namespace GazeMonitoring
     public partial class App : Application
     {
         private TaskbarIcon _taskbarIcon;
-        private static IContainer _container;
+        private static IoContainer _container;
         private ILogger _logger;
 
         private GlobalHotKey _hotKey;
@@ -44,10 +41,10 @@ namespace GazeMonitoring
             try
             {
                 Init();
-                _logger = _container.Resolve<ILoggerFactory>().GetLogger(typeof(App));
+                _logger = _container.GetInstance<ILoggerFactory>().GetLogger(typeof(App));
                 //_taskbarIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, new BalloonService(_taskbarIcon)));
-                _taskbarIcon = _container.Resolve<TaskbarIcon>();
-                _taskbarIcon.DataContext = _container.Resolve<NotifyIconViewModel>();
+                _taskbarIcon = _container.GetInstance<TaskbarIcon>();
+                _taskbarIcon.DataContext = _container.GetInstance<NotifyIconViewModel>();
 
                 SetupExceptionHandling();
             } catch (Exception ex)
@@ -110,12 +107,12 @@ namespace GazeMonitoring
                 _logger.Debug("AutoDiscovery set to false");
             }
 
-            var builder = new ContainerBuilder();
-            var module = new ConfigurationModule(configurationRoot);
+            var builder = ContainerBuilderFactory.Create();
+
             builder.RegisterModule<CommonModule>();
-            builder.RegisterModule(module);
-            builder.RegisterType<DefaultScreenParameters>().As<IScreenParameters>();
-            builder.RegisterType<GazeDataMonitorFactory>().As<IGazeDataMonitorFactory>();
+            builder.RegisterModule(configurationRoot);
+            builder.Register<IScreenParameters, DefaultScreenParameters>();
+            builder.Register<IGazeDataMonitorFactory, GazeDataMonitorFactory>();
 
             if (autoDiscover) {
                 var discoveryManager = new TrackerDiscoveryManager();
@@ -129,11 +126,11 @@ namespace GazeMonitoring
                 // fail
             }
 
-            builder.RegisterInstance(notifyIcon).SingleInstance();
-            builder.RegisterType<BalloonService>().As<IBalloonService>();
-            builder.RegisterType<MainViewModel>();
-            builder.RegisterType<MainWindow>();
-            builder.RegisterType<NotifyIconViewModel>();
+            builder.RegisterSingleton(notifyIcon);
+            builder.Register<IBalloonService, BalloonService>();
+            builder.Register<MainViewModel>();
+            builder.Register<MainWindow>();
+            builder.Register<NotifyIconViewModel>();
 
             _container = builder.Build();
         }

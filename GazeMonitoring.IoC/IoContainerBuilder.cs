@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Configuration;
 
 namespace GazeMonitoring.IoC
 {
@@ -16,6 +17,8 @@ namespace GazeMonitoring.IoC
 
         IoContainerBuilder RegisterModule<T>() where T : IoCModule, new();
         IoContainerBuilder RegisterModule<T>(T instance) where T : IoCModule, new();
+
+        IoContainerBuilder RegisterModule(IConfigurationRoot configurationRoot);
 
         IoContainer Build();
     }

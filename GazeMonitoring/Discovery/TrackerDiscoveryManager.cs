@@ -5,10 +5,11 @@ using System.Linq;
 using System.Reflection;
 using Autofac;
 using GazeMonitoring.EyeTracker.Core.Discovery;
+using GazeMonitoring.IoC;
 
 namespace GazeMonitoring.Discovery {
     public class TrackerDiscoveryManager {
-        public void Discover(ContainerBuilder container) {
+        public void Discover(IoContainerBuilder container) {
             // Force all referenced assemblies to be loaded into the app domain
             new DirectoryCatalog(".");
 
