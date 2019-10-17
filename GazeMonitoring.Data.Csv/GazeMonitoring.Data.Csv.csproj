@@ -61,9 +61,6 @@
     <Compile Include="SubjectInfoMap.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\GazeMonitoring.Common\GazeMonitoring.Common.csproj">
       <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
       <Name>GazeMonitoring.Common</Name>
@@ -76,6 +73,9 @@
       <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>
       <Name>GazeMonitoring.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
