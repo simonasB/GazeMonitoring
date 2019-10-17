@@ -1,12 +1,12 @@
-﻿using Autofac;
+﻿using GazeMonitoring.IoC;
 
 namespace GazeMonitoring.Data.Xml {
-    public class XmlModule : Module {
-        protected override void Load(ContainerBuilder builder)
+    public class XmlModule : IoCModule {
+        public void Load(IoContainerBuilder builder)
         {
-            builder.RegisterType<XmlFileNameFormatter>().As<IFileNameFormatter>();
-            builder.RegisterType<XmlWritersFactory>().As<IXmlWritersFactory>();
-            builder.RegisterType<XmlGazeDataRepositoryFactory>().As<IGazeDataRepositoryFactory>();
+            builder.Register<IFileNameFormatter, XmlFileNameFormatter>();
+            builder.Register<IXmlWritersFactory, XmlWritersFactory>();
+            builder.Register<IGazeDataRepositoryFactory, XmlGazeDataRepositoryFactory>();
         }
     }
 }

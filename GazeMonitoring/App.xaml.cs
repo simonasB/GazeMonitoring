@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -103,6 +104,9 @@ namespace GazeMonitoring
 
             config.AddJsonFile("config.json");
             var configurationRoot = config.Build();
+
+            var configurationModule = new ConfigurationIoCModule(configurationRoot);
+
             if (!bool.TryParse(configurationRoot["autoDiscover"], out var autoDiscover)) {
                 _logger.Debug("AutoDiscovery set to false");
             }
@@ -110,7 +114,7 @@ namespace GazeMonitoring
             var builder = ContainerBuilderFactory.Create();
 
             builder.RegisterModule<CommonModule>();
-            builder.RegisterModule(configurationRoot);
+            builder.RegisterModule(configurationModule);
             builder.Register<IScreenParameters, DefaultScreenParameters>();
             builder.Register<IGazeDataMonitorFactory, GazeDataMonitorFactory>();
 

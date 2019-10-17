@@ -1,11 +1,12 @@
-﻿using Autofac;
+﻿using GazeMonitoring.IoC;
 
 namespace GazeMonitoring.Data.Csv {
-    public class CsvModule : Module {
-        protected override void Load(ContainerBuilder builder) {
-            builder.RegisterType<CsvFileNameFormatter>().As<IFileNameFormatter>();
-            builder.RegisterType<CsvWritersFactory>().As<ICsvWritersFactory>();
-            builder.RegisterType<CsvGazeDataRepositoryFactory>().As<IGazeDataRepositoryFactory>();
+    public class CsvModule : IoCModule {
+        public void Load(IoContainerBuilder builder)
+        {
+            builder.Register<IFileNameFormatter, CsvFileNameFormatter>();
+            builder.Register<ICsvWritersFactory, CsvWritersFactory>();
+            builder.Register<IGazeDataRepositoryFactory, CsvGazeDataRepositoryFactory>();
         }
     }
 }

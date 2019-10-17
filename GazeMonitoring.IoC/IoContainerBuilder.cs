@@ -16,7 +16,7 @@ namespace GazeMonitoring.IoC
         IoContainerBuilder Register<T>(Func<IoContainer, T> factory, Scope scope) where T : class;
 
         IoContainerBuilder RegisterModule<T>() where T : IoCModule, new();
-        IoContainerBuilder RegisterModule<T>(T instance) where T : IoCModule, new();
+        IoContainerBuilder RegisterModule<T>(T instance) where T : IoCModule;
 
         IoContainerBuilder RegisterModule(IConfigurationRoot configurationRoot);
 

@@ -36,6 +36,9 @@
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Extensions.Primitives, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
@@ -57,10 +60,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationIoCModule.cs" />
+    <Compile Include="GazeMonitoringIoCException.cs" />
     <Compile Include="IoCModule.cs" />
     <Compile Include="IoContainer.cs" />
     <Compile Include="IoContainerBuilder.cs" />
-    <Compile Include="ModuleConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scope.cs" />
   </ItemGroup>

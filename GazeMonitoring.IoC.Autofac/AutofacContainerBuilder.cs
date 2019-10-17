@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using Autofac.Configuration;
 using Microsoft.Extensions.Configuration;
 
 namespace GazeMonitoring.IoC.Autofac
@@ -93,7 +94,7 @@ namespace GazeMonitoring.IoC.Autofac
             return this;
         }
 
-        public IoContainerBuilder RegisterModule<T>(T instance) where T : IoCModule, new()
+        public IoContainerBuilder RegisterModule<T>(T instance) where T : IoCModule
         {
             instance.Load(this);
             return this;
@@ -101,6 +102,7 @@ namespace GazeMonitoring.IoC.Autofac
 
         public IoContainerBuilder RegisterModule(IConfigurationRoot configurationRoot)
         {
+            var module = new ConfigurationModule(configurationRoot);
             return this;
         }
 

@@ -1,11 +1,11 @@
-﻿using Autofac;
+﻿using GazeMonitoring.IoC;
 
 namespace GazeMonitoring.ScreenCapture.SharpAvi {
-    public class SharpAviModule : Module {
-        protected override void Load(ContainerBuilder builder)
+    public class SharpAviModule : IoCModule {
+        public void Load(IoContainerBuilder builder)
         {
-            builder.RegisterType<AviVideoStreamFactory>().As<IAviVideoStreamFactory>();
-            builder.RegisterType<SharpAviRecorder>().As<IScreenRecorder>();
+            builder.Register<IAviVideoStreamFactory, AviVideoStreamFactory>();
+            builder.Register<IScreenRecorder, SharpAviRecorder>();
         }
     }
 }
