@@ -173,8 +173,8 @@
     <Compile Include="Addorners\ResizeRotateChrome.cs" />
     <Compile Include="BalloonService.cs" />
     <Compile Include="Base\AppContext.cs" />
-    <Compile Include="Base\BaseViewModel.cs" />
     <Compile Include="Base\Hotkey.cs" />
+    <Compile Include="Base\ViewModelBase.cs" />
     <Compile Include="Commands\AwaitableDelegateCommand.cs" />
     <Compile Include="Base\BindableBase.cs" />
     <Compile Include="Base\BooleanAndConverter.cs" />
@@ -203,11 +203,15 @@
     <Compile Include="Unmanaged\IGlobalHotKeyHandler.cs" />
     <Compile Include="Unmanaged\GlobalHotKeyManager.cs" />
     <Compile Include="ViewModels\OptionsViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\OptionsWindow.xaml.cs">
       <DependentUpon>OptionsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScreenConfigurationWindow.xaml.cs">
       <DependentUpon>ScreenConfigurationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Wrappers\EyeTrackerStatusWrapper.cs" />
     <Compile Include="Commands\IAsyncCommand.cs" />
@@ -248,6 +252,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ScreenConfigurationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

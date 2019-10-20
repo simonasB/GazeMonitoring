@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -127,7 +126,7 @@ namespace GazeMonitoring
 
             if (notifyIcon == null)
             {
-                // fail
+                throw new Exception("Cannot load notify icon.");
             }
 
             builder.RegisterSingleton(notifyIcon);

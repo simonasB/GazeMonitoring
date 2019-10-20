@@ -1,11 +1,9 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using GazeMonitoring.Base;
+﻿using GazeMonitoring.Base;
 using GazeMonitoring.Unmanaged;
 
 namespace GazeMonitoring.ViewModels
 {
-    public class OptionsViewModel : INotifyPropertyChanged
+    public class OptionsViewModel : ViewModelBase
     {
         private readonly IGlobalHotKeyManager _globalHotKeyManager;
         private Hotkey _captureScreenRegionHotkey;
@@ -61,13 +59,6 @@ namespace GazeMonitoring.ViewModels
                     OnPropertyChanged();
                 }
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
