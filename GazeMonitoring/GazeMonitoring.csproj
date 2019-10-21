@@ -172,9 +172,12 @@
     <Compile Include="Addorners\ResizeRotateAddorner.cs" />
     <Compile Include="Addorners\ResizeRotateChrome.cs" />
     <Compile Include="BalloonService.cs" />
-    <Compile Include="Base\AppContext.cs" />
+    <Compile Include="Base\AppLocalContext.cs" />
+    <Compile Include="Base\AppLocalContextManager.cs" />
     <Compile Include="Base\Hotkey.cs" />
+    <Compile Include="Base\ISettingsSubViewModel.cs" />
     <Compile Include="Base\ViewModelBase.cs" />
+    <Compile Include="Base\VisibilityConverter.cs" />
     <Compile Include="Commands\AwaitableDelegateCommand.cs" />
     <Compile Include="Base\BindableBase.cs" />
     <Compile Include="Base\BooleanAndConverter.cs" />
@@ -190,6 +193,9 @@
     <Compile Include="IBalloonService.cs" />
     <Compile Include="IoC\CommonModule.cs" />
     <Compile Include="IoC\ContainerBuilderFactory.cs" />
+    <Compile Include="Messaging\IMessage.cs" />
+    <Compile Include="Messaging\Messenger.cs" />
+    <Compile Include="Messaging\ShowSettingsMessage.cs" />
     <Compile Include="Monitor\GazeDataMonitorFactory.cs" />
     <Compile Include="Powerpoint\PowerpointParser.cs" />
     <Compile Include="Resources\HotkeyEditorControl.xaml.cs">
@@ -198,12 +204,16 @@
     <Compile Include="Unmanaged\CreateScreenConfigurationHandler.cs" />
     <Compile Include="Unmanaged\EditScreenConfigurationHandler.cs" />
     <Compile Include="Unmanaged\GlobalHotKey.cs" />
-    <Compile Include="Unmanaged\GlobalHotKeyFactory.cs" />
     <Compile Include="Unmanaged\GlobalHotKeyHandlerFactory.cs" />
     <Compile Include="Unmanaged\IGlobalHotKeyHandler.cs" />
     <Compile Include="Unmanaged\GlobalHotKeyManager.cs" />
+    <Compile Include="ViewModels\ESettingsSubViewModel.cs" />
+    <Compile Include="ViewModels\MonitoringConfigurationsViewModel.cs" />
     <Compile Include="ViewModels\OptionsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\MonitoringConfigurationsWindow.xaml.cs">
+      <DependentUpon>MonitoringConfigurationsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OptionsWindow.xaml.cs">
       <DependentUpon>OptionsWindow.xaml</DependentUpon>
     </Compile>
@@ -242,6 +252,10 @@
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MonitoringConfigurationsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NotifyIconResources.xaml">
       <SubType>Designer</SubType>

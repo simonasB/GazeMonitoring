@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using LiteDB;
 
 namespace GazeMonitoring.DataAccess.LiteDB
@@ -54,8 +56,34 @@ namespace GazeMonitoring.DataAccess.LiteDB
             using (var db = new LiteDatabase(@"C:\Temp\MyData.db"))
             {
                 var col = db.GetCollection<T>(typeof(T).Name);
-
                 return col.FindById(id);
+            }
+        }
+
+        public IEnumerable<T> Search<T>()
+        {
+            using (var db = new LiteDatabase(@"C:\Temp\MyData.db"))
+            {
+                var col = db.GetCollection<T>(typeof(T).Name);
+                return col.FindAll();
+            }
+        }
+
+        public IEnumerable<T> Search<T>(Expression<Func<T, bool>> predicate)
+        {
+            using (var db = new LiteDatabase(@"C:\Temp\MyData.db"))
+            {
+                var col = db.GetCollection<T>(typeof(T).Name);
+                return col.Find(predicate);
+            }
+        }
+
+        public T SearchOne<T>(Expression<Func<T, bool>> predicate)
+        {
+            using (var db = new LiteDatabase(@"C:\Temp\MyData.db"))
+            {
+                var col = db.GetCollection<T>(typeof(T).Name);
+                return col.FindOne(predicate);
             }
         }
     }

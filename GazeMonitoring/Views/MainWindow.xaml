@@ -180,7 +180,7 @@
             <TextBlock HorizontalAlignment="Left" Margin="104,40,0,0" TextWrapping="Wrap" Text="{Binding EyeTrackerStatusWrapper.EyeTrackerName}" VerticalAlignment="Top" Width="176" Height="18" Foreground="#FFADADAD" FontSize="14" FontFamily="Segoe UI Semibold"/>
             <Rectangle HorizontalAlignment="Stretch" Fill="#FF575757" Height="1" Grid.ColumnSpan="2" Margin="0,75,1.2,345"/>
             <Button x:Name="Capture" Command="{Binding CaptureCommand}" Content="Capture" HorizontalAlignment="Left" Margin="35,424,0,0" VerticalAlignment="Top" Width="85" Height="25" BorderBrush="#FF4D4D4D" FontSize="14"/>
-            <Button Content="Options" HorizontalAlignment="Left" Margin="160,424,0,0" VerticalAlignment="Top" Width="75" Command="{Binding OptionsCommand}"/>
+            <Button Content="Options" HorizontalAlignment="Left" Margin="160,424,0,0" VerticalAlignment="Top" Width="75" Command="{Binding SettingsCommand}"/>
         </Grid>
     </xctk:BusyIndicator>
 </Window>

@@ -18,29 +18,30 @@ namespace GazeMonitoring.Views
     /// </summary>
     public partial class ScreenConfigurationWindow : Window
     {
-        private readonly IAppLocalContext _appLocalContext;
+        private readonly IAppLocalContextManager _appLocalContextManager;
         private readonly IConfigurationRepository _configurationRepository;
         private Point _startPoint;
         private Rectangle _rectSelectArea;
         private ContentControl _rectContentControl;
         private bool _activated;
         private MonitoringConfiguration _monitoringConfiguration;
-
+        private AppLocalContext _appLocalContext;
 
         public const string AreaOfInterestTitle = "AreaOfInterestTitle";
 
-        public ScreenConfigurationWindow(IAppLocalContext appLocalContext, IConfigurationRepository configurationRepository)
+        public ScreenConfigurationWindow(IAppLocalContextManager appLocalContextManager, IConfigurationRepository configurationRepository)
         {
-            _appLocalContext = appLocalContext;
+            _appLocalContextManager = appLocalContextManager;
             _configurationRepository = configurationRepository;
             InitializeComponent();
 
             this.PreviewKeyDown += HandleEsc;
+            _appLocalContext = appLocalContextManager.Get();
             _appLocalContext.MonitoringConfigurationId = 8;
             _appLocalContext.ScreenConfigurationId = "76edd958-e418-4c37-9f38-b3972c274926";
         }
 
-        public ScreenConfigurationWindow() : this(new AppLocalContext(), new LiteDBConfigurationRepository())
+        public ScreenConfigurationWindow() : this(new AppLocalContextManager(new LiteDBConfigurationRepository()), new LiteDBConfigurationRepository())
         {
             
         }

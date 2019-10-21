@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GazeMonitoring.Base;
+using GazeMonitoring.DataAccess;
 using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Discovery;
 using GazeMonitoring.IoC;
 using GazeMonitoring.Logging;
+using GazeMonitoring.Messaging;
 using GazeMonitoring.Model;
 using GazeMonitoring.Monitor;
 using GazeMonitoring.Powerpoint;
@@ -29,14 +31,14 @@ namespace GazeMonitoring
         private ILogger _logger;
 
         private GlobalHotKey _hotKey;
-        private IAppLocalContext _appLocalContext;
+        private IAppLocalContextManager _appLocalContextManager;
 
         private GlobalHotKey _parseGlobalHotKey;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            _appLocalContext = new AppLocalContext();
+            //_appLocalContextManager = new AppLocalContextManager();
 
             try
             {
@@ -46,6 +48,9 @@ namespace GazeMonitoring
                 _taskbarIcon = _container.GetInstance<TaskbarIcon>();
                 _taskbarIcon.DataContext = _container.GetInstance<NotifyIconViewModel>();
 
+                // Initialize messaging registrations
+                _container.GetInstance<SettingsWindow>();
+
                 SetupExceptionHandling();
             } catch (Exception ex)
             {
@@ -54,7 +59,7 @@ namespace GazeMonitoring
                 Current.Shutdown();
             }
 
-            _hotKey = new GlobalHotKey(Key.F9, ModifierKeys.None, new EditScreenConfigurationHandler(_appLocalContext));
+            //_hotKey = new GlobalHotKey(Key.F9, ModifierKeys.None, new EditScreenConfigurationHandler(_appLocalContextManager));
             _parseGlobalHotKey = new GlobalHotKey(Key.F10, ModifierKeys.None, () =>
             {
                 var parser = new PowerpointParser(new DefaultScreenParameters());
@@ -134,6 +139,17 @@ namespace GazeMonitoring
             builder.Register<MainViewModel>();
             builder.Register<MainWindow>();
             builder.Register<NotifyIconViewModel>();
+
+            builder.Register<IMessenger, Messenger>(Scope.Singleton);
+            builder.Register<IGlobalHotKeyManager, GlobalHotKeyManager>(Scope.Singleton);
+            builder.Register<IGlobalHotKeyHandlerFactory, GlobalHotKeyHandlerFactory>(Scope.Singleton);
+            builder.Register<IConfigurationRepository, LiteDBConfigurationRepository>(Scope.Singleton);
+            builder.Register<IAppLocalContextManager, AppLocalContextManager>(Scope.Singleton);
+
+            builder.Register<ISettingsSubViewModel, MonitoringConfigurationsViewModel>();
+            builder.Register<ISettingsSubViewModel, OptionsViewModel>();
+            builder.Register<SettingsViewModel>();
+            builder.Register<SettingsWindow>();
 
             _container = builder.Build();
         }

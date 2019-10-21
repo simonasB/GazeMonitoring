@@ -1,14 +1,20 @@
-﻿using GazeMonitoring.Base;
+﻿using System;
+using GazeMonitoring.Base;
 using GazeMonitoring.Unmanaged;
 
 namespace GazeMonitoring.ViewModels
 {
-    public class OptionsViewModel : ViewModelBase
+    public class OptionsViewModel : ViewModelBase, ISettingsSubViewModel
     {
         private readonly IGlobalHotKeyManager _globalHotKeyManager;
         private Hotkey _captureScreenRegionHotkey;
         private Hotkey _createScreenConfigurationHotkey;
         private Hotkey _editScreenConfigurationHotkey;
+
+        [Obsolete("Only for design data", true)]
+        public OptionsViewModel() : this(null)
+        {
+        }
 
         public OptionsViewModel(IGlobalHotKeyManager globalHotKeyManager)
         {
@@ -41,7 +47,7 @@ namespace GazeMonitoring.ViewModels
                 if (_createScreenConfigurationHotkey != value)
                 {
                     _createScreenConfigurationHotkey = value;
-                    _globalHotKeyManager.ChangeGlobalHotKey(EGlobalHotKey.CreateScreenConfiguration, _captureScreenRegionHotkey.Key, _captureScreenRegionHotkey.Modifiers);
+                    _globalHotKeyManager.ChangeGlobalHotKey(EGlobalHotKey.CreateScreenConfiguration, _createScreenConfigurationHotkey.Key, _captureScreenRegionHotkey.Modifiers);
                     OnPropertyChanged();
                 }
             }
@@ -55,10 +61,12 @@ namespace GazeMonitoring.ViewModels
                 if (_editScreenConfigurationHotkey != value)
                 {
                     _editScreenConfigurationHotkey = value;
-                    _globalHotKeyManager.ChangeGlobalHotKey(EGlobalHotKey.EditScreenConfiguration, _captureScreenRegionHotkey.Key, _captureScreenRegionHotkey.Modifiers);
+                    _globalHotKeyManager.ChangeGlobalHotKey(EGlobalHotKey.EditScreenConfiguration, _editScreenConfigurationHotkey.Key, _captureScreenRegionHotkey.Modifiers);
                     OnPropertyChanged();
                 }
             }
         }
+
+        public ESettingsSubViewModel ESettingsSubViewModel => ESettingsSubViewModel.OptionsViewModel;
     }
 }

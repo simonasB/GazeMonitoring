@@ -1,12 +1,21 @@
 ﻿<Application x:Class="GazeMonitoring.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:GazeMonitoring.Views"
+             xmlns:viewModels="clr-namespace:GazeMonitoring.ViewModels"
              ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Views/NotifyIconResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type viewModels:OptionsViewModel}">
+                <views:OptionsWindow />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:MonitoringConfigurationsViewModel}">
+                <views:MonitoringConfigurationsWindow />
+            </DataTemplate>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

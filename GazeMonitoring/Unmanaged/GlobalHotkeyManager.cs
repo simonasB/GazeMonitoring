@@ -24,11 +24,6 @@ namespace GazeMonitoring.Unmanaged
             };
         }
 
-        public GlobalHotKeyManager(Dictionary<EGlobalHotKey, GlobalHotKey> globalHotKeys)
-        {
-            _globalHotKeys = globalHotKeys;
-        }
-
         public void ChangeGlobalHotKey(EGlobalHotKey eGlobalHotKey, Key key, ModifierKeys keyModifiers)
         {
             if (!_globalHotKeys.TryGetValue(eGlobalHotKey, out var globalHotKey))

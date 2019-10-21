@@ -1,4 +1,5 @@
 ﻿using GazeMonitoring.Base;
+using GazeMonitoring.DataAccess;
 using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Views;
 
@@ -6,16 +7,18 @@ namespace GazeMonitoring.Unmanaged
 {
     public class CreateScreenConfigurationHandler : IGlobalHotKeyHandler
     {
-        private readonly IAppLocalContext _appLocalContext;
+        private readonly IAppLocalContextManager _appLocalContextManager;
+        private readonly IConfigurationRepository _configurationRepository;
 
-        public CreateScreenConfigurationHandler(IAppLocalContext appLocalContext)
+        public CreateScreenConfigurationHandler(IAppLocalContextManager appLocalContextManager, IConfigurationRepository configurationRepository)
         {
-            _appLocalContext = appLocalContext;
+            _appLocalContextManager = appLocalContextManager;
+            _configurationRepository = configurationRepository;
         }
 
         public void Handle()
         {
-            var window = new ScreenConfigurationWindow(_appLocalContext, new LiteDBConfigurationRepository());
+            var window = new ScreenConfigurationWindow(_appLocalContextManager, _configurationRepository);
             window.Show();
         }
     }

@@ -11,6 +11,7 @@ using GazeMonitoring.Commands;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.Logging;
+using GazeMonitoring.Messaging;
 using GazeMonitoring.Model;
 using GazeMonitoring.Monitor;
 using GazeMonitoring.ScreenCapture;
@@ -28,6 +29,7 @@ namespace GazeMonitoring.ViewModels {
         private readonly IBalloonService _balloonService;
         private readonly IGazeDataMonitorFactory _gazeDataMonitorFactory;
         private readonly IScreenRecorder _screenRecorder;
+        private readonly IMessenger _messenger;
         private SubjectInfo _subjectInfo;
         private readonly IEyeTrackerStatusProvider _eyeTrackerStatusProvider;
         private readonly IGazeDataMonitorFinalizer _gazeDataMonitorFinalizer;
@@ -35,21 +37,18 @@ namespace GazeMonitoring.ViewModels {
         private readonly ILogger _logger;
         private IGazeDataMonitor _gazeDataMonitor;
 
-        public MainViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, IScreenRecorder screenRecorder, ILoggerFactory loggerFactory) {
+        public MainViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, IScreenRecorder screenRecorder, ILoggerFactory loggerFactory, IMessenger messenger) {
             _balloonService = balloonService;
             _gazeDataMonitorFactory = gazeDataMonitorFactory;
             StartCommand = new RelayCommand(OnStart, CanStart);
             CaptureCommand = new RelayCommand(OnCapture, CanCapture);
             StopCommand = new AwaitableDelegateCommand(OnStop, CanStop);
-            OptionsCommand = new RelayCommand(() =>
-            {
-                var screenConfigurationWindow = new OptionsWindow(new GlobalHotKeyManager(new GlobalHotKeyHandlerFactory(new AppLocalContext())));
-                screenConfigurationWindow.Show();
-            });
+            SettingsCommand = new RelayCommand(OnSettings);
             SubjectInfoWrapper = new SubjectInfoWrapper();
             _eyeTrackerStatusProvider = eyeTrackerStatusProvider;
             _gazeDataMonitorFinalizer = gazeDataMonitorFinalizer;
             _screenRecorder = screenRecorder;
+            _messenger = messenger;
             InvokeEyeTrackerStatusPolling();
             EyeTrackerStatusWrapper = new EyeTrackerStatusWrapper(StartCommand, StopCommand) {
                 EyeTrackerName = CommonConstants.DefaultEyeTrackerName
@@ -121,7 +120,7 @@ namespace GazeMonitoring.ViewModels {
 
         public RelayCommand CaptureCommand { get; }
 
-        public RelayCommand OptionsCommand { get; }
+        public RelayCommand SettingsCommand { get; }
 
         public AwaitableDelegateCommand StopCommand { get; }
 
@@ -274,6 +273,11 @@ namespace GazeMonitoring.ViewModels {
         private bool CanCapture()
         {
             return true;
+        }
+
+        private void OnSettings()
+        {
+            _messenger.Send(new ShowSettingsMessage());
         }
     }
 }
