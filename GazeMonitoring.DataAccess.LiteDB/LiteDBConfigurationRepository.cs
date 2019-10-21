@@ -12,7 +12,7 @@ namespace GazeMonitoring.DataAccess.LiteDB
             
         }
 
-        public int Save<T>(IEnumerable<T> entities)
+        public int SaveMany<T>(IEnumerable<T> entities)
         {
             using (var db = new LiteDatabase(@"C:\Temp\MyData.db"))
             {
@@ -27,7 +27,6 @@ namespace GazeMonitoring.DataAccess.LiteDB
             using (var db = new LiteDatabase(@"C:\Temp\MyData.db"))
             {
                 var col = db.GetCollection<T>(typeof(T).Name);
-
                 return col.Insert(entity).AsInt32;
             }
         }

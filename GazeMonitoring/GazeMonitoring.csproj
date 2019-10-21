@@ -201,10 +201,12 @@
     <Compile Include="Resources\HotkeyEditorControl.xaml.cs">
       <DependentUpon>HotkeyEditorControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Seeding\DatabaseSeeder.cs" />
     <Compile Include="Unmanaged\CreateScreenConfigurationHandler.cs" />
     <Compile Include="Unmanaged\EditScreenConfigurationHandler.cs" />
     <Compile Include="Unmanaged\GlobalHotKey.cs" />
     <Compile Include="Unmanaged\GlobalHotKeyHandlerFactory.cs" />
+    <Compile Include="Unmanaged\GlobalHotKeyEntity.cs" />
     <Compile Include="Unmanaged\IGlobalHotKeyHandler.cs" />
     <Compile Include="Unmanaged\GlobalHotKeyManager.cs" />
     <Compile Include="ViewModels\ESettingsSubViewModel.cs" />

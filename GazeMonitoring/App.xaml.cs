@@ -13,6 +13,7 @@ using GazeMonitoring.Messaging;
 using GazeMonitoring.Model;
 using GazeMonitoring.Monitor;
 using GazeMonitoring.Powerpoint;
+using GazeMonitoring.Seeding;
 using GazeMonitoring.Unmanaged;
 using GazeMonitoring.ViewModels;
 using GazeMonitoring.Views;
@@ -27,29 +28,28 @@ namespace GazeMonitoring
     public partial class App : Application
     {
         private TaskbarIcon _taskbarIcon;
+        private SettingsWindow _settingsWindow;
         private static IoContainer _container;
         private ILogger _logger;
-
-        private GlobalHotKey _hotKey;
-        private IAppLocalContextManager _appLocalContextManager;
 
         private GlobalHotKey _parseGlobalHotKey;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            //_appLocalContextManager = new AppLocalContextManager();
 
             try
             {
-                Init();
+                BuildContainer();
                 _logger = _container.GetInstance<ILoggerFactory>().GetLogger(typeof(App));
-                //_taskbarIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, new BalloonService(_taskbarIcon)));
                 _taskbarIcon = _container.GetInstance<TaskbarIcon>();
                 _taskbarIcon.DataContext = _container.GetInstance<NotifyIconViewModel>();
 
                 // Initialize messaging registrations
-                _container.GetInstance<SettingsWindow>();
+                _settingsWindow = _container.GetInstance<SettingsWindow>();
+
+                var seeder = _container.GetInstance<IDatabaseSeeder>();
+                seeder.Seed();
 
                 SetupExceptionHandling();
             } catch (Exception ex)
@@ -59,7 +59,6 @@ namespace GazeMonitoring
                 Current.Shutdown();
             }
 
-            //_hotKey = new GlobalHotKey(Key.F9, ModifierKeys.None, new EditScreenConfigurationHandler(_appLocalContextManager));
             _parseGlobalHotKey = new GlobalHotKey(Key.F10, ModifierKeys.None, () =>
             {
                 var parser = new PowerpointParser(new DefaultScreenParameters());
@@ -87,8 +86,8 @@ namespace GazeMonitoring
 
         private void LogUnhandledException(Exception exception, string source) {
             try {
-                System.Reflection.AssemblyName assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
-                var message = $"Unhandled exception in {assemblyName.Name} v{assemblyName.Version}";
+                var assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
+                var message = $"Unhandled exception in {assemblyName.Name} v{assemblyName.Version}. Source: {source}";
                 _logger.Error(message);
             } catch (Exception ex) {
                 _logger.Error(ex);
@@ -103,7 +102,7 @@ namespace GazeMonitoring
             base.OnExit(e);
         }
 
-        private void Init() {
+        private void BuildContainer() {
             var config = new ConfigurationBuilder();
 
             config.AddJsonFile("config.json");
@@ -121,6 +120,7 @@ namespace GazeMonitoring
             builder.RegisterModule(configurationModule);
             builder.Register<IScreenParameters, DefaultScreenParameters>();
             builder.Register<IGazeDataMonitorFactory, GazeDataMonitorFactory>();
+            builder.Register<IDatabaseSeeder, DatabaseSeeder>();
 
             if (autoDiscover) {
                 var discoveryManager = new TrackerDiscoveryManager();

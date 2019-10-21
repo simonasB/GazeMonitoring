@@ -19,6 +19,10 @@ namespace GazeMonitoring.ViewModels
         public OptionsViewModel(IGlobalHotKeyManager globalHotKeyManager)
         {
             _globalHotKeyManager = globalHotKeyManager;
+            var createScreenConfigurationGlobalKey = _globalHotKeyManager.Get(EGlobalHotKey.CreateScreenConfiguration);
+            var editScreenConfigurationGlobalKey = _globalHotKeyManager.Get(EGlobalHotKey.EditScreenConfiguration);
+            _createScreenConfigurationHotkey = new Hotkey(createScreenConfigurationGlobalKey.Key, createScreenConfigurationGlobalKey.KeyModifiers);
+            _editScreenConfigurationHotkey = new Hotkey(editScreenConfigurationGlobalKey.Key, editScreenConfigurationGlobalKey.KeyModifiers);
         }
 
         public Hotkey CaptureScreenRegionHotkey
@@ -47,7 +51,7 @@ namespace GazeMonitoring.ViewModels
                 if (_createScreenConfigurationHotkey != value)
                 {
                     _createScreenConfigurationHotkey = value;
-                    _globalHotKeyManager.ChangeGlobalHotKey(EGlobalHotKey.CreateScreenConfiguration, _createScreenConfigurationHotkey.Key, _captureScreenRegionHotkey.Modifiers);
+                    _globalHotKeyManager.ChangeGlobalHotKey(EGlobalHotKey.CreateScreenConfiguration, _createScreenConfigurationHotkey.Key, _createScreenConfigurationHotkey.Modifiers);
                     OnPropertyChanged();
                 }
             }
@@ -61,7 +65,7 @@ namespace GazeMonitoring.ViewModels
                 if (_editScreenConfigurationHotkey != value)
                 {
                     _editScreenConfigurationHotkey = value;
-                    _globalHotKeyManager.ChangeGlobalHotKey(EGlobalHotKey.EditScreenConfiguration, _editScreenConfigurationHotkey.Key, _captureScreenRegionHotkey.Modifiers);
+                    _globalHotKeyManager.ChangeGlobalHotKey(EGlobalHotKey.EditScreenConfiguration, _editScreenConfigurationHotkey.Key, _editScreenConfigurationHotkey.Modifiers);
                     OnPropertyChanged();
                 }
             }
