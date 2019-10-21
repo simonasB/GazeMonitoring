@@ -9,7 +9,34 @@
         d:DataContext="{d:DesignInstance viewModels:MonitoringConfigurationsViewModel,
                                          IsDesignTimeCreatable=True}">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="209,110,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="98" Width="146"/>
-
+        <ListView Name="lvArtists" ItemsSource="{Binding MonitoringConfigurations}" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" Width="120" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Name"
+                                    x:Name="ArtistColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl>
+                                    <TextBlock Text="{Binding Name}" />
+                                </ContentControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="No. Screens" Width="120" DisplayMemberBinding="{Binding ScreenConfigurations.Count}" />
+                    <GridViewColumn Header="" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding DataContext.DeleteCommand  
+                                , RelativeSource={RelativeSource AncestorType=ListView}}"
+                                        CommandParameter="{Binding}"
+                                        Content="Delete"
+                                />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>
