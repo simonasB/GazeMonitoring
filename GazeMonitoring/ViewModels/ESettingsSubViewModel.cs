@@ -3,6 +3,7 @@
     public enum ESettingsSubViewModel
     {
         OptionsViewModel,
-        MonitoringConfigurationsViewModel
+        MonitoringConfigurationsViewModel,
+        MonitoringConfigurationEditViewModel,
     }
 }

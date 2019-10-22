@@ -25,6 +25,7 @@ namespace GazeMonitoring.ViewModels
             ShowOptions = new RelayCommand(() => ShowView(ESettingsSubViewModel.OptionsViewModel));
             ShowMonitoringConfigurations = new RelayCommand(() => ShowView(ESettingsSubViewModel.MonitoringConfigurationsViewModel));
             messenger.Register<ShowSettingsMessage>(_ => IsVisible = true);
+            messenger.Register<ShowMonitoringConfigurationDetailsMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationEditViewModel));
         }
 
         public RelayCommand ShowOptions { get; }

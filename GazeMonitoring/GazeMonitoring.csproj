@@ -195,6 +195,8 @@
     <Compile Include="IoC\ContainerBuilderFactory.cs" />
     <Compile Include="Messaging\IMessage.cs" />
     <Compile Include="Messaging\Messenger.cs" />
+    <Compile Include="Messaging\ShowMonitoringConfigurationAddMessage.cs" />
+    <Compile Include="Messaging\ShowMonitoringConfigurationDetailsMessage.cs" />
     <Compile Include="Messaging\ShowSettingsMessage.cs" />
     <Compile Include="Monitor\GazeDataMonitorFactory.cs" />
     <Compile Include="Powerpoint\PowerpointParser.cs" />
@@ -210,9 +212,13 @@
     <Compile Include="Unmanaged\IGlobalHotKeyHandler.cs" />
     <Compile Include="Unmanaged\GlobalHotKeyManager.cs" />
     <Compile Include="ViewModels\ESettingsSubViewModel.cs" />
+    <Compile Include="ViewModels\MonitoringConfigurationEditViewModel.cs" />
     <Compile Include="ViewModels\MonitoringConfigurationsViewModel.cs" />
     <Compile Include="ViewModels\OptionsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\MonitoringConfigurationEditWindow.xaml.cs">
+      <DependentUpon>MonitoringConfigurationEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MonitoringConfigurationsWindow.xaml.cs">
       <DependentUpon>MonitoringConfigurationsWindow.xaml</DependentUpon>
     </Compile>
@@ -254,6 +260,10 @@
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MonitoringConfigurationEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MonitoringConfigurationsWindow.xaml">
       <SubType>Designer</SubType>

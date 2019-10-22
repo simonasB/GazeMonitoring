@@ -25,6 +25,7 @@ namespace GazeMonitoring.Messaging
             if (_registry.TryGetValue(type, out var callbacks))
             {
                 callbacks.Add(o => callback((T)o));
+                return;
             }
 
             _registry[type] = new List<Action<object>> { o => callback((T)o) };

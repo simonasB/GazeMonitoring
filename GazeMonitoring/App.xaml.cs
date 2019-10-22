@@ -41,15 +41,16 @@ namespace GazeMonitoring
             try
             {
                 BuildContainer();
+
+                var seeder = _container.GetInstance<IDatabaseSeeder>();
+                seeder.Seed();
+
                 _logger = _container.GetInstance<ILoggerFactory>().GetLogger(typeof(App));
                 _taskbarIcon = _container.GetInstance<TaskbarIcon>();
                 _taskbarIcon.DataContext = _container.GetInstance<NotifyIconViewModel>();
 
                 // Initialize messaging registrations
                 _settingsWindow = _container.GetInstance<SettingsWindow>();
-
-                var seeder = _container.GetInstance<IDatabaseSeeder>();
-                seeder.Seed();
 
                 SetupExceptionHandling();
             } catch (Exception ex)
@@ -148,6 +149,7 @@ namespace GazeMonitoring
 
             builder.Register<ISettingsSubViewModel, MonitoringConfigurationsViewModel>();
             builder.Register<ISettingsSubViewModel, OptionsViewModel>();
+            builder.Register<ISettingsSubViewModel, MonitoringConfigurationEditViewModel>();
             builder.Register<SettingsViewModel>();
             builder.Register<SettingsWindow>();
 

@@ -17,7 +17,7 @@ namespace GazeMonitoring.DataAccess.LiteDB
             using (var db = new LiteDatabase(@"C:\Temp\MyData.db"))
             {
                 var col = db.GetCollection<T>(typeof(T).Name);
-
+                
                 return col.Insert(entities);
             }
         }
@@ -41,7 +41,7 @@ namespace GazeMonitoring.DataAccess.LiteDB
             }
         }
 
-        public void Delete<T>(string id)
+        public void Delete<T>(int id)
         {
             using (var db = new LiteDatabase(@"C:\Temp\MyData.db"))
             {

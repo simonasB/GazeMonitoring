@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using GazeMonitoring.Base;
 using GazeMonitoring.Unmanaged;
 
@@ -33,7 +34,7 @@ namespace GazeMonitoring.ViewModels
                 if (_captureScreenRegionHotkey != value)
                 {
                     _captureScreenRegionHotkey = value;
-                    _globalHotKeyManager.ChangeGlobalHotKey(EGlobalHotKey.CreateScreenConfiguration, _captureScreenRegionHotkey.Key, _captureScreenRegionHotkey.Modifiers);
+                    _globalHotKeyManager.Change(EGlobalHotKey.CreateScreenConfiguration, _captureScreenRegionHotkey.Key, _captureScreenRegionHotkey.Modifiers);
                     OnPropertyChanged();
                 }
             }
@@ -46,31 +47,32 @@ namespace GazeMonitoring.ViewModels
         public Hotkey CreateScreenConfigurationHotkey
         {
             get => _createScreenConfigurationHotkey;
-            set
-            {
-                if (_createScreenConfigurationHotkey != value)
-                {
-                    _createScreenConfigurationHotkey = value;
-                    _globalHotKeyManager.ChangeGlobalHotKey(EGlobalHotKey.CreateScreenConfiguration, _createScreenConfigurationHotkey.Key, _createScreenConfigurationHotkey.Modifiers);
-                    OnPropertyChanged();
-                }
-            }
+            set => OnPropertyChanged(ref _createScreenConfigurationHotkey, value, EGlobalHotKey.CreateScreenConfiguration);
         }
 
         public Hotkey EditScreenConfigurationHotkey
         {
             get => _editScreenConfigurationHotkey;
-            set
-            {
-                if (_editScreenConfigurationHotkey != value)
-                {
-                    _editScreenConfigurationHotkey = value;
-                    _globalHotKeyManager.ChangeGlobalHotKey(EGlobalHotKey.EditScreenConfiguration, _editScreenConfigurationHotkey.Key, _editScreenConfigurationHotkey.Modifiers);
-                    OnPropertyChanged();
-                }
-            }
+            set => OnPropertyChanged(ref _editScreenConfigurationHotkey, value, EGlobalHotKey.EditScreenConfiguration);
         }
 
         public ESettingsSubViewModel ESettingsSubViewModel => ESettingsSubViewModel.OptionsViewModel;
+
+        private void OnPropertyChanged(ref Hotkey currentHotkey, Hotkey updatedHotkey, EGlobalHotKey eGlobalHotKey, [CallerMemberName] string propertyName = null)
+        {
+            if (currentHotkey == updatedHotkey)
+                return;
+
+            currentHotkey = updatedHotkey;
+            if (currentHotkey == null)
+            {
+                _globalHotKeyManager.Remove(eGlobalHotKey);
+            }
+            else
+            {
+                _globalHotKeyManager.Change(eGlobalHotKey, _createScreenConfigurationHotkey.Key, _createScreenConfigurationHotkey.Modifiers);
+            }
+            OnPropertyChanged(propertyName);
+        }
     }
 }

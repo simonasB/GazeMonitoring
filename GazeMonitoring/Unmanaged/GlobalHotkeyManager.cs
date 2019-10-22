@@ -9,7 +9,9 @@ namespace GazeMonitoring.Unmanaged
     {
         GlobalHotKey Get(EGlobalHotKey key);
 
-        void ChangeGlobalHotKey(EGlobalHotKey eGlobalHotKey, Key key, ModifierKeys keyModifiers);
+        void Change(EGlobalHotKey eGlobalHotKey, Key key, ModifierKeys keyModifiers);
+
+        void Remove(EGlobalHotKey key);
     }
 
     public class GlobalHotKeyManager : IGlobalHotKeyManager
@@ -30,7 +32,7 @@ namespace GazeMonitoring.Unmanaged
             }
         }
 
-        public void ChangeGlobalHotKey(EGlobalHotKey eGlobalHotKey, Key key, ModifierKeys keyModifiers)
+        public void Change(EGlobalHotKey eGlobalHotKey, Key key, ModifierKeys keyModifiers)
         {
             if (!_globalHotKeys.TryGetValue(eGlobalHotKey, out var globalHotKey))
             {
@@ -46,6 +48,18 @@ namespace GazeMonitoring.Unmanaged
 
             var updatedGlobalHotKey = new GlobalHotKey(key, keyModifiers, _globalHotKeyHandlerFactory.Create(eGlobalHotKey));
             _globalHotKeys[eGlobalHotKey] = updatedGlobalHotKey;
+        }
+
+        public void Remove(EGlobalHotKey key)
+        {
+            if (!_globalHotKeys.TryGetValue(key, out var globalHotKey))
+            {
+                throw new ArgumentException("Global key not registered", nameof(key));
+            }
+
+            globalHotKey.Dispose();
+            _configurationRepository.Delete<GlobalHotKeyEntity>(globalHotKey.Id);
+            _globalHotKeys.Remove(key);
         }
 
         public GlobalHotKey Get(EGlobalHotKey key)

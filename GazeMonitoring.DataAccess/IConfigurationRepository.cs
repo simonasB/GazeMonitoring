@@ -9,7 +9,7 @@ namespace GazeMonitoring.DataAccess
         int SaveMany<T>(IEnumerable<T> entities);
         int Save<T>(T entity);
         void Update<T>(T entity);
-        void Delete<T>(string id);
+        void Delete<T>(int id);
         T Search<T>(int id);
         IEnumerable<T> Search<T>();
         IEnumerable<T> Search<T>(Expression<Func<T, bool>> predicate);
