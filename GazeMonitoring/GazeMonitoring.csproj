@@ -171,7 +171,7 @@
     </ApplicationDefinition>
     <Compile Include="Addorners\ResizeRotateAddorner.cs" />
     <Compile Include="Addorners\ResizeRotateChrome.cs" />
-    <Compile Include="BalloonService.cs" />
+    <Compile Include="Balloon\BalloonService.cs" />
     <Compile Include="Base\AppLocalContext.cs" />
     <Compile Include="Base\AppLocalContextManager.cs" />
     <Compile Include="Base\Hotkey.cs" />
@@ -187,10 +187,10 @@
     <Compile Include="Controls\DesignerItemDecorator.cs" />
     <Compile Include="Controls\MoveThumb.cs" />
     <Compile Include="Controls\ResizeThumb.cs" />
-    <Compile Include="DefaultScreenParameters.cs" />
+    <Compile Include="Base\DefaultScreenParameters.cs" />
     <Compile Include="Discovery\TrackerDiscoveryManager.cs" />
     <Compile Include="Extensions\MiscExtensions.cs" />
-    <Compile Include="IBalloonService.cs" />
+    <Compile Include="Balloon\IBalloonService.cs" />
     <Compile Include="IoC\CommonModule.cs" />
     <Compile Include="IoC\ContainerBuilderFactory.cs" />
     <Compile Include="Messaging\IMessage.cs" />

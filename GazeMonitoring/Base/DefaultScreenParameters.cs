@@ -1,7 +1,6 @@
-﻿using GazeMonitoring.Common;
-using GazeMonitoring.Model;
+﻿using GazeMonitoring.Model;
 
-namespace GazeMonitoring {
+namespace GazeMonitoring.Base {
     public class DefaultScreenParameters : IScreenParameters {
         public DefaultScreenParameters() {
             Height = System.Windows.SystemParameters.PrimaryScreenHeight;

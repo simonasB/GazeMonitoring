@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using GazeMonitoring.Balloon;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
 using GazeMonitoring.Common.Finalizers;

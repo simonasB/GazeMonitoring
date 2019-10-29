@@ -1,6 +1,6 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 
-namespace GazeMonitoring {
+namespace GazeMonitoring.Balloon {
     public class BalloonService : IBalloonService
     {
         private readonly TaskbarIcon _taskbarIcon;
