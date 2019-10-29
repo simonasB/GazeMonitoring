@@ -7,8 +7,13 @@
         xmlns:resources="clr-namespace:GazeMonitoring.Resources"
         xmlns:viewModels="clr-namespace:GazeMonitoring.ViewModels"
         mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="12"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         d:DataContext="{d:DesignInstance viewModels:OptionsViewModel,
-                                         IsDesignTimeCreatable=True}">
+                                         IsDesignTimeCreatable=True}" d:DesignWidth="295.205" d:DesignHeight="193.08">
     <Grid>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="25,10,0,0" TextWrapping="Wrap" Text="Hotkeys" VerticalAlignment="Top" Width="90"/>
         <TextBlock HorizontalAlignment="Left" Margin="25,42,0,0" TextWrapping="Wrap" Text="Capture screen region" VerticalAlignment="Top" Height="19" Width="150"/>
@@ -21,11 +26,11 @@
         <TextBox HorizontalAlignment="Left" Height="19" Margin="182,69,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90"/>
         <TextBox HorizontalAlignment="Left" Height="19" Margin="182,96,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90"/>-->
 
-        <resources:HotkeyEditorControl Hotkey="{Binding CaptureScreenRegionHotkey}" HorizontalAlignment="Left" Height="19" Margin="182,42,0,0" VerticalAlignment="Top" Width="90"/>
-        <resources:HotkeyEditorControl Hotkey="{Binding StartGazeRecordingHotkey}" HorizontalAlignment="Left" Height="19" Margin="182,69,0,0" VerticalAlignment="Top" Width="90"/>
-        <resources:HotkeyEditorControl Hotkey="{Binding StopGazeRecordingHotkey}" HorizontalAlignment="Left" Height="19" Margin="182,96,0,0" VerticalAlignment="Top" Width="90"/>
-        <resources:HotkeyEditorControl Hotkey="{Binding CreateScreenConfigurationHotkey}" HorizontalAlignment="Left" Height="19" Margin="182,123,0,0" VerticalAlignment="Top" Width="90"/>
-        <resources:HotkeyEditorControl Hotkey="{Binding EditScreenConfigurationHotkey}" HorizontalAlignment="Left" Height="19" Margin="182,150,0,0" VerticalAlignment="Top" Width="90"/>
+        <resources:HotkeyEditorControl Hotkey="{Binding CaptureScreenRegionHotkey}" HorizontalAlignment="Left" Height="24" Margin="182,42,0,0" VerticalAlignment="Top" Width="90"/>
+        <resources:HotkeyEditorControl Hotkey="{Binding StartGazeRecordingHotkey}" HorizontalAlignment="Left" Height="24" Margin="182,69,0,0" VerticalAlignment="Top" Width="90"/>
+        <resources:HotkeyEditorControl Hotkey="{Binding StopGazeRecordingHotkey}" HorizontalAlignment="Left" Height="24" Margin="182,96,0,0" VerticalAlignment="Top" Width="90"/>
+        <resources:HotkeyEditorControl Hotkey="{Binding CreateScreenConfigurationHotkey}" HorizontalAlignment="Left" Height="24" Margin="182,123,0,0" VerticalAlignment="Top" Width="90"/>
+        <resources:HotkeyEditorControl Hotkey="{Binding EditScreenConfigurationHotkey}" HorizontalAlignment="Left" Height="24" Margin="182,150,0,0" VerticalAlignment="Top" Width="90"/>
 
     </Grid>
 </UserControl>

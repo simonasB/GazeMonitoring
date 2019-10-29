@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Controls;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
 using GazeMonitoring.Messaging;
@@ -12,6 +13,7 @@ namespace GazeMonitoring.ViewModels
         private readonly Dictionary<ESettingsSubViewModel, ISettingsSubViewModel> _viewModels;
         private ISettingsSubViewModel _currentViewModel;
         private bool _isVisible;
+        private TextBlock _selectedMenuItem;
 
         public ISettingsSubViewModel CurrentViewModel
         {
@@ -27,6 +29,24 @@ namespace GazeMonitoring.ViewModels
             ShowMonitoringConfigurations = new RelayCommand(() => ShowView(ESettingsSubViewModel.MonitoringConfigurationsViewModel));
             messenger.Register<ShowSettingsMessage>(_ => IsVisible = true);
             messenger.Register<ShowMonitoringConfigurationDetailsMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationEditViewModel));
+        }
+
+        public TextBlock SelectedMenuItem
+        {
+            get => _selectedMenuItem;
+            set
+            {
+                switch (value.Name)
+                {
+                    case "Options":
+                        ShowView(ESettingsSubViewModel.OptionsViewModel);
+                        break;
+                    case "Screen":
+                        ShowView(ESettingsSubViewModel.MonitoringConfigurationsViewModel);
+                        break;
+                }
+                SetProperty(ref _selectedMenuItem, value);
+            }
         }
 
         public RelayCommand ShowOptions { get; }
