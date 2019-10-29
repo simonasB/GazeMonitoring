@@ -2,7 +2,7 @@
 using GazeMonitoring.Base;
 using GazeMonitoring.DataAccess;
 
-namespace GazeMonitoring.Unmanaged
+namespace GazeMonitoring.HotKeys.Global.Handlers
 {
     public interface IGlobalHotKeyHandlerFactory
     {

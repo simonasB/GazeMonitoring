@@ -1,6 +1,6 @@
 ﻿using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Messaging
+namespace GazeMonitoring.Messaging.Messages
 {
     public class ShowMonitoringConfigurationDetailsMessage : IMessage
     {

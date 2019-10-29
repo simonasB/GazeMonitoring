@@ -1,7 +1,10 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
+using GazeMonitoring.DataAccess;
 using GazeMonitoring.Messaging;
+using GazeMonitoring.Messaging.Messages;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.ViewModels
@@ -9,15 +12,20 @@ namespace GazeMonitoring.ViewModels
     public class MonitoringConfigurationEditViewModel : ViewModelBase, ISettingsSubViewModel
     {
         private readonly IMessenger _messenger;
+        private readonly IConfigurationRepository _configurationRepository;
 
         public ObservableCollection<ScreenConfiguration> ScreenConfigurations { get; set; }
 
-        public MonitoringConfigurationEditViewModel(IMessenger messenger)
+        private MonitoringConfiguration _monitoringConfiguration;
+
+        public MonitoringConfigurationEditViewModel(IMessenger messenger, IConfigurationRepository configurationRepository)
         {
             _messenger = messenger;
+            _configurationRepository = configurationRepository;
             _messenger.Register<ShowMonitoringConfigurationDetailsMessage>(o =>
             {
                 ScreenConfigurations = new ObservableCollection<ScreenConfiguration>(o.MonitoringConfiguration.ScreenConfigurations);
+                _monitoringConfiguration = o.MonitoringConfiguration;
             });
         }
 
@@ -31,9 +39,15 @@ namespace GazeMonitoring.ViewModels
             {
                 return _deleteCommand
                        ?? (_deleteCommand = new RelayCommand<ScreenConfiguration>(
-                           monitoringConfig =>
+                           screenConfiguration =>
                            {
-                               ScreenConfigurations.Remove(monitoringConfig);
+                               ScreenConfigurations.Remove(screenConfiguration);
+                               var screenConfigToDelete = _monitoringConfiguration.ScreenConfigurations.FirstOrDefault(o => o.Id == screenConfiguration.Id);
+
+                               if (screenConfigToDelete == null) return;
+
+                               _monitoringConfiguration.ScreenConfigurations.Remove(screenConfigToDelete);
+                               _configurationRepository.Update(_monitoringConfiguration);
                            }));
             }
         }

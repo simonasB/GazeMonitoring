@@ -195,22 +195,22 @@
     <Compile Include="IoC\ContainerBuilderFactory.cs" />
     <Compile Include="Messaging\IMessage.cs" />
     <Compile Include="Messaging\Messenger.cs" />
-    <Compile Include="Messaging\ShowMonitoringConfigurationAddMessage.cs" />
-    <Compile Include="Messaging\ShowMonitoringConfigurationDetailsMessage.cs" />
-    <Compile Include="Messaging\ShowSettingsMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowMonitoringConfigurationAddMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowMonitoringConfigurationDetailsMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowSettingsMessage.cs" />
     <Compile Include="Monitor\GazeDataMonitorFactory.cs" />
     <Compile Include="Powerpoint\PowerpointParser.cs" />
     <Compile Include="Resources\HotkeyEditorControl.xaml.cs">
       <DependentUpon>HotkeyEditorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Seeding\DatabaseSeeder.cs" />
-    <Compile Include="Unmanaged\CreateScreenConfigurationHandler.cs" />
-    <Compile Include="Unmanaged\EditScreenConfigurationHandler.cs" />
-    <Compile Include="Unmanaged\GlobalHotKey.cs" />
-    <Compile Include="Unmanaged\GlobalHotKeyHandlerFactory.cs" />
-    <Compile Include="Unmanaged\GlobalHotKeyEntity.cs" />
-    <Compile Include="Unmanaged\IGlobalHotKeyHandler.cs" />
-    <Compile Include="Unmanaged\GlobalHotKeyManager.cs" />
+    <Compile Include="HotKeys\Global\Handlers\CreateScreenConfigurationHandler.cs" />
+    <Compile Include="HotKeys\Global\Handlers\EditScreenConfigurationHandler.cs" />
+    <Compile Include="HotKeys\Global\GlobalHotKey.cs" />
+    <Compile Include="HotKeys\Global\Handlers\GlobalHotKeyHandlerFactory.cs" />
+    <Compile Include="HotKeys\Global\GlobalHotKeyEntity.cs" />
+    <Compile Include="HotKeys\Global\Handlers\IGlobalHotKeyHandler.cs" />
+    <Compile Include="HotKeys\Global\GlobalHotKeyManager.cs" />
     <Compile Include="ViewModels\ESettingsSubViewModel.cs" />
     <Compile Include="ViewModels\MonitoringConfigurationEditViewModel.cs" />
     <Compile Include="ViewModels\MonitoringConfigurationsViewModel.cs" />
@@ -395,6 +395,8 @@
   <ItemGroup>
     <Content Include="Images\gm_logoi.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Unmanaged\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

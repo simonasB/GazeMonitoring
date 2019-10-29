@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using GazeMonitoring.Base;
-using GazeMonitoring.Unmanaged;
+using GazeMonitoring.HotKeys.Global;
 
 namespace GazeMonitoring.ViewModels
 {

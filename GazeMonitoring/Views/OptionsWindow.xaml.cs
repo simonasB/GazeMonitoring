@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using GazeMonitoring.Unmanaged;
 using GazeMonitoring.ViewModels;
 
 namespace GazeMonitoring.Views

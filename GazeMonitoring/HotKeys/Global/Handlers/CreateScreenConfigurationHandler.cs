@@ -1,9 +1,8 @@
 ﻿using GazeMonitoring.Base;
 using GazeMonitoring.DataAccess;
-using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Views;
 
-namespace GazeMonitoring.Unmanaged
+namespace GazeMonitoring.HotKeys.Global.Handlers
 {
     public class CreateScreenConfigurationHandler : IGlobalHotKeyHandler
     {

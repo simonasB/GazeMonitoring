@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace GazeMonitoring.Unmanaged
+namespace GazeMonitoring.HotKeys.Global
 {
     public class GlobalHotKeyEntity
     {

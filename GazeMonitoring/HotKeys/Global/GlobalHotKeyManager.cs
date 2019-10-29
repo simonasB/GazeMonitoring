@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 using GazeMonitoring.DataAccess;
+using GazeMonitoring.HotKeys.Global.Handlers;
 
-namespace GazeMonitoring.Unmanaged
+namespace GazeMonitoring.HotKeys.Global
 {
     public interface IGlobalHotKeyManager
     {
@@ -58,6 +59,7 @@ namespace GazeMonitoring.Unmanaged
             }
 
             globalHotKey.Dispose();
+            // TODO If deleted, seed will reassing to default value when application is restarted. Maybe user wants to remove hot keys at all
             _configurationRepository.Delete<GlobalHotKeyEntity>(globalHotKey.Id);
             _globalHotKeys.Remove(key);
         }

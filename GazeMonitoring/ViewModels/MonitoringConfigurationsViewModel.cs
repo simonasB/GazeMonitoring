@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using System.Threading;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
 using GazeMonitoring.DataAccess;
 using GazeMonitoring.Messaging;
+using GazeMonitoring.Messaging.Messages;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.ViewModels

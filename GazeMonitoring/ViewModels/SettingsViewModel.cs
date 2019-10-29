@@ -3,6 +3,7 @@ using System.Linq;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
 using GazeMonitoring.Messaging;
+using GazeMonitoring.Messaging.Messages;
 
 namespace GazeMonitoring.ViewModels
 {

@@ -4,8 +4,9 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Interop;
+using GazeMonitoring.HotKeys.Global.Handlers;
 
-namespace GazeMonitoring.Unmanaged
+namespace GazeMonitoring.HotKeys.Global
 {
     public class GlobalHotKey : IDisposable
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Input;
 using GazeMonitoring.Base;
 using GazeMonitoring.DataAccess;
-using GazeMonitoring.Unmanaged;
+using GazeMonitoring.HotKeys.Global;
 
 namespace GazeMonitoring.Seeding
 {
