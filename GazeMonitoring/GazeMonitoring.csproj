@@ -395,8 +395,6 @@
   <ItemGroup>
     <Content Include="Images\gm_logoi.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Unmanaged\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
