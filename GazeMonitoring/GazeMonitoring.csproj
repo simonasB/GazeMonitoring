@@ -194,6 +194,8 @@
     <Compile Include="IoC\CommonModule.cs" />
     <Compile Include="IoC\ContainerBuilderFactory.cs" />
     <Compile Include="Messaging\IMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowCreateScreenConfigurationMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowEditScreenConfigurationMessage.cs" />
     <Compile Include="Messaging\Messenger.cs" />
     <Compile Include="Messaging\Messages\ShowMonitoringConfigurationAddMessage.cs" />
     <Compile Include="Messaging\Messages\ShowMonitoringConfigurationDetailsMessage.cs" />
@@ -228,6 +230,7 @@
     <Compile Include="Views\ScreenConfigurationWindow.xaml.cs">
       <DependentUpon>ScreenConfigurationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ScreenConfigurationWindowHandler.cs" />
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>

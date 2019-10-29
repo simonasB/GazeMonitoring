@@ -8,6 +8,10 @@ namespace GazeMonitoring.Base
         void Save(AppLocalContext appLocalContext);
 
         AppLocalContext Get();
+
+        // TODO: Might extracted to extensions methods
+        void SetScreenConfigurationId(string screenConfigurationId);
+        void SetMonitoringConfigurationId(int monitoringConfigurationId);
     }
 
     public class AppLocalContextManager : IAppLocalContextManager
@@ -29,6 +33,20 @@ namespace GazeMonitoring.Base
             var appLocalContext = _configurationRepository.Search<AppLocalContext>().FirstOrDefault();
 
             return appLocalContext;
+        }
+
+        public void SetScreenConfigurationId(string screenConfigurationId)
+        {
+            var appLocalContext = Get();
+            appLocalContext.ScreenConfigurationId = screenConfigurationId;
+            _configurationRepository.Update(appLocalContext);
+        }
+
+        public void SetMonitoringConfigurationId(int monitoringConfigurationId)
+        {
+            var appLocalContext = Get();
+            appLocalContext.MonitoringConfigurationId = monitoringConfigurationId;
+            _configurationRepository.Update(appLocalContext);
         }
     }
 }

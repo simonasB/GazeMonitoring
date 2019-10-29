@@ -31,6 +31,7 @@ namespace GazeMonitoring
     {
         private TaskbarIcon _taskbarIcon;
         private SettingsWindow _settingsWindow;
+        private IScreenConfigurationWindowHandler _screenConfigurationWindowHandler;
         private static IoContainer _container;
         private ILogger _logger;
 
@@ -53,6 +54,8 @@ namespace GazeMonitoring
 
                 // Initialize messaging registrations
                 _settingsWindow = _container.GetInstance<SettingsWindow>();
+                _screenConfigurationWindowHandler = _container.GetInstance<IScreenConfigurationWindowHandler>();
+                _screenConfigurationWindowHandler.Handle();
 
                 SetupExceptionHandling();
             } catch (Exception ex)
@@ -61,19 +64,6 @@ namespace GazeMonitoring
                 MessageBox.Show($"Could not launch GazeMonitoring application.{ex}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Current.Shutdown();
             }
-
-            _parseGlobalHotKey = new GlobalHotKey(Key.F10, ModifierKeys.None, () =>
-            {
-                var parser = new PowerpointParser(new DefaultScreenParameters());
-                var configurations = parser.Parse().ToList();
-                var repo = new LiteDBConfigurationRepository();
-                var recordingConfiguration = new MonitoringConfiguration
-                {
-                    Name = "ppt",
-                    ScreenConfigurations = configurations
-                };
-                var id = repo.Save(recordingConfiguration);
-            });
         }
 
         private void SetupExceptionHandling() {
@@ -154,6 +144,8 @@ namespace GazeMonitoring
             builder.Register<ISettingsSubViewModel, MonitoringConfigurationEditViewModel>();
             builder.Register<SettingsViewModel>();
             builder.Register<SettingsWindow>();
+
+            builder.Register<IScreenConfigurationWindowHandler, ScreenConfigurationWindowHandler>();
 
             _container = builder.Build();
         }

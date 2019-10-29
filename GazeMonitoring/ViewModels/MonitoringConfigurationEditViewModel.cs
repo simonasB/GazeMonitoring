@@ -13,15 +13,17 @@ namespace GazeMonitoring.ViewModels
     {
         private readonly IMessenger _messenger;
         private readonly IConfigurationRepository _configurationRepository;
+        private readonly IAppLocalContextManager _appLocalContextManager;
 
         public ObservableCollection<ScreenConfiguration> ScreenConfigurations { get; set; }
 
         private MonitoringConfiguration _monitoringConfiguration;
 
-        public MonitoringConfigurationEditViewModel(IMessenger messenger, IConfigurationRepository configurationRepository)
+        public MonitoringConfigurationEditViewModel(IMessenger messenger, IConfigurationRepository configurationRepository, IAppLocalContextManager appLocalContextManager)
         {
             _messenger = messenger;
             _configurationRepository = configurationRepository;
+            _appLocalContextManager = appLocalContextManager;
             _messenger.Register<ShowMonitoringConfigurationDetailsMessage>(o =>
             {
                 ScreenConfigurations = new ObservableCollection<ScreenConfiguration>(o.MonitoringConfiguration.ScreenConfigurations);
@@ -60,9 +62,10 @@ namespace GazeMonitoring.ViewModels
             {
                 return _editCommand
                        ?? (_editCommand = new RelayCommand<ScreenConfiguration>(
-                           monitoringConfig =>
+                           screenConfiguration =>
                            {
-                               ScreenConfigurations.Remove(monitoringConfig);
+                               _appLocalContextManager.SetScreenConfigurationId(screenConfiguration.Id);
+                               _messenger.Send(new ShowEditScreenConfigurationMessage());
                            }));
             }
         }

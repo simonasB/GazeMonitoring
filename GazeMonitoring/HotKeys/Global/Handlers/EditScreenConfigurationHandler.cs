@@ -1,24 +1,20 @@
-﻿using GazeMonitoring.Base;
-using GazeMonitoring.DataAccess;
-using GazeMonitoring.Views;
+﻿using GazeMonitoring.Messaging;
+using GazeMonitoring.Messaging.Messages;
 
 namespace GazeMonitoring.HotKeys.Global.Handlers
 {
     public class EditScreenConfigurationHandler : IGlobalHotKeyHandler
     {
-        private readonly IAppLocalContextManager _appLocalContextManager;
-        private readonly IConfigurationRepository _configurationRepository;
+        private readonly IMessenger _messenger;
 
-        public EditScreenConfigurationHandler(IAppLocalContextManager appLocalContextManager, IConfigurationRepository configurationRepository)
+        public EditScreenConfigurationHandler(IMessenger messenger)
         {
-            _appLocalContextManager = appLocalContextManager;
-            _configurationRepository = configurationRepository;
+            _messenger = messenger;
         }
 
         public void Handle()
         {
-            var window = new ScreenConfigurationWindow(_appLocalContextManager, _configurationRepository);
-            window.Show();
+            _messenger.Send(new ShowEditScreenConfigurationMessage());
         }
     }
 }

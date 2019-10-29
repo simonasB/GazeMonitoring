@@ -1,6 +1,5 @@
 ﻿using System;
-using GazeMonitoring.Base;
-using GazeMonitoring.DataAccess;
+using GazeMonitoring.Messaging;
 
 namespace GazeMonitoring.HotKeys.Global.Handlers
 {
@@ -11,13 +10,11 @@ namespace GazeMonitoring.HotKeys.Global.Handlers
 
     public class GlobalHotKeyHandlerFactory : IGlobalHotKeyHandlerFactory
     {
-        private readonly IAppLocalContextManager _appLocalContextManager;
-        private readonly IConfigurationRepository _configurationRepository;
+        private readonly IMessenger _messenger;
 
-        public GlobalHotKeyHandlerFactory(IAppLocalContextManager appLocalContextManager, IConfigurationRepository configurationRepository)
+        public GlobalHotKeyHandlerFactory(IMessenger messenger)
         {
-            _appLocalContextManager = appLocalContextManager;
-            _configurationRepository = configurationRepository;
+            _messenger = messenger;
         }
 
         public IGlobalHotKeyHandler Create(EGlobalHotKey hotKey)
@@ -25,9 +22,9 @@ namespace GazeMonitoring.HotKeys.Global.Handlers
             switch (hotKey)
             {
                 case EGlobalHotKey.CreateScreenConfiguration:
-                    return new CreateScreenConfigurationHandler(_appLocalContextManager, _configurationRepository);
+                    return new CreateScreenConfigurationHandler(_messenger);
                 case EGlobalHotKey.EditScreenConfiguration:
-                    return new EditScreenConfigurationHandler(_appLocalContextManager, _configurationRepository);
+                    return new EditScreenConfigurationHandler(_messenger);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(hotKey), hotKey, null);
             }

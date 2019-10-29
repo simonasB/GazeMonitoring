@@ -25,11 +25,11 @@ namespace GazeMonitoring.Views
         private ContentControl _rectContentControl;
         private bool _activated;
         private MonitoringConfiguration _monitoringConfiguration;
-        private AppLocalContext _appLocalContext;
+        private readonly AppLocalContext _appLocalContext;
 
         public const string AreaOfInterestTitle = "AreaOfInterestTitle";
 
-        public ScreenConfigurationWindow(IAppLocalContextManager appLocalContextManager, IConfigurationRepository configurationRepository)
+        public ScreenConfigurationWindow(IAppLocalContextManager appLocalContextManager, IConfigurationRepository configurationRepository, bool newConfigurationRequested)
         {
             _appLocalContextManager = appLocalContextManager;
             _configurationRepository = configurationRepository;
@@ -37,17 +37,22 @@ namespace GazeMonitoring.Views
 
             this.PreviewKeyDown += HandleEsc;
             _appLocalContext = appLocalContextManager.Get();
-            _appLocalContext.MonitoringConfigurationId = 8;
-            _appLocalContext.ScreenConfigurationId = "76edd958-e418-4c37-9f38-b3972c274926";
+            if (newConfigurationRequested)
+            {
+                _appLocalContext.ScreenConfigurationId = null;
+            }
         }
 
-        public ScreenConfigurationWindow() : this(new AppLocalContextManager(new LiteDBConfigurationRepository()), new LiteDBConfigurationRepository())
+        public ScreenConfigurationWindow() : this(new AppLocalContextManager(new LiteDBConfigurationRepository()), new LiteDBConfigurationRepository(), true)
         {
             
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            if (!_appLocalContext.MonitoringConfigurationId.HasValue)
+                return;
+
             _monitoringConfiguration = _configurationRepository.Search<MonitoringConfiguration>(_appLocalContext.MonitoringConfigurationId.Value);
 
             var screenConfiguration =

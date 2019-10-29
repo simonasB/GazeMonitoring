@@ -12,14 +12,20 @@ namespace GazeMonitoring.ViewModels
     {
         private readonly IConfigurationRepository _configurationRepository;
         private readonly IMessenger _messenger;
+        private readonly IAppLocalContextManager _appLocalContextManager;
 
-        public MonitoringConfigurationsViewModel(IConfigurationRepository configurationRepository, IMessenger messenger)
+        public MonitoringConfigurationsViewModel(IConfigurationRepository configurationRepository, IMessenger messenger, IAppLocalContextManager appLocalContextManager)
         {
             _configurationRepository = configurationRepository;
             _messenger = messenger;
+            _appLocalContextManager = appLocalContextManager;
             MonitoringConfigurations = new ObservableCollection<MonitoringConfiguration>(_configurationRepository.Search<MonitoringConfiguration>());
             EditCommand = new RelayCommand<MonitoringConfiguration>(
-                monitoringConfig => { _messenger.Send(new ShowMonitoringConfigurationDetailsMessage(monitoringConfig)); });
+                monitoringConfig =>
+                {
+                    _appLocalContextManager.SetMonitoringConfigurationId(monitoringConfig.Id);
+                    _messenger.Send(new ShowMonitoringConfigurationDetailsMessage(monitoringConfig));
+                });
             DeleteCommand = new RelayCommand<MonitoringConfiguration>(
                 monitoringConfig =>
                 {
