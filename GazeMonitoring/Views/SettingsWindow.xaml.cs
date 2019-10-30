@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 using GazeMonitoring.ViewModels;
 
 namespace GazeMonitoring.Views
@@ -13,12 +12,10 @@ namespace GazeMonitoring.Views
         {
             this.DataContext = viewModel;
             InitializeComponent();
-            //_messenger.Register<ShowSettingsMessage>(_ => this.Show());
         }
 
-        private void Window_Closing(object sender, CancelEventArgs e)
+        private void Close_OnClick(object sender, RoutedEventArgs e)
         {
-            e.Cancel = true;
             this.Visibility = Visibility.Hidden;
         }
     }

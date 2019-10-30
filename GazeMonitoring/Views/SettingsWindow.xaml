@@ -3,12 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GazeMonitoring.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="450" Width="586.842"
+        Title="GazeMonitoring" Height="450" Width="586.842"
         Visibility="{Binding IsVisible,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}"
-        Closing="Window_Closing"
+        WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -22,21 +21,46 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
     </Window.Resources>
     <Grid>
-        <ContentControl Content="{Binding CurrentViewModel}" Margin="176,0,0,0">
-        </ContentControl>
-        <!--<Button Content="Options" Style="{StaticResource MaterialDesignOutlinedButton}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="166" Command="{Binding ShowOptions}" Height="69"/>-->
-        <!--<Button Content="Configurations" Style="{StaticResource MaterialDesignOutlinedButton}" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Width="166" Height="69" Command="{Binding ShowMonitoringConfigurations}" />-->
-
-        <!--<TreeView Margin="0,0,405,22">
-            <TreeViewItem Header="Options" Height="57" Width="172"/>
-            <TreeViewItem Header="Monitoring Configurations" Height="57" Width="172"/>
-        </TreeView>-->
+        <materialDesign:ColorZone
+                Grid.ColumnSpan="2"
+                Padding="8"
+                Mode="PrimaryMid">
+            <DockPanel>
+                <Button
+                        Name="Close"
+                        Margin="0,0,10,0"
+                        VerticalAlignment="Center"
+                        Command="{Binding CloseCommand}"
+                        CommandParameter="{Binding ElementName=MainViewWindow}"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignToolForegroundButton}"
+                        Click="Close_OnClick"
+                        ToolTip="Close">
+                    <materialDesign:PackIcon
+                            Width="24"
+                            Height="24"
+                            Kind="Close" />
+                </Button>
+                <Button
+                        Margin="0,0,0,0"
+                        Panel.ZIndex="0"
+                        Command="{Binding ViewHomeCommand}"
+                        Style="{DynamicResource MaterialDesignToolForegroundButton}"
+                        ToolTip="Home">
+                    <materialDesign:PackIcon
+                            Width="28"
+                            Height="28"
+                            Kind="Home" />
+                </Button>
+                <StackPanel materialDesign:RippleAssist.IsCentered="True" Orientation="Horizontal" />
+            </DockPanel>
+        </materialDesign:ColorZone>
+        <ContentControl Content="{Binding CurrentViewModel}" Margin="176,48,0,0"/>
 
         <ListBox SelectedItem="{Binding SelectedMenuItem}"
-            IsEnabled="{Binding IsChecked, ElementName=EnableListBox}" Margin="0,0,405,0" BorderThickness="1"
+            IsEnabled="{Binding IsChecked, ElementName=EnableListBox}" Margin="0,48,411,0" BorderThickness="1"
             BorderBrush="{DynamicResource MaterialDesignDivider}">
             <ListBoxItem Name="Options" BorderThickness="1"
                          BorderBrush="{DynamicResource MaterialDesignDivider}">
