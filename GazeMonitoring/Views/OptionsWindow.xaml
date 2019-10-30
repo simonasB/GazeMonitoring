@@ -15,16 +15,12 @@
         d:DataContext="{d:DesignInstance viewModels:OptionsViewModel,
                                          IsDesignTimeCreatable=True}" d:DesignWidth="295.205" d:DesignHeight="193.08">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="25,10,0,0" TextWrapping="Wrap" Text="Hotkeys" VerticalAlignment="Top" Width="90"/>
-        <TextBlock HorizontalAlignment="Left" Margin="25,42,0,0" TextWrapping="Wrap" Text="Capture screen region" VerticalAlignment="Top" Height="19" Width="150"/>
-        <TextBlock HorizontalAlignment="Left" Margin="25,69,0,0" TextWrapping="Wrap" Text="Start gaze recording" VerticalAlignment="Top" Height="19" Width="150"/>
-        <TextBlock HorizontalAlignment="Left" Margin="25,96,0,0" TextWrapping="Wrap" Text="Stop gaze recording" VerticalAlignment="Top" Height="19" Width="150"/>
-        <TextBlock HorizontalAlignment="Left" Margin="25,123,0,0" TextWrapping="Wrap" Text="Create screen configuration" VerticalAlignment="Top" Height="19" Width="150"/>
-        <TextBlock HorizontalAlignment="Left" Margin="25,150,0,0" TextWrapping="Wrap" Text="Edit screen configuration" VerticalAlignment="Top" Height="19" Width="150"/>
-
-        <!--<TextBox HorizontalAlignment="Left" Height="19" Margin="182,42,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90"/>
-        <TextBox HorizontalAlignment="Left" Height="19" Margin="182,69,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90"/>
-        <TextBox HorizontalAlignment="Left" Height="19" Margin="182,96,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90"/>-->
+        <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Height="32" Margin="25,10,0,0" TextWrapping="Wrap" Text="Hotkeys" VerticalAlignment="Top" Width="90"/>
+        <TextBlock HorizontalAlignment="Left" Margin="25,47,0,0" TextWrapping="Wrap" Text="Capture screen region" VerticalAlignment="Top" Height="19" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="25,74,0,0" TextWrapping="Wrap" Text="Start gaze recording" VerticalAlignment="Top" Height="19" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="25,101,0,0" TextWrapping="Wrap" Text="Stop gaze recording" VerticalAlignment="Top" Height="19" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="25,128,0,0" TextWrapping="Wrap" Text="Create screen configuration" VerticalAlignment="Top" Height="19" Width="150"/>
+        <TextBlock HorizontalAlignment="Left" Margin="25,155,0,0" TextWrapping="Wrap" Text="Edit screen configuration" VerticalAlignment="Top" Height="19" Width="150"/>
 
         <resources:HotkeyEditorControl Hotkey="{Binding CaptureScreenRegionHotkey}" HorizontalAlignment="Left" Height="24" Margin="182,42,0,0" VerticalAlignment="Top" Width="90"/>
         <resources:HotkeyEditorControl Hotkey="{Binding StartGazeRecordingHotkey}" HorizontalAlignment="Left" Height="24" Margin="182,69,0,0" VerticalAlignment="Top" Width="90"/>
