@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="GazeMonitoring" Height="450" Width="586.842"
+        Title="GazeMonitoring" Height="526.705" Width="585.564"
         Visibility="{Binding IsVisible,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
@@ -23,6 +23,10 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="352*"/>
+            <ColumnDefinition Width="235*"/>
+        </Grid.ColumnDefinitions>
         <materialDesign:ColorZone
                 Grid.ColumnSpan="2"
                 Padding="8"
@@ -57,10 +61,10 @@
                 <StackPanel materialDesign:RippleAssist.IsCentered="True" Orientation="Horizontal" />
             </DockPanel>
         </materialDesign:ColorZone>
-        <ContentControl Content="{Binding CurrentViewModel}" Margin="176,48,0,0"/>
+        <ContentControl Content="{Binding CurrentViewModel}" Margin="176,48,0,0" Grid.ColumnSpan="2"/>
 
         <ListBox SelectedItem="{Binding SelectedMenuItem}"
-            IsEnabled="{Binding IsChecked, ElementName=EnableListBox}" Margin="0,48,411,0" BorderThickness="1"
+            IsEnabled="{Binding IsChecked, ElementName=EnableListBox}" Margin="0,48,175.562,0" BorderThickness="1"
             BorderBrush="{DynamicResource MaterialDesignDivider}">
             <ListBoxItem Name="Options" BorderThickness="1"
                          BorderBrush="{DynamicResource MaterialDesignDivider}">
