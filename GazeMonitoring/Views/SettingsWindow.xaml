@@ -36,15 +36,22 @@
         </TreeView>-->
 
         <ListBox SelectedItem="{Binding SelectedMenuItem}"
-            IsEnabled="{Binding IsChecked, ElementName=EnableListBox}" Margin="0,0,405,0">
-            <TextBlock Name="Options" FontSize="20" Margin="5,10,0,10">
-                <materialDesign:PackIcon Kind="SettingsOutline" />
-                Options
-            </TextBlock>
-            <TextBlock Name="Screen" FontSize="20" Margin="5,10,0,10">
-                <materialDesign:PackIcon Kind="WindowMaximize" /> 
-                Screen
-            </TextBlock>
+            IsEnabled="{Binding IsChecked, ElementName=EnableListBox}" Margin="0,0,405,0" BorderThickness="1"
+            BorderBrush="{DynamicResource MaterialDesignDivider}">
+            <ListBoxItem Name="Options" BorderThickness="1"
+                         BorderBrush="{DynamicResource MaterialDesignDivider}">
+                <TextBlock FontSize="20" Margin="5,10,0,10">
+                    <materialDesign:PackIcon Kind="SettingsOutline" />
+                    Options
+                </TextBlock>
+            </ListBoxItem>
+            <ListBoxItem Name="Screen" BorderThickness="1"
+                         BorderBrush="{DynamicResource MaterialDesignDivider}">
+                <TextBlock FontSize="20" Margin="5,10,0,10">
+                    <materialDesign:PackIcon Kind="WindowMaximize" /> 
+                    Screen
+                </TextBlock>
+            </ListBoxItem>
         </ListBox>
     </Grid>
 </Window>

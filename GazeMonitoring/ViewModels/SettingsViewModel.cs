@@ -13,7 +13,7 @@ namespace GazeMonitoring.ViewModels
         private readonly Dictionary<ESettingsSubViewModel, ISettingsSubViewModel> _viewModels;
         private ISettingsSubViewModel _currentViewModel;
         private bool _isVisible;
-        private TextBlock _selectedMenuItem;
+        private ListBoxItem _selectedMenuItem;
 
         public ISettingsSubViewModel CurrentViewModel
         {
@@ -31,7 +31,7 @@ namespace GazeMonitoring.ViewModels
             messenger.Register<ShowMonitoringConfigurationDetailsMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationEditViewModel));
         }
 
-        public TextBlock SelectedMenuItem
+        public ListBoxItem SelectedMenuItem
         {
             get => _selectedMenuItem;
             set
