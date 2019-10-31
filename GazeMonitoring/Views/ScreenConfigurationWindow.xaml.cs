@@ -10,6 +10,7 @@ using GazeMonitoring.Base;
 using GazeMonitoring.DataAccess;
 using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Model;
+using MaterialDesignThemes.Wpf;
 
 namespace GazeMonitoring.Views
 {
@@ -64,13 +65,17 @@ namespace GazeMonitoring.Views
                 var grid = new Canvas();
                 var deleteButton = new Button
                 {
-                    Content = "Remove",
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    Tag = areaOfInterest.Id
+                    Content = new PackIcon { Kind = PackIconKind.Close },
+                    Tag = areaOfInterest.Id,
+                    Style = (Style)Application.Current.Resources["MaterialDesignFlatButton"]
                 };
                 deleteButton.Click += DeleteButtonOnClick;
-                Canvas.SetTop(deleteButton, 20);
-
+                deleteButton.Click += DeleteButtonOnClick;
+                Canvas.SetTop(deleteButton, -40);
+                Canvas.SetLeft(deleteButton, -20);
+                var title = new TextBox { Text = areaOfInterest.Name, Tag = AreaOfInterestTitle, Width = 100 };
+                Canvas.SetLeft(title, 30);
+                Canvas.SetTop(title, -40);
 
                 grid.Children.Add(new Rectangle
                 {
@@ -79,7 +84,7 @@ namespace GazeMonitoring.Views
                     Fill = new SolidColorBrush(Color.FromRgb(100, 120, 130)) {Opacity = 0},
                     IsHitTestVisible = false
                 });
-                grid.Children.Add(new TextBox { Text = areaOfInterest.Name, Tag = AreaOfInterestTitle});
+                grid.Children.Add(title);
                 grid.Children.Add(deleteButton);
 
                 var rectContentControl = new ContentControl
@@ -97,6 +102,9 @@ namespace GazeMonitoring.Views
 
                 paintSurface.Children.Add(rectContentControl);
             });
+
+            var left = (paintSurface.ActualWidth - upperActions.ActualWidth) / 2;
+            Canvas.SetLeft(upperActions, left);
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -134,21 +142,25 @@ namespace GazeMonitoring.Views
                 var grid = new Canvas();
                 var deleteButton = new Button
                 {
-                    Content = "Remove", HorizontalAlignment = HorizontalAlignment.Right, Tag = uniqueName
+                    Content = new PackIcon {Kind = PackIconKind.Close}, Tag = uniqueName,
+                    Style = (Style) Application.Current.Resources["MaterialDesignFlatButton"]
                 };
                 deleteButton.Click += DeleteButtonOnClick;
-                Canvas.SetTop(deleteButton, 20);
+                Canvas.SetTop(deleteButton, -40);
+                Canvas.SetLeft(deleteButton, -20);
+                var title = new TextBox {Tag = AreaOfInterestTitle, Width = 100 };
+                Canvas.SetLeft(title, 30);
+                Canvas.SetTop(title, -40);
 
                 grid.Children.Add(_rectSelectArea);
-                grid.Children.Add(new TextBox { Text = "Lorem Ipsum", Tag = AreaOfInterestTitle });
+                grid.Children.Add(title);
                 grid.Children.Add(deleteButton);
 
                 _rectContentControl = new ContentControl
                 {
                     Content = grid,
                     Template = (ControlTemplate) this.FindResource("DesignerItemTemplate"),
-                    Tag = uniqueName,
-                    
+                    Tag = uniqueName
                 };
 
                 Canvas.SetLeft(_rectContentControl, _startPoint.X);
@@ -191,8 +203,9 @@ namespace GazeMonitoring.Views
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddNewAreaOfInterestClick(object sender, RoutedEventArgs e)
         {
+            Mouse.OverrideCursor = Cursors.Pen;
             _activated = !_activated;
         }
 
@@ -200,11 +213,12 @@ namespace GazeMonitoring.Views
         {
             if (_activated)
             {
+                Mouse.OverrideCursor = null;
                 _activated = false;
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void SaveClick(object sender, RoutedEventArgs e)
         {
             var areasOfInterest = new List<AreaOfInterest>();
 
@@ -248,6 +262,11 @@ namespace GazeMonitoring.Views
             }
 
             _configurationRepository.Update(_monitoringConfiguration);
+        }
+
+        private void CloseClick(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
