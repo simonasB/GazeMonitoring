@@ -3,58 +3,93 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:GazeMonitoring.Views"
         xmlns:controls="clr-namespace:GazeMonitoring.Controls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="ScreenConfigurationWindow"
         AllowsTransparency="True" WindowStyle="None" WindowState="Maximized"
         Background="Transparent"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="12">
     <Window.Resources>
+        <ResourceDictionary>
+            <!-- MoveThumb Template -->
+            <ControlTemplate x:Key="MoveThumbTemplate" TargetType="{x:Type controls:MoveThumb}">
+                <Rectangle Fill="Transparent"/>
+            </ControlTemplate>
 
-        <!-- MoveThumb Template -->
-        <ControlTemplate x:Key="MoveThumbTemplate" TargetType="{x:Type controls:MoveThumb}">
-            <Rectangle Fill="Transparent"/>
-        </ControlTemplate>
-
-        <!-- ResizeDecorator Template -->
-        <ControlTemplate x:Key="ResizeDecoratorTemplate" TargetType="{x:Type Control}">
-            <Grid>
-                <controls:ResizeThumb Height="3" Cursor="SizeNS" Margin="0 -4 0 0"
+            <!-- ResizeDecorator Template -->
+            <ControlTemplate x:Key="ResizeDecoratorTemplate" TargetType="{x:Type Control}">
+                <Grid>
+                    <controls:ResizeThumb Height="3" Cursor="SizeNS" Margin="0 -4 0 0"
                        VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
-                <controls:ResizeThumb Width="3" Cursor="SizeWE" Margin="-4 0 0 0"
+                    <controls:ResizeThumb Width="3" Cursor="SizeWE" Margin="-4 0 0 0"
                        VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
-                <controls:ResizeThumb Width="3" Cursor="SizeWE" Margin="0 0 -4 0"
+                    <controls:ResizeThumb Width="3" Cursor="SizeWE" Margin="0 0 -4 0"
                        VerticalAlignment="Stretch" HorizontalAlignment="Right"/>
-                <controls:ResizeThumb Height="3" Cursor="SizeNS" Margin="0 0 0 -4"
+                    <controls:ResizeThumb Height="3" Cursor="SizeNS" Margin="0 0 0 -4"
                        VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
-                <controls:ResizeThumb Width="7" Height="7" Cursor="SizeNWSE" Margin="-6 -6 0 0"
+                    <controls:ResizeThumb Width="7" Height="7" Cursor="SizeNWSE" Margin="-6 -6 0 0"
                        VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                <controls:ResizeThumb Width="7" Height="7" Cursor="SizeNESW" Margin="0 -6 -6 0"
+                    <controls:ResizeThumb Width="7" Height="7" Cursor="SizeNESW" Margin="0 -6 -6 0"
                        VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                <controls:ResizeThumb Width="7" Height="7" Cursor="SizeNESW" Margin="-6 0 0 -6"
+                    <controls:ResizeThumb Width="7" Height="7" Cursor="SizeNESW" Margin="-6 0 0 -6"
                        VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                <controls:ResizeThumb Width="7" Height="7" Cursor="SizeNWSE" Margin="0 0 -6 -6"
+                    <controls:ResizeThumb Width="7" Height="7" Cursor="SizeNWSE" Margin="0 0 -6 -6"
                        VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-            </Grid>
-        </ControlTemplate>
+                </Grid>
+            </ControlTemplate>
 
-        <!-- Designer Item Template-->
-        <ControlTemplate x:Key="DesignerItemTemplate" TargetType="ContentControl">
-            <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
-                <controls:MoveThumb Template="{StaticResource MoveThumbTemplate}" Cursor="SizeAll"/>
-                <ContentPresenter Content="{TemplateBinding ContentControl.Content}"/>
-                <controls:DesignerItemDecorator x:Name="decorator" ShowDecorator="true"/>
-                <Control Template="{StaticResource ResizeDecoratorTemplate}"/>
-            </Grid>
-            <ControlTemplate.Triggers>
-                <Trigger Property="Selector.IsSelected" Value="True">
-                    <Setter TargetName="decorator" Property="ShowDecorator" Value="true"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
+            <!-- Designer Item Template-->
+            <ControlTemplate x:Key="DesignerItemTemplate" TargetType="ContentControl">
+                <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                    <controls:MoveThumb Template="{StaticResource MoveThumbTemplate}" Cursor="SizeAll"/>
+                    <ContentPresenter Content="{TemplateBinding ContentControl.Content}"/>
+                    <controls:DesignerItemDecorator x:Name="decorator" ShowDecorator="true"/>
+                    <Control Template="{StaticResource ResizeDecoratorTemplate}"/>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Selector.IsSelected" Value="True">
+                        <Setter TargetName="decorator" Property="ShowDecorator" Value="true"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.popupbox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
     <Canvas Name="paintSurface" MouseDown="Canvas_MouseDown_1" MouseMove="Canvas_MouseMove_1" MouseLeftButtonUp="PaintSurface_OnMouseLeftButtonUp" >
         <Canvas.Background>
             <SolidColorBrush Color="Gray" Opacity="0.1"/>
         </Canvas.Background>
+        <materialDesign:PopupBox
+            Style="{StaticResource MaterialDesignMultiFloatingActionAccentPopupBox}"
+            PlacementMode="BottomAndAlignCentres"
+            ToggleCheckedContentCommandParameter="wowsers"
+            ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionAccentPopupBox">
+            <materialDesign:PopupBox.ToggleCheckedContent>
+                <materialDesign:PackIcon
+                    Kind="Pencil"
+                    Width="24"
+                    Height="24" />
+            </materialDesign:PopupBox.ToggleCheckedContent>
+            <StackPanel>
+                <Button
+                    ToolTip="One">
+                    1
+                </Button>
+                <Button
+                    ToolTip="Two"
+                    IsEnabled="False">
+                    2
+                </Button>
+                <Button
+                    ToolTip="Three">
+                    3
+                </Button>
+            </StackPanel>
+        </materialDesign:PopupBox>
         <Button Content="Button" Canvas.Left="348" Canvas.Top="477" Width="75" Click="Button_Click"/>
         <Button Content="Save" Canvas.Left="585" Canvas.Top="477" Width="75" Click="Button_Click_1"/>
     </Canvas>
