@@ -2,8 +2,8 @@
 using GazeMonitoring.Base;
 using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Wrappers {
-    public class SubjectInfoWrapper : ValidatableBindableBase {
+namespace GazeMonitoring.WindowModels {
+    public class SubjectInfoWindowModel : ValidatableBindableBase {
         private string _name;
         private int? _age;
         private string _details;

@@ -2,14 +2,14 @@
 using System.Runtime.CompilerServices;
 using GazeMonitoring.Commands;
 
-namespace GazeMonitoring.Wrappers {
-    public class EyeTrackerStatusWrapper : INotifyPropertyChanged {
+namespace GazeMonitoring.WindowModels {
+    public class EyeTrackerStatusWindowModel : INotifyPropertyChanged {
         private readonly RelayCommand _startCommand;
         private readonly AwaitableDelegateCommand _stopCommand;
         private bool _isAvailable;
         private string _eyeTrackerName;
 
-        public EyeTrackerStatusWrapper(RelayCommand startCommand, AwaitableDelegateCommand stopCommand) {
+        public EyeTrackerStatusWindowModel(RelayCommand startCommand, AwaitableDelegateCommand stopCommand) {
             _startCommand = startCommand;
             _stopCommand = stopCommand;
         }
