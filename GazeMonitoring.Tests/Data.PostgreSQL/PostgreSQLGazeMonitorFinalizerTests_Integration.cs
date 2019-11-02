@@ -21,7 +21,7 @@ namespace GazeMonitoring.Tests.Data.PostgreSQL {
             _databaseRepository = new DatabaseRepository(connectionString, _mockLoggerFactory.Object);
         }
 
-        [Test]
+        /*[Test]
         public void FinalizeMonitoring_WorksAsExpected() {
             var subjectInfo = new SubjectInfo
             {
@@ -124,5 +124,6 @@ namespace GazeMonitoring.Tests.Data.PostgreSQL {
             _databaseRepository.DeleteSaccades(savedSubjectInfo.Id.Value);
             _databaseRepository.DeleteSubjectInfo(subjectInfo.SessionId);
         }
+   */
     }
 }
