@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using PPt = Microsoft.Office.Interop.PowerPoint;
 using System.Runtime.InteropServices;
 using GazeMonitoring.Model;
+using Microsoft.Office.Core;
 
 namespace GazeMonitoring.Powerpoint
 {
-    public class PowerpointParser
+    public interface IPowerpointParser
+    {
+        IEnumerable<ScreenConfiguration> Parse(string fileName);
+    }
+
+    public class PowerpointParser : IPowerpointParser
     {
         private readonly IScreenParameters _screenParameters;
 
@@ -16,22 +22,26 @@ namespace GazeMonitoring.Powerpoint
         }
 
         // TODO Create wrapper for ppt classes for better testability
-        public IEnumerable<ScreenConfiguration> Parse()
+        public IEnumerable<ScreenConfiguration> Parse(string fileName)
         {
             var result = new List<ScreenConfiguration>();
+            var pptApp = new PPt.Application();
+            var pptPresentations = pptApp.Presentations;
+            PPt.Presentation presentation = null;
             try
             {
-                var pptApplication = Marshal.GetActiveObject("PowerPoint.Application") as PPt.Application;
+                presentation = pptPresentations.Open(fileName, MsoTriState.msoTrue, MsoTriState.msoFalse,
+                    MsoTriState.msoFalse);
 
-                if (pptApplication == null)
+                if (presentation == null)
                 {
                     throw new Exception("Could not load powerpoint presentation.");
                 }
 
-                var heightScale = _screenParameters.Height / ConvertToPixels(pptApplication.ActivePresentation.PageSetup.SlideHeight);
-                var widthScale = _screenParameters.Width / ConvertToPixels(pptApplication.ActivePresentation.PageSetup.SlideWidth);
+                var heightScale = _screenParameters.Height / ConvertToPixels(presentation.PageSetup.SlideHeight);
+                var widthScale = _screenParameters.Width / ConvertToPixels(presentation.PageSetup.SlideWidth);
 
-                foreach (PPt.Slide activePresentationSlide in pptApplication.ActivePresentation.Slides)
+                foreach (PPt.Slide activePresentationSlide in presentation.Slides)
                 {
                     var screenConfiguration = new ScreenConfiguration
                     {
@@ -61,6 +71,10 @@ namespace GazeMonitoring.Powerpoint
             {
                 Console.WriteLine(e);
                 throw;
+            }
+            finally
+            {
+                presentation?.Close();
             }
 
             return result;
