@@ -202,12 +202,15 @@
     <Compile Include="Balloon\IBalloonService.cs" />
     <Compile Include="IoC\CommonModule.cs" />
     <Compile Include="IoC\ContainerBuilderFactory.cs" />
+    <Compile Include="IO\FileDialogService.cs" />
     <Compile Include="Messaging\IMessage.cs" />
+    <Compile Include="Messaging\Messages\SettingsSubViewModelChangedMessage.cs" />
     <Compile Include="Messaging\Messages\ShowCreateScreenConfigurationMessage.cs" />
     <Compile Include="Messaging\Messages\ShowEditScreenConfigurationMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowMonitoringConfigurationsMessage.cs" />
     <Compile Include="Messaging\Messenger.cs" />
-    <Compile Include="Messaging\Messages\ShowMonitoringConfigurationAddMessage.cs" />
-    <Compile Include="Messaging\Messages\ShowMonitoringConfigurationDetailsMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowAddMonitoringConfigurationMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowEditMonitoringConfigurationMessage.cs" />
     <Compile Include="Messaging\Messages\ShowSettingsMessage.cs" />
     <Compile Include="Monitor\GazeDataMonitorFactory.cs" />
     <Compile Include="Powerpoint\PowerpointParser.cs" />
@@ -223,12 +226,12 @@
     <Compile Include="HotKeys\Global\Handlers\IGlobalHotKeyHandler.cs" />
     <Compile Include="HotKeys\Global\GlobalHotKeyManager.cs" />
     <Compile Include="ViewModels\ESettingsSubViewModel.cs" />
-    <Compile Include="ViewModels\MonitoringConfigurationEditViewModel.cs" />
+    <Compile Include="ViewModels\MonitoringConfigurationAddEditViewModel.cs" />
     <Compile Include="ViewModels\MonitoringConfigurationsViewModel.cs" />
     <Compile Include="ViewModels\OptionsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="Views\MonitoringConfigurationEditWindow.xaml.cs">
-      <DependentUpon>MonitoringConfigurationEditWindow.xaml</DependentUpon>
+    <Compile Include="Views\MonitoringConfigurationAddEditWindow.xaml.cs">
+      <DependentUpon>MonitoringConfigurationAddEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MonitoringConfigurationsWindow.xaml.cs">
       <DependentUpon>MonitoringConfigurationsWindow.xaml</DependentUpon>
@@ -243,13 +246,15 @@
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Wrappers\EyeTrackerStatusWrapper.cs" />
+    <Compile Include="WindowModels\EyeTrackerStatusWindowModel.cs" />
     <Compile Include="Commands\IAsyncCommand.cs" />
     <Compile Include="Commands\IRaiseCanExecuteChanged.cs" />
     <Compile Include="Monitor\IGazeDataMonitor.cs" />
     <Compile Include="Views\MainWindow.xaml.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Wrappers\SubjectInfoWrapper.cs" />
+    <Compile Include="WindowModels\MonitoringConfigurationWindowModel.cs" />
+    <Compile Include="WindowModels\ScreenConfigurationWindowModel.cs" />
+    <Compile Include="WindowModels\SubjectInfoWindowModel.cs" />
     <Compile Include="Base\ValidatableBindableBase.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -273,7 +278,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MonitoringConfigurationEditWindow.xaml">
+    <Page Include="Views\MonitoringConfigurationAddEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -406,6 +411,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\gm_logoi.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

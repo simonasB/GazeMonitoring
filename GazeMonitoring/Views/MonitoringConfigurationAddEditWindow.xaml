@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GazeMonitoring.Views.MonitoringConfigurationEditWindow"
+﻿<UserControl x:Class="GazeMonitoring.Views.MonitoringConfigurationAddEditWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,7 +12,7 @@
         TextElement.FontWeight="Regular"
         TextElement.FontSize="12"
         Height="453.562" Width="341.733"
-        d:DataContext="{d:DesignInstance viewModels:MonitoringConfigurationEditViewModel,
+        d:DataContext="{d:DesignInstance viewModels:MonitoringConfigurationAddEditViewModel,
                                          IsDesignTimeCreatable=True}">
     <Grid>
         <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271" Text="Monitoring configuration"/>
@@ -30,7 +30,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Screens" DisplayMemberBinding="{Binding AreasOfInterest.Count}" />
+                    <GridViewColumn Header="Screens" DisplayMemberBinding="{Binding AreasOfInterestCount}" />
                     <GridViewColumn Header="Actions" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -56,12 +56,12 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="120,65,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="144"/>
+        <TextBox Text="{Binding MonitoringConfigurationWindowModel.Name}" HorizontalAlignment="Left" Height="23" Margin="120,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,69,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
-        <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="269,65,9,351" Height="Auto">
+        <Button Command="{Binding SaveMonitoringConfigurationCommand}" Style="{StaticResource MaterialDesignFlatButton}" Margin="269,65,9,351" Height="Auto">
             <materialDesign:PackIcon Kind="ContentSave" Height="28" Width="33" />
         </Button>
-        <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="286,10,0,406" Height="Auto">
+        <Button Command="{Binding BackCommand}" Style="{StaticResource MaterialDesignFlatButton}" Margin="286,10,0,406" Height="Auto">
             <materialDesign:PackIcon Kind="ArrowBack" Height="28" Width="33" />
         </Button>
         <Border Margin="-2,98,2,344" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}" RenderTransformOrigin="0.5,0.5" >
@@ -75,14 +75,14 @@
             </Border.RenderTransform>
         </Border>
         <TextBlock HorizontalAlignment="Left" Margin="10,393,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="120,393,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="144"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="120,393,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
         <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="268,388,10,28" Height="Auto">
             <materialDesign:PackIcon Kind="ContentSave" Height="28" Width="33" />
         </Button>
         <Button HorizontalAlignment="Left" Margin="272,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
             <materialDesign:PackIcon Kind="AddCircle" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
         </Button>
-        <Button HorizontalAlignment="Left" Margin="216,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
+        <Button Command="{Binding CreateFromPptCommand}" HorizontalAlignment="Left" Margin="216,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
             <materialDesign:PackIcon Kind="AddToPhotos" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
         </Button>
     </Grid>

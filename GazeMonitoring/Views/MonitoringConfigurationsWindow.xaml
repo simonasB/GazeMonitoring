@@ -53,7 +53,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button HorizontalAlignment="Left" Margin="269,85,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
+        <Button Command="{Binding AddCommand}" HorizontalAlignment="Left" Margin="269,85,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
             <materialDesign:PackIcon Kind="AddCircle" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
         </Button>
 

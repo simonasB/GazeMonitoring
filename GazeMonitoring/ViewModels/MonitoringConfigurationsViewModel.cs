@@ -24,7 +24,7 @@ namespace GazeMonitoring.ViewModels
                 monitoringConfig =>
                 {
                     _appLocalContextManager.SetMonitoringConfigurationId(monitoringConfig.Id);
-                    _messenger.Send(new ShowMonitoringConfigurationDetailsMessage(monitoringConfig));
+                    _messenger.Send(new ShowEditMonitoringConfigurationMessage(monitoringConfig));
                 });
             DeleteCommand = new RelayCommand<MonitoringConfiguration>(
                 monitoringConfig =>
@@ -32,7 +32,14 @@ namespace GazeMonitoring.ViewModels
                     _configurationRepository.Delete<MonitoringConfiguration>(monitoringConfig.Id);
                     MonitoringConfigurations.Remove(monitoringConfig);
                 });
-            AddCommand = new RelayCommand(() => _messenger.Send(new ShowMonitoringConfigurationAddMessage()));
+            AddCommand = new RelayCommand(() => _messenger.Send(new ShowAddMonitoringConfigurationMessage()));
+            _messenger.Register<SettingsSubViewModelChangedMessage>(message =>
+            {
+                if (message.SettingsSubViewModel == ESettingsSubViewModel.MonitoringConfigurationsViewModel)
+                {
+                    MonitoringConfigurations = new ObservableCollection<MonitoringConfiguration>(_configurationRepository.Search<MonitoringConfiguration>());
+                }
+            });
         }
 
         public ObservableCollection<MonitoringConfiguration> MonitoringConfigurations { get; set; }

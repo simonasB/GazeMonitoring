@@ -4,6 +4,6 @@
     {
         OptionsViewModel,
         MonitoringConfigurationsViewModel,
-        MonitoringConfigurationEditViewModel,
+        MonitoringConfigurationAddEditViewModel,
     }
 }

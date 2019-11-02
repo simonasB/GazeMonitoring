@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace GazeMonitoring.Views
 {
     /// <summary>
-    /// Interaction logic for MonitoringConfigurationEditWindow.xaml
+    /// Interaction logic for MonitoringConfigurationAddEditWindow.xaml
     /// </summary>
-    public partial class MonitoringConfigurationEditWindow : UserControl
+    public partial class MonitoringConfigurationAddEditWindow : UserControl
     {
-        public MonitoringConfigurationEditWindow()
+        public MonitoringConfigurationAddEditWindow()
         {
             InitializeComponent();
         }

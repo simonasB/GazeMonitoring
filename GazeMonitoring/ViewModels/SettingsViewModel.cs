@@ -10,6 +10,7 @@ namespace GazeMonitoring.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
+        private readonly IMessenger _messenger;
         private readonly Dictionary<ESettingsSubViewModel, ISettingsSubViewModel> _viewModels;
         private ISettingsSubViewModel _currentViewModel;
         private bool _isVisible;
@@ -23,12 +24,15 @@ namespace GazeMonitoring.ViewModels
 
         public SettingsViewModel(IEnumerable<ISettingsSubViewModel> viewModels, IMessenger messenger)
         {
+            _messenger = messenger;
             _viewModels = viewModels.ToDictionary(o => o.ESettingsSubViewModel);
             CurrentViewModel = _viewModels[ESettingsSubViewModel.OptionsViewModel];
             ShowOptions = new RelayCommand(() => ShowView(ESettingsSubViewModel.OptionsViewModel));
             ShowMonitoringConfigurations = new RelayCommand(() => ShowView(ESettingsSubViewModel.MonitoringConfigurationsViewModel));
             messenger.Register<ShowSettingsMessage>(_ => IsVisible = true);
-            messenger.Register<ShowMonitoringConfigurationDetailsMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationEditViewModel));
+            messenger.Register<ShowEditMonitoringConfigurationMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationAddEditViewModel));
+            messenger.Register<ShowAddMonitoringConfigurationMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationAddEditViewModel));
+            messenger.Register<ShowMonitoringConfigurationsMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationsViewModel));
         }
 
         public ListBoxItem SelectedMenuItem
@@ -61,6 +65,7 @@ namespace GazeMonitoring.ViewModels
 
         private void ShowView(ESettingsSubViewModel viewModel)
         {
+            _messenger.Send(new SettingsSubViewModelChangedMessage {SettingsSubViewModel = viewModel});
             CurrentViewModel = _viewModels[viewModel];
         }
     }

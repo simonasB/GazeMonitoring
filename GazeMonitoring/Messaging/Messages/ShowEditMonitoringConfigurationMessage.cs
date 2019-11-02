@@ -2,9 +2,9 @@
 
 namespace GazeMonitoring.Messaging.Messages
 {
-    public class ShowMonitoringConfigurationDetailsMessage : IMessage
+    public class ShowEditMonitoringConfigurationMessage : IMessage
     {
-        public ShowMonitoringConfigurationDetailsMessage(MonitoringConfiguration monitoringConfiguration)
+        public ShowEditMonitoringConfigurationMessage(MonitoringConfiguration monitoringConfiguration)
         {
             MonitoringConfiguration = monitoringConfiguration;
         }

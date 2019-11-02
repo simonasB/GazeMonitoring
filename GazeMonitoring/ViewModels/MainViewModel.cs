@@ -18,7 +18,7 @@ using GazeMonitoring.Model;
 using GazeMonitoring.Monitor;
 using GazeMonitoring.ScreenCapture;
 using GazeMonitoring.Views;
-using GazeMonitoring.Wrappers;
+using GazeMonitoring.WindowModels;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace GazeMonitoring.ViewModels {
@@ -45,13 +45,13 @@ namespace GazeMonitoring.ViewModels {
             CaptureCommand = new RelayCommand(OnCapture, CanCapture);
             StopCommand = new AwaitableDelegateCommand(OnStop, CanStop);
             SettingsCommand = new RelayCommand(OnSettings);
-            SubjectInfoWrapper = new SubjectInfoWrapper();
+            SubjectInfoWindowModel = new SubjectInfoWindowModel();
             _eyeTrackerStatusProvider = eyeTrackerStatusProvider;
             _gazeDataMonitorFinalizer = gazeDataMonitorFinalizer;
             _screenRecorder = screenRecorder;
             _messenger = messenger;
             InvokeEyeTrackerStatusPolling();
-            EyeTrackerStatusWrapper = new EyeTrackerStatusWrapper(StartCommand, StopCommand) {
+            EyeTrackerStatusWindowModel = new EyeTrackerStatusWindowModel(StartCommand, StopCommand) {
                 EyeTrackerName = CommonConstants.DefaultEyeTrackerName
             };
             _logger = loggerFactory.GetLogger(typeof(MainViewModel));
@@ -67,11 +67,11 @@ namespace GazeMonitoring.ViewModels {
                 }
 
                 if (value) {
-                    SubjectInfoWrapper.Name = null;
-                    SubjectInfoWrapper.Age = 0;
-                    SubjectInfoWrapper.Age = null;
-                    SubjectInfoWrapper.Details = null;
-                    SubjectInfoWrapper.ResetErrors();
+                    SubjectInfoWindowModel.Name = null;
+                    SubjectInfoWindowModel.Age = 0;
+                    SubjectInfoWindowModel.Age = null;
+                    SubjectInfoWindowModel.Details = null;
+                    SubjectInfoWindowModel.ResetErrors();
                 }
             }
         }
@@ -100,7 +100,7 @@ namespace GazeMonitoring.ViewModels {
             }
         }
 
-        public SubjectInfoWrapper SubjectInfoWrapper { get; set; }
+        public SubjectInfoWindowModel SubjectInfoWindowModel { get; set; }
 
         public bool IsBusy {
             get { return _isBusy; }
@@ -115,7 +115,7 @@ namespace GazeMonitoring.ViewModels {
             }
         }
 
-        public EyeTrackerStatusWrapper EyeTrackerStatusWrapper { get; set; }
+        public EyeTrackerStatusWindowModel EyeTrackerStatusWindowModel { get; set; }
 
         public RelayCommand StartCommand { get; }
 
@@ -132,7 +132,7 @@ namespace GazeMonitoring.ViewModels {
         }
 
         private bool CanStop() {
-            return IsStarted && !IsBusy && EyeTrackerStatusWrapper.IsAvailable;
+            return IsStarted && !IsBusy && EyeTrackerStatusWindowModel.IsAvailable;
         }
 
         private async Task OnStop() {
@@ -148,7 +148,7 @@ namespace GazeMonitoring.ViewModels {
                 var finalizationTask = Task.Run(() =>
                 {
                     _gazeDataMonitorFinalizer.FinalizeMonitoring(new MonitoringContext
-                        {SubjectInfo = _subjectInfo, DataStream = SubjectInfoWrapper.DataStream});
+                        {SubjectInfo = _subjectInfo, DataStream = SubjectInfoWindowModel.DataStream});
                 });
 
                 var stopRecordingTask = Task.Run(() => {
@@ -168,7 +168,7 @@ namespace GazeMonitoring.ViewModels {
         }
 
         private bool CanStart() {
-            return !IsStarted && !IsBusy && EyeTrackerStatusWrapper.IsAvailable;
+            return !IsStarted && !IsBusy && EyeTrackerStatusWindowModel.IsAvailable;
         }
 
         private void OnStart() {
@@ -185,13 +185,13 @@ namespace GazeMonitoring.ViewModels {
                 };
 
                 if (!IsAnonymous) {
-                    _subjectInfo.Name = SubjectInfoWrapper.Name;
-                    _subjectInfo.Age = SubjectInfoWrapper.Age;
-                    _subjectInfo.Details = SubjectInfoWrapper.Details;
+                    _subjectInfo.Name = SubjectInfoWindowModel.Name;
+                    _subjectInfo.Age = SubjectInfoWindowModel.Age;
+                    _subjectInfo.Details = SubjectInfoWindowModel.Details;
                 }
 
                 var monitoringContext = new MonitoringContext
-                    {SubjectInfo = _subjectInfo, DataStream = SubjectInfoWrapper.DataStream};
+                    {SubjectInfo = _subjectInfo, DataStream = SubjectInfoWindowModel.DataStream};
                 _gazeDataMonitor = _gazeDataMonitorFactory.Create(monitoringContext);
                 _gazeDataMonitor.Start();
 
@@ -203,7 +203,7 @@ namespace GazeMonitoring.ViewModels {
 
                     _screenRecorder.StartRecording(
                         new RecorderParams(
-                            $"{videoFolderName}/video_{SubjectInfoWrapper.DataStream}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi",
+                            $"{videoFolderName}/video_{SubjectInfoWindowModel.DataStream}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi",
                             10, 50), monitoringContext);
                 }
             } catch (Exception ex){
@@ -222,13 +222,13 @@ namespace GazeMonitoring.ViewModels {
 
             if (!IsAnonymous) {
 
-                if (string.IsNullOrEmpty(SubjectInfoWrapper.Name)) {
-                    SubjectInfoWrapper.Name = null;
+                if (string.IsNullOrEmpty(SubjectInfoWindowModel.Name)) {
+                    SubjectInfoWindowModel.Name = null;
                     isFormValid = false;
                 }
 
-                if (SubjectInfoWrapper.Age == null) {
-                    SubjectInfoWrapper.Age = null;
+                if (SubjectInfoWindowModel.Age == null) {
+                    SubjectInfoWindowModel.Age = null;
                     isFormValid = false;
                 }
             }
@@ -252,8 +252,8 @@ namespace GazeMonitoring.ViewModels {
                         status.Name = CommonConstants.DefaultEyeTrackerName;
                     }
                     await Application.Current.Dispatcher.BeginInvoke(new Action(async () => {
-                        EyeTrackerStatusWrapper.IsAvailable = status.IsAvailable;
-                        EyeTrackerStatusWrapper.EyeTrackerName = EyeTrackerStatusWrapper.IsAvailable ? status.Name : CommonConstants.DefaultEyeTrackerName;
+                        EyeTrackerStatusWindowModel.IsAvailable = status.IsAvailable;
+                        EyeTrackerStatusWindowModel.EyeTrackerName = EyeTrackerStatusWindowModel.IsAvailable ? status.Name : CommonConstants.DefaultEyeTrackerName;
                         if (!status.IsAvailable && IsStarted) {
                             await OnStop();
                         }

@@ -10,6 +10,7 @@ using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Discovery;
 using GazeMonitoring.HotKeys.Global;
 using GazeMonitoring.HotKeys.Global.Handlers;
+using GazeMonitoring.IO;
 using GazeMonitoring.IoC;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Messaging;
@@ -141,11 +142,13 @@ namespace GazeMonitoring
 
             builder.Register<ISettingsSubViewModel, MonitoringConfigurationsViewModel>();
             builder.Register<ISettingsSubViewModel, OptionsViewModel>();
-            builder.Register<ISettingsSubViewModel, MonitoringConfigurationEditViewModel>();
+            builder.Register<ISettingsSubViewModel, MonitoringConfigurationAddEditViewModel>();
             builder.Register<SettingsViewModel>();
             builder.Register<SettingsWindow>();
 
             builder.Register<IScreenConfigurationWindowHandler, ScreenConfigurationWindowHandler>();
+            builder.Register<IPowerpointParser, PowerpointParser>();
+            builder.Register<IFileDialogService, FileDialogService>();
 
             _container = builder.Build();
         }

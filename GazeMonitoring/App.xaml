@@ -20,8 +20,8 @@
             <DataTemplate DataType="{x:Type viewModels:MonitoringConfigurationsViewModel}">
                 <views:MonitoringConfigurationsWindow />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModels:MonitoringConfigurationEditViewModel}">
-                <views:MonitoringConfigurationEditWindow />
+            <DataTemplate DataType="{x:Type viewModels:MonitoringConfigurationAddEditViewModel}">
+                <views:MonitoringConfigurationAddEditWindow />
             </DataTemplate>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
