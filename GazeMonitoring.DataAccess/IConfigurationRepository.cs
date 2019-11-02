@@ -7,7 +7,7 @@ namespace GazeMonitoring.DataAccess
     public interface IConfigurationRepository
     {
         int SaveMany<T>(IEnumerable<T> entities);
-        int Save<T>(T entity);
+        void Save<T>(T entity);
         void Update<T>(T entity);
         void Delete<T>(int id);
         T Search<T>(int id);

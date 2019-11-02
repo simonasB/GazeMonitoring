@@ -22,12 +22,12 @@ namespace GazeMonitoring.DataAccess.LiteDB
             }
         }
 
-        public int Save<T>(T entity)
+        public void Save<T>(T entity)
         {
             using (var db = new LiteDatabase(@"C:\Temp\MyData.db"))
             {
                 var col = db.GetCollection<T>(typeof(T).Name);
-                return col.Insert(entity).AsInt32;
+                col.Upsert(entity);
             }
         }
 
