@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
 using GazeMonitoring.DataAccess;
@@ -33,6 +35,7 @@ namespace GazeMonitoring.ViewModels
 
         private MonitoringConfiguration _monitoringConfiguration;
         private ObservableCollection<ScreenConfigurationWindowModel> _screenConfigurations;
+        private bool _isBusy;
 
         public MonitoringConfigurationWindowModel MonitoringConfigurationWindowModel { get; set; }
 
@@ -47,16 +50,7 @@ namespace GazeMonitoring.ViewModels
 
             _messenger.Register<ShowEditMonitoringConfigurationMessage>(o =>
             {
-                var screenConfigurationWindowModels = new List<ScreenConfigurationWindowModel>();
-                o.MonitoringConfiguration.ScreenConfigurations?.ForEach(screenConfiguration =>
-                {
-                    screenConfigurationWindowModels.Add(new ScreenConfigurationWindowModel
-                    {
-                        AreasOfInterestCount = screenConfiguration.AreasOfInterest?.Count ?? 0,
-                        Id = screenConfiguration.Id,
-                        Name = screenConfiguration.Name
-                    });
-                });
+                var screenConfigurationWindowModels = Convert(o.MonitoringConfiguration.ScreenConfigurations);
                 ScreenConfigurations =
                     new ObservableCollection<ScreenConfigurationWindowModel>(screenConfigurationWindowModels);
                 _monitoringConfiguration = o.MonitoringConfiguration;
@@ -113,7 +107,7 @@ namespace GazeMonitoring.ViewModels
             _messenger.Send(new ShowMonitoringConfigurationsMessage());
         });
 
-        public RelayCommand CreateFromPptCommand => new RelayCommand(() =>
+        public AwaitableDelegateCommand CreateFromPptCommand => new AwaitableDelegateCommand(async () =>
         {
             var fileName = _fileDialogService.OpenFileDialog();
 
@@ -123,11 +117,30 @@ namespace GazeMonitoring.ViewModels
                 return;
             }
 
-            var screenConfigurations = _powerpointParser.Parse(fileName).ToList();
-            _monitoringConfiguration.ScreenConfigurations = screenConfigurations;
-            ScreenConfigurations = new ObservableCollection<ScreenConfigurationWindowModel>(Convert(screenConfigurations));
-            _configurationRepository.Save(_monitoringConfiguration);
+            // TODO: might warp to try/finally
+            IsBusy = true;
+
+            await Task.Run(() =>
+            {
+                var screenConfigurations = _powerpointParser.Parse(fileName).ToList();
+                _monitoringConfiguration.ScreenConfigurations = screenConfigurations;
+                ScreenConfigurations = new ObservableCollection<ScreenConfigurationWindowModel>(Convert(screenConfigurations));
+                _configurationRepository.Save(_monitoringConfiguration);
+            });
+
+            IsBusy = false;
         });
+
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set
+            {
+                _isBusy = value;
+                OnPropertyChanged();
+                CreateFromPptCommand.RaiseCanExecuteChanged();
+            }
+        }
 
         private List<ScreenConfigurationWindowModel> Convert(List<ScreenConfiguration> screenConfigurations)
         {

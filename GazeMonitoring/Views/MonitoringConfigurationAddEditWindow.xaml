@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:GazeMonitoring.Views"
         xmlns:viewModels="clr-namespace:GazeMonitoring.ViewModels"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -14,76 +15,77 @@
         Height="453.562" Width="341.733"
         d:DataContext="{d:DesignInstance viewModels:MonitoringConfigurationAddEditViewModel,
                                          IsDesignTimeCreatable=True}">
-    <Grid>
-        <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271" Text="Monitoring configuration"/>
-
-        <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Screen"/><Run Text=" configurations"/></TextBlock>
-        <ListView ItemsSource="{Binding ScreenConfigurations}" Margin="0,152,0,71" BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <ContentControl>
-                                    <TextBlock Text="{Binding Name}" />
-                                </ContentControl>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Screens" DisplayMemberBinding="{Binding AreasOfInterestCount}" />
-                    <GridViewColumn Header="Actions" >
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}" Margin="0,0,0.4,-0.6">
+        <Grid>
+            <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271" Text="Monitoring configuration"/>
+            <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Screen"/><Run Text=" configurations"/></TextBlock>
+            <ListView ItemsSource="{Binding ScreenConfigurations}" Margin="0,152,0,71" BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ContentControl>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </ContentControl>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Screens" DisplayMemberBinding="{Binding AreasOfInterestCount}" />
+                        <GridViewColumn Header="Actions" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource MaterialDesignFlatButton}">
-                                    <materialDesign:PackIcon Kind="DatabaseEdit" />
-                                </Button>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="" >
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                        <materialDesign:PackIcon Kind="DatabaseEdit" />
+                                    </Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource MaterialDesignFlatButton}">
-                                    <materialDesign:PackIcon Kind="DeleteCircle" />
-                                </Button>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <TextBox Text="{Binding MonitoringConfigurationWindowModel.Name}" HorizontalAlignment="Left" Height="23" Margin="120,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,69,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
-        <Button Command="{Binding SaveMonitoringConfigurationCommand}" Style="{StaticResource MaterialDesignFlatButton}" Margin="269,65,9,351" Height="Auto">
-            <materialDesign:PackIcon Kind="ContentSave" Height="28" Width="33" />
-        </Button>
-        <Button Command="{Binding BackCommand}" Style="{StaticResource MaterialDesignFlatButton}" Margin="286,10,0,406" Height="Auto">
-            <materialDesign:PackIcon Kind="ArrowBack" Height="28" Width="33" />
-        </Button>
-        <Border Margin="-2,98,2,344" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}" RenderTransformOrigin="0.5,0.5" >
-            <Border.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Border.RenderTransform>
-        </Border>
-        <TextBlock HorizontalAlignment="Left" Margin="10,393,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="120,393,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
-        <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="268,388,10,28" Height="Auto">
-            <materialDesign:PackIcon Kind="ContentSave" Height="28" Width="33" />
-        </Button>
-        <Button HorizontalAlignment="Left" Margin="272,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
-            <materialDesign:PackIcon Kind="AddCircle" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
-        </Button>
-        <Button Command="{Binding CreateFromPptCommand}" HorizontalAlignment="Left" Margin="216,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
-            <materialDesign:PackIcon Kind="AddToPhotos" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
-        </Button>
-    </Grid>
+                                        <materialDesign:PackIcon Kind="DeleteCircle" />
+                                    </Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <TextBox Text="{Binding MonitoringConfigurationWindowModel.Name}" HorizontalAlignment="Left" Height="23" Margin="120,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,69,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
+            <Button Command="{Binding SaveMonitoringConfigurationCommand}" Style="{StaticResource MaterialDesignFlatButton}" Margin="269,65,9,351" Height="Auto">
+                <materialDesign:PackIcon Kind="ContentSave" Height="28" Width="33" />
+            </Button>
+            <Button Command="{Binding BackCommand}" Style="{StaticResource MaterialDesignFlatButton}" Margin="286,10,0,406" Height="Auto">
+                <materialDesign:PackIcon Kind="ArrowBack" Height="28" Width="33" />
+            </Button>
+            <Border Margin="-2,98,2,344" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}" RenderTransformOrigin="0.5,0.5" >
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+            </Border>
+            <TextBlock HorizontalAlignment="Left" Margin="10,393,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="120,393,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="268,388,10,28" Height="Auto">
+                <materialDesign:PackIcon Kind="ContentSave" Height="28" Width="33" />
+            </Button>
+            <Button HorizontalAlignment="Left" Margin="272,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
+                <materialDesign:PackIcon Kind="AddCircle" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
+            </Button>
+            <Button Command="{Binding CreateFromPptCommand}" HorizontalAlignment="Left" Margin="216,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
+                <materialDesign:PackIcon Kind="AddToPhotos" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
+            </Button>
+        </Grid>
+    </xctk:BusyIndicator>
 </UserControl>
