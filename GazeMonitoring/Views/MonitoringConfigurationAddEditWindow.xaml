@@ -19,7 +19,7 @@
         <Grid>
             <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271" Text="Monitoring configuration"/>
             <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Screen"/><Run Text=" configurations"/></TextBlock>
-            <ListView ItemsSource="{Binding ScreenConfigurations}" Margin="0,152,0,71" BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}">
+            <ListView ItemsSource="{Binding ScreenConfigurations}" SelectedItem="{Binding SelectedScreenConfiguration}" SelectedIndex="{Binding SelectedIndex}" Margin="0,152,0,71" BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name">
@@ -76,7 +76,7 @@
                 </Border.RenderTransform>
             </Border>
             <TextBlock HorizontalAlignment="Left" Margin="10,393,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
-            <TextBox HorizontalAlignment="Left" Height="23" Margin="120,393,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
+            <TextBox Text="{Binding ScreenConfigurationWindowModel.Name}" HorizontalAlignment="Left" Height="23" Margin="120,393,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
             <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="268,388,10,28" Height="Auto">
                 <materialDesign:PackIcon Kind="ContentSave" Height="28" Width="33" />
             </Button>

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
@@ -36,6 +35,9 @@ namespace GazeMonitoring.ViewModels
         private MonitoringConfiguration _monitoringConfiguration;
         private ObservableCollection<ScreenConfigurationWindowModel> _screenConfigurations;
         private bool _isBusy;
+        private ScreenConfigurationWindowModel _selectedScreenConfiguration;
+        private int _selectedIndex = -1;
+        private ScreenConfigurationWindowModel _screenConfigurationWindowModel = new ScreenConfigurationWindowModel();
 
         public MonitoringConfigurationWindowModel MonitoringConfigurationWindowModel { get; set; }
 
@@ -138,11 +140,42 @@ namespace GazeMonitoring.ViewModels
             {
                 _isBusy = value;
                 OnPropertyChanged();
-                CreateFromPptCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private List<ScreenConfigurationWindowModel> Convert(List<ScreenConfiguration> screenConfigurations)
+        public ScreenConfigurationWindowModel SelectedScreenConfiguration
+        {
+            get => _selectedScreenConfiguration;
+            set
+            {
+                _selectedScreenConfiguration = value;
+                ScreenConfigurationWindowModel.Name = _selectedScreenConfiguration.Name;
+                OnPropertyChanged(nameof(ScreenConfigurationWindowModel));
+                OnPropertyChanged();
+            }
+        }
+
+        public int SelectedIndex
+        {
+            get => _selectedIndex;
+            set
+            {
+                _selectedIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ScreenConfigurationWindowModel ScreenConfigurationWindowModel
+        {
+            get => _screenConfigurationWindowModel;
+            set
+            {
+                _screenConfigurationWindowModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private static List<ScreenConfigurationWindowModel> Convert(List<ScreenConfiguration> screenConfigurations)
         {
             var screenConfigurationWindowModels = new List<ScreenConfigurationWindowModel>();
 
