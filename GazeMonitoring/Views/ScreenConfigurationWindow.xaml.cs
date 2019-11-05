@@ -57,7 +57,7 @@ namespace GazeMonitoring.Views
             _monitoringConfiguration = _configurationRepository.Search<MonitoringConfiguration>(_appLocalContext.MonitoringConfigurationId.Value);
 
             var screenConfiguration =
-                _monitoringConfiguration.ScreenConfigurations?.FirstOrDefault(o =>
+                _monitoringConfiguration?.ScreenConfigurations?.FirstOrDefault(o =>
                     o.Id == _appLocalContext.ScreenConfigurationId);
 
             screenConfiguration?.AreasOfInterest?.ForEach(areaOfInterest =>
@@ -69,7 +69,6 @@ namespace GazeMonitoring.Views
                     Tag = areaOfInterest.Id,
                     Style = (Style)Application.Current.Resources["MaterialDesignFlatButton"]
                 };
-                deleteButton.Click += DeleteButtonOnClick;
                 deleteButton.Click += DeleteButtonOnClick;
                 Canvas.SetTop(deleteButton, -40);
                 Canvas.SetLeft(deleteButton, -20);

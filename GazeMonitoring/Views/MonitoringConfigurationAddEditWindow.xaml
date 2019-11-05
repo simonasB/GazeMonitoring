@@ -19,7 +19,7 @@
         <Grid>
             <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271" Text="Monitoring configuration"/>
             <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Screen"/><Run Text=" configurations"/></TextBlock>
-            <ListView ItemsSource="{Binding ScreenConfigurations}" SelectedItem="{Binding SelectedScreenConfiguration}" SelectedIndex="{Binding SelectedIndex}" Margin="0,152,0,71" BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}">
+            <ListView ItemsSource="{Binding ScreenConfigurations}" SelectedItem="{Binding SelectedScreenConfiguration}" Margin="0,152,0,71" BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name">
@@ -75,17 +75,19 @@
                     </TransformGroup>
                 </Border.RenderTransform>
             </Border>
-            <TextBlock HorizontalAlignment="Left" Margin="10,393,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top"/>
-            <TextBox Text="{Binding ScreenConfigurationWindowModel.Name}" HorizontalAlignment="Left" Height="23" Margin="120,393,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
-            <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="268,388,10,28" Height="Auto">
+            <TextBlock Visibility="{Binding AddEditScreenModeEnabled,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="10,400,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" RenderTransformOrigin="0.568,1.107"/>
+            <TextBox Visibility="{Binding AddEditScreenModeEnabled,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding AddEditScreenConfigurationWindowModel.Name}" HorizontalAlignment="Left" Height="23" Margin="120,393,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
+            <Button Command="{Binding SaveScreenConfigurationCommand}" Visibility="{Binding AddEditScreenModeEnabled,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource MaterialDesignFlatButton}" Margin="268,388,10,28" Height="Auto">
                 <materialDesign:PackIcon Kind="ContentSave" Height="28" Width="33" />
             </Button>
-            <Button HorizontalAlignment="Left" Margin="272,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
+            <Button Command="{Binding AddScreenConfigurationCommand}" HorizontalAlignment="Left" Margin="272,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
                 <materialDesign:PackIcon Kind="AddCircle" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
             </Button>
             <Button Command="{Binding CreateFromPptCommand}" HorizontalAlignment="Left" Margin="216,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
                 <materialDesign:PackIcon Kind="AddToPhotos" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
             </Button>
+            <TextBlock Visibility="{Binding AddEditScreenModeEnabled, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,429,0,0" TextWrapping="Wrap" Text="Duration" VerticalAlignment="Top"/>
+            <materialDesign:TimePicker Visibility="{Binding AddEditScreenModeEnabled, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}" Is24Hours="True" x:Name="PresetTimePicker" SelectedTime="{Binding AddEditScreenConfigurationWindowModel.Duration}" Margin="120,421,79,9"/>
         </Grid>
     </xctk:BusyIndicator>
 </UserControl>

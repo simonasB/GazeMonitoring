@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GazeMonitoring.Model
 {
@@ -7,6 +8,7 @@ namespace GazeMonitoring.Model
         public string Name { get; set; }
         public int Number { get; set; }
         public List<AreaOfInterest> AreasOfInterest { get; set; }
+        public TimeSpan? Duration { get; set; }
         public string Id { get; set; }
     }
 }
