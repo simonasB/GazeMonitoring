@@ -130,8 +130,9 @@ namespace GazeMonitoring
 
             builder.RegisterSingleton(notifyIcon);
             builder.Register<IBalloonService, BalloonService>();
-            builder.Register<MainViewModel>();
-            builder.Register<MainWindow>();
+            builder.Register<MainNavigationWindow>();
+            builder.Register<SessionViewModel>();
+            builder.Register<SessionWindow>();
             builder.Register<NotifyIconViewModel>();
 
             builder.Register<IMessenger, Messenger>(Scope.Singleton);

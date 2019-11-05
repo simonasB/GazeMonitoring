@@ -22,7 +22,7 @@ using GazeMonitoring.WindowModels;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace GazeMonitoring.ViewModels {
-    public class MainViewModel : INotifyPropertyChanged {
+    public class SessionViewModel : INotifyPropertyChanged {
         private bool _isAnonymous;
         private bool _isScreenRecorded;
         private bool _isStarted;
@@ -38,11 +38,10 @@ namespace GazeMonitoring.ViewModels {
         private readonly ILogger _logger;
         private IGazeDataMonitor _gazeDataMonitor;
 
-        public MainViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, IScreenRecorder screenRecorder, ILoggerFactory loggerFactory, IMessenger messenger) {
+        public SessionViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, IScreenRecorder screenRecorder, ILoggerFactory loggerFactory, IMessenger messenger) {
             _balloonService = balloonService;
             _gazeDataMonitorFactory = gazeDataMonitorFactory;
             StartCommand = new RelayCommand(OnStart, CanStart);
-            CaptureCommand = new RelayCommand(OnCapture, CanCapture);
             StopCommand = new AwaitableDelegateCommand(OnStop, CanStop);
             SettingsCommand = new RelayCommand(OnSettings);
             SubjectInfoWindowModel = new SubjectInfoWindowModel();
@@ -54,7 +53,7 @@ namespace GazeMonitoring.ViewModels {
             EyeTrackerStatusWindowModel = new EyeTrackerStatusWindowModel(StartCommand, StopCommand) {
                 EyeTrackerName = CommonConstants.DefaultEyeTrackerName
             };
-            _logger = loggerFactory.GetLogger(typeof(MainViewModel));
+            _logger = loggerFactory.GetLogger(typeof(SessionViewModel));
         }
 
         public bool IsAnonymous {
@@ -118,8 +117,6 @@ namespace GazeMonitoring.ViewModels {
         public EyeTrackerStatusWindowModel EyeTrackerStatusWindowModel { get; set; }
 
         public RelayCommand StartCommand { get; }
-
-        public RelayCommand CaptureCommand { get; }
 
         public RelayCommand SettingsCommand { get; }
 
@@ -262,18 +259,6 @@ namespace GazeMonitoring.ViewModels {
                     await Task.Delay(TimeSpan.FromSeconds(PollIntervalSeconds));
                 }
             }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-        }
-
-        private void OnCapture()
-        {
-            var screenConfigurationWindow = new ScreenConfigurationWindow();
-            screenConfigurationWindow.InitializeComponent();
-            screenConfigurationWindow.Show();
-        }
-
-        private bool CanCapture()
-        {
-            return true;
         }
 
         private void OnSettings()

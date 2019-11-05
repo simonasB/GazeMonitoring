@@ -99,13 +99,16 @@
       <HintPath>..\packages\Microsoft.Extensions.Primitives.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Office.Interop.PowerPoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Office.Interop.PowerPoint.15.0.4420.1017\lib\net20\Microsoft.Office.Interop.PowerPoint.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.Office.Interop.PowerPoint, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <HintPath>..\packages\Microsoft.Office.Interop.PowerPoint.12.0.4518.1014\lib\net20\Microsoft.Office.Interop.PowerPoint.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Office, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -230,6 +233,9 @@
     <Compile Include="ViewModels\MonitoringConfigurationsViewModel.cs" />
     <Compile Include="ViewModels\OptionsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\MainNavigationWindow.xaml.cs">
+      <DependentUpon>MainNavigationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MonitoringConfigurationAddEditWindow.xaml.cs">
       <DependentUpon>MonitoringConfigurationAddEditWindow.xaml</DependentUpon>
     </Compile>
@@ -250,7 +256,7 @@
     <Compile Include="Commands\IAsyncCommand.cs" />
     <Compile Include="Commands\IRaiseCanExecuteChanged.cs" />
     <Compile Include="Monitor\IGazeDataMonitor.cs" />
-    <Compile Include="Views\MainWindow.xaml.cs" />
+    <Compile Include="Views\SessionWindow.xaml.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="WindowModels\MonitoringConfigurationWindowModel.cs" />
     <Compile Include="WindowModels\ScreenConfigurationWindowModel.cs" />
@@ -261,7 +267,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Monitor\GazeDataMonitor.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\SessionViewModel.cs" />
     <Page Include="Resources\DesignerItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -274,7 +280,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MainWindow.xaml">
+    <Page Include="Views\MainNavigationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SessionWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

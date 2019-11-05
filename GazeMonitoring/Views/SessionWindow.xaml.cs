@@ -6,11 +6,11 @@ using GazeMonitoring.ViewModels;
 
 namespace GazeMonitoring.Views {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SessionWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window {
-        public MainWindow(MainViewModel mainViewModel) {
-            this.DataContext = mainViewModel;
+    public partial class SessionWindow : Window {
+        public SessionWindow(SessionViewModel sessionViewModel) {
+            this.DataContext = sessionViewModel;
             InitializeComponent();
             CmbDataStreams.ItemsSource = Enum.GetValues(typeof(DataStream)).Cast<DataStream>();
         }
