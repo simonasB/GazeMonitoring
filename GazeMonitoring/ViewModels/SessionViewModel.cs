@@ -17,12 +17,11 @@ using GazeMonitoring.Messaging.Messages;
 using GazeMonitoring.Model;
 using GazeMonitoring.Monitor;
 using GazeMonitoring.ScreenCapture;
-using GazeMonitoring.Views;
 using GazeMonitoring.WindowModels;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace GazeMonitoring.ViewModels {
-    public class SessionViewModel : INotifyPropertyChanged {
+    public class SessionViewModel : INotifyPropertyChanged, IMainSubViewModel {
         private bool _isAnonymous;
         private bool _isScreenRecorded;
         private bool _isStarted;
@@ -121,6 +120,8 @@ namespace GazeMonitoring.ViewModels {
         public RelayCommand SettingsCommand { get; }
 
         public AwaitableDelegateCommand StopCommand { get; }
+
+        public EMainSubViewModel SubViewModel => EMainSubViewModel.SessionViewModel;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -23,6 +23,15 @@
             <DataTemplate DataType="{x:Type viewModels:MonitoringConfigurationAddEditViewModel}">
                 <views:MonitoringConfigurationAddEditWindow />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:ProfilesViewModel}">
+                <views:ProfilesWindow />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:SessionViewModel}">
+                <views:SessionWindow />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:MainNavigationViewModel}">
+                <views:MainNavigationWindow />
+            </DataTemplate>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>

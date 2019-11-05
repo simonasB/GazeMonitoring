@@ -9,10 +9,10 @@ namespace GazeMonitoring.ViewModels {
     /// in App.xaml.cs could have created this view model, and assigned it to the NotifyIcon.
     /// </summary>
     public class NotifyIconViewModel {
-        private readonly Views.MainNavigationWindow _mainNavigationWindow;
+        private readonly Views.MainWindow _mainWindow;
 
-        public NotifyIconViewModel(Views.MainNavigationWindow mainNavigationWindow) {
-            _mainNavigationWindow = mainNavigationWindow;
+        public NotifyIconViewModel(Views.MainWindow mainWindow) {
+            _mainWindow = mainWindow;
         }
         /// <summary>
         /// Shows a window, if none is already open.
@@ -22,7 +22,7 @@ namespace GazeMonitoring.ViewModels {
             {
                 return new DelegateCommand(
                     () => {
-                        Application.Current.MainWindow = _mainNavigationWindow;
+                        Application.Current.MainWindow = _mainWindow;
                         Application.Current.MainWindow.Show();
                         Application.Current.MainWindow.Topmost = true;
                     },

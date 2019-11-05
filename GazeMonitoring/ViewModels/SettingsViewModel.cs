@@ -29,10 +29,7 @@ namespace GazeMonitoring.ViewModels
             CurrentViewModel = _viewModels[ESettingsSubViewModel.OptionsViewModel];
             ShowOptions = new RelayCommand(() => ShowView(ESettingsSubViewModel.OptionsViewModel));
             ShowMonitoringConfigurations = new RelayCommand(() => ShowView(ESettingsSubViewModel.MonitoringConfigurationsViewModel));
-            messenger.Register<ShowSettingsMessage>(_ => IsVisible = true);
-            messenger.Register<ShowEditMonitoringConfigurationMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationAddEditViewModel));
-            messenger.Register<ShowAddMonitoringConfigurationMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationAddEditViewModel));
-            messenger.Register<ShowMonitoringConfigurationsMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationsViewModel));
+            SetupMessageRegistrations();
         }
 
         public ListBoxItem SelectedMenuItem
@@ -67,6 +64,14 @@ namespace GazeMonitoring.ViewModels
         {
             _messenger.Send(new SettingsSubViewModelChangedMessage {SettingsSubViewModel = viewModel});
             CurrentViewModel = _viewModels[viewModel];
+        }
+
+        private void SetupMessageRegistrations()
+        {
+            _messenger.Register<ShowSettingsMessage>(_ => IsVisible = true);
+            _messenger.Register<ShowEditMonitoringConfigurationMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationAddEditViewModel));
+            _messenger.Register<ShowAddMonitoringConfigurationMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationAddEditViewModel));
+            _messenger.Register<ShowMonitoringConfigurationsMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationsViewModel));
         }
     }
 }

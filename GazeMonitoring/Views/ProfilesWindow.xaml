@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="GazeMonitoring.Views.ProfilesWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GazeMonitoring.Views"
+             mc:Ignorable="d" 
+             Height="420" Width="315"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="12"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+    <Grid>
+        <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,20,0,0" TextWrapping="Wrap" Text="Profiles" VerticalAlignment="Top"/>
+    </Grid>
+</UserControl>

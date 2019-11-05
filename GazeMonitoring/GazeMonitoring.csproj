@@ -207,10 +207,14 @@
     <Compile Include="IoC\ContainerBuilderFactory.cs" />
     <Compile Include="IO\FileDialogService.cs" />
     <Compile Include="Messaging\IMessage.cs" />
+    <Compile Include="Messaging\Messages\MainSubViewModelChangedMessage.cs" />
     <Compile Include="Messaging\Messages\SettingsSubViewModelChangedMessage.cs" />
     <Compile Include="Messaging\Messages\ShowCreateScreenConfigurationMessage.cs" />
     <Compile Include="Messaging\Messages\ShowEditScreenConfigurationMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowMainNavigationMessage.cs" />
     <Compile Include="Messaging\Messages\ShowMonitoringConfigurationsMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowProfilesMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowStartNewSessionMessage.cs" />
     <Compile Include="Messaging\Messenger.cs" />
     <Compile Include="Messaging\Messages\ShowAddMonitoringConfigurationMessage.cs" />
     <Compile Include="Messaging\Messages\ShowEditMonitoringConfigurationMessage.cs" />
@@ -228,13 +232,21 @@
     <Compile Include="HotKeys\Global\GlobalHotKeyEntity.cs" />
     <Compile Include="HotKeys\Global\Handlers\IGlobalHotKeyHandler.cs" />
     <Compile Include="HotKeys\Global\GlobalHotKeyManager.cs" />
+    <Compile Include="ViewModels\EMainSubViewModel.cs" />
     <Compile Include="ViewModels\ESettingsSubViewModel.cs" />
+    <Compile Include="ViewModels\IMainSubViewModel.cs" />
+    <Compile Include="ViewModels\MainNavigationViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MonitoringConfigurationAddEditViewModel.cs" />
     <Compile Include="ViewModels\MonitoringConfigurationsViewModel.cs" />
     <Compile Include="ViewModels\OptionsViewModel.cs" />
+    <Compile Include="ViewModels\ProfilesViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\MainNavigationWindow.xaml.cs">
       <DependentUpon>MainNavigationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MonitoringConfigurationAddEditWindow.xaml.cs">
       <DependentUpon>MonitoringConfigurationAddEditWindow.xaml</DependentUpon>
@@ -244,6 +256,9 @@
     </Compile>
     <Compile Include="Views\OptionsWindow.xaml.cs">
       <DependentUpon>OptionsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProfilesWindow.xaml.cs">
+      <DependentUpon>ProfilesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScreenConfigurationWindow.xaml.cs">
       <DependentUpon>ScreenConfigurationWindow.xaml</DependentUpon>
@@ -281,6 +296,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainNavigationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProfilesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
