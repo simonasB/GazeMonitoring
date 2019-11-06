@@ -24,6 +24,8 @@ namespace GazeMonitoring.Tests.HotKeys
             _configurationRepository = new Mock<IConfigurationRepository>();
             _globalHotKeyHandlerFactory = new Mock<IGlobalHotKeyHandlerFactory>();
             _globalHotKeyManager = new GlobalHotKeyManager(_globalHotKeyHandlerFactory.Object, _configurationRepository.Object);
+            var localGlobalKey = new GlobalHotKey(Key.A, ModifierKeys.Alt, () => {}, false);
+            localGlobalKey.WithMemberValue("_dictHotKeyToCalBackProc", new Dictionary<int, GlobalHotKey>());
         }
 
         [Test]

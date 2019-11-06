@@ -432,6 +432,10 @@
       <Project>{60f20997-4a0b-4769-879b-d270b35ac149}</Project>
       <Name>MockMonitoring</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TobiiCoreMonitoring\TobiiCoreMonitoring.csproj">
+      <Project>{523c4922-424a-4843-b560-0cb2781722d3}</Project>
+      <Name>TobiiCoreMonitoring</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Red.ico" />

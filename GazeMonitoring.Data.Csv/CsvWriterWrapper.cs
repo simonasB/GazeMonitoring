@@ -21,9 +21,23 @@ namespace GazeMonitoring.Data.Csv {
             _textWriter = textWriter;
         }
 
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                CsvWriter?.Dispose();
+                _textWriter?.Dispose();
+            }
+        }
+
+        ~CsvWriterWrapper()
+        {
+            Dispose(false);
+        }
+
         public void Dispose() {
-            CsvWriter?.Dispose();
-            _textWriter?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

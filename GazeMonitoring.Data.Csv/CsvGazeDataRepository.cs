@@ -4,7 +4,10 @@ using CsvHelper;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Csv {
-    public class CsvGazeDataRepository : IGazeDataRepository {
+    public class CsvGazeDataRepository : IGazeDataRepository
+    {
+        private bool _disposed;
+
         private readonly Dictionary<Type, CsvWriterWrapper> _csvWriterWrappers;
 
         public CsvGazeDataRepository(Dictionary<Type, CsvWriterWrapper> csvWriterWrappers) {
@@ -19,10 +22,14 @@ namespace GazeMonitoring.Data.Csv {
             return _csvWriterWrappers[type].CsvWriter;
         }
 
-        public void Dispose() {
+        public void Dispose()
+        {
+            if (_disposed)
+                return;
             foreach (var csvWriterWrapper in _csvWriterWrappers) {
                 csvWriterWrapper.Value?.Dispose();
             }
+            _disposed = true;
         }
 
         public void SaveGazePoint(GazePoint gazePoint) {

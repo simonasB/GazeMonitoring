@@ -15,7 +15,7 @@ namespace MockMonitoring {
             container.Register<IEyeTrackerStatusProvider, MockStatusProvider>();
 
             return new DiscoveryResult {
-                IsActive = true
+                IsActive = false
             };
         }
     }
