@@ -189,7 +189,7 @@
     <Compile Include="Base\Hotkey.cs" />
     <Compile Include="Base\ISettingsSubViewModel.cs" />
     <Compile Include="Base\ViewModelBase.cs" />
-    <Compile Include="Base\VisibilityConverter.cs" />
+    <Compile Include="Base\SelectedProfileVisibilityConverter.cs" />
     <Compile Include="Commands\AwaitableDelegateCommand.cs" />
     <Compile Include="Base\BindableBase.cs" />
     <Compile Include="Base\BooleanAndConverter.cs" />
@@ -274,6 +274,7 @@
     <Compile Include="Views\SessionWindow.xaml.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="WindowModels\MonitoringConfigurationWindowModel.cs" />
+    <Compile Include="WindowModels\ProfileWindowModel.cs" />
     <Compile Include="WindowModels\ScreenConfigurationWindowModel.cs" />
     <Compile Include="WindowModels\SubjectInfoWindowModel.cs" />
     <Compile Include="Base\ValidatableBindableBase.cs" />

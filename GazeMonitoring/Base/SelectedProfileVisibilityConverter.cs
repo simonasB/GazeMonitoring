@@ -6,7 +6,7 @@ using System.Windows.Data;
 namespace GazeMonitoring.Base
 {
     [ValueConversion(typeof(bool), typeof(Visibility))]
-    public class VisibilityConverter : IValueConverter
+    public class SelectedProfileVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

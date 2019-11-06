@@ -16,9 +16,66 @@
              d:DataContext="{d:DesignInstance viewModels:ProfilesViewModel,
                                          IsDesignTimeCreatable=True}">
     <Grid>
+        <ListView ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" Margin="0,85,0,82" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name"
+                                    x:Name="ArtistColumn">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl>
+                                    <TextBlock Text="{Binding Name}" />
+                                </ContentControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Actions" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="DatabaseEdit" />
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding DataContext.CalibrateCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="Eye" />
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="DeleteCircle" />
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Command="{Binding AddCommand}" HorizontalAlignment="Left" Margin="250,85,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
+            <materialDesign:PackIcon Kind="AddCircle" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
+        </Button>
         <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,20,0,0" TextWrapping="Wrap" Text="Profiles" VerticalAlignment="Top"/>
         <Button Command="{Binding BackCommand}" HorizontalAlignment="Left" Margin="230,17,0,0" Style="{StaticResource MaterialDesignFlatButton}" VerticalAlignment="Top" Width="75">
             <materialDesign:PackIcon Kind="ArrowBack" Height="28" Width="33" />
+        </Button>
+        <TextBlock Visibility="{Binding AddEditProfileModeEnabled,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="10,388,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" RenderTransformOrigin="0.568,1.107"/>
+        <TextBox Visibility="{Binding AddEditProfileModeEnabled,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding AddEditProfileWindowModel.Name}" HorizontalAlignment="Left" Height="23" Margin="107,379,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
+        <Button Command="{Binding SaveProfileCommand}" HorizontalAlignment="Left" Margin="250,371,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
+            <materialDesign:PackIcon Kind="ContentSave" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
         </Button>
     </Grid>
 </UserControl>

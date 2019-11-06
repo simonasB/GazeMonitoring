@@ -5,8 +5,11 @@
       "type": "GazeMonitoring.Data.Csv.CsvModule, GazeMonitoring.Data.Csv"
     },
     {
+      "type": "GazeMonitoring.Data.PostgreSQL.PostgreSQLModule, GazeMonitoring.Data.PostgreSQL"
+    },
+    {
       "type": "GazeMonitoring.ScreenCapture.SharpAvi.SharpAviModule, GazeMonitoring.ScreenCapture.SharpAvi"
     }
   ],
-  "PostgreSQL": "Server=localhost;Port=5432;Database=gazemonitoring;User Id=gazemonitoring;Password=Password1"
+  "PostgreSQL": "Server=localhost;Port=5432;Database=gazemonitoring;User Id=postgres;Password=Password1"
 }

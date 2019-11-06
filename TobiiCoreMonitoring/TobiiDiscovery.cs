@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using GazeMonitoring.EyeTracker.Core.Calibration;
 using GazeMonitoring.EyeTracker.Core.Discovery;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
@@ -18,6 +19,7 @@ namespace TobiiCoreMonitoring {
                     containerBuilder.Register<IGazePointStreamFactory, TobiiCoreGazePointStreamFactory>();
                     containerBuilder.RegisterSingleton(host);
                     containerBuilder.Register<IEyeTrackerStatusProvider, TobiiStatusProvider>();
+                    containerBuilder.Register<ICalibrationManager, TobiiCalibrationManager>();
                     discoveryResult.IsActive = true;
                     return discoveryResult;
                 }
