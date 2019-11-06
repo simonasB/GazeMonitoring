@@ -38,7 +38,10 @@ namespace GazeMonitoring.Messaging
                 throw new ArgumentException($"Message type '{typeof(T).Name}' is not registered.");
             }
 
-            callbacks.ForEach(o => o.Invoke(message));
+            foreach (var o in callbacks)
+            {
+                o.Invoke(message);
+            }
         }
     }
 }

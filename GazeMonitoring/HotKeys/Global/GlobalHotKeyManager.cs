@@ -23,8 +23,8 @@ namespace GazeMonitoring.HotKeys.Global
 
         public GlobalHotKeyManager(IGlobalHotKeyHandlerFactory globalHotKeyHandlerFactory, IConfigurationRepository configurationRepository)
         {
-            _globalHotKeyHandlerFactory = globalHotKeyHandlerFactory;
-            _configurationRepository = configurationRepository;
+            _globalHotKeyHandlerFactory = globalHotKeyHandlerFactory ?? throw new ArgumentNullException(nameof(globalHotKeyHandlerFactory));
+            _configurationRepository = configurationRepository ?? throw new ArgumentNullException(nameof(configurationRepository));
 
             _globalHotKeys = new Dictionary<EGlobalHotKey, GlobalHotKey>();
             foreach (var globalHotKeyEntity in _configurationRepository.Search<GlobalHotKeyEntity>())
@@ -43,8 +43,16 @@ namespace GazeMonitoring.HotKeys.Global
             globalHotKey.Dispose();
 
             var hotKeyEntity = _configurationRepository.SearchOne<GlobalHotKeyEntity>(o => o.EGlobalHotKey == eGlobalHotKey);
-            hotKeyEntity.Key = key;
-            hotKeyEntity.KeyModifiers = keyModifiers;
+            if (hotKeyEntity == null)
+            {
+                hotKeyEntity = new GlobalHotKeyEntity(eGlobalHotKey, key, keyModifiers);
+            }
+            else
+            {
+                hotKeyEntity.Key = key;
+                hotKeyEntity.KeyModifiers = keyModifiers;
+            }
+
             _configurationRepository.Update(hotKeyEntity);
 
             var updatedGlobalHotKey = new GlobalHotKey(key, keyModifiers, _globalHotKeyHandlerFactory.Create(eGlobalHotKey));
@@ -59,7 +67,6 @@ namespace GazeMonitoring.HotKeys.Global
             }
 
             globalHotKey.Dispose();
-            // TODO If deleted, seed will reassing to default value when application is restarted. Maybe user wants to remove hot keys at all
             _configurationRepository.Delete<GlobalHotKeyEntity>(globalHotKey.Id);
             _globalHotKeys.Remove(key);
         }
