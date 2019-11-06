@@ -8,6 +8,7 @@
         xmlns:local="clr-namespace:GazeMonitoring"
         xmlns:entities1="clr-namespace:GazeMonitoring.Model;assembly=GazeMonitoring.Model"
         xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Height="420" Width="315">
     <UserControl.Resources>
@@ -173,6 +174,9 @@
             <TextBlock HorizontalAlignment="Left" Margin="25,40,0,0" TextWrapping="Wrap" Text="EyeTracker" VerticalAlignment="Top" Height="18" Width="75" Foreground="#FFADADAD" FontSize="14"/>
             <TextBlock HorizontalAlignment="Left" Margin="104,40,0,0" TextWrapping="Wrap" Text="{Binding EyeTrackerStatusWindowModel.EyeTrackerName}" VerticalAlignment="Top" Width="176" Height="18" Foreground="#FFADADAD" FontSize="14" FontFamily="Segoe UI Semibold"/>
             <Rectangle HorizontalAlignment="Stretch" Fill="#FF575757" Height="1" Grid.ColumnSpan="2" Margin="0,75,1.2,345"/>
+            <Button Command="{Binding BackCommand}" HorizontalAlignment="Left" Margin="230,17,0,0" Style="{StaticResource MaterialDesignFlatButton}" VerticalAlignment="Top" Width="75">
+                <materialDesign:PackIcon Kind="ArrowBack" Height="28" Width="33" />
+            </Button>
         </Grid>
     </xctk:BusyIndicator>
 </UserControl>

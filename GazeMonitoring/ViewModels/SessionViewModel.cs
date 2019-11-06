@@ -262,6 +262,11 @@ namespace GazeMonitoring.ViewModels {
             }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
 
+        public RelayCommand BackCommand => new RelayCommand(() =>
+        {
+            _messenger.Send(new ShowMainNavigationMessage());
+        });
+
         private void OnSettings()
         {
             _messenger.Send(new ShowSettingsMessage());
