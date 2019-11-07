@@ -1,4 +1,5 @@
-﻿using GazeMonitoring.EyeTracker.Core.Status;
+﻿using GazeMonitoring.EyeTracker.Core.Calibration;
+using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.IoC;
 
@@ -8,6 +9,7 @@ namespace MockMonitoring {
         {
             builder.Register<IGazePointStreamFactory, MockGazePointStreamFactory>();
             builder.Register<IEyeTrackerStatusProvider, MockStatusProvider>();
+            builder.Register<ICalibrationManager, MockCalibrationManager>();
         }
     }
 }

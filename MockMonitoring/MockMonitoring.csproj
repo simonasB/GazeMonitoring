@@ -49,6 +49,7 @@
     <Compile Include="GazeStreams\SensitiveFixationGazeStream.cs" />
     <Compile Include="GazeStreams\SlowFixationGazeStream.cs" />
     <Compile Include="GazeStreams\UnfilteredGazeStream.cs" />
+    <Compile Include="MockCalibrationManager.cs" />
     <Compile Include="MockDiscovery.cs" />
     <Compile Include="MockGazePointStreamFactory.cs" />
     <Compile Include="MockModule.cs" />

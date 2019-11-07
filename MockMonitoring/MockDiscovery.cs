@@ -1,4 +1,5 @@
 ﻿using System;
+using GazeMonitoring.EyeTracker.Core.Calibration;
 using GazeMonitoring.EyeTracker.Core.Discovery;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
@@ -13,9 +14,10 @@ namespace MockMonitoring {
 
             container.Register<IGazePointStreamFactory, MockGazePointStreamFactory>();
             container.Register<IEyeTrackerStatusProvider, MockStatusProvider>();
+            container.Register<ICalibrationManager, MockCalibrationManager>();
 
             return new DiscoveryResult {
-                IsActive = false
+                IsActive = true
             };
         }
     }
