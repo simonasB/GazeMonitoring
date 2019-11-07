@@ -43,8 +43,10 @@ namespace GazeMonitoring.ViewModels
                 _currentProfile = _calibrationManager.GetCurrentProfileAsync().Result;
                 SelectedProfile = Profiles.First(o => o.Name == _currentProfile);
                 AddEditProfileWindowModel = new ProfileWindowModel();
+                AddEditProfileModeEnabled = false;
             });
             AddEditProfileWindowModel = new ProfileWindowModel();
+            AddEditProfileModeEnabled = false;
         }
 
         public RelayCommand BackCommand => new RelayCommand(() =>
@@ -60,6 +62,19 @@ namespace GazeMonitoring.ViewModels
         public AwaitableDelegateCommand<ProfileWindowModel> DeleteCommand => new AwaitableDelegateCommand<ProfileWindowModel>(async (profile) =>
         {
             await _calibrationManager.DeleteProfileAsync(profile.Name);
+            Profiles.Remove(profile);
+        });
+
+        public AwaitableDelegateCommand SaveProfileCommand => new AwaitableDelegateCommand(async () =>
+        {
+            await _calibrationManager.CreateProfileAsync(AddEditProfileWindowModel.Name);
+            _messenger.Send(new ShowMainNavigationMessage());
+        });
+
+        public DelegateCommand AddCommand => new DelegateCommand(() =>
+        {
+            AddEditProfileModeEnabled = true;
+            AddEditProfileWindowModel = new ProfileWindowModel();
         });
 
         public ObservableCollection<ProfileWindowModel> Profiles

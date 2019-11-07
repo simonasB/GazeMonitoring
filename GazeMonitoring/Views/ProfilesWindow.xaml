@@ -32,17 +32,6 @@
                     <GridViewColumn Header="Actions" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
-                                    <materialDesign:PackIcon Kind="DatabaseEdit" />
-                                </Button>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="" >
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
                                 <Button Command="{Binding DataContext.CalibrateCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource MaterialDesignFlatButton}">
@@ -74,7 +63,7 @@
         </Button>
         <TextBlock Visibility="{Binding AddEditProfileModeEnabled,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" Margin="10,388,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" RenderTransformOrigin="0.568,1.107"/>
         <TextBox Visibility="{Binding AddEditProfileModeEnabled,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding AddEditProfileWindowModel.Name}" HorizontalAlignment="Left" Height="23" Margin="107,379,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
-        <Button Command="{Binding SaveProfileCommand}" HorizontalAlignment="Left" Margin="250,371,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
+        <Button Visibility="{Binding AddEditProfileModeEnabled,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding SaveProfileCommand}" HorizontalAlignment="Left" Margin="250,371,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
             <materialDesign:PackIcon Kind="ContentSave" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
         </Button>
     </Grid>
