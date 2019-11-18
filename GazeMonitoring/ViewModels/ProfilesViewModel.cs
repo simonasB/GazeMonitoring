@@ -19,8 +19,13 @@ namespace GazeMonitoring.ViewModels
         private string _currentProfile;
         private ProfileWindowModel _selectedProfile;
         private bool _addEditProfileModeEnabled;
+        private ProfileWindowModel _addEditProfileWindowModel;
 
-        public ProfileWindowModel AddEditProfileWindowModel { get; set; }
+        public ProfileWindowModel AddEditProfileWindowModel
+        {
+            get => _addEditProfileWindowModel;
+            set => SetProperty(ref _addEditProfileWindowModel, value);
+        }
 
         public bool AddEditProfileModeEnabled
         {
@@ -63,6 +68,10 @@ namespace GazeMonitoring.ViewModels
         {
             await _calibrationManager.DeleteProfileAsync(profile.Name);
             Profiles.Remove(profile);
+            if (_currentProfile == profile.Name)
+            {
+                _messenger.Send(new ShowProfilesMessage());
+            }
         });
 
         public AwaitableDelegateCommand SaveProfileCommand => new AwaitableDelegateCommand(async () =>
@@ -88,6 +97,7 @@ namespace GazeMonitoring.ViewModels
             get => _selectedProfile;
             set
             {
+                if (value == null) return;
                 SetProperty(ref _selectedProfile, value);
                 _calibrationManager.SetCurrentProfileAsync(_selectedProfile.Name).Wait();
             }

@@ -63,9 +63,15 @@
         </materialDesign:ColorZone>
         <ContentControl Content="{Binding CurrentViewModel}" Margin="176,48,0,0" Grid.ColumnSpan="2"/>
 
-        <ListBox SelectedItem="{Binding SelectedMenuItem}"
+        <ListBox Name="ListBox" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             IsEnabled="{Binding IsChecked, ElementName=EnableListBox}" Margin="0,48,175.562,0" BorderThickness="1"
             BorderBrush="{DynamicResource MaterialDesignDivider}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonUp">
+                    <i:InvokeCommandAction Command="{Binding MenuItemClicked}"
+                                           CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListBoxItem Name="Options" BorderThickness="1"
                          BorderBrush="{DynamicResource MaterialDesignDivider}">
                 <TextBlock FontSize="20" Margin="5,10,0,10">

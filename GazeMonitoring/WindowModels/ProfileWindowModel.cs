@@ -1,7 +1,15 @@
-﻿namespace GazeMonitoring.WindowModels
+﻿using GazeMonitoring.Base;
+
+namespace GazeMonitoring.WindowModels
 {
-    public class ProfileWindowModel
+    public class ProfileWindowModel : ViewModelBase
     {
-        public string Name { get; set; }
+        private string _name;
+
+        public string Name
+        {
+            get => _name;
+            set => SetProperty(ref _name, value);
+        }
     }
 }

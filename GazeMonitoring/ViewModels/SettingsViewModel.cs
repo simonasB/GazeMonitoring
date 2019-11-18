@@ -32,23 +32,18 @@ namespace GazeMonitoring.ViewModels
             SetupMessageRegistrations();
         }
 
-        public ListBoxItem SelectedMenuItem
+        public RelayCommand<ListBoxItem> MenuItemClicked => new RelayCommand<ListBoxItem>((o) =>
         {
-            get => _selectedMenuItem;
-            set
+            switch (o.Name)
             {
-                switch (value.Name)
-                {
-                    case "Options":
-                        ShowView(ESettingsSubViewModel.OptionsViewModel);
-                        break;
-                    case "Screen":
-                        ShowView(ESettingsSubViewModel.MonitoringConfigurationsViewModel);
-                        break;
-                }
-                SetProperty(ref _selectedMenuItem, value);
+                case "Options":
+                    ShowView(ESettingsSubViewModel.OptionsViewModel);
+                    break;
+                case "Screen":
+                    ShowView(ESettingsSubViewModel.MonitoringConfigurationsViewModel);
+                    break;
             }
-        }
+        });
 
         public RelayCommand ShowOptions { get; }
 
