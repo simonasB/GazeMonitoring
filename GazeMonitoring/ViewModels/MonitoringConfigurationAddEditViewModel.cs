@@ -104,6 +104,7 @@ namespace GazeMonitoring.ViewModels
                 {
                     _appLocalContextManager.SetScreenConfigurationId(screenConfiguration.Id);
                     _messenger.Send(new ShowEditScreenConfigurationMessage());
+                    _messenger.Send(new HideSettingsMessage());
                 });
 
         public RelayCommand SaveMonitoringConfigurationCommand => new RelayCommand(() =>

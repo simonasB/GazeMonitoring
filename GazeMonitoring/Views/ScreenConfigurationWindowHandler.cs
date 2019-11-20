@@ -27,13 +27,13 @@ namespace GazeMonitoring.Views
         {
             _messenger.Register<ShowCreateScreenConfigurationMessage>(_ =>
             {
-                var window = new ScreenConfigurationWindow(_appLocalContextManager, _configurationRepository, true);
+                var window = new ScreenConfigurationWindow(_appLocalContextManager, _configurationRepository, _messenger, true);
                 window.Show();
             });
 
             _messenger.Register<ShowEditScreenConfigurationMessage>(_ =>
             {
-                var window = new ScreenConfigurationWindow(_appLocalContextManager, _configurationRepository, false);
+                var window = new ScreenConfigurationWindow(_appLocalContextManager, _configurationRepository, _messenger, false);
                 window.Show();
             });
         }

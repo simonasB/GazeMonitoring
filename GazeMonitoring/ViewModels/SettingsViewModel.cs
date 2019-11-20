@@ -14,7 +14,6 @@ namespace GazeMonitoring.ViewModels
         private readonly Dictionary<ESettingsSubViewModel, ISettingsSubViewModel> _viewModels;
         private ISettingsSubViewModel _currentViewModel;
         private bool _isVisible;
-        private ListBoxItem _selectedMenuItem;
 
         public ISettingsSubViewModel CurrentViewModel
         {
@@ -64,6 +63,7 @@ namespace GazeMonitoring.ViewModels
         private void SetupMessageRegistrations()
         {
             _messenger.Register<ShowSettingsMessage>(_ => IsVisible = true);
+            _messenger.Register<HideSettingsMessage>(_ => IsVisible = false);
             _messenger.Register<ShowEditMonitoringConfigurationMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationAddEditViewModel));
             _messenger.Register<ShowAddMonitoringConfigurationMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationAddEditViewModel));
             _messenger.Register<ShowMonitoringConfigurationsMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationsViewModel));

@@ -9,6 +9,8 @@ using System.Windows.Shapes;
 using GazeMonitoring.Base;
 using GazeMonitoring.DataAccess;
 using GazeMonitoring.DataAccess.LiteDB;
+using GazeMonitoring.Messaging;
+using GazeMonitoring.Messaging.Messages;
 using GazeMonitoring.Model;
 using MaterialDesignThemes.Wpf;
 
@@ -21,6 +23,7 @@ namespace GazeMonitoring.Views
     {
         private readonly IAppLocalContextManager _appLocalContextManager;
         private readonly IConfigurationRepository _configurationRepository;
+        private readonly IMessenger _messenger;
         private Point _startPoint;
         private Rectangle _rectSelectArea;
         private ContentControl _rectContentControl;
@@ -30,10 +33,11 @@ namespace GazeMonitoring.Views
 
         public const string AreaOfInterestTitle = "AreaOfInterestTitle";
 
-        public ScreenConfigurationWindow(IAppLocalContextManager appLocalContextManager, IConfigurationRepository configurationRepository, bool newConfigurationRequested)
+        public ScreenConfigurationWindow(IAppLocalContextManager appLocalContextManager, IConfigurationRepository configurationRepository, IMessenger messenger, bool newConfigurationRequested)
         {
             _appLocalContextManager = appLocalContextManager;
             _configurationRepository = configurationRepository;
+            _messenger = messenger;
             InitializeComponent();
 
             this.PreviewKeyDown += HandleEsc;
@@ -42,11 +46,6 @@ namespace GazeMonitoring.Views
             {
                 _appLocalContext.ScreenConfigurationId = null;
             }
-        }
-
-        public ScreenConfigurationWindow() : this(new AppLocalContextManager(new LiteDBConfigurationRepository()), new LiteDBConfigurationRepository(), true)
-        {
-            
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -109,7 +108,7 @@ namespace GazeMonitoring.Views
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                Close();
+                CloseInternal();
         }
 
         private void Canvas_MouseDown_1(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -265,6 +264,14 @@ namespace GazeMonitoring.Views
 
         private void CloseClick(object sender, RoutedEventArgs e)
         {
+            CloseInternal();
+        }
+
+        private void CloseInternal()
+        {
+            _messenger.Send(new ShowSettingsMessage());
+            if(_monitoringConfiguration != null)
+                _messenger.Send(new ShowEditMonitoringConfigurationMessage(_monitoringConfiguration));
             Close();
         }
     }

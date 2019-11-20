@@ -213,6 +213,7 @@
     <Compile Include="IoC\ContainerBuilderFactory.cs" />
     <Compile Include="IO\FileDialogService.cs" />
     <Compile Include="Messaging\IMessage.cs" />
+    <Compile Include="Messaging\Messages\HideSettingsMessage.cs" />
     <Compile Include="Messaging\Messages\MainSubViewModelChangedMessage.cs" />
     <Compile Include="Messaging\Messages\SettingsSubViewModelChangedMessage.cs" />
     <Compile Include="Messaging\Messages\ShowCreateScreenConfigurationMessage.cs" />
