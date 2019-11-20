@@ -9,16 +9,22 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="12"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
     <Grid HorizontalAlignment="Left" Width="315" Margin="0,0,0,-0.2">
         <Image Margin="-52,-59,100,324.2">
             <Image.Source>
                 <BitmapImage  UriSource="/images/gm_logo.png" />
             </Image.Source>
         </Image>
-        <ListBox SelectedItem="{Binding SelectedMenuItem}"
-            IsEnabled="{Binding IsChecked, ElementName=EnableListBox}" Margin="0,121,0,-72.8" BorderThickness="1"
+        <ListBox Name="ListBox" Margin="0,121,0,-72.8" BorderThickness="1"
             BorderBrush="{DynamicResource MaterialDesignDivider}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonUp">
+                    <i:InvokeCommandAction Command="{Binding MenuItemClicked}"
+                                           CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListBoxItem x:Name="Settings" BorderThickness="1"
                          BorderBrush="{DynamicResource MaterialDesignDivider}" Height="98">
                 <TextBlock FontSize="24" Margin="5,10,0,10"><InlineUIContainer>

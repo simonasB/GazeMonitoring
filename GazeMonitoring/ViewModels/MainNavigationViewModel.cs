@@ -2,13 +2,13 @@
 using GazeMonitoring.Messaging;
 using GazeMonitoring.Messaging.Messages;
 using System.Windows.Controls;
+using GazeMonitoring.Commands;
 
 namespace GazeMonitoring.ViewModels
 {
     public class MainNavigationViewModel : ViewModelBase, IMainSubViewModel
     {
         private readonly IMessenger _messenger;
-        private ListBoxItem _selectedMenuItem;
 
         public EMainSubViewModel SubViewModel => EMainSubViewModel.MainNavigationViewModel;
 
@@ -17,25 +17,20 @@ namespace GazeMonitoring.ViewModels
             _messenger = messenger;
         }
 
-        public ListBoxItem SelectedMenuItem
+        public RelayCommand<ListBoxItem> MenuItemClicked => new RelayCommand<ListBoxItem>((o) =>
         {
-            get => _selectedMenuItem;
-            set
+            switch (o.Name)
             {
-                switch (value.Name)
-                {
-                    case "Settings":
-                        _messenger.Send(new ShowSettingsMessage());
-                        break;
-                    case "StartNewSession":
-                        _messenger.Send(new ShowStartNewSessionMessage());
-                        break;
-                    case "Profiles":
-                        _messenger.Send(new ShowProfilesMessage());
-                        break;
-                }
-                SetProperty(ref _selectedMenuItem, value);
+                case "Settings":
+                    _messenger.Send(new ShowSettingsMessage());
+                    break;
+                case "StartNewSession":
+                    _messenger.Send(new ShowStartNewSessionMessage());
+                    break;
+                case "Profiles":
+                    _messenger.Send(new ShowProfilesMessage());
+                    break;
             }
-        }
+        });
     }
 }
