@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using Highsoft.Web.Mvc.Charts
+@using Highsoft.Web.Mvc.Charts.Rendering
+
+@{
+    var chartOptions = new Highcharts
+    {
+        Title = new Title
+        {
+            Text = "US and USSR nuclear stockpiles"
+        },
+        Subtitle = new Subtitle
+        {
+            Text = "Source: thebulletin.metapress.com"
+        },
+
+        XAxis = new List<XAxis>
+        {
+            new XAxis
+            {
+                AllowDecimals = false,
+                Labels = new XAxisLabels
+                {
+                    //Formatter = "formatXAxis"
+                }
+
+            }
+        },
+        YAxis = new List<YAxis>
+        {
+            new YAxis
+            {
+                Title = new YAxisTitle
+                {
+                    Text = "Nuclear weapon states"
+                },
+                Labels = new YAxisLabels
+                {
+                    //Formatter = "formatYAxis"
+                }
+            }
+        },
+        Tooltip = new Tooltip
+        {
+            PointFormat = "{series.name} produced {point.y:,.0f} warheads in {point.x}"
+        },
+        PlotOptions = new PlotOptions
+        {
+            Area = new PlotOptionsArea
+            {
+                PointStart = 1940,
+                Marker = new PlotOptionsAreaMarker
+                {
+                    Enabled = false,
+                    Symbol = "circle",
+                    Radius = 2,
+                    States = new PlotOptionsAreaMarkerStates
+                    {
+                        Hover = new PlotOptionsAreaMarkerStatesHover
+                        {
+                            Enabled = true
+                        }
+                    }
+                }
+
+            }
+        },
+        Series = new List<Series>
+        {
+            new AreaSeries
+            {
+                Name = "USA",
+                Data = ViewData["usaData"] as List<AreaSeriesData>
+
+            },
+            new AreaSeries
+            {
+                Name = "USSR/Russia",
+                Data = ViewData["russiaData"] as List<AreaSeriesData>
+            }
+        }
+    };
+    
+
+    chartOptions.ID = "chart";
+    var renderer = new HighchartsRenderer(chartOptions, "MDcwMjAyMDAxMDUxMDAwMDAwMDE=");
+}
+
+@Html.Raw(renderer.RenderHtml(true))
