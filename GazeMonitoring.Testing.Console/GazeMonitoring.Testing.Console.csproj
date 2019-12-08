@@ -318,13 +318,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Templates\View.cshtml" />
+    <None Include="Templates\Main.cshtml" />
+    <None Include="Templates\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />

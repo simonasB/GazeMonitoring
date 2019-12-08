@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,11 +35,13 @@ namespace GazeMonitoring.Testing.Console
             russiaValues.ForEach(p => russiaData.Add(new AreaSeriesData { Y = p }));
 
             var engine = new RazorLightEngineBuilder()
-                .UseFileSystemProject(@"C:\repositories\GazeMonitoring\GazeMonitoring.Testing.Console\Templates")
+                .UseFileSystemProject(@"C:\repos\gazemonitoring\GazeMonitoring.Testing.Console\Templates")
                 .UseMemoryCachingProvider()
                 .Build();
 
-            string result = engine.CompileRenderAsync("View.cshtml", new { Name = "John Doe" }).Result;
+            string result = engine.CompileRenderAsync("Main.cshtml", new { UsaData = usaData, RussiaData = russiaData }).Result;
+
+            File.WriteAllText(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Reports", "report.html"), result);
         }
     }
 }
