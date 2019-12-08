@@ -4,6 +4,7 @@ using System.Windows.Input;
 using GazeMonitoring.Base;
 using GazeMonitoring.DataAccess;
 using GazeMonitoring.HotKeys.Global;
+using GazeMonitoring.IO;
 
 namespace GazeMonitoring.Seeding
 {
@@ -15,10 +16,12 @@ namespace GazeMonitoring.Seeding
     public class DatabaseSeeder : IDatabaseSeeder
     {
         private readonly IConfigurationRepository _configurationRepository;
+        private readonly IFileSystemHelper _fileSystemHelper;
 
-        public DatabaseSeeder(IConfigurationRepository configurationRepository)
+        public DatabaseSeeder(IConfigurationRepository configurationRepository, IFileSystemHelper fileSystemHelper)
         {
             _configurationRepository = configurationRepository;
+            _fileSystemHelper = fileSystemHelper;
         }
 
         public void Seed()
@@ -51,7 +54,10 @@ namespace GazeMonitoring.Seeding
             var appLocalContext = _configurationRepository.Search<AppLocalContext>().FirstOrDefault();
             if (appLocalContext == null)
             {
-                _configurationRepository.Save(new AppLocalContext());
+                _configurationRepository.Save(new AppLocalContext
+                {
+                    DataFilesPath = _fileSystemHelper.GetAppDataDirectoryPath()
+                });
             }
         }
     }

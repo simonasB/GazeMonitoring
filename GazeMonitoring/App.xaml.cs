@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -45,6 +46,8 @@ namespace GazeMonitoring
             try
             {
                 BuildContainer();
+
+                CreateAppDataFolder(_container.GetInstance<IFileSystemHelper>());
 
                 var seeder = _container.GetInstance<IDatabaseSeeder>();
                 seeder.Seed();
@@ -152,8 +155,20 @@ namespace GazeMonitoring
             builder.Register<IScreenConfigurationWindowHandler, ScreenConfigurationWindowHandler>();
             builder.Register<IPowerpointParser, PowerpointParser>();
             builder.Register<IFileDialogService, FileDialogService>();
+            builder.Register<IFileSystemHelper, FileSystemHelper>();
+            builder.Register<IFolderDialogService, FolderDialogService>();
 
             _container = builder.Build();
+        }
+
+        private void CreateAppDataFolder(IFileSystemHelper fileSystemHelper)
+        {
+            var appDataFolderPath = fileSystemHelper.GetAppDataDirectoryPath();
+
+            if (!Directory.Exists(appDataFolderPath))
+            {
+                Directory.CreateDirectory(appDataFolderPath);
+            }
         }
     }
 }

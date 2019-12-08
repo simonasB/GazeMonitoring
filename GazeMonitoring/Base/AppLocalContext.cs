@@ -9,5 +9,7 @@
         public int? MonitoringConfigurationId { get; set; }
 
         public int? ProfileId { get; set; }
+
+        public string DataFilesPath { get; set; }
     }
 }

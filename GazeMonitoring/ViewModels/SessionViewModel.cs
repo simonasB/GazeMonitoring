@@ -30,6 +30,7 @@ namespace GazeMonitoring.ViewModels {
         private readonly IGazeDataMonitorFactory _gazeDataMonitorFactory;
         private readonly IScreenRecorder _screenRecorder;
         private readonly IMessenger _messenger;
+        private readonly IAppLocalContextManager _appLocalContextManager;
         private SubjectInfo _subjectInfo;
         private readonly IEyeTrackerStatusProvider _eyeTrackerStatusProvider;
         private readonly IGazeDataMonitorFinalizer _gazeDataMonitorFinalizer;
@@ -37,7 +38,7 @@ namespace GazeMonitoring.ViewModels {
         private readonly ILogger _logger;
         private IGazeDataMonitor _gazeDataMonitor;
 
-        public SessionViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, IScreenRecorder screenRecorder, ILoggerFactory loggerFactory, IMessenger messenger) {
+        public SessionViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, IScreenRecorder screenRecorder, ILoggerFactory loggerFactory, IMessenger messenger, IAppLocalContextManager appLocalContextManager) {
             _balloonService = balloonService;
             _gazeDataMonitorFactory = gazeDataMonitorFactory;
             StartCommand = new RelayCommand(OnStart, CanStart);
@@ -48,6 +49,7 @@ namespace GazeMonitoring.ViewModels {
             _gazeDataMonitorFinalizer = gazeDataMonitorFinalizer;
             _screenRecorder = screenRecorder;
             _messenger = messenger;
+            _appLocalContextManager = appLocalContextManager;
             InvokeEyeTrackerStatusPolling();
             EyeTrackerStatusWindowModel = new EyeTrackerStatusWindowModel(StartCommand, StopCommand) {
                 EyeTrackerName = CommonConstants.DefaultEyeTrackerName
@@ -182,26 +184,29 @@ namespace GazeMonitoring.ViewModels {
                     SessionStartTimestamp = DateTime.UtcNow
                 };
 
+                var dataFolderName = DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture);
+
                 if (!IsAnonymous) {
                     _subjectInfo.Name = SubjectInfoWindowModel.Name;
                     _subjectInfo.Age = SubjectInfoWindowModel.Age;
                     _subjectInfo.Details = SubjectInfoWindowModel.Details;
+                    dataFolderName = $"{_subjectInfo.Name}_{_subjectInfo.Age}_{_subjectInfo.Details}:{dataFolderName}";
                 }
 
+                var dataFilesPath = Path.Combine(_appLocalContextManager.Get().DataFilesPath, dataFolderName);
+
+                if (!Directory.Exists(dataFilesPath))
+                    Directory.CreateDirectory(dataFilesPath);
+
                 var monitoringContext = new MonitoringContext
-                    {SubjectInfo = _subjectInfo, DataStream = SubjectInfoWindowModel.DataStream};
+                    {SubjectInfo = _subjectInfo, DataStream = SubjectInfoWindowModel.DataStream, DataFilesPath = dataFilesPath };
                 _gazeDataMonitor = _gazeDataMonitorFactory.Create(monitoringContext);
                 _gazeDataMonitor.Start();
 
                 if (IsScreenRecorded) {
-                    const string videoFolderName = "recorded_videos";
-                    if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), videoFolderName))) {
-                        Directory.CreateDirectory(videoFolderName);
-                    }
-
                     _screenRecorder.StartRecording(
                         new RecorderParams(
-                            $"{videoFolderName}/video_{SubjectInfoWindowModel.DataStream}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi",
+                            Path.Combine(dataFilesPath, $"video_{SubjectInfoWindowModel.DataStream}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi"),
                             10, 50), monitoringContext);
                 }
             } catch (Exception ex){

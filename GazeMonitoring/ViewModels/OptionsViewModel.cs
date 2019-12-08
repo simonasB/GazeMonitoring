@@ -1,29 +1,37 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using GazeMonitoring.Base;
+using GazeMonitoring.Commands;
 using GazeMonitoring.HotKeys.Global;
+using GazeMonitoring.IO;
 
 namespace GazeMonitoring.ViewModels
 {
     public class OptionsViewModel : ViewModelBase, ISettingsSubViewModel
     {
         private readonly IGlobalHotKeyManager _globalHotKeyManager;
+        private readonly IFolderDialogService _folderDialogService;
+        private readonly IAppLocalContextManager _appLocalContextManager;
         private Hotkey _captureScreenRegionHotkey;
         private Hotkey _createScreenConfigurationHotkey;
         private Hotkey _editScreenConfigurationHotkey;
+        private string _dataFilesPath;
 
         [Obsolete("Only for design data", true)]
-        public OptionsViewModel() : this(null)
+        public OptionsViewModel() : this(null, null, null)
         {
         }
 
-        public OptionsViewModel(IGlobalHotKeyManager globalHotKeyManager)
+        public OptionsViewModel(IGlobalHotKeyManager globalHotKeyManager, IFolderDialogService folderDialogService, IAppLocalContextManager appLocalContextManager)
         {
             _globalHotKeyManager = globalHotKeyManager;
+            _folderDialogService = folderDialogService;
+            _appLocalContextManager = appLocalContextManager;
             var createScreenConfigurationGlobalKey = _globalHotKeyManager.Get(EGlobalHotKey.CreateScreenConfiguration);
             var editScreenConfigurationGlobalKey = _globalHotKeyManager.Get(EGlobalHotKey.EditScreenConfiguration);
             _createScreenConfigurationHotkey = new Hotkey(createScreenConfigurationGlobalKey.Key, createScreenConfigurationGlobalKey.KeyModifiers);
             _editScreenConfigurationHotkey = new Hotkey(editScreenConfigurationGlobalKey.Key, editScreenConfigurationGlobalKey.KeyModifiers);
+            DataFilesPath = _appLocalContextManager.Get().DataFilesPath;
         }
 
         public Hotkey CaptureScreenRegionHotkey
@@ -57,6 +65,22 @@ namespace GazeMonitoring.ViewModels
         }
 
         public ESettingsSubViewModel ESettingsSubViewModel => ESettingsSubViewModel.OptionsViewModel;
+
+        public RelayCommand ChangeDataFilesPathCommand => new RelayCommand(() =>
+            {
+                var folderPath = _folderDialogService.OpenFolderDialog();
+                if (folderPath != null)
+                {
+                    DataFilesPath = folderPath;
+                    _appLocalContextManager.SetDataFilesPath(DataFilesPath);
+                }
+            });
+
+        public string DataFilesPath
+        {
+            get => _dataFilesPath;
+            set => SetProperty(ref _dataFilesPath, value);
+        }
 
         private void OnPropertyChanged(ref Hotkey currentHotkey, Hotkey updatedHotkey, EGlobalHotKey eGlobalHotKey, [CallerMemberName] string propertyName = null)
         {

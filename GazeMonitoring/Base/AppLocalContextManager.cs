@@ -7,11 +7,33 @@ namespace GazeMonitoring.Base
     {
         void Save(AppLocalContext appLocalContext);
 
-        AppLocalContext Get();
+        void Update(AppLocalContext appLocalContext);
 
-        // TODO: Might extracted to extensions methods
-        void SetScreenConfigurationId(string screenConfigurationId);
-        void SetMonitoringConfigurationId(int monitoringConfigurationId);
+        AppLocalContext Get();
+    }
+
+    public static class AppLocalContextManagerExtensions
+    {
+        public static void SetScreenConfigurationId(this IAppLocalContextManager appLocalContextManager, string screenConfigurationId)
+        {
+            var appLocalContext = appLocalContextManager.Get();
+            appLocalContext.ScreenConfigurationId = screenConfigurationId;
+            appLocalContextManager.Update(appLocalContext);
+        }
+
+        public static void SetMonitoringConfigurationId(this IAppLocalContextManager appLocalContextManager, int monitoringConfigurationId)
+        {
+            var appLocalContext = appLocalContextManager.Get();
+            appLocalContext.MonitoringConfigurationId = monitoringConfigurationId;
+            appLocalContextManager.Update(appLocalContext);
+        }
+
+        public static void SetDataFilesPath(this IAppLocalContextManager appLocalContextManager, string dataFilesPath)
+        {
+            var appLocalContext = appLocalContextManager.Get();
+            appLocalContext.DataFilesPath = dataFilesPath;
+            appLocalContextManager.Update(appLocalContext);
+        }
     }
 
     public class AppLocalContextManager : IAppLocalContextManager
@@ -28,25 +50,16 @@ namespace GazeMonitoring.Base
             _configurationRepository.Save(appLocalContext);
         }
 
+        public void Update(AppLocalContext appLocalContext)
+        {
+            _configurationRepository.Update(appLocalContext);
+        }
+
         public AppLocalContext Get()
         {
             var appLocalContext = _configurationRepository.Search<AppLocalContext>().FirstOrDefault();
 
             return appLocalContext;
-        }
-
-        public void SetScreenConfigurationId(string screenConfigurationId)
-        {
-            var appLocalContext = Get();
-            appLocalContext.ScreenConfigurationId = screenConfigurationId;
-            _configurationRepository.Update(appLocalContext);
-        }
-
-        public void SetMonitoringConfigurationId(int monitoringConfigurationId)
-        {
-            var appLocalContext = Get();
-            appLocalContext.MonitoringConfigurationId = monitoringConfigurationId;
-            _configurationRepository.Update(appLocalContext);
         }
     }
 }
