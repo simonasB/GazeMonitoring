@@ -35,7 +35,7 @@ namespace GazeMonitoring.Testing.Console
             russiaValues.ForEach(p => russiaData.Add(new AreaSeriesData { Y = p }));
 
             var engine = new RazorLightEngineBuilder()
-                .UseFileSystemProject(@"C:\repos\gazemonitoring\GazeMonitoring.Testing.Console\Templates")
+                .UseFileSystemProject(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Templates"))
                 .UseMemoryCachingProvider()
                 .Build();
 
