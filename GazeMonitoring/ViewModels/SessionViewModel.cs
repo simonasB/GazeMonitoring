@@ -11,6 +11,7 @@ using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.EyeTracker.Core.Status;
+using GazeMonitoring.IO;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Messaging;
 using GazeMonitoring.Messaging.Messages;
@@ -31,6 +32,7 @@ namespace GazeMonitoring.ViewModels {
         private readonly IScreenRecorder _screenRecorder;
         private readonly IMessenger _messenger;
         private readonly IAppLocalContextManager _appLocalContextManager;
+        private readonly IFileSystemHelper _fileSystemHelper;
         private SubjectInfo _subjectInfo;
         private readonly IEyeTrackerStatusProvider _eyeTrackerStatusProvider;
         private readonly IGazeDataMonitorFinalizer _gazeDataMonitorFinalizer;
@@ -38,7 +40,7 @@ namespace GazeMonitoring.ViewModels {
         private readonly ILogger _logger;
         private IGazeDataMonitor _gazeDataMonitor;
 
-        public SessionViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, IScreenRecorder screenRecorder, ILoggerFactory loggerFactory, IMessenger messenger, IAppLocalContextManager appLocalContextManager) {
+        public SessionViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, IScreenRecorder screenRecorder, ILoggerFactory loggerFactory, IMessenger messenger, IAppLocalContextManager appLocalContextManager, IFileSystemHelper fileSystemHelper) {
             _balloonService = balloonService;
             _gazeDataMonitorFactory = gazeDataMonitorFactory;
             StartCommand = new RelayCommand(OnStart, CanStart);
@@ -50,6 +52,7 @@ namespace GazeMonitoring.ViewModels {
             _screenRecorder = screenRecorder;
             _messenger = messenger;
             _appLocalContextManager = appLocalContextManager;
+            _fileSystemHelper = fileSystemHelper;
             InvokeEyeTrackerStatusPolling();
             EyeTrackerStatusWindowModel = new EyeTrackerStatusWindowModel(StartCommand, StopCommand) {
                 EyeTrackerName = CommonConstants.DefaultEyeTrackerName
@@ -193,10 +196,7 @@ namespace GazeMonitoring.ViewModels {
                     dataFolderName = $"{_subjectInfo.Name}_{_subjectInfo.Age}_{_subjectInfo.Details}:{dataFolderName}";
                 }
 
-                var dataFilesPath = Path.Combine(_appLocalContextManager.Get().DataFilesPath, dataFolderName);
-
-                if (!Directory.Exists(dataFilesPath))
-                    Directory.CreateDirectory(dataFilesPath);
+                var dataFilesPath = GetDataFilesPath(dataFolderName);
 
                 var monitoringContext = new MonitoringContext
                     {SubjectInfo = _subjectInfo, DataStream = SubjectInfoWindowModel.DataStream, DataFilesPath = dataFilesPath };
@@ -218,6 +218,26 @@ namespace GazeMonitoring.ViewModels {
 
             IsBusy = false;
             IsStarted = true;
+        }
+
+        private string GetDataFilesPath(string dataFolderName)
+        {
+            var rootDataFilesPath = _appLocalContextManager.Get().DataFilesPath;
+            string dataFilesPath;
+            if (!Directory.Exists(rootDataFilesPath))
+            {
+                _logger.Warning($"Configured data files path folder does not exist: Path: {rootDataFilesPath}. Need to reconfigure");
+                dataFilesPath = Path.Combine(_fileSystemHelper.GetAppDataDirectoryPath(), dataFolderName);
+            }
+            else
+            {
+                dataFilesPath = Path.Combine(_appLocalContextManager.Get().DataFilesPath, dataFolderName);
+            }
+
+            if (!Directory.Exists(dataFilesPath))
+                Directory.CreateDirectory(dataFilesPath);
+
+            return rootDataFilesPath;
         }
 
         private bool IsFormValid() {

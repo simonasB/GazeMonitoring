@@ -27,18 +27,18 @@ namespace GazeMonitoring.Data.Xml {
             switch (dataStream)
             {
                 case DataStream.UnfilteredGaze:
-                    csvWriters.Add(typeof(GazePoint), CreateXmlWriter<GazePoint>(dataStream.ToString(), subjectInfo));
+                    csvWriters.Add(typeof(GazePoint), CreateXmlWriter<GazePoint>(dataStream.ToString(), subjectInfo, monitoringContext.DataFilesPath));
                     break;
                 case DataStream.LightlyFilteredGaze:
-                    csvWriters.Add(typeof(GazePoint), CreateXmlWriter<GazePoint>(dataStream.ToString(), subjectInfo));
+                    csvWriters.Add(typeof(GazePoint), CreateXmlWriter<GazePoint>(dataStream.ToString(), subjectInfo, monitoringContext.DataFilesPath));
                     break;
                 case DataStream.SensitiveFixation:
-                    csvWriters.Add(typeof(GazePoint), CreateXmlWriter<GazePoint>(dataStream.ToString(), subjectInfo));
-                    csvWriters.Add(typeof(Saccade), CreateXmlWriter<Saccade>($"{dataStream}_Saccades", subjectInfo));
+                    csvWriters.Add(typeof(GazePoint), CreateXmlWriter<GazePoint>(dataStream.ToString(), subjectInfo, monitoringContext.DataFilesPath));
+                    csvWriters.Add(typeof(Saccade), CreateXmlWriter<Saccade>($"{dataStream}_Saccades", subjectInfo, monitoringContext.DataFilesPath));
                     break;
                 case DataStream.SlowFixation:
-                    csvWriters.Add(typeof(GazePoint), CreateXmlWriter<GazePoint>(dataStream.ToString(), subjectInfo));
-                    csvWriters.Add(typeof(Saccade), CreateXmlWriter<Saccade>($"{dataStream}_Saccades", subjectInfo));
+                    csvWriters.Add(typeof(GazePoint), CreateXmlWriter<GazePoint>(dataStream.ToString(), subjectInfo, monitoringContext.DataFilesPath));
+                    csvWriters.Add(typeof(Saccade), CreateXmlWriter<Saccade>($"{dataStream}_Saccades", subjectInfo, monitoringContext.DataFilesPath));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(dataStream), dataStream, null);
@@ -47,12 +47,12 @@ namespace GazeMonitoring.Data.Xml {
             return csvWriters;
         }
 
-        private XmlWriterWrapper CreateXmlWriter<T>(string dataStream, SubjectInfo subjectInfo)
+        private XmlWriterWrapper CreateXmlWriter<T>(string dataStream, SubjectInfo subjectInfo, string dataFilesPath)
         {
             var fileName = new FileName { DataStream = dataStream, DateTime = DateTime.Now };
 
             const string xmlFolderName = "data_xml";
-            var xmlFolderPath = Path.Combine(Directory.GetCurrentDirectory(), xmlFolderName);
+            var xmlFolderPath = Path.Combine(dataFilesPath, xmlFolderName);
 
             if (!Directory.Exists(xmlFolderPath)) {
                 Directory.CreateDirectory(xmlFolderPath);
