@@ -52,13 +52,13 @@ namespace GazeMonitoring.Data.Csv {
             csvWriter.NextRecord();
         }
 
-        public void SaveFixationPoint(FixationPoint point) {
-            if (point == null) {
-                throw new ArgumentNullException(nameof(point));
+        public void SaveFixationPoint(FixationPoint fixationPoint) {
+            if (fixationPoint == null) {
+                throw new ArgumentNullException(nameof(fixationPoint));
             }
 
             var csvWriter = GetCsvWriter(typeof(FixationPoint));
-            csvWriter.WriteRecord(point);
+            csvWriter.WriteRecord(fixationPoint);
             csvWriter.NextRecord();
         }
     }

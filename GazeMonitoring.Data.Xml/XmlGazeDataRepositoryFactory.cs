@@ -1,5 +1,4 @@
-﻿using System;
-using GazeMonitoring.Model;
+﻿using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Xml
 {

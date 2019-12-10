@@ -34,13 +34,13 @@ namespace GazeMonitoring.Data.Xml {
             Write(saccade);
         }
 
-        public void SaveFixationPoint(FixationPoint point) {
-            if (point == null)
+        public void SaveFixationPoint(FixationPoint fixationPoint) {
+            if (fixationPoint == null)
             {
-                throw new ArgumentNullException(nameof(point));
+                throw new ArgumentNullException(nameof(fixationPoint));
             }
 
-            Write(point);
+            Write(fixationPoint);
         }
 
         public void Dispose() {

@@ -6,6 +6,6 @@ namespace GazeMonitoring.Data {
     {
         void SaveGazePoint(GazePoint gazePoint);
         void SaveSaccade(Saccade saccade);
-        void SaveFixationPoint(FixationPoint point);
+        void SaveFixationPoint(FixationPoint fixationPoint);
     }
 }

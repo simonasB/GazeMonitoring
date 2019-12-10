@@ -20,6 +20,8 @@ namespace GazeMonitoring.IoC
             builder.Register<IGazeDataRepositoryFactory, NullGazeDataRepositoryFactory>();
             builder.Register<IGazePointStreamFactory, NullGazePointStreamFactory>();
             builder.Register<IGazeDataWriterFactory, GazeDataWriterFactory>();
+            builder.Register<ITempDataConfiguration, TempDataConfiguration>();
+            builder.Register<ICurrentSessionData, CurrentSessionDataFromTemp>();
         }
     }
 }

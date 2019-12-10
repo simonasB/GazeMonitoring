@@ -2,7 +2,7 @@
 
 namespace GazeMonitoring.Data.Csv
 {
-    public class CsvGazeDataRepositoryFactory : IGazeDataRepositoryFactory
+    public class CsvGazeDataRepositoryFactory : GazeDataRepositoryFactoryBase
     {
         private readonly ICsvWritersFactory _csvWritersFactory;
 
@@ -11,7 +11,7 @@ namespace GazeMonitoring.Data.Csv
             _csvWritersFactory = csvWritersFactory;
         }
 
-        public IGazeDataRepository Create(IMonitoringContext monitoringContext)
+        protected override IGazeDataRepository CreateConcreteRepo(IMonitoringContext monitoringContext)
         {
             return new CsvGazeDataRepository(_csvWritersFactory.GetCsvWriters(monitoringContext));
         }
