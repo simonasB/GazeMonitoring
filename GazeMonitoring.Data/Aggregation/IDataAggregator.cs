@@ -4,6 +4,6 @@ namespace GazeMonitoring.Data.Aggregation
 {
     public interface IDataAggregator
     {
-        void Aggregate(MonitoringConfiguration monitoringConfiguration, IMonitoringContext monitoringContext, AggregatedData aggregatedData);
+        void Aggregate(IMonitoringContext monitoringContext, AggregatedData aggregatedData);
     }
 }

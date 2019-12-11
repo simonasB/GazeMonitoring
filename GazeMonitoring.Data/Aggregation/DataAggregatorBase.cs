@@ -11,6 +11,6 @@ namespace GazeMonitoring.Data.Aggregation
             CurrentSessionData = currentSessionData;
         }
 
-        public abstract void Aggregate(MonitoringConfiguration monitoringConfiguration, IMonitoringContext monitoringContext, AggregatedData aggregatedData);
+        public abstract void Aggregate(IMonitoringContext monitoringContext, AggregatedData aggregatedData);
     }
 }
