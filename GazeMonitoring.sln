@@ -53,6 +53,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication2", "WebAppli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricAnalysisApp", "MetricAnalysisApp\MetricAnalysisApp.csproj", "{59C530DF-6D9E-4844-A612-B123645FEEA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GazeMonitoring.Data.Reporting", "GazeMonitoring.Data.Reporting\GazeMonitoring.Data.Reporting.csproj", "{F2F03B7F-0378-4C23-99E4-CF59CDF1B9FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +159,10 @@ Global
 		{59C530DF-6D9E-4844-A612-B123645FEEA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59C530DF-6D9E-4844-A612-B123645FEEA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59C530DF-6D9E-4844-A612-B123645FEEA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2F03B7F-0378-4C23-99E4-CF59CDF1B9FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2F03B7F-0378-4C23-99E4-CF59CDF1B9FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2F03B7F-0378-4C23-99E4-CF59CDF1B9FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2F03B7F-0378-4C23-99E4-CF59CDF1B9FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

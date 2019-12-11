@@ -29,8 +29,8 @@ namespace GazeMonitoring.Data.PostgreSQL {
             _databaseRepository.SaveSubjectInfo(monitoringContext.SubjectInfo);
             var savedSubjectInfo = _databaseRepository.RetrieveSubjectInfo(monitoringContext.SubjectInfo.SessionId);
 
-            var saccadesFilePath = Path.Combine(Directory.GetCurrentDirectory(), "data_csv", Constants.SaccadesTempCsvFileName);
-            var gazePointsFilePath = Path.Combine(Directory.GetCurrentDirectory(), "data_csv", Constants.GazePointsTempCsvFileName);
+            var saccadesFilePath = Path.Combine(monitoringContext.DataFilesPath, "data_csv", Constants.SaccadesTempCsvFileName);
+            var gazePointsFilePath = Path.Combine(monitoringContext.DataFilesPath, "data_csv", Constants.GazePointsTempCsvFileName);
 
             if (File.Exists(gazePointsFilePath)) {
                 using (TextReader reader = File.OpenText(gazePointsFilePath)) {
