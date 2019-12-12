@@ -5,13 +5,20 @@ using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Aggregation
 {
-    public class FixationPointsDataAggregator : DataAggregatorBase
+    public class MappedFixationPointsDataAggregator : DataAggregatorBase
     {
+        public MappedFixationPointsDataAggregator(ICurrentSessionData currentSessionData) : base(currentSessionData)
+        {
+
+        }
 
         public override void Aggregate(IMonitoringContext monitoringContext, AggregatedData aggregatedData)
         {
             if (monitoringContext.DataStream == DataStream.UnfilteredGaze || monitoringContext.DataStream == DataStream.LightlyFilteredGaze)
+            {
+                base.Aggregate(monitoringContext, aggregatedData);
                 return;
+            }
 
             // Set some property of aggregated data
             var orderedScreenConfigurations = monitoringContext.MonitoringConfiguration.ScreenConfigurations.OrderBy(o => o.Number);
@@ -20,7 +27,7 @@ namespace GazeMonitoring.Data.Aggregation
 
             using (var screenConfigurationsEnumerator = orderedScreenConfigurations.GetEnumerator())
             {
-                if(!screenConfigurationsEnumerator.MoveNext())
+                if (!screenConfigurationsEnumerator.MoveNext())
                     return;
 
                 var screenConfiguration = screenConfigurationsEnumerator.Current;
@@ -50,7 +57,7 @@ namespace GazeMonitoring.Data.Aggregation
                             mappedFixationPoint.ScreenConfigurationId = screenConfiguration.Id;
                         });
                     }
-                    else if(screenConfigurationsEnumerator.MoveNext())
+                    else if (screenConfigurationsEnumerator.MoveNext())
                     {
                         // It means that current screen configuration is not the same time frame as fixation point.
                         // Need to get next screen configuration because fixation points are sorted by time in ascending order.
@@ -65,11 +72,8 @@ namespace GazeMonitoring.Data.Aggregation
             }
 
             aggregatedData.MappedFixationPoints = mappedFixationPoints;
-        }
 
-        public FixationPointsDataAggregator(ICurrentSessionData currentSessionData) : base(currentSessionData)
-        {
-
+            base.Aggregate(monitoringContext, aggregatedData);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using GazeMonitoring.Model;
+﻿using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Aggregation
 {
@@ -10,21 +9,22 @@ namespace GazeMonitoring.Data.Aggregation
 
     public class DataAggregationManager : IDataAggregationManager
     {
-        private readonly IEnumerable<IDataAggregator> _dataAggregators;
+        private readonly ICurrentSessionData _currentSessionData;
 
-        public DataAggregationManager(IEnumerable<IDataAggregator> dataAggregators)
+        public DataAggregationManager(ICurrentSessionData currentSessionData)
         {
-            _dataAggregators = dataAggregators;
+            _currentSessionData = currentSessionData;
         }
 
         public AggregatedData Aggregate(MonitoringConfiguration monitoringConfiguration, IMonitoringContext monitoringContext)
         {
             var aggregatedData = new AggregatedData();
 
-            foreach (var dataAggregator in _dataAggregators)
-            {
-                dataAggregator.Aggregate(monitoringConfiguration, monitoringContext, aggregatedData);
-            }
+            var mappedFixationPointsDataAggregator = new MappedFixationPointsDataAggregator(_currentSessionData);
+
+            // Set next aggregator
+            //mappedFixationPointsDataAggregator.SetNext();
+            mappedFixationPointsDataAggregator.Aggregate(monitoringContext, aggregatedData);
 
             return aggregatedData;
         }
