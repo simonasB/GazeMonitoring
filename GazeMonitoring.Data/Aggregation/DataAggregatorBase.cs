@@ -1,4 +1,5 @@
-﻿using GazeMonitoring.Model;
+﻿using GazeMonitoring.Data.Aggregation.Model;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Aggregation
 {
@@ -12,8 +13,16 @@ namespace GazeMonitoring.Data.Aggregation
             CurrentSessionData = currentSessionData;
         }
 
-        public virtual void Aggregate(IMonitoringContext monitoringContext, AggregatedData aggregatedData)
+        public void Aggregate(IMonitoringContext monitoringContext, AggregatedData aggregatedData)
         {
+            if (!IsPossibleToAggregate(monitoringContext, aggregatedData))
+            {
+                _next?.Aggregate(monitoringContext, aggregatedData);
+                return;
+            }
+
+            AggregateInternal(monitoringContext, aggregatedData);
+
             _next?.Aggregate(monitoringContext, aggregatedData);
         }
 
@@ -21,5 +30,9 @@ namespace GazeMonitoring.Data.Aggregation
         {
             _next = dataAggregator;
         }
+
+        protected abstract void AggregateInternal(IMonitoringContext monitoringContext, AggregatedData aggregatedData);
+
+        protected abstract bool IsPossibleToAggregate(IMonitoringContext monitoringContext, AggregatedData aggregatedData);
     }
 }

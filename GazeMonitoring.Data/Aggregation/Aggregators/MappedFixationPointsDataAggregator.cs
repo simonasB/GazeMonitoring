@@ -1,26 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GazeMonitoring.Data.Aggregation.Model;
 using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Data.Aggregation
+namespace GazeMonitoring.Data.Aggregation.Aggregators
 {
-    public class MappedFixationPointsDataAggregator : DataAggregatorBase
+    public class MappedFixationPointsDataAggregator : SensitiveOrSlowFixationDataAggregator
     {
         public MappedFixationPointsDataAggregator(ICurrentSessionData currentSessionData) : base(currentSessionData)
         {
 
         }
 
-        public override void Aggregate(IMonitoringContext monitoringContext, AggregatedData aggregatedData)
+        protected override void AggregateInternal(IMonitoringContext monitoringContext, AggregatedData aggregatedData)
         {
-            if (monitoringContext.DataStream == DataStream.UnfilteredGaze || monitoringContext.DataStream == DataStream.LightlyFilteredGaze)
-            {
-                base.Aggregate(monitoringContext, aggregatedData);
-                return;
-            }
-
-            // Set some property of aggregated data
             var orderedScreenConfigurations = monitoringContext.MonitoringConfiguration.ScreenConfigurations.OrderBy(o => o.Number);
             var fixationPoints = CurrentSessionData.GetFixationPoints().ToList();
             var mappedFixationPoints = new List<MappedFixationPoint>();
@@ -72,8 +66,6 @@ namespace GazeMonitoring.Data.Aggregation
             }
 
             aggregatedData.MappedFixationPoints = mappedFixationPoints;
-
-            base.Aggregate(monitoringContext, aggregatedData);
         }
     }
 }
