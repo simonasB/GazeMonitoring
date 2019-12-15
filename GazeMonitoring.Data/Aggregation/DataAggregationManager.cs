@@ -23,9 +23,12 @@ namespace GazeMonitoring.Data.Aggregation
             var aggregatedData = new AggregatedData();
 
             var mappedFixationPointsDataAggregator = new MappedFixationPointsDataAggregator(_currentSessionData);
+            var totalFixationTimesAndCountsByAoiNameDataAggregator = new TotalFixationTimesAndCountsByAoiNameDataAggregator(_currentSessionData);
+            var fixationTimesAndCountsByScreenConfigurationAndAoiIdDataAggregator = new TotalFixationTimesAndCountsByScreenConfigurationAndAoiIdDataAggregator(_currentSessionData);
 
             // Set next aggregator
-            //mappedFixationPointsDataAggregator.SetNext();
+            mappedFixationPointsDataAggregator.SetNext(totalFixationTimesAndCountsByAoiNameDataAggregator);
+            totalFixationTimesAndCountsByAoiNameDataAggregator.SetNext(fixationTimesAndCountsByScreenConfigurationAndAoiIdDataAggregator);
             mappedFixationPointsDataAggregator.Aggregate(monitoringContext, aggregatedData);
 
             return aggregatedData;

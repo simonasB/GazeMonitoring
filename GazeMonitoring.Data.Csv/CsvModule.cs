@@ -1,4 +1,5 @@
-﻿using GazeMonitoring.IoC;
+﻿using GazeMonitoring.Data.Aggregation;
+using GazeMonitoring.IoC;
 
 namespace GazeMonitoring.Data.Csv {
     public class CsvModule : IoCModule {
@@ -7,6 +8,7 @@ namespace GazeMonitoring.Data.Csv {
             builder.Register<IFileNameFormatter, CsvFileNameFormatter>();
             builder.Register<ICsvWritersFactory, CsvWritersFactory>();
             builder.Register<IGazeDataRepositoryFactory, CsvGazeDataRepositoryFactory>();
+            builder.Register<IAggregatedDataRepository, CsvAggregatedDataRepository>();
         }
     }
 }

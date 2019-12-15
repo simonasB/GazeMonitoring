@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="CsvAggregatedDataRepository.cs" />
     <Compile Include="CsvFileNameFormatter.cs" />
     <Compile Include="CsvGazeDataRepositoryFactory.cs" />
     <Compile Include="CsvModule.cs" />

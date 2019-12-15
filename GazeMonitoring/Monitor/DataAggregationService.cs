@@ -27,7 +27,7 @@ namespace GazeMonitoring.Monitor
         {
             var aggregatedData = _dataAggregationManager.Aggregate(monitoringContext);
 
-            await _dataRepository.Save(aggregatedData);
+            await _dataRepository.Save(aggregatedData, monitoringContext);
 
             if (monitoringContext.IsReportGenerated)
             {

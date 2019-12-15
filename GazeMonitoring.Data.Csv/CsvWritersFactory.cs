@@ -44,8 +44,7 @@ namespace GazeMonitoring.Data.Csv {
         private CsvWriterWrapper CreateCsvWriter<T>(string dataStream, SubjectInfo subjectInfo, string dataFilesPath) {
             var fileName = new FileName { DataStream = dataStream, DateTime = DateTime.Now};
 
-            const string csvFolderName = "data_csv";
-            var csvFolderPath = Path.Combine(dataFilesPath, csvFolderName);
+            var csvFolderPath = Path.Combine(dataFilesPath, Constants.FolderName);
 
             if (!Directory.Exists(csvFolderPath)) {
                 Directory.CreateDirectory(csvFolderPath);

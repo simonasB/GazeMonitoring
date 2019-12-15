@@ -56,7 +56,7 @@ namespace GazeMonitoring.Data.Aggregation.Aggregators
                         // It means that current screen configuration is not the same time frame as fixation point.
                         // Need to get next screen configuration because fixation points are sorted by time in ascending order.
                         screenConfiguration = screenConfigurationsEnumerator.Current;
-                        screenConfigurationEndTime = monitoringContext.SubjectInfo.SessionStartTimestamp.Add(screenConfiguration.Duration.Value);
+                        screenConfigurationEndTime = screenConfigurationEndTime.Add(screenConfiguration.Duration.Value);
                     }
                     else
                     {

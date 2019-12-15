@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using GazeMonitoring.Balloon;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
-using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.DataAccess;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.IO;
@@ -17,7 +15,6 @@ using GazeMonitoring.Messaging;
 using GazeMonitoring.Messaging.Messages;
 using GazeMonitoring.Model;
 using GazeMonitoring.Monitor;
-using GazeMonitoring.ScreenCapture;
 using GazeMonitoring.WindowModels;
 using Hardcodet.Wpf.TaskbarNotification;
 
@@ -62,7 +59,7 @@ namespace GazeMonitoring.ViewModels {
             {
                 var defaultConfiguration = new MonitoringConfiguration
                 {
-                    Name = "None"
+                    Name = CommonConstants.DefaultMonitoringConfigName
                 };
                 SessionWindowModel.MonitoringConfigurations = new List<MonitoringConfiguration>
                 {
@@ -182,8 +179,16 @@ namespace GazeMonitoring.ViewModels {
                     DataStream = SessionWindowModel.DataStream,
                     DataFilesPath = dataFilesPath,
                     IsAnonymous = IsAnonymous,
-                    IsScreenRecorded = SessionWindowModel.IsReportGenerated
+                    IsScreenRecorded = SessionWindowModel.IsScreenRecorded,
+                    IsReportGenerated = SessionWindowModel.IsReportGenerated
                 };
+
+                if (SessionWindowModel.SelectedMonitoringConfiguration.Name !=
+                    CommonConstants.DefaultMonitoringConfigName)
+                {
+                    monitoringContext.MonitoringConfiguration = SessionWindowModel.SelectedMonitoringConfiguration;
+                }
+
                 _gazeDataMonitor = _gazeDataMonitorFactory.Create(monitoringContext);
                 await _gazeDataMonitor.StartAsync();
             } catch (Exception ex){
@@ -195,6 +200,16 @@ namespace GazeMonitoring.ViewModels {
 
             IsBusy = false;
             IsStarted = true;
+
+            if (SessionWindowModel.SelectedMonitoringConfiguration.Name !=
+                CommonConstants.DefaultMonitoringConfigName)
+            {
+                await Task.Delay(TimeSpan.FromMilliseconds(
+                    SessionWindowModel.SelectedMonitoringConfiguration.ScreenConfigurations.Sum(o =>
+                        o.Duration.Value.TotalMilliseconds)));
+
+                await OnStop();
+            }
         }
 
         private bool IsFormValid() {
