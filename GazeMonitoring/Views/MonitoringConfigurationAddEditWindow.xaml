@@ -13,13 +13,16 @@
         TextElement.FontWeight="Regular"
         TextElement.FontSize="12"
         Height="453.562" Width="341.733"
+        xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         d:DataContext="{d:DesignInstance viewModels:MonitoringConfigurationAddEditViewModel,
                                          IsDesignTimeCreatable=True}">
     <xctk:BusyIndicator IsBusy="{Binding IsBusy}" Margin="0,0,0.4,-0.6">
         <Grid>
             <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271" Text="Monitoring configuration"/>
             <TextBlock Style="{DynamicResource MaterialDesignHeadlineTextBlock}" HorizontalAlignment="Left" Margin="10,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Screen"/><Run Text=" configurations"/></TextBlock>
-            <ListView ItemsSource="{Binding ScreenConfigurations}" SelectedItem="{Binding SelectedScreenConfiguration}" Margin="0,152,0,71" BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}">
+            <ListView ItemsSource="{Binding ScreenConfigurations}" SelectedItem="{Binding SelectedScreenConfiguration}" Margin="0,152,0,71" BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}" dd:DragDrop.IsDragSource="True"
+                      dd:DragDrop.IsDropTarget="True"
+                      dd:DragDrop.DropHandler="{Binding}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name">

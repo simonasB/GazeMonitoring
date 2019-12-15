@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
 using GazeMonitoring.DataAccess;
@@ -12,10 +13,11 @@ using GazeMonitoring.Messaging.Messages;
 using GazeMonitoring.Model;
 using GazeMonitoring.Powerpoint;
 using GazeMonitoring.WindowModels;
+using GongSolutions.Wpf.DragDrop;
 
 namespace GazeMonitoring.ViewModels
 {
-    public class MonitoringConfigurationAddEditViewModel : ViewModelBase, ISettingsSubViewModel
+    public class MonitoringConfigurationAddEditViewModel : ViewModelBase, ISettingsSubViewModel, IDropTarget
     {
         private readonly IMessenger _messenger;
         private readonly IConfigurationRepository _configurationRepository;
@@ -55,7 +57,7 @@ namespace GazeMonitoring.ViewModels
             {
                 var screenConfigurationWindowModels = Convert(o.MonitoringConfiguration.ScreenConfigurations);
                 ScreenConfigurations =
-                    new ObservableCollection<ScreenConfigurationWindowModel>(screenConfigurationWindowModels);
+                    new ObservableCollection<ScreenConfigurationWindowModel>(screenConfigurationWindowModels.OrderBy(x => x.Number));
                 _monitoringConfiguration = o.MonitoringConfiguration;
                 MonitoringConfigurationWindowModel = new MonitoringConfigurationWindowModel
                 {
@@ -110,6 +112,10 @@ namespace GazeMonitoring.ViewModels
         public RelayCommand SaveMonitoringConfigurationCommand => new RelayCommand(() =>
             {
                 _monitoringConfiguration.Name = MonitoringConfigurationWindowModel.Name;
+                _monitoringConfiguration.ScreenConfigurations.ForEach(sc =>
+                    {
+                        sc.Number = ScreenConfigurations.First(o => o.Id == sc.Id).Number;
+                    });
                 _configurationRepository.Save(_monitoringConfiguration);
                 _appLocalContextManager.SetMonitoringConfigurationId(_monitoringConfiguration.Id);
             });
@@ -138,6 +144,7 @@ namespace GazeMonitoring.ViewModels
                 _monitoringConfiguration.ScreenConfigurations = screenConfigurations;
                 ScreenConfigurations = new ObservableCollection<ScreenConfigurationWindowModel>(Convert(screenConfigurations));
                 _configurationRepository.Save(_monitoringConfiguration);
+                _appLocalContextManager.SetMonitoringConfigurationId(_monitoringConfiguration.Id);
             });
 
             IsBusy = false;
@@ -223,7 +230,8 @@ namespace GazeMonitoring.ViewModels
                 {
                     Id = AddEditScreenConfigurationWindowModel.Id,
                     Name = AddEditScreenConfigurationWindowModel.Name,
-                    Duration = ParseDuration(AddEditScreenConfigurationWindowModel.Duration)
+                    Duration = ParseDuration(AddEditScreenConfigurationWindowModel.Duration),
+                    Number = ScreenConfigurations.Count - 1
                 });
                 _configurationRepository.Save(_monitoringConfiguration);
                 _appLocalContextManager.SetScreenConfigurationId(AddEditScreenConfigurationWindowModel.Id);
@@ -241,7 +249,8 @@ namespace GazeMonitoring.ViewModels
                 {
                     AreasOfInterestCount = screenConfiguration.AreasOfInterest?.Count ?? 0,
                     Id = screenConfiguration.Id,
-                    Name = screenConfiguration.Name
+                    Name = screenConfiguration.Name,
+                    Number = screenConfiguration.Number
                 };
 
                 if (screenConfiguration.Duration.HasValue)
@@ -260,6 +269,47 @@ namespace GazeMonitoring.ViewModels
             // hours, minutes, seconds
             // Hours used for minutes because time picker does not support picking only minutes and seconds.
             return new TimeSpan(0, dateTime.Hour, dateTime.Minute);
+        }
+
+        void IDropTarget.DragOver(IDropInfo dropInfo)
+        {
+            var sourceItem = dropInfo.Data as ScreenConfigurationWindowModel;
+            var targetItem = dropInfo.TargetItem as ScreenConfigurationWindowModel;
+
+            if (sourceItem != null && targetItem != null)
+            {
+                dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+                dropInfo.Effects = DragDropEffects.Copy;
+            }
+        }
+
+        void IDropTarget.Drop(IDropInfo dropInfo)
+        {
+            var sourceItem = dropInfo.Data as ScreenConfigurationWindowModel;
+            var targetItem = dropInfo.TargetItem as ScreenConfigurationWindowModel;
+
+            var removedIdx = ScreenConfigurations.IndexOf(sourceItem);
+            var targetIdx = ScreenConfigurations.IndexOf(targetItem);
+
+            if (removedIdx < targetIdx)
+            {
+                ScreenConfigurations.Insert(targetIdx + 1, sourceItem);
+                ScreenConfigurations.RemoveAt(removedIdx);
+            }
+            else
+            {
+                var remIdx = removedIdx + 1;
+                if (ScreenConfigurations.Count + 1 > remIdx)
+                {
+                    ScreenConfigurations.Insert(targetIdx, sourceItem);
+                    ScreenConfigurations.RemoveAt(remIdx);
+                }
+            }
+            
+            for (var i = 0; i < ScreenConfigurations.Count; i++)
+            {
+                ScreenConfigurations[i].Number = i;
+            }
         }
     }
 }
