@@ -1,15 +1,23 @@
 ﻿using System;
+using System.Globalization;
+using System.IO;
+using System.Threading.Tasks;
+using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.Data.Writers;
 using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
+using GazeMonitoring.ScreenCapture;
 
 namespace GazeMonitoring.Monitor {
     public class GazeDataMonitor : IGazeDataMonitor {
         private readonly GazePointStream _gazePointStream;
         private readonly IGazeDataWriter _gazeDataWriter;
-        private bool _stopCalled;
+        private readonly IScreenRecorder _screenRecorder;
+        private readonly IGazeDataMonitorFinalizer _gazeDataMonitorFinalizer;
+        private readonly IDataAggregationService _dataAggregationService;
+        private readonly IMonitoringContext _monitoringContext;
 
-        public GazeDataMonitor(GazePointStream gazePointStream, IGazeDataWriter gazeDataWriter) {
+        public GazeDataMonitor(GazePointStream gazePointStream, IGazeDataWriter gazeDataWriter, IMonitoringContext monitoringContext, IScreenRecorder screenRecorder, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, IDataAggregationService dataAggregationService) {
             if (gazePointStream == null) {
                 throw new ArgumentNullException(nameof(gazePointStream));
             }
@@ -18,40 +26,46 @@ namespace GazeMonitoring.Monitor {
             }
             _gazePointStream = gazePointStream;
             _gazeDataWriter = gazeDataWriter;
+            _monitoringContext = monitoringContext;
+            _screenRecorder = screenRecorder;
+            _gazeDataMonitorFinalizer = gazeDataMonitorFinalizer;
+            _dataAggregationService = dataAggregationService;
         }
 
-        public void Start() {
+        public async Task StartAsync() {
             _gazePointStream.GazePointReceived += OnGazePointReceived;
+            if (_monitoringContext.IsScreenRecorded)
+            {
+                _screenRecorder.StartRecording(
+                    new RecorderParams(
+                        Path.Combine(_monitoringContext.DataFilesPath, $"video_{_monitoringContext.DataStream}_{_monitoringContext.SubjectInfo.SessionStartTimestamp.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi"),
+                        10, 50), _monitoringContext);
+            }
         }
 
-        private void OnGazePointReceived(object sender, GazePointReceivedEventArgs args) {
-            _gazeDataWriter.Write(args.GazePoint);
-        }
-
-        public void Stop() {
+        public async Task StopAsync() {
             _gazePointStream.GazePointReceived -= OnGazePointReceived;
             _gazeDataWriter.Dispose();
-            _stopCalled = true;
+
+            var finalizationTask = Task.Run(() =>
+            {
+                _gazeDataMonitorFinalizer.FinalizeMonitoring(_monitoringContext);
+            });
+
+            var stopRecordingTask = Task.Run(() => {
+                if (_monitoringContext.IsScreenRecorded)
+                {
+                    _screenRecorder?.StopRecording();
+                }
+            });
+
+            await Task.WhenAll(finalizationTask, stopRecordingTask).ConfigureAwait(false);
+            await _dataAggregationService.Run(_monitoringContext);
         }
 
-        private void Dispose(bool disposing)
+        private void OnGazePointReceived(object sender, GazePointReceivedEventArgs args)
         {
-            if (!disposing || !_stopCalled)
-                return;
-
-            Stop();
-            _gazeDataWriter.Dispose();
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        ~GazeDataMonitor()
-        {
-            Dispose(false);
+            _gazeDataWriter.Write(args.GazePoint);
         }
     }
 }

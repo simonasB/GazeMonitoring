@@ -219,6 +219,7 @@
     <Compile Include="Balloon\IBalloonService.cs" />
     <Compile Include="IoC\CommonModule.cs" />
     <Compile Include="IoC\ContainerBuilderFactory.cs" />
+    <Compile Include="IO\DataFolderManager.cs" />
     <Compile Include="IO\FileDialogService.cs" />
     <Compile Include="IO\FileSystemHelper.cs" />
     <Compile Include="IO\FolderDialogService.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Messaging\Messages\ShowAddMonitoringConfigurationMessage.cs" />
     <Compile Include="Messaging\Messages\ShowEditMonitoringConfigurationMessage.cs" />
     <Compile Include="Messaging\Messages\ShowSettingsMessage.cs" />
+    <Compile Include="Monitor\DataAggregationService.cs" />
     <Compile Include="Monitor\GazeDataMonitorFactory.cs" />
     <Compile Include="Powerpoint\PowerpointParser.cs" />
     <Compile Include="Resources\HotkeyEditorControl.xaml.cs">
@@ -293,7 +295,7 @@
     <Compile Include="WindowModels\MonitoringConfigurationWindowModel.cs" />
     <Compile Include="WindowModels\ProfileWindowModel.cs" />
     <Compile Include="WindowModels\ScreenConfigurationWindowModel.cs" />
-    <Compile Include="WindowModels\SubjectInfoWindowModel.cs" />
+    <Compile Include="WindowModels\SessionWindowModel.cs" />
     <Compile Include="Base\ValidatableBindableBase.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -397,6 +399,10 @@
     <ProjectReference Include="..\GazeMonitoring.Data.PostgreSQL\GazeMonitoring.Data.PostgreSQL.csproj">
       <Project>{B6FE1338-3086-4B01-B2F7-DA0CB1679175}</Project>
       <Name>GazeMonitoring.Data.PostgreSQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Data.Reporting\GazeMonitoring.Data.Reporting.csproj">
+      <Project>{F2F03B7F-0378-4C23-99E4-CF59CDF1B9FC}</Project>
+      <Name>GazeMonitoring.Data.Reporting</Name>
     </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.Data.Xml\GazeMonitoring.Data.Xml.csproj">
       <Project>{1bb84589-22ea-4f07-bf68-c39577aebc21}</Project>

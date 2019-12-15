@@ -6,6 +6,8 @@ using System.Windows;
 using System.Windows.Input;
 using GazeMonitoring.Balloon;
 using GazeMonitoring.Base;
+using GazeMonitoring.Data.Aggregation;
+using GazeMonitoring.Data.Reporting;
 using GazeMonitoring.DataAccess;
 using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Discovery;
@@ -157,6 +159,11 @@ namespace GazeMonitoring
             builder.Register<IFileDialogService, FileDialogService>();
             builder.Register<IFileSystemHelper, FileSystemHelper>();
             builder.Register<IFolderDialogService, FolderDialogService>();
+            builder.Register<IDataFolderManager, DataFolderManager>();
+
+            builder.Register<IDataAggregationManager, DataAggregationManager>();
+            builder.Register<IDataAggregationService, DataAggregationService>();
+            builder.Register<IReportManager, ReportManager>();
 
             _container = builder.Build();
         }

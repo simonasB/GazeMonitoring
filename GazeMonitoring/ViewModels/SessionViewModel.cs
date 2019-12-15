@@ -1,8 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,6 +9,7 @@ using GazeMonitoring.Balloon;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
 using GazeMonitoring.Common.Finalizers;
+using GazeMonitoring.DataAccess;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.IO;
 using GazeMonitoring.Logging;
@@ -22,42 +22,55 @@ using GazeMonitoring.WindowModels;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace GazeMonitoring.ViewModels {
-    public class SessionViewModel : INotifyPropertyChanged, IMainSubViewModel {
+    public class SessionViewModel : ViewModelBase, IMainSubViewModel {
         private bool _isAnonymous;
-        private bool _isScreenRecorded;
         private bool _isStarted;
         private bool _isBusy;
         private readonly IBalloonService _balloonService;
         private readonly IGazeDataMonitorFactory _gazeDataMonitorFactory;
-        private readonly IScreenRecorder _screenRecorder;
         private readonly IMessenger _messenger;
-        private readonly IAppLocalContextManager _appLocalContextManager;
-        private readonly IFileSystemHelper _fileSystemHelper;
+        private readonly IConfigurationRepository _configurationRepository;
+        private readonly IDataFolderManager _dataFolderManager;
         private SubjectInfo _subjectInfo;
         private readonly IEyeTrackerStatusProvider _eyeTrackerStatusProvider;
-        private readonly IGazeDataMonitorFinalizer _gazeDataMonitorFinalizer;
         private const int PollIntervalSeconds = 5;
         private readonly ILogger _logger;
         private IGazeDataMonitor _gazeDataMonitor;
 
-        public SessionViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, IGazeDataMonitorFinalizer gazeDataMonitorFinalizer, IScreenRecorder screenRecorder, ILoggerFactory loggerFactory, IMessenger messenger, IAppLocalContextManager appLocalContextManager, IFileSystemHelper fileSystemHelper) {
+        [Obsolete("Only for design data", true)]
+        public SessionViewModel() : this(null, null, null, null, null, null, null)
+        {
+        }
+
+        public SessionViewModel(IBalloonService balloonService, IGazeDataMonitorFactory gazeDataMonitorFactory, IEyeTrackerStatusProvider eyeTrackerStatusProvider, ILoggerFactory loggerFactory, IMessenger messenger, IConfigurationRepository configurationRepository, IDataFolderManager dataFolderManager) {
             _balloonService = balloonService;
             _gazeDataMonitorFactory = gazeDataMonitorFactory;
-            StartCommand = new RelayCommand(OnStart, CanStart);
+            StartCommand = new AwaitableDelegateCommand(OnStart, CanStart);
             StopCommand = new AwaitableDelegateCommand(OnStop, CanStop);
             SettingsCommand = new RelayCommand(OnSettings);
-            SubjectInfoWindowModel = new SubjectInfoWindowModel();
+            SessionWindowModel = new SessionWindowModel();
             _eyeTrackerStatusProvider = eyeTrackerStatusProvider;
-            _gazeDataMonitorFinalizer = gazeDataMonitorFinalizer;
-            _screenRecorder = screenRecorder;
             _messenger = messenger;
-            _appLocalContextManager = appLocalContextManager;
-            _fileSystemHelper = fileSystemHelper;
+            _configurationRepository = configurationRepository;
+            _dataFolderManager = dataFolderManager;
             InvokeEyeTrackerStatusPolling();
             EyeTrackerStatusWindowModel = new EyeTrackerStatusWindowModel(StartCommand, StopCommand) {
                 EyeTrackerName = CommonConstants.DefaultEyeTrackerName
             };
             _logger = loggerFactory.GetLogger(typeof(SessionViewModel));
+            _messenger.Register<ShowStartNewSessionMessage>(_ =>
+            {
+                var defaultConfiguration = new MonitoringConfiguration
+                {
+                    Name = "None"
+                };
+                SessionWindowModel.MonitoringConfigurations = new List<MonitoringConfiguration>
+                {
+                    defaultConfiguration
+                };
+                SessionWindowModel.MonitoringConfigurations.AddRange(_configurationRepository.Search<MonitoringConfiguration>());
+                SessionWindowModel.SelectedMonitoringConfiguration = defaultConfiguration;
+            });
         }
 
         public bool IsAnonymous {
@@ -70,22 +83,11 @@ namespace GazeMonitoring.ViewModels {
                 }
 
                 if (value) {
-                    SubjectInfoWindowModel.Name = null;
-                    SubjectInfoWindowModel.Age = 0;
-                    SubjectInfoWindowModel.Age = null;
-                    SubjectInfoWindowModel.Details = null;
-                    SubjectInfoWindowModel.ResetErrors();
-                }
-            }
-        }
-
-        public bool IsScreenRecorded {
-            get => _isScreenRecorded;
-            set
-            {
-                if (_isScreenRecorded != value) {
-                    _isScreenRecorded = value;
-                    OnPropertyChanged();
+                    SessionWindowModel.Name = null;
+                    SessionWindowModel.Age = 0;
+                    SessionWindowModel.Age = null;
+                    SessionWindowModel.Details = null;
+                    SessionWindowModel.ResetErrors();
                 }
             }
         }
@@ -103,7 +105,7 @@ namespace GazeMonitoring.ViewModels {
             }
         }
 
-        public SubjectInfoWindowModel SubjectInfoWindowModel { get; set; }
+        public SessionWindowModel SessionWindowModel { get; set; }
 
         public bool IsBusy {
             get { return _isBusy; }
@@ -120,19 +122,13 @@ namespace GazeMonitoring.ViewModels {
 
         public EyeTrackerStatusWindowModel EyeTrackerStatusWindowModel { get; set; }
 
-        public RelayCommand StartCommand { get; }
+        public AwaitableDelegateCommand StartCommand { get; }
 
         public RelayCommand SettingsCommand { get; }
 
         public AwaitableDelegateCommand StopCommand { get; }
 
         public EMainSubViewModel SubViewModel => EMainSubViewModel.SessionViewModel;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         private bool CanStop() {
             return IsStarted && !IsBusy && EyeTrackerStatusWindowModel.IsAvailable;
@@ -141,26 +137,11 @@ namespace GazeMonitoring.ViewModels {
         private async Task OnStop() {
             IsBusy = true;
             try {
-                await Task.Run(() => {
-                    _gazeDataMonitor.Stop();
+                await Task.Run(async () => {
+                    await _gazeDataMonitor.StopAsync().ConfigureAwait(false);
                     _gazeDataMonitor = null;
                     _subjectInfo.SessionEndTimeStamp = DateTime.UtcNow;
                 });
-
-
-                var finalizationTask = Task.Run(() =>
-                {
-                    _gazeDataMonitorFinalizer.FinalizeMonitoring(new MonitoringContext
-                        {SubjectInfo = _subjectInfo, DataStream = SubjectInfoWindowModel.DataStream});
-                });
-
-                var stopRecordingTask = Task.Run(() => {
-                    if (IsScreenRecorded) {
-                        _screenRecorder?.StopRecording();
-                    }
-                });
-
-                await Task.WhenAll(finalizationTask, stopRecordingTask);
             } catch (Exception ex) {
                 _logger.Error($"Unhandled error occured on stop. Ex: {ex}");
                 ShowErrorBalloon();
@@ -174,7 +155,7 @@ namespace GazeMonitoring.ViewModels {
             return !IsStarted && !IsBusy && EyeTrackerStatusWindowModel.IsAvailable;
         }
 
-        private void OnStart() {
+        private async Task OnStart() {
             if (!IsFormValid()) {
                 return;
             }
@@ -187,28 +168,24 @@ namespace GazeMonitoring.ViewModels {
                     SessionStartTimestamp = DateTime.UtcNow
                 };
 
-                var dataFolderName = DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture);
-
                 if (!IsAnonymous) {
-                    _subjectInfo.Name = SubjectInfoWindowModel.Name;
-                    _subjectInfo.Age = SubjectInfoWindowModel.Age;
-                    _subjectInfo.Details = SubjectInfoWindowModel.Details;
-                    dataFolderName = $"{_subjectInfo.Name}_{_subjectInfo.Age}_{_subjectInfo.Details}:{dataFolderName}";
+                    _subjectInfo.Name = SessionWindowModel.Name;
+                    _subjectInfo.Age = SessionWindowModel.Age;
+                    _subjectInfo.Details = SessionWindowModel.Details;
                 }
 
-                var dataFilesPath = GetDataFilesPath(dataFolderName);
+                var dataFilesPath = _dataFolderManager.GetDataFilesPath(_subjectInfo, IsAnonymous);
 
                 var monitoringContext = new MonitoringContext
-                    {SubjectInfo = _subjectInfo, DataStream = SubjectInfoWindowModel.DataStream, DataFilesPath = dataFilesPath };
+                {
+                    SubjectInfo = _subjectInfo,
+                    DataStream = SessionWindowModel.DataStream,
+                    DataFilesPath = dataFilesPath,
+                    IsAnonymous = IsAnonymous,
+                    IsScreenRecorded = SessionWindowModel.IsReportGenerated
+                };
                 _gazeDataMonitor = _gazeDataMonitorFactory.Create(monitoringContext);
-                _gazeDataMonitor.Start();
-
-                if (IsScreenRecorded) {
-                    _screenRecorder.StartRecording(
-                        new RecorderParams(
-                            Path.Combine(dataFilesPath, $"video_{SubjectInfoWindowModel.DataStream}_{DateTime.UtcNow.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi"),
-                            10, 50), monitoringContext);
-                }
+                await _gazeDataMonitor.StartAsync();
             } catch (Exception ex){
                 _logger.Error($"Unhandled exception occured on start. {ex}");
                 ShowErrorBalloon();
@@ -220,38 +197,18 @@ namespace GazeMonitoring.ViewModels {
             IsStarted = true;
         }
 
-        private string GetDataFilesPath(string dataFolderName)
-        {
-            var rootDataFilesPath = _appLocalContextManager.Get().DataFilesPath;
-            string dataFilesPath;
-            if (!Directory.Exists(rootDataFilesPath))
-            {
-                _logger.Warning($"Configured data files path folder does not exist: Path: {rootDataFilesPath}. Need to reconfigure");
-                dataFilesPath = Path.Combine(_fileSystemHelper.GetAppDataDirectoryPath(), dataFolderName);
-            }
-            else
-            {
-                dataFilesPath = Path.Combine(_appLocalContextManager.Get().DataFilesPath, dataFolderName);
-            }
-
-            if (!Directory.Exists(dataFilesPath))
-                Directory.CreateDirectory(dataFilesPath);
-
-            return rootDataFilesPath;
-        }
-
         private bool IsFormValid() {
             var isFormValid = true;
 
             if (!IsAnonymous) {
 
-                if (string.IsNullOrEmpty(SubjectInfoWindowModel.Name)) {
-                    SubjectInfoWindowModel.Name = null;
+                if (string.IsNullOrEmpty(SessionWindowModel.Name)) {
+                    SessionWindowModel.Name = null;
                     isFormValid = false;
                 }
 
-                if (SubjectInfoWindowModel.Age == null) {
-                    SubjectInfoWindowModel.Age = null;
+                if (SessionWindowModel.Age == null) {
+                    SessionWindowModel.Age = null;
                     isFormValid = false;
                 }
             }

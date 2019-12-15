@@ -6,7 +6,7 @@ namespace GazeMonitoring.Data.Aggregation
 {
     public interface IDataAggregationManager
     {
-        AggregatedData Aggregate(MonitoringConfiguration monitoringConfiguration, IMonitoringContext monitoringContext);
+        AggregatedData Aggregate(IMonitoringContext monitoringContext);
     }
 
     public class DataAggregationManager : IDataAggregationManager
@@ -18,7 +18,7 @@ namespace GazeMonitoring.Data.Aggregation
             _currentSessionData = currentSessionData;
         }
 
-        public AggregatedData Aggregate(MonitoringConfiguration monitoringConfiguration, IMonitoringContext monitoringContext)
+        public AggregatedData Aggregate(IMonitoringContext monitoringContext)
         {
             var aggregatedData = new AggregatedData();
 

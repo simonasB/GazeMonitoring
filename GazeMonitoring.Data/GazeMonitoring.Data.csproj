@@ -57,6 +57,7 @@
     <Compile Include="GazeDataRepositoryFactoryBase.cs" />
     <Compile Include="ICurrentSessionData.cs" />
     <Compile Include="IGazeDataRepositoryFactory.cs" />
+    <Compile Include="Aggregation\NullAggregatedDataRepository.cs" />
     <Compile Include="TempGazeDataRepository.cs" />
     <Compile Include="IReadableGazeDataRepository.cs" />
     <Compile Include="MultipleSourceGazeDataRepository.cs" />

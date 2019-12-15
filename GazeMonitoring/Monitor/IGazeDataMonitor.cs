@@ -1,8 +1,8 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 
 namespace GazeMonitoring.Monitor {
-    public interface IGazeDataMonitor : IDisposable {
-        void Start();
-        void Stop();
+    public interface IGazeDataMonitor {
+        Task StartAsync();
+        Task StopAsync();
     }
 }

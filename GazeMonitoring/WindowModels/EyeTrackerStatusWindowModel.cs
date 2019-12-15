@@ -4,12 +4,12 @@ using GazeMonitoring.Commands;
 
 namespace GazeMonitoring.WindowModels {
     public class EyeTrackerStatusWindowModel : INotifyPropertyChanged {
-        private readonly RelayCommand _startCommand;
+        private readonly AwaitableDelegateCommand _startCommand;
         private readonly AwaitableDelegateCommand _stopCommand;
         private bool _isAvailable;
         private string _eyeTrackerName;
 
-        public EyeTrackerStatusWindowModel(RelayCommand startCommand, AwaitableDelegateCommand stopCommand) {
+        public EyeTrackerStatusWindowModel(AwaitableDelegateCommand startCommand, AwaitableDelegateCommand stopCommand) {
             _startCommand = startCommand;
             _stopCommand = stopCommand;
         }

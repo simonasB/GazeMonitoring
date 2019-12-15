@@ -1,6 +1,7 @@
 ﻿using GazeMonitoring.Common.Calculations;
 using GazeMonitoring.Common.Finalizers;
 using GazeMonitoring.Data;
+using GazeMonitoring.Data.Aggregation;
 using GazeMonitoring.Data.Writers;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
@@ -22,6 +23,7 @@ namespace GazeMonitoring.IoC
             builder.Register<IGazeDataWriterFactory, GazeDataWriterFactory>();
             builder.Register<ITempDataConfiguration, TempDataConfiguration>();
             builder.Register<ICurrentSessionData, CurrentSessionDataFromTemp>();
+            builder.Register<IAggregatedDataRepository, NullAggregatedDataRepository>();
         }
     }
 }

@@ -1,11 +1,17 @@
-﻿using GazeMonitoring.Data.Aggregation.Model;
+﻿using System.Threading.Tasks;
+using GazeMonitoring.Data.Aggregation.Model;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Reporting
 {
-    public class ReportManager
+    public interface IReportManager
     {
-        public void GenerateReport(AggregatedData aggregatedData, IMonitoringContext monitoringContext)
+        Task GenerateReport(AggregatedData aggregatedData, IMonitoringContext monitoringContext);
+    }
+
+    public class ReportManager : IReportManager
+    {
+        public async Task GenerateReport(AggregatedData aggregatedData, IMonitoringContext monitoringContext)
         {
 
         }
