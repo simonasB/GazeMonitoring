@@ -40,13 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aggregation\AggregatedData.cs" />
+    <Compile Include="Aggregation\Model\AggregatedData.cs" />
     <Compile Include="Aggregation\DataAggregationManager.cs" />
-    <Compile Include="Aggregation\FixationPointsDataAggregator.cs" />
     <Compile Include="Aggregation\DataAggregatorBase.cs" />
+    <Compile Include="Aggregation\Model\FixationPointsAggregatedDataForAoi.cs" />
+    <Compile Include="Aggregation\Model\FixationPointsAggregatedDataForScreenConfiguration.cs" />
     <Compile Include="Aggregation\IAggregatedDataRepository.cs" />
     <Compile Include="Aggregation\IDataAggregator.cs" />
-    <Compile Include="Aggregation\MappedFixationPoint.cs" />
+    <Compile Include="Aggregation\Model\MappedFixationPoint.cs" />
+    <Compile Include="Aggregation\Aggregators\MappedFixationPointsDataAggregator.cs" />
+    <Compile Include="Aggregation\Aggregators\SensitiveOrSlowFixationDataAggregator.cs" />
+    <Compile Include="Aggregation\Aggregators\TotalFixationTimesAndCountsByAoiNameDataAggregator.cs" />
+    <Compile Include="Aggregation\Aggregators\TotalFixationTimesAndCountsByScreenConfigurationAndAoiIdDataAggregator.cs" />
     <Compile Include="CurrentSessionDataFromTemp.cs" />
     <Compile Include="FileName.cs" />
     <Compile Include="GazeDataRepositoryFactoryBase.cs" />

@@ -1,7 +1,6 @@
-﻿using System;
-using GazeMonitoring.Model;
+﻿using GazeMonitoring.Model;
 
-namespace GazeMonitoring.Data.Aggregation
+namespace GazeMonitoring.Data.Aggregation.Model
 {
     public class MappedFixationPoint : FixationPoint
     {

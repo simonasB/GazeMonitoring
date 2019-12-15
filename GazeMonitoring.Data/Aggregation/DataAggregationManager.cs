@@ -1,4 +1,6 @@
-﻿using GazeMonitoring.Model;
+﻿using GazeMonitoring.Data.Aggregation.Aggregators;
+using GazeMonitoring.Data.Aggregation.Model;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Aggregation
 {
