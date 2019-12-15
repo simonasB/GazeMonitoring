@@ -9,5 +9,7 @@ namespace GazeMonitoring.Data.Aggregation.Model
         public List<FixationPointsAggregatedDataForAoi> AggregatedDataForAois { get; set; }
         public int FixationPointsCount { get; set; }
         public TimeSpan FixationPointsDuration { get; set; }
+        public int LongFixationPointsCount { get; set; }
+        public int ShortFixationPointsCount { get; set; }
     }
 }

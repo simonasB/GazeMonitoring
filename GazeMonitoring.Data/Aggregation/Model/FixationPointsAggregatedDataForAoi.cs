@@ -10,5 +10,7 @@ namespace GazeMonitoring.Data.Aggregation.Model
         public string Identifier { get; set; }
         public int FixationPointsCount { get; set; }
         public TimeSpan FixationPointsDuration { get; set; }
+        public int LongFixationPointsCount { get; set; }
+        public int ShortFixationPointsCount { get; set; }
     }
 }

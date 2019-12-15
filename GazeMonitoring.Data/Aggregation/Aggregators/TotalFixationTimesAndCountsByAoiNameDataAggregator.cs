@@ -20,12 +20,28 @@ namespace GazeMonitoring.Data.Aggregation.Aggregators
             {
                 var aoiName = mappedFixationPointsByName.Key;
 
-                aggregatedDataForAois.Add(new FixationPointsAggregatedDataForAoi
+                var aggregatedDataForAoi = new FixationPointsAggregatedDataForAoi
                 {
-                    Identifier = aoiName,
-                    FixationPointsCount = mappedFixationPointsByName.Count(),
-                    FixationPointsDuration = TimeSpan.FromMilliseconds(mappedFixationPointsByName.Sum(o => o.DurationInMillis))
-                });
+                    Identifier = aoiName
+                };
+                long fixationPointsDurationInMillis = 0;
+                foreach (var mappedFixationPointByName in mappedFixationPointsByName)
+                {
+                    aggregatedDataForAoi.FixationPointsCount += 1;
+                    if (mappedFixationPointByName.DurationInMillis > 100)
+                    {
+                        aggregatedDataForAoi.LongFixationPointsCount += 1;
+                    }
+                    else
+                    {
+                        aggregatedDataForAoi.ShortFixationPointsCount += 1;
+                    }
+
+                    fixationPointsDurationInMillis += mappedFixationPointByName.DurationInMillis;
+                }
+
+                aggregatedDataForAoi.FixationPointsDuration = TimeSpan.FromMilliseconds(fixationPointsDurationInMillis);
+                aggregatedDataForAois.Add(aggregatedDataForAoi);
             }
 
             aggregatedData.FixationPointsAggregatedDataForAoiByName = aggregatedDataForAois;
