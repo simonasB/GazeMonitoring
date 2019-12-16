@@ -1,6 +1,7 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = "_Layout.cshtml";
 }
+
 @using System.Collections
 @using Highsoft.Web.Mvc.Charts
 @using Highsoft.Web.Mvc.Charts.Rendering
@@ -20,7 +21,7 @@
             },
             Title = new Title
             {
-                Text = "Browser market shares at a specific website, 2014"
+                Text = "Fixation total times by area of interest type"
             },
             Tooltip = new Tooltip
             {
@@ -39,18 +40,16 @@
             {
                 new PieSeries
                 {
-                    Name = "Browser Share",
-                    Data = @ViewData["pieData"] as List<PieSeriesData>
+                    Name = "AreaOfInterestType",
+                    Data = @Model.PieData as List<PieSeriesData>
                 },
 
             }
         };
-    
+
 
     chartOptions.ID = "chart";
     var renderer = new HighchartsRenderer(chartOptions, "MDcwMjAyMDAxMDUxMDAwMDAwMDE=");
-
-
 }
 
-@Html.Raw(renderer.RenderHtml(true))
+@Raw(renderer.RenderHtml(true))

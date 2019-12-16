@@ -111,6 +111,7 @@
     <Compile Include="Data.Xml\XmlGazeDataRepositoryTests_Integration.cs" />
     <Compile Include="Data.Xml\XmlGazeDataRepositoryTests_Unit.cs" />
     <Compile Include="DataAccess\LiteDB\LiteDBConfigurationRepositoryTests.cs" />
+    <Compile Include="Data\Aggregation\AggregatorTests_Manual.cs" />
     <Compile Include="Data\Writers\GazePointWriterTests_Unit.cs" />
     <Compile Include="Data\Writers\MultipleSourcesGazeDataWriterTests_Unit.cs" />
     <Compile Include="Data\Writers\SaccadesWriterTests_Unit.cs" />
@@ -149,6 +150,10 @@
     <ProjectReference Include="..\GazeMonitoring.Data.PostgreSQL\GazeMonitoring.Data.PostgreSQL.csproj">
       <Project>{B6FE1338-3086-4B01-B2F7-DA0CB1679175}</Project>
       <Name>GazeMonitoring.Data.PostgreSQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Data.Reporting\GazeMonitoring.Data.Reporting.csproj">
+      <Project>{F2F03B7F-0378-4C23-99E4-CF59CDF1B9FC}</Project>
+      <Name>GazeMonitoring.Data.Reporting</Name>
     </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.Data.Xml\GazeMonitoring.Data.Xml.csproj">
       <Project>{1bb84589-22ea-4f07-bf68-c39577aebc21}</Project>

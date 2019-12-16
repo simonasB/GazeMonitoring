@@ -35,7 +35,7 @@ namespace GazeMonitoring.Data.Csv
                     var screenConfiguration = monitoringContext.MonitoringConfiguration.ScreenConfigurations
                         .First(x => x.Id == o.ScreenConfigurationId);
                     using (var writer = new StreamWriter(Path.Combine(monitoringContext.DataFilesPath, Constants.FolderName,
-                        $"AggregatedDataForAoisByScreenConfiguration_{screenConfiguration.Name}_{screenConfiguration.Number}.csv")))
+                        $"AggregatedDataForAoisByScreenConfiguration_{screenConfiguration.Number}_{screenConfiguration.Name}.csv")))
                     using (var csv = new CsvWriter(writer))
                     {
                         csv.WriteRecords(o.AggregatedDataForAois);

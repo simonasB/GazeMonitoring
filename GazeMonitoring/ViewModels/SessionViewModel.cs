@@ -135,9 +135,9 @@ namespace GazeMonitoring.ViewModels {
             IsBusy = true;
             try {
                 await Task.Run(async () => {
+                    _subjectInfo.SessionEndTimeStamp = DateTime.UtcNow;
                     await _gazeDataMonitor.StopAsync().ConfigureAwait(false);
                     _gazeDataMonitor = null;
-                    _subjectInfo.SessionEndTimeStamp = DateTime.UtcNow;
                 });
             } catch (Exception ex) {
                 _logger.Error($"Unhandled error occured on stop. Ex: {ex}");
