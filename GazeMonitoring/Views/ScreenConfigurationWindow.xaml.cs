@@ -8,7 +8,6 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using GazeMonitoring.Base;
 using GazeMonitoring.DataAccess;
-using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Messaging;
 using GazeMonitoring.Messaging.Messages;
 using GazeMonitoring.Model;
@@ -50,16 +49,38 @@ namespace GazeMonitoring.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            var left = (paintSurface.ActualWidth - upperActions.ActualWidth) / 2;
+            Canvas.SetLeft(upperActions, left);
+
             if (!_appLocalContext.MonitoringConfigurationId.HasValue)
+            {
+                _monitoringConfiguration = new MonitoringConfiguration
+                {
+                    ScreenConfigurations = new List<ScreenConfiguration>()
+                };
                 return;
+            }
 
             _monitoringConfiguration = _configurationRepository.Search<MonitoringConfiguration>(_appLocalContext.MonitoringConfigurationId.Value);
+            if (_monitoringConfiguration == null)
+            {
+                _monitoringConfiguration = new MonitoringConfiguration
+                {
+                    ScreenConfigurations = new List<ScreenConfiguration>()
+                };
+                return;
+            }
 
             var screenConfiguration =
                 _monitoringConfiguration?.ScreenConfigurations?.FirstOrDefault(o =>
                     o.Id == _appLocalContext.ScreenConfigurationId);
+            if (screenConfiguration == null)
+            {
+                _appLocalContext.ScreenConfigurationId = null;
+                return;
+            }
 
-            screenConfiguration?.AreasOfInterest?.ForEach(areaOfInterest =>
+            screenConfiguration.AreasOfInterest?.ForEach(areaOfInterest =>
             {
                 var grid = new Canvas();
                 var deleteButton = new Button
@@ -100,9 +121,6 @@ namespace GazeMonitoring.Views
 
                 paintSurface.Children.Add(rectContentControl);
             });
-
-            var left = (paintSurface.ActualWidth - upperActions.ActualWidth) / 2;
-            Canvas.SetLeft(upperActions, left);
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -111,7 +129,7 @@ namespace GazeMonitoring.Views
                 CloseInternal();
         }
 
-        private void Canvas_MouseDown_1(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Canvas_MouseDown_1(object sender, MouseButtonEventArgs e)
         {
             if (_activated)
             {
@@ -173,7 +191,7 @@ namespace GazeMonitoring.Views
             paintSurface.Children.Remove(elementToRemove);
         }
 
-        private void Canvas_MouseMove_1(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Canvas_MouseMove_1(object sender, MouseEventArgs e)
         {
             if (_activated)
             {
@@ -246,7 +264,6 @@ namespace GazeMonitoring.Views
                 {
                     AreasOfInterest = areasOfInterest,
                     Id = id,
-                    Name = "test",
                     Number = 1
                 });
                 _appLocalContext.ScreenConfigurationId = id;
@@ -258,8 +275,6 @@ namespace GazeMonitoring.Views
                         o.Id == _appLocalContext.ScreenConfigurationId);
                 screenConfiguration.AreasOfInterest = areasOfInterest;
             }
-
-            _configurationRepository.Update(_monitoringConfiguration);
         }
 
         private void CloseClick(object sender, RoutedEventArgs e)

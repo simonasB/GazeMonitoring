@@ -98,7 +98,7 @@ namespace GazeMonitoring.ViewModels
                 if (screenConfigToDelete == null) return;
 
                 _monitoringConfiguration.ScreenConfigurations.Remove(screenConfigToDelete);
-                _configurationRepository.Update(_monitoringConfiguration);
+                //_configurationRepository.Update(_monitoringConfiguration);
             });
 
         public RelayCommand<ScreenConfigurationWindowModel> EditCommand => new RelayCommand<ScreenConfigurationWindowModel>(
@@ -220,7 +220,7 @@ namespace GazeMonitoring.ViewModels
                 var dbScreenConfiguration = _monitoringConfiguration.ScreenConfigurations.First(o => o.Id == SelectedScreenConfiguration.Id);
                 dbScreenConfiguration.Name = AddEditScreenConfigurationWindowModel.Name;
                 dbScreenConfiguration.Duration = ParseDuration(AddEditScreenConfigurationWindowModel.Duration);
-                _configurationRepository.Save(_monitoringConfiguration);
+                //_configurationRepository.Save(_monitoringConfiguration);
                 _appLocalContextManager.SetScreenConfigurationId(SelectedScreenConfiguration.Id);
             }
             else
@@ -233,10 +233,10 @@ namespace GazeMonitoring.ViewModels
                     Duration = ParseDuration(AddEditScreenConfigurationWindowModel.Duration),
                     Number = ScreenConfigurations.Count - 1
                 });
-                _configurationRepository.Save(_monitoringConfiguration);
+                //_configurationRepository.Save(_monitoringConfiguration);
                 _appLocalContextManager.SetScreenConfigurationId(AddEditScreenConfigurationWindowModel.Id);
             }
-            _appLocalContextManager.SetMonitoringConfigurationId(_monitoringConfiguration.Id);
+            //_appLocalContextManager.SetMonitoringConfigurationId(_monitoringConfiguration.Id);
         });
 
         private static List<ScreenConfigurationWindowModel> Convert(List<ScreenConfiguration> screenConfigurations)
@@ -266,9 +266,7 @@ namespace GazeMonitoring.ViewModels
 
         private static TimeSpan ParseDuration(DateTime dateTime)
         {
-            // hours, minutes, seconds
-            // Hours used for minutes because time picker does not support picking only minutes and seconds.
-            return new TimeSpan(0, dateTime.Hour, dateTime.Minute);
+            return new TimeSpan(dateTime.Hour, dateTime.Minute, dateTime.Second);
         }
 
         void IDropTarget.DragOver(IDropInfo dropInfo)

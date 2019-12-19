@@ -90,7 +90,7 @@
                 <materialDesign:PackIcon Kind="AddToPhotos" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
             </Button>
             <TextBlock Visibility="{Binding AddEditScreenModeEnabled, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,429,0,0" TextWrapping="Wrap" Text="Duration" VerticalAlignment="Top"/>
-            <materialDesign:TimePicker Visibility="{Binding AddEditScreenModeEnabled, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}" Is24Hours="True" x:Name="PresetTimePicker" SelectedTime="{Binding AddEditScreenConfigurationWindowModel.Duration}" Margin="120,421,79,9"/>
+            <materialDesign:TimePicker Visibility="{Binding AddEditScreenModeEnabled, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}" Is24Hours="True" x:Name="PresetTimePicker" WithSeconds="True" SelectedTime="{Binding AddEditScreenConfigurationWindowModel.Duration}" Margin="120,421,79,9"/>
         </Grid>
     </xctk:BusyIndicator>
 </UserControl>

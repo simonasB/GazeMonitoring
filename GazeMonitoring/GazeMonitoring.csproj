@@ -250,6 +250,7 @@
     <Compile Include="HotKeys\Global\GlobalHotKeyEntity.cs" />
     <Compile Include="HotKeys\Global\Handlers\IGlobalHotKeyHandler.cs" />
     <Compile Include="HotKeys\Global\GlobalHotKeyManager.cs" />
+    <Compile Include="Validation\SessionTimeAttribute.cs" />
     <Compile Include="ViewModels\EMainSubViewModel.cs" />
     <Compile Include="ViewModels\ESettingsSubViewModel.cs" />
     <Compile Include="ViewModels\IMainSubViewModel.cs" />

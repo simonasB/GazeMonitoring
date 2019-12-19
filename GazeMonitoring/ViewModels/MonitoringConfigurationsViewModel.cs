@@ -32,7 +32,11 @@ namespace GazeMonitoring.ViewModels
                     _configurationRepository.Delete<MonitoringConfiguration>(monitoringConfig.Id);
                     MonitoringConfigurations.Remove(monitoringConfig);
                 });
-            AddCommand = new RelayCommand(() => _messenger.Send(new ShowAddMonitoringConfigurationMessage()));
+            AddCommand = new RelayCommand(() =>
+            {
+                _appLocalContextManager.SetMonitoringConfigurationId(null);
+                _messenger.Send(new ShowAddMonitoringConfigurationMessage());
+            });
             _messenger.Register<SettingsSubViewModelChangedMessage>(message =>
             {
                 if (message.SettingsSubViewModel == ESettingsSubViewModel.MonitoringConfigurationsViewModel)

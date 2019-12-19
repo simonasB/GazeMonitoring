@@ -2,6 +2,6 @@
 {
     public class ShowEditScreenConfigurationMessage : IMessage
     {
-
+        public string ScreenConfigurationId { get; set; }
     }
 }

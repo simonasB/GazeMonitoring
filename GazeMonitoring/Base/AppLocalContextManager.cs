@@ -21,7 +21,7 @@ namespace GazeMonitoring.Base
             appLocalContextManager.Update(appLocalContext);
         }
 
-        public static void SetMonitoringConfigurationId(this IAppLocalContextManager appLocalContextManager, int monitoringConfigurationId)
+        public static void SetMonitoringConfigurationId(this IAppLocalContextManager appLocalContextManager, int? monitoringConfigurationId)
         {
             var appLocalContext = appLocalContextManager.Get();
             appLocalContext.MonitoringConfigurationId = monitoringConfigurationId;
