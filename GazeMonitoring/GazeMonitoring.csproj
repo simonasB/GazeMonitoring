@@ -223,6 +223,7 @@
     <Compile Include="IO\FileSystemHelper.cs" />
     <Compile Include="IO\FolderDialogService.cs" />
     <Compile Include="Messaging\IMessage.cs" />
+    <Compile Include="Messaging\Messages\AddScreenConfigurationWithHotKeyMessage.cs" />
     <Compile Include="Messaging\Messages\HideSettingsMessage.cs" />
     <Compile Include="Messaging\Messages\MainSubViewModelChangedMessage.cs" />
     <Compile Include="Messaging\Messages\SettingsSubViewModelChangedMessage.cs" />

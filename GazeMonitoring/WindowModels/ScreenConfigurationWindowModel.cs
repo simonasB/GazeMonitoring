@@ -16,11 +16,7 @@ namespace GazeMonitoring.WindowModels
         public string Name
         {
             get => _name;
-            set
-            {
-                _name = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _name, value);
         }
 
         public int AreasOfInterestCount
@@ -37,11 +33,7 @@ namespace GazeMonitoring.WindowModels
         public DateTime Duration
         {
             get => _duration;
-            set
-            {
-                _duration = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref _duration, value);
         }
 
         public string Id { get; set; }

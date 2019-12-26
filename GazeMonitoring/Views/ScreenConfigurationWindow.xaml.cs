@@ -29,6 +29,8 @@ namespace GazeMonitoring.Views
         private bool _activated;
         private MonitoringConfiguration _monitoringConfiguration;
         private readonly AppLocalContext _appLocalContext;
+        private readonly bool _isNewConfigurationRequested;
+        private ScreenConfiguration _newScreenConfiguration;
 
         public const string AreaOfInterestTitle = "AreaOfInterestTitle";
 
@@ -41,10 +43,7 @@ namespace GazeMonitoring.Views
 
             this.PreviewKeyDown += HandleEsc;
             _appLocalContext = appLocalContextManager.Get();
-            if (newConfigurationRequested)
-            {
-                _appLocalContext.ScreenConfigurationId = null;
-            }
+            _isNewConfigurationRequested = newConfigurationRequested;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -52,33 +51,14 @@ namespace GazeMonitoring.Views
             var left = (paintSurface.ActualWidth - upperActions.ActualWidth) / 2;
             Canvas.SetLeft(upperActions, left);
 
-            if (!_appLocalContext.MonitoringConfigurationId.HasValue)
-            {
-                _monitoringConfiguration = new MonitoringConfiguration
-                {
-                    ScreenConfigurations = new List<ScreenConfiguration>()
-                };
-                return;
-            }
-
             _monitoringConfiguration = _configurationRepository.Search<MonitoringConfiguration>(_appLocalContext.MonitoringConfigurationId.Value);
-            if (_monitoringConfiguration == null)
-            {
-                _monitoringConfiguration = new MonitoringConfiguration
-                {
-                    ScreenConfigurations = new List<ScreenConfiguration>()
-                };
-                return;
-            }
 
-            var screenConfiguration =
-                _monitoringConfiguration?.ScreenConfigurations?.FirstOrDefault(o =>
-                    o.Id == _appLocalContext.ScreenConfigurationId);
-            if (screenConfiguration == null)
-            {
-                _appLocalContext.ScreenConfigurationId = null;
+            if (_isNewConfigurationRequested)
                 return;
-            }
+            
+            var screenConfiguration =
+                _monitoringConfiguration.ScreenConfigurations.First(o =>
+                    o.Id == _appLocalContext.ScreenConfigurationId);
 
             screenConfiguration.AreasOfInterest?.ForEach(areaOfInterest =>
             {
@@ -255,18 +235,14 @@ namespace GazeMonitoring.Views
                 areasOfInterest.Add(areaOfInterest);
             }
 
-            if (_appLocalContext.ScreenConfigurationId == null)
+            if (_isNewConfigurationRequested)
             {
-                _monitoringConfiguration.ScreenConfigurations =
-                    _monitoringConfiguration.ScreenConfigurations ?? new List<ScreenConfiguration>();
                 var id = Guid.NewGuid().ToString();
-                _monitoringConfiguration.ScreenConfigurations.Add(new ScreenConfiguration
+                _newScreenConfiguration = new ScreenConfiguration
                 {
                     AreasOfInterest = areasOfInterest,
-                    Id = id,
-                    Number = 1
-                });
-                _appLocalContext.ScreenConfigurationId = id;
+                    Id = id
+                };
             }
             else
             {
@@ -275,6 +251,8 @@ namespace GazeMonitoring.Views
                         o.Id == _appLocalContext.ScreenConfigurationId);
                 screenConfiguration.AreasOfInterest = areasOfInterest;
             }
+
+            CloseInternal();
         }
 
         private void CloseClick(object sender, RoutedEventArgs e)
@@ -285,8 +263,11 @@ namespace GazeMonitoring.Views
         private void CloseInternal()
         {
             _messenger.Send(new ShowSettingsMessage());
-            if(_monitoringConfiguration != null)
-                _messenger.Send(new ShowEditMonitoringConfigurationMessage(_monitoringConfiguration));
+            _messenger.Send(new ShowEditMonitoringConfigurationMessage(_monitoringConfiguration));
+            if (_isNewConfigurationRequested && _newScreenConfiguration != null)
+            {
+                _messenger.Send(new AddScreenConfigurationWithHotKeyMessage(_newScreenConfiguration));
+            }
             Close();
         }
     }

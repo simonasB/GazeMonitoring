@@ -14,6 +14,7 @@ namespace GazeMonitoring.HotKeys.Global.Handlers
 
         public void Handle()
         {
+            _messenger.Send(new HideSettingsMessage());
             _messenger.Send(new ShowCreateScreenConfigurationMessage());
         }
     }

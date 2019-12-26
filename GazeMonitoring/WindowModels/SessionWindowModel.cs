@@ -13,7 +13,7 @@ namespace GazeMonitoring.WindowModels {
         private List<MonitoringConfiguration> _monitoringConfigurations;
 
         [Required]
-        [StringLength(100, MinimumLength = 1)]
+        [StringLength(100, MinimumLength = 10)]
         public string Name {
             get { return _name; }
             set => SetProperty(ref _name, value);

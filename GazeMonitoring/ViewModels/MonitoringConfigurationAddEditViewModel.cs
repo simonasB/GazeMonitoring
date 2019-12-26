@@ -41,6 +41,7 @@ namespace GazeMonitoring.ViewModels
         private ScreenConfigurationWindowModel _selectedScreenConfiguration;
         private ScreenConfigurationWindowModel _addEditScreenConfigurationWindowModel = new ScreenConfigurationWindowModel();
         private bool _addEditScreenModeEnabled;
+        private List<AreaOfInterest> _addedAreasOfInterestWithUsingHotkey;
 
         public MonitoringConfigurationWindowModel MonitoringConfigurationWindowModel { get; set; }
 
@@ -81,6 +82,17 @@ namespace GazeMonitoring.ViewModels
                 };
                 AddEditScreenConfigurationWindowModel = new ScreenConfigurationWindowModel();
                 AddEditScreenModeEnabled = false;
+            });
+
+            _messenger.Register<AddScreenConfigurationWithHotKeyMessage>(o =>
+            {
+                _addedAreasOfInterestWithUsingHotkey = o.ScreenConfiguration.AreasOfInterest;
+                AddEditScreenConfigurationWindowModel = new ScreenConfigurationWindowModel
+                {
+                    Id = Guid.NewGuid().ToString()
+                };
+                AddEditScreenModeEnabled = true;
+                SelectedScreenConfiguration = null;
             });
         }
 
@@ -231,12 +243,14 @@ namespace GazeMonitoring.ViewModels
                     Id = AddEditScreenConfigurationWindowModel.Id,
                     Name = AddEditScreenConfigurationWindowModel.Name,
                     Duration = ParseDuration(AddEditScreenConfigurationWindowModel.Duration),
-                    Number = ScreenConfigurations.Count - 1
+                    Number = ScreenConfigurations.Count - 1,
+                    // Only set when added using hot key, otherwise null. When editing, it's handled in other screen.
+                    AreasOfInterest = _addedAreasOfInterestWithUsingHotkey
                 });
-                //_configurationRepository.Save(_monitoringConfiguration);
+
+                _addedAreasOfInterestWithUsingHotkey = null;
                 _appLocalContextManager.SetScreenConfigurationId(AddEditScreenConfigurationWindowModel.Id);
             }
-            //_appLocalContextManager.SetMonitoringConfigurationId(_monitoringConfiguration.Id);
         });
 
         private static List<ScreenConfigurationWindowModel> Convert(List<ScreenConfiguration> screenConfigurations)
@@ -255,13 +269,18 @@ namespace GazeMonitoring.ViewModels
 
                 if (screenConfiguration.Duration.HasValue)
                 {
-                    screenConfigurationWindowModel.Duration = new DateTime(2019,1,1,screenConfiguration.Duration.Value.Minutes, screenConfiguration.Duration.Value.Seconds, 0, DateTimeKind.Utc);
+                    screenConfigurationWindowModel.Duration = ParseDuration(screenConfiguration.Duration.Value);
                 }
 
                 screenConfigurationWindowModels.Add(screenConfigurationWindowModel);
             });
 
             return screenConfigurationWindowModels;
+        }
+
+        private static DateTime ParseDuration(TimeSpan timespan)
+        {
+            return new DateTime(2019, 1, 1, timespan.Hours, timespan.Minutes, timespan.Seconds, DateTimeKind.Utc);
         }
 
         private static TimeSpan ParseDuration(DateTime dateTime)
