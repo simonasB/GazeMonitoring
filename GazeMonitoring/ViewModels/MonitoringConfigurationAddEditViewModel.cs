@@ -122,15 +122,26 @@ namespace GazeMonitoring.ViewModels
                 });
 
         public RelayCommand SaveMonitoringConfigurationCommand => new RelayCommand(() =>
+        {
+            if (MonitoringConfigurationWindowModel.HasErrors)
             {
-                _monitoringConfiguration.Name = MonitoringConfigurationWindowModel.Name;
-                _monitoringConfiguration.ScreenConfigurations.ForEach(sc =>
-                    {
-                        sc.Number = ScreenConfigurations.First(o => o.Id == sc.Id).Number;
-                    });
-                _configurationRepository.Save(_monitoringConfiguration);
-                _appLocalContextManager.SetMonitoringConfigurationId(_monitoringConfiguration.Id);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(MonitoringConfigurationWindowModel.Name))
+            {
+                MonitoringConfigurationWindowModel.Name = null;
+                return;
+            }
+
+            _monitoringConfiguration.Name = MonitoringConfigurationWindowModel.Name;
+            _monitoringConfiguration.ScreenConfigurations.ForEach(sc =>
+            {
+                sc.Number = ScreenConfigurations.First(o => o.Id == sc.Id).Number;
             });
+            _configurationRepository.Save(_monitoringConfiguration);
+            _appLocalContextManager.SetMonitoringConfigurationId(_monitoringConfiguration.Id);
+        });
 
         public RelayCommand BackCommand => new RelayCommand(() =>
         {
@@ -223,6 +234,8 @@ namespace GazeMonitoring.ViewModels
 
         public RelayCommand SaveScreenConfigurationCommand => new RelayCommand(() =>
         {
+            if (!IsValidScreenConfiguration()) return;
+
             if (SelectedScreenConfiguration != null)
             {
                 var windowScreenConfiguration = ScreenConfigurations.First(o => o.Id == SelectedScreenConfiguration.Id);
@@ -231,7 +244,7 @@ namespace GazeMonitoring.ViewModels
 
                 var dbScreenConfiguration = _monitoringConfiguration.ScreenConfigurations.First(o => o.Id == SelectedScreenConfiguration.Id);
                 dbScreenConfiguration.Name = AddEditScreenConfigurationWindowModel.Name;
-                dbScreenConfiguration.Duration = ParseDuration(AddEditScreenConfigurationWindowModel.Duration);
+                dbScreenConfiguration.Duration = ParseDuration(AddEditScreenConfigurationWindowModel.Duration.Value);
                 //_configurationRepository.Save(_monitoringConfiguration);
                 _appLocalContextManager.SetScreenConfigurationId(SelectedScreenConfiguration.Id);
             }
@@ -242,7 +255,7 @@ namespace GazeMonitoring.ViewModels
                 {
                     Id = AddEditScreenConfigurationWindowModel.Id,
                     Name = AddEditScreenConfigurationWindowModel.Name,
-                    Duration = ParseDuration(AddEditScreenConfigurationWindowModel.Duration),
+                    Duration = ParseDuration(AddEditScreenConfigurationWindowModel.Duration.Value),
                     Number = ScreenConfigurations.Count - 1,
                     // Only set when added using hot key, otherwise null. When editing, it's handled in other screen.
                     AreasOfInterest = _addedAreasOfInterestWithUsingHotkey
@@ -252,6 +265,24 @@ namespace GazeMonitoring.ViewModels
                 _appLocalContextManager.SetScreenConfigurationId(AddEditScreenConfigurationWindowModel.Id);
             }
         });
+
+        private bool IsValidScreenConfiguration()
+        {
+            var isValid = !AddEditScreenConfigurationWindowModel.HasErrors;
+
+            if (string.IsNullOrEmpty(AddEditScreenConfigurationWindowModel.Name))
+            {
+                isValid = false;
+                AddEditScreenConfigurationWindowModel.Name = null;
+            }
+            if (!AddEditScreenConfigurationWindowModel.Duration.HasValue)
+            {
+                isValid = false;
+                AddEditScreenConfigurationWindowModel.Duration = null;
+            }
+
+            return isValid;
+        }
 
         private static List<ScreenConfigurationWindowModel> Convert(List<ScreenConfiguration> screenConfigurations)
         {

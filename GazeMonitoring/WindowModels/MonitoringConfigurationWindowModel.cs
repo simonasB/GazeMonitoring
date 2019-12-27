@@ -9,7 +9,7 @@ namespace GazeMonitoring.WindowModels
         private string _name;
 
         [Required]
-        [StringLength(20, MinimumLength = 3)]
+        [StringLength(20, MinimumLength = 1)]
         public string Name
         {
             get => _name;

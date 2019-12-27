@@ -8,8 +8,7 @@ namespace GazeMonitoring.WindowModels
     {
         private string _name;
         private int _areasOfInterestCount;
-        // Initialize with default value 0 minutes and 0 seconds
-        private DateTime _duration = new DateTime(2019,1,1, 0,0, 0, DateTimeKind.Utc);
+        private DateTime? _duration;
 
         [Required]
         [StringLength(20, MinimumLength = 1)]
@@ -30,7 +29,7 @@ namespace GazeMonitoring.WindowModels
         }
 
         [Required]
-        public DateTime Duration
+        public DateTime? Duration
         {
             get => _duration;
             set => SetProperty(ref _duration, value);
