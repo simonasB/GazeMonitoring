@@ -32,7 +32,7 @@ namespace GazeMonitoring.Monitor {
             _dataAggregationService = dataAggregationService;
         }
 
-        public async Task StartAsync() {
+        public Task StartAsync() {
             _gazePointStream.GazePointReceived += OnGazePointReceived;
             if (_monitoringContext.IsScreenRecorded)
             {
@@ -41,6 +41,8 @@ namespace GazeMonitoring.Monitor {
                         Path.Combine(_monitoringContext.DataFilesPath, $"video_{_monitoringContext.DataStream}_{_monitoringContext.SubjectInfo.SessionStartTimestamp.ToString("yyyy_MM_dd_HH_mm_ss_fff", CultureInfo.InvariantCulture)}.avi"),
                         10, 50), _monitoringContext);
             }
+
+            return Task.CompletedTask;
         }
 
         public async Task StopAsync() {
@@ -60,7 +62,7 @@ namespace GazeMonitoring.Monitor {
             });
 
             await Task.WhenAll(finalizationTask, stopRecordingTask).ConfigureAwait(false);
-            await _dataAggregationService.Run(_monitoringContext);
+            await _dataAggregationService.Run(_monitoringContext).ConfigureAwait(false);
         }
 
         private void OnGazePointReceived(object sender, GazePointReceivedEventArgs args)

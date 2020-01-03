@@ -33,6 +33,8 @@ namespace GazeMonitoring.ViewModels {
         private const int PollIntervalSeconds = 5;
         private readonly ILogger _logger;
         private IGazeDataMonitor _gazeDataMonitor;
+        private CancellationTokenSource _cancellationTokenSource;
+        private static SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
 
         [Obsolete("Only for design data", true)]
         public SessionViewModel() : this(null, null, null, null, null, null, null)
@@ -132,20 +134,34 @@ namespace GazeMonitoring.ViewModels {
         }
 
         private async Task OnStop() {
-            IsBusy = true;
-            try {
-                await Task.Run(async () => {
+            try
+            {
+                await _semaphoreSlim.WaitAsync();
+                _cancellationTokenSource.Cancel();
+                if(!IsStarted)
+                    return;
+
+                IsBusy = true;
+                await Task.Run(async () =>
+                {
                     _subjectInfo.SessionEndTimeStamp = DateTime.UtcNow;
                     await _gazeDataMonitor.StopAsync().ConfigureAwait(false);
                     _gazeDataMonitor = null;
                 });
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 _logger.Error($"Unhandled error occured on stop. Ex: {ex}");
                 ShowErrorBalloon();
             }
-
-            IsBusy = false;
-            IsStarted = false;
+            finally
+            {
+                IsBusy = false;
+                IsStarted = false;
+                _cancellationTokenSource.Dispose();
+                _cancellationTokenSource = null;
+                _semaphoreSlim.Release();
+            }
         }
 
         private bool CanStart() {
@@ -190,6 +206,7 @@ namespace GazeMonitoring.ViewModels {
                 }
 
                 _gazeDataMonitor = _gazeDataMonitorFactory.Create(monitoringContext);
+                _cancellationTokenSource = new CancellationTokenSource();
                 await _gazeDataMonitor.StartAsync();
             } catch (Exception ex){
                 _logger.Error($"Unhandled exception occured on start. {ex}");
@@ -206,7 +223,7 @@ namespace GazeMonitoring.ViewModels {
             {
                 await Task.Delay(TimeSpan.FromMilliseconds(
                     SessionWindowModel.SelectedMonitoringConfiguration.ScreenConfigurations.Sum(o =>
-                        o.Duration.Value.TotalMilliseconds)));
+                        o.Duration.Value.TotalMilliseconds)), _cancellationTokenSource.Token);
 
                 await OnStop();
             }
