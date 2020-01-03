@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.IO;
 using GazeMonitoring.Base;
+using GazeMonitoring.Common;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Model;
 
@@ -14,13 +15,13 @@ namespace GazeMonitoring.IO
     public class DataFolderManager : IDataFolderManager
     {
         private readonly IAppLocalContextManager _appLocalContextManager;
-        private readonly IFileSystemHelper _fileSystemHelper;
+        private readonly IAppDataHelper _appDataHelper;
         private readonly ILogger _logger;
 
-        public DataFolderManager(IAppLocalContextManager appLocalContextManager, IFileSystemHelper fileSystemHelper, ILoggerFactory loggerFactory)
+        public DataFolderManager(IAppLocalContextManager appLocalContextManager, IAppDataHelper appDataHelper, ILoggerFactory loggerFactory)
         {
             _appLocalContextManager = appLocalContextManager;
-            _fileSystemHelper = fileSystemHelper;
+            _appDataHelper = appDataHelper;
             _logger = loggerFactory.GetLogger(typeof(DataFolderManager));
         }
 
@@ -38,7 +39,7 @@ namespace GazeMonitoring.IO
             if (!Directory.Exists(rootDataFilesPath))
             {
                 _logger.Warning($"Configured data files path folder does not exist: Path: {rootDataFilesPath}. Need to reconfigure");
-                dataFilesPath = Path.Combine(_fileSystemHelper.GetAppDataDirectoryPath(), dataFolderName);
+                dataFilesPath = Path.Combine(_appDataHelper.GetAppDataDirectoryPath(), dataFolderName);
             }
             else
             {

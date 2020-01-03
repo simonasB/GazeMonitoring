@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO;
 
-namespace GazeMonitoring.IO
+namespace GazeMonitoring.Common
 {
-    public interface IFileSystemHelper
+    public interface IAppDataHelper
     {
         string GetAppDataDirectoryPath();
     }
 
-    public class FileSystemHelper : IFileSystemHelper
+    public class AppDataHelper : IAppDataHelper
     {
         public string GetAppDataDirectoryPath()
         {

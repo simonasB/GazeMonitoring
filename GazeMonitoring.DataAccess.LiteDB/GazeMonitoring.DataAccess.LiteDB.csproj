@@ -48,6 +48,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GazeMonitoring.Common\GazeMonitoring.Common.csproj">
+      <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
+      <Name>GazeMonitoring.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.DataAccess\GazeMonitoring.DataAccess.csproj">
       <Project>{539396B0-6231-4FC6-A671-65A4CB83AEED}</Project>
       <Name>GazeMonitoring.DataAccess</Name>

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using GazeMonitoring.Balloon;
 using GazeMonitoring.Base;
+using GazeMonitoring.Common;
 using GazeMonitoring.Data.Aggregation;
 using GazeMonitoring.Data.Reporting;
 using GazeMonitoring.DataAccess;
@@ -49,7 +50,7 @@ namespace GazeMonitoring
             {
                 BuildContainer();
 
-                CreateAppDataFolder(_container.GetInstance<IFileSystemHelper>());
+                CreateAppDataFolder(_container.GetInstance<IAppDataHelper>());
 
                 var seeder = _container.GetInstance<IDatabaseSeeder>();
                 seeder.Seed();
@@ -157,7 +158,7 @@ namespace GazeMonitoring
             builder.Register<IScreenConfigurationWindowHandler, ScreenConfigurationWindowHandler>();
             builder.Register<IPowerpointParser, PowerpointParser>();
             builder.Register<IFileDialogService, FileDialogService>();
-            builder.Register<IFileSystemHelper, FileSystemHelper>();
+            builder.Register<IAppDataHelper, AppDataHelper>();
             builder.Register<IFolderDialogService, FolderDialogService>();
             builder.Register<IDataFolderManager, DataFolderManager>();
 
@@ -168,9 +169,9 @@ namespace GazeMonitoring
             _container = builder.Build();
         }
 
-        private void CreateAppDataFolder(IFileSystemHelper fileSystemHelper)
+        private static void CreateAppDataFolder(IAppDataHelper appDataHelper)
         {
-            var appDataFolderPath = fileSystemHelper.GetAppDataDirectoryPath();
+            var appDataFolderPath = appDataHelper.GetAppDataDirectoryPath();
 
             if (!Directory.Exists(appDataFolderPath))
             {

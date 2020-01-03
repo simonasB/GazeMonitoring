@@ -26,9 +26,6 @@ namespace GazeMonitoring.Data
             var fixationPointWriter = new XmlSerializer(typeof(List<FixationPoint>));
             var saccadesWriter = new XmlSerializer(typeof(List<Saccade>));
 
-            if (!Directory.Exists(_configuration.FolderPath))
-                Directory.CreateDirectory(_configuration.FolderPath);
-
             using (var file = File.Create(_configuration.GazePointsFilePath))
             {
                 gazePointWriter.Serialize(file, _gazePoints);

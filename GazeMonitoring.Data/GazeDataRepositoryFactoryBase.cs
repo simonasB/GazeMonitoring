@@ -1,4 +1,5 @@
-﻿using GazeMonitoring.Model;
+﻿using GazeMonitoring.Common;
+using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data
 {
@@ -6,7 +7,7 @@ namespace GazeMonitoring.Data
     {
         public IGazeDataRepository Create(IMonitoringContext monitoringContext)
         {
-            return new MultipleSourceGazeDataRepository(new[] {new TempGazeDataRepository(new TempDataConfiguration()), CreateConcreteRepo(monitoringContext)});
+            return new MultipleSourceGazeDataRepository(new[] {new TempGazeDataRepository(new TempDataConfiguration(new AppDataHelper())), CreateConcreteRepo(monitoringContext)});
         }
 
         protected abstract IGazeDataRepository CreateConcreteRepo(IMonitoringContext monitoringContext);

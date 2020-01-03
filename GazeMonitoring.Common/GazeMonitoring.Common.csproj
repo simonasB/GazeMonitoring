@@ -33,6 +33,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppDataHelper.cs" />
     <Compile Include="Calculations\BasicSaccadeCalculator.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Finalizers\IGazeDataMonitorFinalizer.cs" />

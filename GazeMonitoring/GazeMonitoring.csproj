@@ -220,7 +220,6 @@
     <Compile Include="IoC\ContainerBuilderFactory.cs" />
     <Compile Include="IO\DataFolderManager.cs" />
     <Compile Include="IO\FileDialogService.cs" />
-    <Compile Include="IO\FileSystemHelper.cs" />
     <Compile Include="IO\FolderDialogService.cs" />
     <Compile Include="Messaging\IMessage.cs" />
     <Compile Include="Messaging\Messages\AddScreenConfigurationWithHotKeyMessage.cs" />
