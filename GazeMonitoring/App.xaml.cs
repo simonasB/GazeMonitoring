@@ -40,8 +40,6 @@ namespace GazeMonitoring
         private static IoContainer _container;
         private ILogger _logger;
 
-        private GlobalHotKey _parseGlobalHotKey;
-
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -50,12 +48,16 @@ namespace GazeMonitoring
             {
                 BuildContainer();
 
+                _logger = _container.GetInstance<ILoggerFactory>().GetLogger(typeof(App));
+                _logger.Information("Starting application");
+
                 CreateAppDataFolder(_container.GetInstance<IAppDataHelper>());
 
+                _logger.Information("Starting db seed.");
                 var seeder = _container.GetInstance<IDatabaseSeeder>();
                 seeder.Seed();
+                _logger.Information("Finished db seed.");
 
-                _logger = _container.GetInstance<ILoggerFactory>().GetLogger(typeof(App));
                 _taskbarIcon = _container.GetInstance<TaskbarIcon>();
                 _taskbarIcon.DataContext = _container.GetInstance<NotifyIconViewModel>();
 
@@ -65,10 +67,17 @@ namespace GazeMonitoring
                 _screenConfigurationWindowHandler.Handle();
 
                 SetupExceptionHandling();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger?.Error(ex);
-                MessageBox.Show($"Could not launch GazeMonitoring application.{ex}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                #if DEBUG
+                    MessageBox.Show($"Could not launch GazeMonitoring application.{ex}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                #else
+                    MessageBox.Show($"Could not launch GazeMonitoring application.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                #endif
+
                 Current.Shutdown();
             }
         }
@@ -169,12 +178,13 @@ namespace GazeMonitoring
             _container = builder.Build();
         }
 
-        private static void CreateAppDataFolder(IAppDataHelper appDataHelper)
+        private void CreateAppDataFolder(IAppDataHelper appDataHelper)
         {
             var appDataFolderPath = appDataHelper.GetAppDataDirectoryPath();
 
             if (!Directory.Exists(appDataFolderPath))
             {
+                _logger.Information($"Creating app data folder. Path {appDataFolderPath}");
                 Directory.CreateDirectory(appDataFolderPath);
             }
         }
