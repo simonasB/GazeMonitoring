@@ -4,16 +4,19 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using GazeMonitoring.Balloon;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
 using GazeMonitoring.DataAccess;
 using GazeMonitoring.IO;
+using GazeMonitoring.Logging;
 using GazeMonitoring.Messaging;
 using GazeMonitoring.Messaging.Messages;
 using GazeMonitoring.Model;
 using GazeMonitoring.Powerpoint;
 using GazeMonitoring.WindowModels;
 using GongSolutions.Wpf.DragDrop;
+using Hardcodet.Wpf.TaskbarNotification;
 
 namespace GazeMonitoring.ViewModels
 {
@@ -24,6 +27,7 @@ namespace GazeMonitoring.ViewModels
         private readonly IAppLocalContextManager _appLocalContextManager;
         private readonly IPowerpointParser _powerpointParser;
         private readonly IFileDialogService _fileDialogService;
+        private readonly IBalloonService _balloonService;
 
         public ObservableCollection<ScreenConfigurationWindowModel> ScreenConfigurations
         {
@@ -42,58 +46,21 @@ namespace GazeMonitoring.ViewModels
         private ScreenConfigurationWindowModel _addEditScreenConfigurationWindowModel = new ScreenConfigurationWindowModel();
         private bool _addEditScreenModeEnabled;
         private List<AreaOfInterest> _addedAreasOfInterestWithUsingHotkey;
+        private readonly ILogger _logger;
 
         public MonitoringConfigurationWindowModel MonitoringConfigurationWindowModel { get; set; }
 
         public MonitoringConfigurationAddEditViewModel(IMessenger messenger,
-            IConfigurationRepository configurationRepository, IAppLocalContextManager appLocalContextManager, IPowerpointParser powerpointParser, IFileDialogService fileDialogService)
+            IConfigurationRepository configurationRepository, IAppLocalContextManager appLocalContextManager, IPowerpointParser powerpointParser, IFileDialogService fileDialogService, IBalloonService balloonService, ILoggerFactory loggerFactory)
         {
             _messenger = messenger;
             _configurationRepository = configurationRepository;
             _appLocalContextManager = appLocalContextManager;
             _powerpointParser = powerpointParser;
             _fileDialogService = fileDialogService;
-
-            _messenger.Register<ShowEditMonitoringConfigurationMessage>(o =>
-            {
-                var screenConfigurationWindowModels = Convert(o.MonitoringConfiguration.ScreenConfigurations);
-                ScreenConfigurations =
-                    new ObservableCollection<ScreenConfigurationWindowModel>(screenConfigurationWindowModels.OrderBy(x => x.Number));
-                _monitoringConfiguration = o.MonitoringConfiguration;
-                MonitoringConfigurationWindowModel = new MonitoringConfigurationWindowModel
-                {
-                    Name = o.MonitoringConfiguration.Name,
-                    ScreenConfigurations = screenConfigurationWindowModels
-                };
-                AddEditScreenConfigurationWindowModel = new ScreenConfigurationWindowModel();
-                AddEditScreenModeEnabled = false;
-            });
-
-            _messenger.Register<ShowAddMonitoringConfigurationMessage>(o =>
-            {
-                ScreenConfigurations = new ObservableCollection<ScreenConfigurationWindowModel>();
-                _monitoringConfiguration = new MonitoringConfiguration
-                {
-                    ScreenConfigurations = new List<ScreenConfiguration>()
-                };
-                MonitoringConfigurationWindowModel = new MonitoringConfigurationWindowModel
-                {
-                    ScreenConfigurations = new List<ScreenConfigurationWindowModel>()
-                };
-                AddEditScreenConfigurationWindowModel = new ScreenConfigurationWindowModel();
-                AddEditScreenModeEnabled = false;
-            });
-
-            _messenger.Register<AddScreenConfigurationWithHotKeyMessage>(o =>
-            {
-                _addedAreasOfInterestWithUsingHotkey = o.ScreenConfiguration.AreasOfInterest;
-                AddEditScreenConfigurationWindowModel = new ScreenConfigurationWindowModel
-                {
-                    Id = Guid.NewGuid().ToString()
-                };
-                AddEditScreenModeEnabled = true;
-                SelectedScreenConfiguration = null;
-            });
+            _balloonService = balloonService;
+            _logger = loggerFactory.GetLogger(typeof(MonitoringConfigurationAddEditViewModel));
+            SetupMessageRegistrations();
         }
 
         public ESettingsSubViewModel ESettingsSubViewModel =>
@@ -150,27 +117,34 @@ namespace GazeMonitoring.ViewModels
 
         public AwaitableDelegateCommand CreateFromPptCommand => new AwaitableDelegateCommand(async () =>
         {
-            var fileName = _fileDialogService.OpenFileDialog();
-
-            // Cancelled window
-            if (fileName == null)
+            try
             {
-                return;
+                var fileName = _fileDialogService.OpenFileDialog();
+
+                // Cancelled window
+                if (fileName == null)
+                {
+                    return;
+                }
+
+                IsBusy = true;
+
+                await Task.Run(() =>
+                {
+                    var screenConfigurations = _powerpointParser.Parse(fileName).ToList();
+                    _monitoringConfiguration.ScreenConfigurations = screenConfigurations;
+                    ScreenConfigurations = new ObservableCollection<ScreenConfigurationWindowModel>(Convert(screenConfigurations));
+                });
             }
-
-            // TODO: might warp to try/finally
-            IsBusy = true;
-
-            await Task.Run(() =>
+            catch (Exception ex)
             {
-                var screenConfigurations = _powerpointParser.Parse(fileName).ToList();
-                _monitoringConfiguration.ScreenConfigurations = screenConfigurations;
-                ScreenConfigurations = new ObservableCollection<ScreenConfigurationWindowModel>(Convert(screenConfigurations));
-                _configurationRepository.Save(_monitoringConfiguration);
-                _appLocalContextManager.SetMonitoringConfigurationId(_monitoringConfiguration.Id);
-            });
-
-            IsBusy = false;
+                _logger.Error($"Could not parse ppt file. Ex: {ex}");
+                _balloonService.ShowBalloonTip("Error", "Could parse invalid ppt file.", BalloonIcon.Error);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         });
 
         public bool IsBusy
@@ -245,7 +219,6 @@ namespace GazeMonitoring.ViewModels
                 var dbScreenConfiguration = _monitoringConfiguration.ScreenConfigurations.First(o => o.Id == SelectedScreenConfiguration.Id);
                 dbScreenConfiguration.Name = AddEditScreenConfigurationWindowModel.Name;
                 dbScreenConfiguration.Duration = ParseDuration(AddEditScreenConfigurationWindowModel.Duration.Value);
-                //_configurationRepository.Save(_monitoringConfiguration);
                 _appLocalContextManager.SetScreenConfigurationId(SelectedScreenConfiguration.Id);
             }
             else
@@ -358,6 +331,50 @@ namespace GazeMonitoring.ViewModels
             {
                 ScreenConfigurations[i].Number = i;
             }
+        }
+
+        private void SetupMessageRegistrations()
+        {
+            _messenger.Register<ShowEditMonitoringConfigurationMessage>(o =>
+            {
+                var screenConfigurationWindowModels = Convert(o.MonitoringConfiguration.ScreenConfigurations);
+                ScreenConfigurations =
+                    new ObservableCollection<ScreenConfigurationWindowModel>(screenConfigurationWindowModels.OrderBy(x => x.Number));
+                _monitoringConfiguration = o.MonitoringConfiguration;
+                MonitoringConfigurationWindowModel = new MonitoringConfigurationWindowModel
+                {
+                    Name = o.MonitoringConfiguration.Name,
+                    ScreenConfigurations = screenConfigurationWindowModels
+                };
+                AddEditScreenConfigurationWindowModel = new ScreenConfigurationWindowModel();
+                AddEditScreenModeEnabled = false;
+            });
+
+            _messenger.Register<ShowAddMonitoringConfigurationMessage>(o =>
+            {
+                ScreenConfigurations = new ObservableCollection<ScreenConfigurationWindowModel>();
+                _monitoringConfiguration = new MonitoringConfiguration
+                {
+                    ScreenConfigurations = new List<ScreenConfiguration>()
+                };
+                MonitoringConfigurationWindowModel = new MonitoringConfigurationWindowModel
+                {
+                    ScreenConfigurations = new List<ScreenConfigurationWindowModel>()
+                };
+                AddEditScreenConfigurationWindowModel = new ScreenConfigurationWindowModel();
+                AddEditScreenModeEnabled = false;
+            });
+
+            _messenger.Register<AddScreenConfigurationWithHotKeyMessage>(o =>
+            {
+                _addedAreasOfInterestWithUsingHotkey = o.ScreenConfiguration.AreasOfInterest;
+                AddEditScreenConfigurationWindowModel = new ScreenConfigurationWindowModel
+                {
+                    Id = Guid.NewGuid().ToString()
+                };
+                AddEditScreenModeEnabled = true;
+                SelectedScreenConfiguration = null;
+            });
         }
     }
 }

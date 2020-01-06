@@ -48,7 +48,8 @@ namespace GazeMonitoring.Powerpoint
                         AreasOfInterest = new List<AreaOfInterest>(),
                         Id = Guid.NewGuid().ToString(),
                         Name = $"Slide{activePresentationSlide.SlideNumber}",
-                        Number = activePresentationSlide.SlideNumber - 1
+                        Number = activePresentationSlide.SlideNumber - 1,
+                        Duration = TimeSpan.FromSeconds(0)
                     };
 
                     foreach (PPt.Shape shape in activePresentationSlide.Shapes)
