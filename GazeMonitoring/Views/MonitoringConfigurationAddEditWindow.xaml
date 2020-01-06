@@ -34,26 +34,23 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Screens" DisplayMemberBinding="{Binding AreasOfInterestCount}" />
-                        <GridViewColumn Header="Actions" >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
-                                        <materialDesign:PackIcon Kind="DatabaseEdit" />
-                                    </Button>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                        <GridViewColumn Header="Screens" DisplayMemberBinding="{Binding AreasOfInterestCount}" Width="Auto" />
+                        <GridViewColumn Header="Duration" DisplayMemberBinding="{Binding Duration, StringFormat=HH:mm:ss}" Width="Auto" />
                         <GridViewColumn Header="" >
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
-                                        <materialDesign:PackIcon Kind="DeleteCircle" />
-                                    </Button>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource MaterialDesignFlatButton}">
+                                            <materialDesign:PackIcon Kind="DatabaseEdit" />
+                                        </Button>
+                                        <Button Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource MaterialDesignFlatButton}">
+                                            <materialDesign:PackIcon Kind="DeleteCircle" />
+                                        </Button>
+                                    </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
