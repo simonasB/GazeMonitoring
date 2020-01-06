@@ -221,11 +221,18 @@ namespace GazeMonitoring.ViewModels {
             if (SessionWindowModel.SelectedMonitoringConfiguration.Name !=
                 CommonConstants.DefaultMonitoringConfigName)
             {
-                await Task.Delay(TimeSpan.FromMilliseconds(
-                    SessionWindowModel.SelectedMonitoringConfiguration.ScreenConfigurations.Sum(o =>
-                        o.Duration.Value.TotalMilliseconds)), _cancellationTokenSource.Token);
+                try
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(
+                        SessionWindowModel.SelectedMonitoringConfiguration.ScreenConfigurations.Sum(o =>
+                            o.Duration.Value.TotalMilliseconds)), _cancellationTokenSource.Token);
 
-                await OnStop();
+                    await OnStop();
+                }
+                catch (Exception ex)
+                {
+                    // Ignore
+                }
             }
         }
 
