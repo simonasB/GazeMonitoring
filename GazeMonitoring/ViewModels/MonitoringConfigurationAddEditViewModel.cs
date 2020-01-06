@@ -127,7 +127,7 @@ namespace GazeMonitoring.ViewModels
                     return;
                 }
 
-                IsBusy = true;
+                _messenger.SendIsBusyChanged(true);
 
                 await Task.Run(() =>
                 {
@@ -143,7 +143,7 @@ namespace GazeMonitoring.ViewModels
             }
             finally
             {
-                IsBusy = false;
+                _messenger.SendIsBusyChanged(false);
             }
         });
 

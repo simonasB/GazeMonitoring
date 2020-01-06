@@ -14,6 +14,7 @@ namespace GazeMonitoring.ViewModels
         private readonly Dictionary<ESettingsSubViewModel, ISettingsSubViewModel> _viewModels;
         private ISettingsSubViewModel _currentViewModel;
         private bool _isVisible;
+        private bool _isBusy;
 
         public ISettingsSubViewModel CurrentViewModel
         {
@@ -54,6 +55,12 @@ namespace GazeMonitoring.ViewModels
             set => SetProperty(ref _isVisible, value);
         }
 
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
+
         private void ShowView(ESettingsSubViewModel viewModel)
         {
             _messenger.Send(new SettingsSubViewModelChangedMessage {SettingsSubViewModel = viewModel});
@@ -67,6 +74,7 @@ namespace GazeMonitoring.ViewModels
             _messenger.Register<ShowEditMonitoringConfigurationMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationAddEditViewModel));
             _messenger.Register<ShowAddMonitoringConfigurationMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationAddEditViewModel));
             _messenger.Register<ShowMonitoringConfigurationsMessage>(_ => ShowView(ESettingsSubViewModel.MonitoringConfigurationsViewModel));
+            _messenger.Register<IsBusyChangedMessage>(o => IsBusy = o.IsBusy);
         }
     }
 }

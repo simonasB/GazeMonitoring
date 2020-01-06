@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="GazeMonitoring" Height="526.705" Width="585.564"
         Visibility="{Binding IsVisible,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -22,17 +23,18 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="352*"/>
-            <ColumnDefinition Width="235*"/>
-        </Grid.ColumnDefinitions>
-        <materialDesign:ColorZone
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}" x:Name="BusyIndicator" Margin="0,0,0.4,-0.6">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="352*"/>
+                <ColumnDefinition Width="235*"/>
+            </Grid.ColumnDefinitions>
+            <materialDesign:ColorZone
                 Grid.ColumnSpan="2"
                 Padding="8"
                 Mode="PrimaryMid">
-            <DockPanel>
-                <Button
+                <DockPanel>
+                    <Button
                         Name="Close"
                         Margin="0,0,10,0"
                         VerticalAlignment="Center"
@@ -42,50 +44,51 @@
                         Style="{StaticResource MaterialDesignToolForegroundButton}"
                         Click="Close_OnClick"
                         ToolTip="Close">
-                    <materialDesign:PackIcon
+                        <materialDesign:PackIcon
                             Width="24"
                             Height="24"
                             Kind="Close" />
-                </Button>
-                <Button
+                    </Button>
+                    <Button
                         Margin="0,0,0,0"
                         Panel.ZIndex="0"
                         Command="{Binding ViewHomeCommand}"
                         Style="{DynamicResource MaterialDesignToolForegroundButton}"
                         ToolTip="Home">
-                    <materialDesign:PackIcon
+                        <materialDesign:PackIcon
                             Width="28"
                             Height="28"
                             Kind="Home" />
-                </Button>
-                <StackPanel materialDesign:RippleAssist.IsCentered="True" Orientation="Horizontal" />
-            </DockPanel>
-        </materialDesign:ColorZone>
-        <ContentControl Content="{Binding CurrentViewModel}" Margin="176,48,0,0" Grid.ColumnSpan="2"/>
+                    </Button>
+                    <StackPanel materialDesign:RippleAssist.IsCentered="True" Orientation="Horizontal" />
+                </DockPanel>
+            </materialDesign:ColorZone>
+            <ContentControl Content="{Binding CurrentViewModel}" Margin="176,48,0,0" Grid.ColumnSpan="2"/>
 
-        <ListBox Name="ListBox" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+            <ListBox Name="ListBox" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             IsEnabled="{Binding IsChecked, ElementName=EnableListBox}" Margin="0,48,175.562,0" BorderThickness="1"
             BorderBrush="{DynamicResource MaterialDesignDivider}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
-                    <i:InvokeCommandAction Command="{Binding MenuItemClicked}"
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <i:InvokeCommandAction Command="{Binding MenuItemClicked}"
                                            CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <ListBoxItem Name="Options" BorderThickness="1"
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ListBoxItem Name="Options" BorderThickness="1"
                          BorderBrush="{DynamicResource MaterialDesignDivider}">
-                <TextBlock FontSize="20" Margin="5,10,0,10">
+                    <TextBlock FontSize="20" Margin="5,10,0,10">
                     <materialDesign:PackIcon Kind="SettingsOutline" />
                     Options
-                </TextBlock>
-            </ListBoxItem>
-            <ListBoxItem Name="Screen" BorderThickness="1"
+                    </TextBlock>
+                </ListBoxItem>
+                <ListBoxItem Name="Screen" BorderThickness="1"
                          BorderBrush="{DynamicResource MaterialDesignDivider}">
-                <TextBlock FontSize="20" Margin="5,10,0,10">
+                    <TextBlock FontSize="20" Margin="5,10,0,10">
                     <materialDesign:PackIcon Kind="WindowMaximize" /> 
                     Screen
-                </TextBlock>
-            </ListBoxItem>
-        </ListBox>
-    </Grid>
+                    </TextBlock>
+                </ListBoxItem>
+            </ListBox>
+        </Grid>
+    </xctk:BusyIndicator>
 </Window>

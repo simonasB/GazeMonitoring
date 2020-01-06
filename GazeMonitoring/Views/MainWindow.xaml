@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         WindowStyle="None"
         Title="MainWindow" Height="420" Width="315"
@@ -14,7 +15,9 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="12">
-    <Grid HorizontalAlignment="Left" Width="315" Margin="0,0,0,-0.2">
-        <ContentControl Content="{Binding CurrentViewModel}" />
-    </Grid>
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}" x:Name="BusyIndicator" Margin="0,0,0.4,-0.6">
+        <Grid HorizontalAlignment="Left" Width="315" Margin="0,0,0,-0.2">
+            <ContentControl Content="{Binding CurrentViewModel}" />
+        </Grid>
+    </xctk:BusyIndicator>
 </Window>

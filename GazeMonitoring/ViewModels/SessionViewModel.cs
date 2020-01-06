@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using GazeMonitoring.Balloon;
 using GazeMonitoring.Base;
 using GazeMonitoring.Commands;
@@ -17,6 +16,8 @@ using GazeMonitoring.Model;
 using GazeMonitoring.Monitor;
 using GazeMonitoring.WindowModels;
 using Hardcodet.Wpf.TaskbarNotification;
+using Microsoft.Office.Interop.PowerPoint;
+using Application = System.Windows.Application;
 
 namespace GazeMonitoring.ViewModels {
     public class SessionViewModel : ViewModelBase, IMainSubViewModel {
@@ -34,7 +35,7 @@ namespace GazeMonitoring.ViewModels {
         private readonly ILogger _logger;
         private IGazeDataMonitor _gazeDataMonitor;
         private CancellationTokenSource _cancellationTokenSource;
-        private static SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
 
         [Obsolete("Only for design data", true)]
         public SessionViewModel() : this(null, null, null, null, null, null, null)
@@ -57,19 +58,7 @@ namespace GazeMonitoring.ViewModels {
                 EyeTrackerName = CommonConstants.DefaultEyeTrackerName
             };
             _logger = loggerFactory.GetLogger(typeof(SessionViewModel));
-            _messenger.Register<ShowStartNewSessionMessage>(_ =>
-            {
-                var defaultConfiguration = new MonitoringConfiguration
-                {
-                    Name = CommonConstants.DefaultMonitoringConfigName
-                };
-                SessionWindowModel.MonitoringConfigurations = new List<MonitoringConfiguration>
-                {
-                    defaultConfiguration
-                };
-                SessionWindowModel.MonitoringConfigurations.AddRange(_configurationRepository.Search<MonitoringConfiguration>());
-                SessionWindowModel.SelectedMonitoringConfiguration = defaultConfiguration;
-            });
+            SetupMessageRegistrations();
         }
 
         public bool IsAnonymous {
@@ -204,10 +193,11 @@ namespace GazeMonitoring.ViewModels {
                 {
                     monitoringContext.MonitoringConfiguration = SessionWindowModel.SelectedMonitoringConfiguration;
                 }
-
+                
                 _gazeDataMonitor = _gazeDataMonitorFactory.Create(monitoringContext);
                 _cancellationTokenSource = new CancellationTokenSource();
                 await _gazeDataMonitor.StartAsync();
+                _messenger.Send(new HideSettingsMessage());
             } catch (Exception ex){
                 _logger.Error($"Unhandled exception occured on start. {ex}");
                 ShowErrorBalloon();
@@ -231,7 +221,7 @@ namespace GazeMonitoring.ViewModels {
                 }
                 catch (Exception ex)
                 {
-                    // Ignore
+                    // Ignore, catch task cancelled exception when session is stopped before time elapses.
                 }
             }
         }
@@ -291,6 +281,23 @@ namespace GazeMonitoring.ViewModels {
         private void OnSettings()
         {
             _messenger.Send(new ShowSettingsMessage());
+        }
+
+        private void SetupMessageRegistrations()
+        {
+            _messenger.Register<ShowStartNewSessionMessage>(_ =>
+            {
+                var defaultConfiguration = new MonitoringConfiguration
+                {
+                    Name = CommonConstants.DefaultMonitoringConfigName
+                };
+                SessionWindowModel.MonitoringConfigurations = new List<MonitoringConfiguration>
+                {
+                    defaultConfiguration
+                };
+                SessionWindowModel.MonitoringConfigurations.AddRange(_configurationRepository.Search<MonitoringConfiguration>());
+                SessionWindowModel.SelectedMonitoringConfiguration = defaultConfiguration;
+            });
         }
     }
 }

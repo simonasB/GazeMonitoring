@@ -224,6 +224,7 @@
     <Compile Include="Messaging\IMessage.cs" />
     <Compile Include="Messaging\Messages\AddScreenConfigurationWithHotKeyMessage.cs" />
     <Compile Include="Messaging\Messages\HideSettingsMessage.cs" />
+    <Compile Include="Messaging\Messages\IsBusyChangedMessage.cs" />
     <Compile Include="Messaging\Messages\MainSubViewModelChangedMessage.cs" />
     <Compile Include="Messaging\Messages\SettingsSubViewModelChangedMessage.cs" />
     <Compile Include="Messaging\Messages\ShowCreateScreenConfigurationMessage.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Messaging\Messages\ShowAddMonitoringConfigurationMessage.cs" />
     <Compile Include="Messaging\Messages\ShowEditMonitoringConfigurationMessage.cs" />
     <Compile Include="Messaging\Messages\ShowSettingsMessage.cs" />
+    <Compile Include="Messaging\MessengerExtensions.cs" />
     <Compile Include="Monitor\DataAggregationService.cs" />
     <Compile Include="Monitor\GazeDataMonitorFactory.cs" />
     <Compile Include="Powerpoint\PowerpointParser.cs" />

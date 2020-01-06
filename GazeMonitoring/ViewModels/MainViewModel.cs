@@ -12,6 +12,13 @@ namespace GazeMonitoring.ViewModels
         private IMainSubViewModel _currentViewModel;
         private readonly Dictionary<EMainSubViewModel, IMainSubViewModel> _viewModels;
         private readonly IMessenger _messenger;
+        private bool _isBusy;
+
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
 
         public IMainSubViewModel CurrentViewModel
         {
@@ -39,6 +46,7 @@ namespace GazeMonitoring.ViewModels
             _messenger.Register<ShowMainNavigationMessage>(_ => ShowView(EMainSubViewModel.MainNavigationViewModel));
             _messenger.Register<ShowProfilesMessage>(_ => ShowView(EMainSubViewModel.ProfilesViewModel));
             _messenger.Register<ShowStartNewSessionMessage>(_ => ShowView(EMainSubViewModel.SessionViewModel));
+            _messenger.Register<IsBusyChangedMessage>(o => IsBusy = o.IsBusy);
         }
     }
 }

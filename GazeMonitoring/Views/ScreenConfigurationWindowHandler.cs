@@ -17,6 +17,7 @@ namespace GazeMonitoring.Views
         private readonly IAppLocalContextManager _appLocalContextManager;
         private readonly IConfigurationRepository _configurationRepository;
         private readonly IMessenger _messenger;
+        private bool _isBusy;
 
         public ScreenConfigurationWindowHandler(IAppLocalContextManager appLocalContextManager, IConfigurationRepository configurationRepository, IMessenger messenger)
         {
@@ -29,6 +30,8 @@ namespace GazeMonitoring.Views
         {
             _messenger.Register<ShowCreateScreenConfigurationMessage>(_ =>
             {
+                if (_isBusy) return;
+
                 if (!IsMonitoringConfigurationContextValid(out var _))
                 {
                     _messenger.Send(new ShowSettingsMessage());
@@ -43,6 +46,8 @@ namespace GazeMonitoring.Views
 
             _messenger.Register<ShowEditScreenConfigurationMessage>(_ =>
             {
+                if (_isBusy) return;
+
                 if (!IsMonitoringConfigurationContextValid(out var monitoringConfiguration))
                 {
                     _messenger.Send(new ShowSettingsMessage());
@@ -61,6 +66,8 @@ namespace GazeMonitoring.Views
                     window.Show();
                 }
             });
+
+            _messenger.Register<IsBusyChangedMessage>(m => _isBusy = m.IsBusy);
         }
 
         private bool IsMonitoringConfigurationContextValid(out MonitoringConfiguration monitoringConfiguration)
