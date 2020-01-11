@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper, Version=6.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.6.1.1\lib\net45\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Highcharts, Version=7.2.1.1, Culture=neutral, PublicKeyToken=90b74bd27a557bd3, processorArchitecture=MSIL">
       <HintPath>..\packages\Highsoft.Highcharts.7.2.1.1\lib\netstandard2.0\Highcharts.dll</HintPath>
     </Reference>
@@ -335,6 +338,20 @@
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GazeMonitoring.Data.Reporting\GazeMonitoring.Data.Reporting.csproj">
+      <Project>{F2F03B7F-0378-4C23-99E4-CF59CDF1B9FC}</Project>
+      <Name>GazeMonitoring.Data.Reporting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
+      <Project>{A425261F-E463-4EB1-B237-597509E25C39}</Project>
+      <Name>GazeMonitoring.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
+      <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>
+      <Name>GazeMonitoring.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

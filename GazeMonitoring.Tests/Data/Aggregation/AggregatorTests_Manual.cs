@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using GazeMonitoring.Common;
 using GazeMonitoring.Data;
 using GazeMonitoring.Data.Aggregation;
 using GazeMonitoring.Data.Csv;
@@ -19,10 +20,10 @@ namespace GazeMonitoring.Tests.Data.Aggregation
         public async Task ManualTest()
         {
             var dataAggregationService = new DataAggregationService(
-                new DataAggregationManager(new CurrentSessionDataFromTemp(new TempDataConfiguration())),
+                new DataAggregationManager(new CurrentSessionDataFromTemp(new TempDataConfiguration(new AppDataHelper()))),
                 new CsvAggregatedDataRepository(), new ReportManager());
 
-            var repo = new LiteDBConfigurationRepository();
+            var repo = new LiteDBConfigurationRepository(new AppDataHelper());
             var monitoringConfiguration = repo.Search<MonitoringConfiguration>().First(o => o.Id == 2);
 
             await dataAggregationService.Run(new MonitoringContext

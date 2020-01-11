@@ -7,7 +7,7 @@
 @using Highsoft.Web.Mvc.Charts.Rendering
 
 @{
-    var chartOptions =
+    var chartOptionsTotalTimesByAoi =
         new Highcharts
         {
             Chart = new Highsoft.Web.Mvc.Charts.Chart
@@ -21,7 +21,7 @@
             },
             Title = new Title
             {
-                Text = "Fixation total times by area of interest type"
+                Text = "Fixation duration total times by area of interest type"
             },
             Tooltip = new Tooltip
             {
@@ -41,15 +41,62 @@
                 new PieSeries
                 {
                     Name = "AreaOfInterestType",
-                    Data = @Model.PieData as List<PieSeriesData>
+                    Data = @Model.TotalTimesByAoi as List<PieSeriesData>
                 },
 
-            }
+                    }
         };
 
 
-    chartOptions.ID = "chart";
-    var renderer = new HighchartsRenderer(chartOptions, "MDcwMjAyMDAxMDUxMDAwMDAwMDE=");
+    chartOptionsTotalTimesByAoi.ID = "chartTotalTimesByAoi";
+    var rendererTotalTimesByAoi = new HighchartsRenderer(chartOptionsTotalTimesByAoi, "");
 }
 
-@Raw(renderer.RenderHtml(true))
+@{
+    var chartOptionsTotalTimesByScreenConfiguration =
+        new Highcharts
+        {
+            Chart = new Highsoft.Web.Mvc.Charts.Chart
+            {
+                PlotBackgroundColor = null,
+                PlotBorderWidth = null,
+                PlotShadow = new Shadow
+                {
+                    Enabled = false
+                }
+            },
+            Title = new Title
+            {
+                Text = "Fixation duration total times by screen configuration"
+            },
+            Tooltip = new Tooltip
+            {
+                PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"
+            },
+            PlotOptions = new PlotOptions
+            {
+                Pie = new PlotOptionsPie
+                {
+                    AllowPointSelect = true,
+                    Cursor = PlotOptionsPieCursor.Pointer,
+                    DataLabels = new Hashtable { { "enabled", true }, { "format", "<b>{point.name}</b>: {point.percentage:.1f} %" } }
+                }
+            },
+            Series = new List<Series>
+            {
+                new PieSeries
+                {
+                    Name = "AreaOfInterestType",
+                    Data = @Model.TotalTimesByScreenConfiguration as List<PieSeriesData>
+                },
+
+                    }
+        };
+
+
+    chartOptionsTotalTimesByScreenConfiguration.ID = "chartTotalTimesByScreenConfiguration";
+    var rendererTotalTimesByScreenConfiguration = new HighchartsRenderer(chartOptionsTotalTimesByScreenConfiguration, "");
+}
+
+@Raw(rendererTotalTimesByAoi.RenderHtml(true))
+@Raw(rendererTotalTimesByScreenConfiguration.RenderHtml(true))

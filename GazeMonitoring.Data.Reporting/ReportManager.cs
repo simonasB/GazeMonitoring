@@ -22,7 +22,8 @@ namespace GazeMonitoring.Data.Reporting
                 .UseMemoryCachingProvider()
                 .Build();
 
-            var pieData = new List<PieSeriesData>();
+            var totalTimesByAoiPieData = new List<PieSeriesData>();
+            var totalTimesByScreenConfigurationPieData = new List<PieSeriesData>();
 
             var totalSessionTimeInMillis =
                 (monitoringContext.SubjectInfo.SessionEndTimeStamp -
@@ -30,10 +31,15 @@ namespace GazeMonitoring.Data.Reporting
 
             aggregatedData.FixationPointsAggregatedDataForAoiByName.ForEach(o =>
             {
-                pieData.Add(new PieSeriesData { Name = o.Identifier ?? "None", Y = o.FixationPointsDuration.TotalMilliseconds * 100 / totalSessionTimeInMillis });
+                totalTimesByAoiPieData.Add(new PieSeriesData { Name = o.Identifier ?? "None", Y = o.FixationPointsDuration.TotalMilliseconds * 100 / totalSessionTimeInMillis });
+            });
+            aggregatedData.FixationPointsAggregatedDataForScreenConfigurations.ForEach(o =>
+            {
+                totalTimesByScreenConfigurationPieData.Add(new PieSeriesData { Name = o.ScreenConfigurationName, Y = o.FixationPointsDuration.TotalMilliseconds * 100 / totalSessionTimeInMillis });
             });
 
-            string result = await engine.CompileRenderAsync("Main.cshtml", new { PieData = pieData });
+
+            string result = await engine.CompileRenderAsync("Main.cshtml", new { TotalTimesByAoi = totalTimesByAoiPieData, TotalTimesByScreenConfiguration = totalTimesByScreenConfigurationPieData });
 
             var reportsFolderPath = Path.Combine(monitoringContext.DataFilesPath, "Reports");
 
