@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GazeMonitoring.Common;
 using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Model;
 using NUnit.Framework;
@@ -13,7 +9,7 @@ namespace GazeMonitoring.Tests.DataAccess.LiteDB
     [TestFixture]
     public class LiteDBConfigurationRepositoryTests
     {
-        private readonly LiteDBConfigurationRepository _configurationRepository = new LiteDBConfigurationRepository();
+        private readonly LiteDBConfigurationRepository _configurationRepository = new LiteDBConfigurationRepository(new AppDataHelper());
 
         [Test]
         public void A()

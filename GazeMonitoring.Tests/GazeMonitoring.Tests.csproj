@@ -120,6 +120,7 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="HotKeys\GlobalHotKeyManagerTests_Unit.cs" />
     <Compile Include="Messaging\MessengerTests_Unit.cs" />
+    <Compile Include="Reporting\ReportManagerTests_Manual.cs" />
     <Compile Include="ScreenCapture.SharpAvi\AviVideoStreamFactoryTests_Unit.cs" />
     <Compile Include="ScreenCapture.SharpAvi\SharpAviRecorderTests_Integration.cs" />
     <Compile Include="ScreenCapture.SharpAvi\SharpAviRecorderTests_Unit.cs" />

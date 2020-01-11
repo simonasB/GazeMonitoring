@@ -262,6 +262,10 @@ namespace GazeMonitoring.Views
 
         private void CloseInternal()
         {
+            if (!_isNewConfigurationRequested)
+            {
+                _configurationRepository.Save(_monitoringConfiguration);
+            }
             _messenger.Send(new ShowSettingsMessage());
             _messenger.Send(new ShowEditMonitoringConfigurationMessage(_monitoringConfiguration));
             if (_isNewConfigurationRequested && _newScreenConfiguration != null)

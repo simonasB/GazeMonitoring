@@ -78,10 +78,10 @@
         <Button Command="{Binding SaveScreenConfigurationCommand}" Visibility="{Binding AddEditScreenModeEnabled,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource MaterialDesignFlatButton}" Margin="268,388,10,28" Height="Auto">
             <materialDesign:PackIcon Kind="ContentSave" Height="28" Width="33" />
         </Button>
-        <Button Command="{Binding AddScreenConfigurationCommand}" HorizontalAlignment="Left" Margin="272,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
+        <Button Command="{Binding AddScreenConfigurationCommand}" IsEnabled="{Binding IsMonitoringConfigurationSaved}" HorizontalAlignment="Left" Margin="272,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
             <materialDesign:PackIcon Kind="AddCircle" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
         </Button>
-        <Button Command="{Binding CreateFromPptCommand}" HorizontalAlignment="Left" Margin="216,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
+        <Button Command="{Binding CreateFromPptCommand}" IsEnabled="{Binding IsMonitoringConfigurationSaved}" HorizontalAlignment="Left" Margin="216,152,0,0" VerticalAlignment="Top" Width="65" RenderTransformOrigin="1.053,1.2" Style="{StaticResource MaterialDesignFlatButton}" Height="39">
             <materialDesign:PackIcon Kind="AddToPhotos" Height="32" Width="30" RenderTransformOrigin="0.4,1.75" />
         </Button>
         <TextBlock Visibility="{Binding AddEditScreenModeEnabled, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,429,0,0" TextWrapping="Wrap" Text="Duration" VerticalAlignment="Top"/>

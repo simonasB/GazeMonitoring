@@ -47,6 +47,7 @@ namespace GazeMonitoring.ViewModels
         private bool _addEditScreenModeEnabled;
         private List<AreaOfInterest> _addedAreasOfInterestWithUsingHotkey;
         private readonly ILogger _logger;
+        private bool _isMonitoringConfigurationSaved;
 
         public MonitoringConfigurationWindowModel MonitoringConfigurationWindowModel { get; set; }
 
@@ -77,7 +78,7 @@ namespace GazeMonitoring.ViewModels
                 if (screenConfigToDelete == null) return;
 
                 _monitoringConfiguration.ScreenConfigurations.Remove(screenConfigToDelete);
-                //_configurationRepository.Update(_monitoringConfiguration);
+                _configurationRepository.Save(_monitoringConfiguration);
             });
 
         public RelayCommand<ScreenConfigurationWindowModel> EditCommand => new RelayCommand<ScreenConfigurationWindowModel>(
@@ -108,6 +109,7 @@ namespace GazeMonitoring.ViewModels
             });
             _configurationRepository.Save(_monitoringConfiguration);
             _appLocalContextManager.SetMonitoringConfigurationId(_monitoringConfiguration.Id);
+            IsMonitoringConfigurationSaved = true;
         });
 
         public RelayCommand BackCommand => new RelayCommand(() =>
@@ -134,6 +136,12 @@ namespace GazeMonitoring.ViewModels
                     var screenConfigurations = _powerpointParser.Parse(fileName).ToList();
                     _monitoringConfiguration.ScreenConfigurations = screenConfigurations;
                     ScreenConfigurations = new ObservableCollection<ScreenConfigurationWindowModel>(Convert(screenConfigurations));
+                    _monitoringConfiguration.ScreenConfigurations.ForEach(sc =>
+                    {
+                        sc.Number = ScreenConfigurations.First(o => o.Id == sc.Id).Number;
+                    });
+                    _configurationRepository.Save(_monitoringConfiguration);
+                    _appLocalContextManager.SetMonitoringConfigurationId(_monitoringConfiguration.Id);
                 });
             }
             catch (Exception ex)
@@ -155,6 +163,16 @@ namespace GazeMonitoring.ViewModels
                 _isBusy = value;
                 OnPropertyChanged();
             }
+        }
+
+
+        /// <summary>
+        /// Monitoring configuration must be saved to db before actions on grid can be done
+        /// </summary>
+        public bool IsMonitoringConfigurationSaved
+        {
+            get => _isMonitoringConfigurationSaved;
+            set => SetProperty(ref _isMonitoringConfigurationSaved, value);
         }
 
         public ScreenConfigurationWindowModel SelectedScreenConfiguration
@@ -219,7 +237,6 @@ namespace GazeMonitoring.ViewModels
                 var dbScreenConfiguration = _monitoringConfiguration.ScreenConfigurations.First(o => o.Id == SelectedScreenConfiguration.Id);
                 dbScreenConfiguration.Name = AddEditScreenConfigurationWindowModel.Name;
                 dbScreenConfiguration.Duration = ParseDuration(AddEditScreenConfigurationWindowModel.Duration.Value);
-                _appLocalContextManager.SetScreenConfigurationId(SelectedScreenConfiguration.Id);
             }
             else
             {
@@ -235,8 +252,15 @@ namespace GazeMonitoring.ViewModels
                 });
 
                 _addedAreasOfInterestWithUsingHotkey = null;
-                _appLocalContextManager.SetScreenConfigurationId(AddEditScreenConfigurationWindowModel.Id);
             }
+
+            _monitoringConfiguration.ScreenConfigurations.ForEach(sc =>
+            {
+                sc.Number = ScreenConfigurations.First(o => o.Id == sc.Id).Number;
+            });
+            _configurationRepository.Save(_monitoringConfiguration);
+            _appLocalContextManager.SetScreenConfigurationId(AddEditScreenConfigurationWindowModel.Id);
+            _appLocalContextManager.SetMonitoringConfigurationId(_monitoringConfiguration.Id);
         });
 
         private bool IsValidScreenConfiguration()
@@ -348,6 +372,7 @@ namespace GazeMonitoring.ViewModels
                 };
                 AddEditScreenConfigurationWindowModel = new ScreenConfigurationWindowModel();
                 AddEditScreenModeEnabled = false;
+                IsMonitoringConfigurationSaved = true;
             });
 
             _messenger.Register<ShowAddMonitoringConfigurationMessage>(o =>
@@ -374,6 +399,7 @@ namespace GazeMonitoring.ViewModels
                 };
                 AddEditScreenModeEnabled = true;
                 SelectedScreenConfiguration = null;
+                IsMonitoringConfigurationSaved = true;
             });
         }
     }
