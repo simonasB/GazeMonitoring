@@ -44,7 +44,7 @@
                     Data = @Model.TotalTimesByAoi as List<PieSeriesData>
                 },
 
-                    }
+                                    }
         };
 
 
@@ -90,7 +90,7 @@
                     Data = @Model.TotalTimesByScreenConfiguration as List<PieSeriesData>
                 },
 
-                    }
+                                    }
         };
 
 
@@ -98,5 +98,143 @@
     var rendererTotalTimesByScreenConfiguration = new HighchartsRenderer(chartOptionsTotalTimesByScreenConfiguration, "");
 }
 
+@{ var chartOptionsFixationCountsForAoiByName =
+        new Highcharts
+        {
+            Chart = new Highsoft.Web.Mvc.Charts.Chart
+            {
+            },
+            Title = new Title
+            {
+                Text = "Fixation points counts for area of interest by name"
+            }
+
+            YAxis = new List<YAxis>
+                {
+                new YAxis
+                {
+                    Title = new YAxisTitle
+                    {
+                        Text = "Fixation points count"
+                    }
+                }
+                                                },
+            PlotOptions = new PlotOptions
+            {
+                Pie = new PlotOptionsPie
+                {
+                    Shadow = new Shadow
+                    {
+                        Enabled = true,
+                        Color = "#000000",
+                        Width = 10,
+                        OffsetX = 0,
+                        OffsetY = 0
+                    },
+                    Center = new string[] { "50%", "50%" }
+                }
+            },
+            Tooltip = new Tooltip
+            {
+                ValueSuffix = "%"
+            },
+            Series = new List<Series>
+                {
+                new PieSeries
+                {
+                    Name = "Total count",
+                    Size = "60%",
+                    DataLabels = new PieSeriesDataLabels
+                    {
+                        Formatter = "formatBrowserSeriesDataLabels",
+                        Color = "white",
+                        //Distance = -30
+                    },
+                    Data = @Model.FixationPointsCountForAoiByName.FullFixationPointsCountData as List<PieSeriesData>
+                },
+                new PieSeries
+                {
+                    Name = "Split",
+                    Size = "80%",
+                    InnerSize = "60%",
+                    Data = @Model.FixationPointsCountForAoiByName.LongAndShortFixationPointsCountData as List<PieSeriesData>
+                }
+                        }
+        };
+
+    chartOptionsFixationCountsForAoiByName.ID = "chart";
+    var rendererFixationCountsForAoiByName = new HighchartsRenderer(chartOptionsFixationCountsForAoiByName);
+}
+
+@{ var chartOptionsFixationCountsForScreenConfigurations =
+        new Highcharts
+        {
+            Chart = new Highsoft.Web.Mvc.Charts.Chart
+            {
+            },
+            Title = new Title
+            {
+                Text = "Fixation points counts for area of interest by name"
+            }
+
+            YAxis = new List<YAxis>
+                {
+                new YAxis
+                {
+                    Title = new YAxisTitle
+                    {
+                        Text = "Fixation points count"
+                    }
+                }
+                                                },
+            PlotOptions = new PlotOptions
+            {
+                Pie = new PlotOptionsPie
+                {
+                    Shadow = new Shadow
+                    {
+                        Enabled = true,
+                        Color = "#000000",
+                        Width = 10,
+                        OffsetX = 0,
+                        OffsetY = 0
+                    },
+                    Center = new string[] { "50%", "50%" }
+                }
+            },
+            Tooltip = new Tooltip
+            {
+                ValueSuffix = "%"
+            },
+            Series = new List<Series>
+                {
+                new PieSeries
+                {
+                    Name = "Total count",
+                    Size = "60%",
+                    DataLabels = new PieSeriesDataLabels
+                    {
+                        Formatter = "formatBrowserSeriesDataLabels",
+                        Color = "white",
+                        //Distance = -30
+                    },
+                    Data = @Model.FixationPointsCountForScreenConfigurations.FullFixationPointsCountData as List<PieSeriesData>
+                },
+                new PieSeries
+                {
+                    Name = "Split",
+                    Size = "80%",
+                    InnerSize = "60%",
+                    Data = @Model.FixationPointsCountForScreenConfigurations.LongAndShortFixationPointsCountData as List<PieSeriesData>
+                }
+                        }
+        };
+
+    chartOptionsFixationCountsForScreenConfigurations.ID = "chart";
+    var rendererFixationCountsForScreenConfigurations = new HighchartsRenderer(chartOptionsFixationCountsForScreenConfigurations);
+}
+
 @Raw(rendererTotalTimesByAoi.RenderHtml(true))
 @Raw(rendererTotalTimesByScreenConfiguration.RenderHtml(true))
+@Raw(rendererFixationCountsForAoiByName.RenderHtml(true))
+@Raw(rendererFixationCountsForScreenConfigurations.RenderHtml(true))

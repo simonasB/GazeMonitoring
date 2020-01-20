@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using GazeMonitoring.Data.Aggregation.Model;
 using GazeMonitoring.Model;
@@ -35,11 +36,22 @@ namespace GazeMonitoring.Data.Reporting
             });
             aggregatedData.FixationPointsAggregatedDataForScreenConfigurations.ForEach(o =>
             {
-                totalTimesByScreenConfigurationPieData.Add(new PieSeriesData { Name = o.ScreenConfigurationName, Y = o.FixationPointsDuration.TotalMilliseconds * 100 / totalSessionTimeInMillis });
+                totalTimesByScreenConfigurationPieData.Add(new PieSeriesData { Name = o.IdentifierReadableName, Y = o.FixationPointsDuration.TotalMilliseconds * 100 / totalSessionTimeInMillis });
             });
+            var fixationPointsCountDataForAoiByName = GetFixationPointsCountData(aggregatedData.FixationPointsAggregatedDataForAoiByName.Cast<FixationPointsAggregatedData>().ToList(),
+                aggregatedData.FixationPointsAggregatedDataForAoiByName.Sum(o => o.FixationPointsCount));
 
+            var fixationPointsCountDataForScreenConfigurations = GetFixationPointsCountData(aggregatedData.FixationPointsAggregatedDataForScreenConfigurations.Cast<FixationPointsAggregatedData>().ToList(),
+                aggregatedData.FixationPointsAggregatedDataForScreenConfigurations.Sum(o => o.FixationPointsCount));
 
-            string result = await engine.CompileRenderAsync("Main.cshtml", new { TotalTimesByAoi = totalTimesByAoiPieData, TotalTimesByScreenConfiguration = totalTimesByScreenConfigurationPieData });
+            string result = await engine.CompileRenderAsync("Main.cshtml", 
+                new
+                {
+                    TotalTimesByAoi = totalTimesByAoiPieData,
+                    TotalTimesByScreenConfiguration = totalTimesByScreenConfigurationPieData,
+                    FixationPointsCountForAoiByName = fixationPointsCountDataForAoiByName,
+                    FixationPointsCountForScreenConfigurations = fixationPointsCountDataForScreenConfigurations
+                });
 
             var reportsFolderPath = Path.Combine(monitoringContext.DataFilesPath, "Reports");
 
@@ -47,6 +59,21 @@ namespace GazeMonitoring.Data.Reporting
                 Directory.CreateDirectory(reportsFolderPath);
 
             File.WriteAllText(Path.Combine(reportsFolderPath, "report.html"), result);
+        }
+
+        private (List<PieSeriesData> FullFixationPointsCountData, List<PieSeriesData> LongAndShortFixationPointsCountData) GetFixationPointsCountData(List<FixationPointsAggregatedData> aggregatedData, int totalFixationPointCount)
+        {
+            var fullFixationPointsCountData = new List<PieSeriesData>();
+            var longAndShortFixationPointsCountData = new List<PieSeriesData>();
+
+            aggregatedData.ForEach(o =>
+            {
+                fullFixationPointsCountData.Add(new PieSeriesData {Name = o.IdentifierReadableName, Y = o.FixationPointsCount * 100 / totalFixationPointCount});
+                longAndShortFixationPointsCountData.Add(new PieSeriesData { Name = "LongFixationsCount", Y = o.LongFixationPointsCount * 100 / totalFixationPointCount });
+                longAndShortFixationPointsCountData.Add(new PieSeriesData { Name = "ShortFixationsCount", Y = o.ShortFixationPointsCount * 100 / totalFixationPointCount });
+            });
+
+            return (fullFixationPointsCountData, longAndShortFixationPointsCountData);
         }
     }
 }

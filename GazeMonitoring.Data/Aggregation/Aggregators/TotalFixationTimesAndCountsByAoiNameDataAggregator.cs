@@ -22,7 +22,8 @@ namespace GazeMonitoring.Data.Aggregation.Aggregators
 
                 var aggregatedDataForAoi = new FixationPointsAggregatedDataForAoi
                 {
-                    Identifier = aoiName
+                    Identifier = aoiName,
+                    IdentifierReadableName = aoiName
                 };
                 long fixationPointsDurationInMillis = 0;
                 foreach (var mappedFixationPointByName in mappedFixationPointsByName)

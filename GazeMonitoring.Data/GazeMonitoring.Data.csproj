@@ -43,6 +43,7 @@
     <Compile Include="Aggregation\Model\AggregatedData.cs" />
     <Compile Include="Aggregation\DataAggregationManager.cs" />
     <Compile Include="Aggregation\DataAggregatorBase.cs" />
+    <Compile Include="Aggregation\Model\FixationPointsAggregatedData.cs" />
     <Compile Include="Aggregation\Model\FixationPointsAggregatedDataForAoi.cs" />
     <Compile Include="Aggregation\Model\FixationPointsAggregatedDataForScreenConfiguration.cs" />
     <Compile Include="Aggregation\IAggregatedDataRepository.cs" />

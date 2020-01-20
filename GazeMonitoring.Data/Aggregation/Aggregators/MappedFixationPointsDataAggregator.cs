@@ -50,6 +50,7 @@ namespace GazeMonitoring.Data.Aggregation.Aggregators
                             mappedFixationPoint.AreaOfInterestId = aoi.Id;
                         });
                         mappedFixationPoint.ScreenConfigurationId = screenConfiguration.Id;
+                        mappedFixationPoint.ScreenConfigurationName = screenConfiguration.Name;
                     }
                     else if (screenConfigurationsEnumerator.MoveNext())
                     {

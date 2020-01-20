@@ -21,7 +21,7 @@ namespace GazeMonitoring.Data.Aggregation.Aggregators
             {
                 var fixationPointsAggregatedDataForScreenConfiguration = new FixationPointsAggregatedDataForScreenConfiguration
                 {
-                    ScreenConfigurationId = mappedFixationPointsByScreenConfigurationId.Key
+                    Identifier = mappedFixationPointsByScreenConfigurationId.Key
                 };
 
                 var aggregatedDataForAois = new List<FixationPointsAggregatedDataForAoi>();
@@ -50,8 +50,12 @@ namespace GazeMonitoring.Data.Aggregation.Aggregators
                             fixationPointsAggregatedDataForScreenConfiguration.ShortFixationPointsCount += 1;
                             fixationPointsAggregatedDataForAoi.ShortFixationPointsCount += 1;
                         }
-                    }
 
+                        if (fixationPointsAggregatedDataForScreenConfiguration.IdentifierReadableName == null)
+                        {
+                            fixationPointsAggregatedDataForScreenConfiguration.IdentifierReadableName = mappedFixationPoint.ScreenConfigurationName;
+                        }
+                    }
                     fixationPointsAggregatedDataForAoi.FixationPointsDuration = TimeSpan.FromMilliseconds(fixationPointsDurationInMillisForAoi);
                     aggregatedDataForAois.Add(fixationPointsAggregatedDataForAoi);
                 }

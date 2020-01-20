@@ -33,7 +33,7 @@ namespace GazeMonitoring.Data.Csv
                 aggregatedData.FixationPointsAggregatedDataForScreenConfigurations.ForEach(o =>
                 {
                     var screenConfiguration = monitoringContext.MonitoringConfiguration.ScreenConfigurations
-                        .First(x => x.Id == o.ScreenConfigurationId);
+                        .First(x => x.Id == o.Identifier);
                     using (var writer = new StreamWriter(Path.Combine(monitoringContext.DataFilesPath, Constants.FolderName,
                         $"AggregatedDataForAoisByScreenConfiguration_{screenConfiguration.Number}_{screenConfiguration.Name}.csv")))
                     using (var csv = new CsvWriter(writer))
