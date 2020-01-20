@@ -15,12 +15,7 @@ namespace GazeMonitoring.Common.Calculations {
                 EndTimeStamp = currentPoint.Timestamp
             };
 
-            if (Math.Abs(deltaX) > 0.0001) {
-                saccade.Direction = RadianToDegree(Math.Atan(Math.Abs(deltaY) /
-                                                             Math.Abs(deltaX)));
-            } else {
-                saccade.Direction = 0;
-            }
+            saccade.Direction = CalculateAngle(deltaX, deltaY);
 
             var deltaTimeStamp = currentPoint.Timestamp -
                                  previousPoint.Timestamp;
@@ -32,11 +27,29 @@ namespace GazeMonitoring.Common.Calculations {
             return saccade;
         }
 
-        private double RadianToDegree(double angle) {
+        private static double CalculateAngle(double deltaX, double deltaY)
+        {
+            // Negate y because the origin is in the top left.
+            // Y coordinate is always positive but in the normal origin it is always negative and in 4th quadrant.
+            // Might seem weird but Atan2 takes y as the first argument
+            var angleInDegrees = RadianToDegree(Math.Atan2(-deltaY, deltaX));
+
+            // Angle in degrees will have value [-180;180]
+            // If it's negative, it means that is either in 3rd or 4th quadrant.
+            // Need to add 360 to convert to 360 degree range.
+            if (angleInDegrees < 0.0)
+            {
+                angleInDegrees += 360;
+            }
+
+            return angleInDegrees;
+        }
+
+        private static double RadianToDegree(double angle) {
             return angle * (180.0 / Math.PI);
         }
 
-        private void Validate(GazePoint previousPoint, GazePoint currentPoint) {
+        private static void Validate(GazePoint previousPoint, GazePoint currentPoint) {
             if (previousPoint == null) {
                 throw new ArgumentNullException(nameof(previousPoint));
             }
