@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace GazeMonitoring.Tests.HotKeys
 {
-    [TestFixture]
+    [TestFixture(Category = TestCategory.UNIT)]
     public class GlobalHotKeyManagerTests_Unit
     {
         private Mock<IConfigurationRepository> _configurationRepository;

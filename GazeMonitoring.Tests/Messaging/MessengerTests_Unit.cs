@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace GazeMonitoring.Tests.Messaging
 {
-    [TestFixture]
+    [TestFixture(Category = TestCategory.UNIT)]
     public class MessengerTests_Unit
     {
         [Test]
