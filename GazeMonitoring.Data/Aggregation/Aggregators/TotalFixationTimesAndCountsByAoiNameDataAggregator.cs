@@ -29,7 +29,7 @@ namespace GazeMonitoring.Data.Aggregation.Aggregators
                 foreach (var mappedFixationPointByName in mappedFixationPointsByName)
                 {
                     aggregatedDataForAoi.FixationPointsCount += 1;
-                    if (mappedFixationPointByName.DurationInMillis > 100)
+                    if (mappedFixationPointByName.DurationInMillis > 200)
                     {
                         aggregatedDataForAoi.LongFixationPointsCount += 1;
                     }

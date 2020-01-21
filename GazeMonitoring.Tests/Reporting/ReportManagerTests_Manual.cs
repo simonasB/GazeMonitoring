@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CsvHelper;
+using CsvHelper.Configuration;
 using GazeMonitoring.Data.Aggregation.Model;
 using GazeMonitoring.Data.Reporting;
 using GazeMonitoring.Model;
@@ -17,7 +18,7 @@ namespace GazeMonitoring.Tests.Reporting
         [Test]
         public async Task Render()
         {
-            var filePath = @"C:\Temp\gaze_data\2020_01_11_14_28_11_771\data_csv";
+            var filePath = @"C:\Temp\gaze_data\2020_01_21_17_08_39_270\data_csv";
 
             var reportManager = new ReportManager();
 
@@ -29,18 +30,30 @@ namespace GazeMonitoring.Tests.Reporting
             using (var reader = new StreamReader(Path.Combine(filePath, "FixationPointsAggregatedDataForAoiByName.csv")))
             using (var csv = new CsvReader(reader))
             {
+                csv.Configuration.MissingFieldFound = null;
+                csv.Configuration.HeaderValidated = null;
                 aggregatedData.FixationPointsAggregatedDataForAoiByName = csv.GetRecords<FixationPointsAggregatedDataForAoi>().ToList();
             }
 
             using (var reader = new StreamReader(Path.Combine(filePath, "FixationPointsAggregatedDataForScreenConfigurations.csv")))
             using (var csv = new CsvReader(reader))
             {
+                csv.Configuration.MissingFieldFound = null;
+                csv.Configuration.HeaderValidated = null;
                 aggregatedData.FixationPointsAggregatedDataForScreenConfigurations = csv.GetRecords<FixationPointsAggregatedDataForScreenConfiguration>().ToList();
+            }
+
+            using (var reader = new StreamReader(Path.Combine(filePath, "SaccadesDurationByDirection.csv")))
+            using (var csv = new CsvReader(reader))
+            {
+                csv.Configuration.MissingFieldFound = null;
+                csv.Configuration.HeaderValidated = null;
+                aggregatedData.SaccadesAggregatedDataByDirectionAndDuration = csv.GetRecords<SaccadesAggregatedDataByDirectionAndDuration>().ToList();
             }
 
             List<FixationPoint> fixationPoints;
 
-            using (var reader = new StreamReader(Path.Combine(filePath, "log_SensitiveFixation_2020_01_11_16_28_11_772.csv")))
+            using (var reader = new StreamReader(Path.Combine(filePath, "log_SensitiveFixation_2020_01_21_19_08_39_282.csv")))
             using (var csv = new CsvReader(reader))
             {
                 fixationPoints = csv.GetRecords<FixationPoint>().ToList();

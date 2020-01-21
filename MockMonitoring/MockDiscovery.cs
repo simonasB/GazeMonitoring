@@ -17,7 +17,7 @@ namespace MockMonitoring {
             container.Register<ICalibrationManager, MockCalibrationManager>();
 
             return new DiscoveryResult {
-                IsActive = true
+                IsActive = false
             };
         }
     }

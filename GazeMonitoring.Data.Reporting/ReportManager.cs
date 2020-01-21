@@ -33,7 +33,7 @@ namespace GazeMonitoring.Data.Reporting
 
             aggregatedData.FixationPointsAggregatedDataForAoiByName.ForEach(o =>
             {
-                totalTimesByAoiPieData.Add(new PieSeriesData { Name = o.Identifier ?? "None", Y = o.FixationPointsDuration.TotalMilliseconds * 100 / totalSessionTimeInMillis });
+                totalTimesByAoiPieData.Add(new PieSeriesData { Name = string.IsNullOrWhiteSpace(o.IdentifierReadableName) ? "None" : o.IdentifierReadableName, Y = o.FixationPointsDuration.TotalMilliseconds * 100 / totalSessionTimeInMillis });
             });
             aggregatedData.FixationPointsAggregatedDataForScreenConfigurations.ForEach(o =>
             {
@@ -52,7 +52,8 @@ namespace GazeMonitoring.Data.Reporting
                     TotalTimesByScreenConfiguration = totalTimesByScreenConfigurationPieData,
                     FixationPointsCountForAoiByName = fixationPointsCountDataForAoiByName,
                     FixationPointsCountForScreenConfigurations = fixationPointsCountDataForScreenConfigurations,
-                    SaccadesSeriesByFullDuration = SaccadesSeriesByDurationCategory(aggregatedData.SaccadesAggregatedDataByDirectionAndDuration)
+                    SaccadesSeriesByFullDuration = SaccadesSeriesByFullDuration(aggregatedData.SaccadesAggregatedDataByDirectionAndDuration),
+                    SaccadesSeriesByDurationCategory = SaccadesSeriesByDurationCategory(aggregatedData.SaccadesAggregatedDataByDirectionAndDuration),
                 });
 
             var reportsFolderPath = Path.Combine(monitoringContext.DataFilesPath, "Reports");
@@ -70,9 +71,9 @@ namespace GazeMonitoring.Data.Reporting
 
             aggregatedData.ForEach(o =>
             {
-                fullFixationPointsCountData.Add(new PieSeriesData {Name = o.IdentifierReadableName, Y = o.FixationPointsCount * 100 / totalFixationPointCount});
-                longAndShortFixationPointsCountData.Add(new PieSeriesData { Name = "LongFixationsCount", Y = o.LongFixationPointsCount * 100 / totalFixationPointCount });
-                longAndShortFixationPointsCountData.Add(new PieSeriesData { Name = "ShortFixationsCount", Y = o.ShortFixationPointsCount * 100 / totalFixationPointCount });
+                fullFixationPointsCountData.Add(new PieSeriesData {Name = string.IsNullOrWhiteSpace(o.IdentifierReadableName) ? "None" : o.IdentifierReadableName, Y = o.FixationPointsCount * 100.0 / totalFixationPointCount});
+                longAndShortFixationPointsCountData.Add(new PieSeriesData { Name = "LongFixationsCount", Y = o.LongFixationPointsCount * 100.0 / totalFixationPointCount });
+                longAndShortFixationPointsCountData.Add(new PieSeriesData { Name = "ShortFixationsCount", Y = o.ShortFixationPointsCount * 100.0 / totalFixationPointCount });
             });
 
             return (fullFixationPointsCountData, longAndShortFixationPointsCountData);
@@ -123,8 +124,11 @@ namespace GazeMonitoring.Data.Reporting
         /// <returns></returns>
         private static List<ColumnSeriesData> MapDataToWindRoseColumnSeriesData(List<SaccadesAggregatedDataByDirectionAndDuration> aggregatedData)
         {
-            var columnSeriesData = new List<ColumnSeriesData>(13);
-
+            var columnSeriesData = new List<ColumnSeriesData>(16);
+            for (int i = 0; i < 16; i++)
+            {
+                columnSeriesData.Add(new ColumnSeriesData {Y = 0});
+            }
             aggregatedData.ForEach(o =>
             {
                 int index;
@@ -182,7 +186,7 @@ namespace GazeMonitoring.Data.Reporting
                         throw new ArgumentOutOfRangeException();
                 }
 
-                columnSeriesData[index] = new ColumnSeriesData {Y = o.RelativePercentage};
+                columnSeriesData[index].Y += o.RelativePercentage * 100;
             });
 
             return columnSeriesData;
