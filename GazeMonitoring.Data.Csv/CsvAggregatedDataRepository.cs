@@ -52,6 +52,15 @@ namespace GazeMonitoring.Data.Csv
                 }
             }
 
+            if (aggregatedData.SaccadesAggregatedDataByDirectionAndDuration != null)
+            {
+                using (var writer = new StreamWriter(Path.Combine(monitoringContext.DataFilesPath, Constants.FolderName, "SaccadesDurationByDirection.csv")))
+                using (var csv = new CsvWriter(writer))
+                {
+                    csv.WriteRecords(aggregatedData.SaccadesAggregatedDataByDirectionAndDuration);
+                }
+            }
+
             return Task.CompletedTask;
         }
     }

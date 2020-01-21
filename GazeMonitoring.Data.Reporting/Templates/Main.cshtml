@@ -44,7 +44,7 @@
                     Data = @Model.TotalTimesByAoi as List<PieSeriesData>
                 },
 
-                                    }
+                                            }
         };
 
 
@@ -90,7 +90,7 @@
                     Data = @Model.TotalTimesByScreenConfiguration as List<PieSeriesData>
                 },
 
-                                    }
+                                            }
         };
 
 
@@ -99,18 +99,19 @@
 }
 
 @{ var chartOptionsFixationCountsForAoiByName =
-        new Highcharts
-        {
-            Chart = new Highsoft.Web.Mvc.Charts.Chart
-            {
-            },
-            Title = new Title
-            {
-                Text = "Fixation points counts for area of interest by name"
-            }
+         new Highcharts
+         {
+             Chart = new Highsoft.Web.Mvc.Charts.Chart
+             {
+             },
+             Title = new Title
+             {
+                 Text = "Fixation points counts for area of interest by name"
+             }
 
-            YAxis = new List<YAxis>
-                {
+
+             YAxis = new List<YAxis>
+                 {
                 new YAxis
                 {
                     Title = new YAxisTitle
@@ -118,28 +119,28 @@
                         Text = "Fixation points count"
                     }
                 }
-                                                },
-            PlotOptions = new PlotOptions
-            {
-                Pie = new PlotOptionsPie
-                {
-                    Shadow = new Shadow
-                    {
-                        Enabled = true,
-                        Color = "#000000",
-                        Width = 10,
-                        OffsetX = 0,
-                        OffsetY = 0
-                    },
-                    Center = new string[] { "50%", "50%" }
-                }
-            },
-            Tooltip = new Tooltip
-            {
-                ValueSuffix = "%"
-            },
-            Series = new List<Series>
-                {
+                                                         },
+             PlotOptions = new PlotOptions
+             {
+                 Pie = new PlotOptionsPie
+                 {
+                     Shadow = new Shadow
+                     {
+                         Enabled = true,
+                         Color = "#000000",
+                         Width = 10,
+                         OffsetX = 0,
+                         OffsetY = 0
+                     },
+                     Center = new string[] { "50%", "50%" }
+                 }
+             },
+             Tooltip = new Tooltip
+             {
+                 ValueSuffix = "%"
+             },
+             Series = new List<Series>
+                 {
                 new PieSeries
                 {
                     Name = "Total count",
@@ -159,26 +160,27 @@
                     InnerSize = "60%",
                     Data = @Model.FixationPointsCountForAoiByName.LongAndShortFixationPointsCountData as List<PieSeriesData>
                 }
-                        }
-        };
+                                 }
+         };
 
-    chartOptionsFixationCountsForAoiByName.ID = "chart";
+    chartOptionsFixationCountsForAoiByName.ID = "chartFixationCountsForAoiByName";
     var rendererFixationCountsForAoiByName = new HighchartsRenderer(chartOptionsFixationCountsForAoiByName);
 }
 
 @{ var chartOptionsFixationCountsForScreenConfigurations =
-        new Highcharts
-        {
-            Chart = new Highsoft.Web.Mvc.Charts.Chart
-            {
-            },
-            Title = new Title
-            {
-                Text = "Fixation points counts for area of interest by name"
-            }
+         new Highcharts
+         {
+             Chart = new Highsoft.Web.Mvc.Charts.Chart
+             {
+             },
+             Title = new Title
+             {
+                 Text = "Fixation points counts for area of interest by name"
+             }
 
-            YAxis = new List<YAxis>
-                {
+
+             YAxis = new List<YAxis>
+                 {
                 new YAxis
                 {
                     Title = new YAxisTitle
@@ -186,28 +188,28 @@
                         Text = "Fixation points count"
                     }
                 }
-                                                },
-            PlotOptions = new PlotOptions
-            {
-                Pie = new PlotOptionsPie
-                {
-                    Shadow = new Shadow
-                    {
-                        Enabled = true,
-                        Color = "#000000",
-                        Width = 10,
-                        OffsetX = 0,
-                        OffsetY = 0
-                    },
-                    Center = new string[] { "50%", "50%" }
-                }
-            },
-            Tooltip = new Tooltip
-            {
-                ValueSuffix = "%"
-            },
-            Series = new List<Series>
-                {
+                                                         },
+             PlotOptions = new PlotOptions
+             {
+                 Pie = new PlotOptionsPie
+                 {
+                     Shadow = new Shadow
+                     {
+                         Enabled = true,
+                         Color = "#000000",
+                         Width = 10,
+                         OffsetX = 0,
+                         OffsetY = 0
+                     },
+                     Center = new string[] { "50%", "50%" }
+                 }
+             },
+             Tooltip = new Tooltip
+             {
+                 ValueSuffix = "%"
+             },
+             Series = new List<Series>
+                 {
                 new PieSeries
                 {
                     Name = "Total count",
@@ -227,14 +229,99 @@
                     InnerSize = "60%",
                     Data = @Model.FixationPointsCountForScreenConfigurations.LongAndShortFixationPointsCountData as List<PieSeriesData>
                 }
-                        }
-        };
+                                 }
+         };
 
-    chartOptionsFixationCountsForScreenConfigurations.ID = "chart";
+    chartOptionsFixationCountsForScreenConfigurations.ID = "chartFixationCountsForScreenConfigurations";
     var rendererFixationCountsForScreenConfigurations = new HighchartsRenderer(chartOptionsFixationCountsForScreenConfigurations);
+}
+
+@{ var chartOptionsSaccadesFullDurationWindRose =
+       new Highcharts
+       {
+           Series = @Model.SaccadesSeriesByFullDuration,
+           Chart = new Highsoft.Web.Mvc.Charts.Chart
+           {
+               Polar = true,
+               Type = ChartType.Column
+           },
+           Data = new Data
+           {
+               Table = "freq",
+               StartRow = 1,
+               EndRow = 17,
+               EndColumn = 7
+           },
+           Title = new Title
+           {
+               Text = "Saccades direction using full duration",
+           },
+           Pane = new Pane
+           {
+               Size = "85%"
+           },
+           Legend = new Legend
+           {
+               Align = LegendAlign.Right,
+               VerticalAlign = LegendVerticalAlign.Top,
+               Y = 100,
+               Layout = LegendLayout.Vertical
+           },
+           XAxis = new List<XAxis>
+               {
+                new XAxis
+                {
+                    TickmarkPlacement = XAxisTickmarkPlacement.On,
+                    Categories = new List<string> {"N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"}
+                }
+                                       },
+           YAxis = new List<YAxis>
+               {
+                new YAxis
+                {
+                    Min = 0,
+                    EndOnTick = false,
+                    ShowLastLabel = true,
+                    Title = new YAxisTitle
+                    {
+                        Text = "Frequency (%)"
+                    },
+                    Labels = new YAxisLabels
+                    {
+                        Formatter = "formatYAxisLabels"
+                    },
+                    ReversedStacks = false
+                }
+                                       },
+           Tooltip = new Tooltip
+           {
+               ValueSuffix = "%"
+           },
+           PlotOptions = new PlotOptions
+           {
+               Series = new PlotOptionsSeries
+               {
+                   Stacking = PlotOptionsSeriesStacking.Normal,
+                   PointPlacement = new PointPlacement
+                   {
+                       PointPlacementEnum = PointPlacementEnum.On
+                   }
+               }
+           }
+       };
+
+    chartOptionsSaccadesFullDurationWindRose.ID = "chartSaccadesFullDurationWindRose";
+    var rendererSaccadesFullDurationWindRose = new HighchartsRenderer(chartOptionsSaccadesFullDurationWindRose);
 }
 
 @Raw(rendererTotalTimesByAoi.RenderHtml(true))
 @Raw(rendererTotalTimesByScreenConfiguration.RenderHtml(true))
 @Raw(rendererFixationCountsForAoiByName.RenderHtml(true))
 @Raw(rendererFixationCountsForScreenConfigurations.RenderHtml(true))
+@Raw(rendererSaccadesFullDurationWindRose.RenderHtml(true))
+
+<script type="text/javascript">
+    function formatYAxisLabels() {
+        return this.value + '%';
+    }
+</script>

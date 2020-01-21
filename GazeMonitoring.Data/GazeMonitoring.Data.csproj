@@ -40,9 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aggregation\Aggregators\SaccadesByDirectionAndDurationAggregator.cs" />
     <Compile Include="Aggregation\Model\AggregatedData.cs" />
     <Compile Include="Aggregation\DataAggregationManager.cs" />
     <Compile Include="Aggregation\DataAggregatorBase.cs" />
+    <Compile Include="Aggregation\Model\SaccadeDirectionCategory.cs" />
     <Compile Include="Aggregation\Model\FixationPointsAggregatedData.cs" />
     <Compile Include="Aggregation\Model\FixationPointsAggregatedDataForAoi.cs" />
     <Compile Include="Aggregation\Model\FixationPointsAggregatedDataForScreenConfiguration.cs" />
@@ -53,6 +55,9 @@
     <Compile Include="Aggregation\Aggregators\SensitiveOrSlowFixationDataAggregator.cs" />
     <Compile Include="Aggregation\Aggregators\TotalFixationTimesAndCountsByAoiNameDataAggregator.cs" />
     <Compile Include="Aggregation\Aggregators\TotalFixationTimesAndCountsByScreenConfigurationAndAoiIdDataAggregator.cs" />
+    <Compile Include="Aggregation\Model\SaccadeDurationCategory.cs" />
+    <Compile Include="Aggregation\Model\SaccadeDurationAndDirectionCategoryInfo.cs" />
+    <Compile Include="Aggregation\Model\SaccadesAggregatedDataByDirectionAndDuration.cs" />
     <Compile Include="CurrentSessionDataFromTemp.cs" />
     <Compile Include="FileName.cs" />
     <Compile Include="GazeDataRepositoryFactoryBase.cs" />
