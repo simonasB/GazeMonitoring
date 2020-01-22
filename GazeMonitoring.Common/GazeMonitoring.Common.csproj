@@ -30,12 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GazeMonitoring.Model, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.Model.1.0.1\lib\netstandard2.0\GazeMonitoring.Model.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppDataHelper.cs" />
     <Compile Include="Calculations\BasicSaccadeCalculator.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Finalizers\IGazeDataMonitorFinalizer.cs" />
@@ -44,7 +42,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
+      <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>
+      <Name>GazeMonitoring.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

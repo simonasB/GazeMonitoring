@@ -73,5 +73,38 @@ namespace GazeMonitoring.Tests.Common {
 
             Helpers.AssertTwoSaccades(expectedSaccade, calculatedSaccade);
         }
+
+        [Test]
+        public void Calculate_CorrectSaccade_SameX()
+        {
+            var previousTimestamp = 100;
+
+            var previousGazePoint = new GazePoint
+            {
+                X = 1000,
+                Y = 1200,
+                Timestamp = previousTimestamp
+            };
+
+            var currentPoint = new GazePoint
+            {
+                X = 1000,
+                Y = 1190,
+                Timestamp = previousTimestamp
+            };
+
+            var expectedSaccade = new Saccade
+            {
+                Amplitude = 10,
+                Direction = 0,
+                StartTimeStamp = previousTimestamp,
+                EndTimeStamp = previousTimestamp,
+                Velocity = 10
+            };
+
+            var calculatedSaccade = _saccadeCalculator.Calculate(previousGazePoint, currentPoint);
+
+            Helpers.AssertTwoSaccades(expectedSaccade, calculatedSaccade);
+        }
     }
 }

@@ -5,8 +5,9 @@
     <Authors>Simonas Baltulionis</Authors>
     <Product>GazeMonitoring</Product>
     <PackageId>GazeMonitoring.Model</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.3</Version>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>

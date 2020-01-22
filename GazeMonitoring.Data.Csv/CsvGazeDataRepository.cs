@@ -4,25 +4,32 @@ using CsvHelper;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Csv {
-    public class CsvGazeDataRepository : IGazeDataRepository, IDisposable {
+    public class CsvGazeDataRepository : IGazeDataRepository
+    {
+        private bool _disposed;
+
         private readonly Dictionary<Type, CsvWriterWrapper> _csvWriterWrappers;
 
-        public CsvGazeDataRepository(ICsvWritersFactory csvWritersFactory, DataStream dataStream) {
-            if (csvWritersFactory == null) {
-                throw new ArgumentNullException(nameof(csvWritersFactory));
+        public CsvGazeDataRepository(Dictionary<Type, CsvWriterWrapper> csvWriterWrappers) {
+            if (csvWriterWrappers == null) {
+                throw new ArgumentNullException(nameof(csvWriterWrappers));
             }
 
-            _csvWriterWrappers = csvWritersFactory.GetCsvWriters(dataStream);
+            _csvWriterWrappers = csvWriterWrappers;
         }
 
         private CsvWriter GetCsvWriter(Type type) {
             return _csvWriterWrappers[type].CsvWriter;
         }
 
-        public void Dispose() {
+        public void Dispose()
+        {
+            if (_disposed)
+                return;
             foreach (var csvWriterWrapper in _csvWriterWrappers) {
                 csvWriterWrapper.Value?.Dispose();
             }
+            _disposed = true;
         }
 
         public void SaveGazePoint(GazePoint gazePoint) {
@@ -45,13 +52,13 @@ namespace GazeMonitoring.Data.Csv {
             csvWriter.NextRecord();
         }
 
-        public void SaveFixationPoint(FixationPoint point) {
-            if (point == null) {
-                throw new ArgumentNullException(nameof(point));
+        public void SaveFixationPoint(FixationPoint fixationPoint) {
+            if (fixationPoint == null) {
+                throw new ArgumentNullException(nameof(fixationPoint));
             }
 
             var csvWriter = GetCsvWriter(typeof(FixationPoint));
-            csvWriter.WriteRecord(point);
+            csvWriter.WriteRecord(fixationPoint);
             csvWriter.NextRecord();
         }
     }

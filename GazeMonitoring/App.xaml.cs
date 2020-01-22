@@ -1,17 +1,29 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Autofac;
-using Autofac.Configuration;
-using Autofac.Core;
+using System.Windows.Input;
+using GazeMonitoring.Balloon;
+using GazeMonitoring.Base;
 using GazeMonitoring.Common;
-using GazeMonitoring.Data.Writers;
+using GazeMonitoring.Data.Aggregation;
+using GazeMonitoring.Data.Reporting;
+using GazeMonitoring.DataAccess;
+using GazeMonitoring.DataAccess.LiteDB;
 using GazeMonitoring.Discovery;
-using GazeMonitoring.EyeTracker.Core.Streams;
+using GazeMonitoring.HotKeys.Global;
+using GazeMonitoring.HotKeys.Global.Handlers;
+using GazeMonitoring.IO;
 using GazeMonitoring.IoC;
 using GazeMonitoring.Logging;
+using GazeMonitoring.Messaging;
+using GazeMonitoring.Model;
+using GazeMonitoring.Monitor;
+using GazeMonitoring.Powerpoint;
+using GazeMonitoring.Seeding;
 using GazeMonitoring.ViewModels;
+using GazeMonitoring.Views;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.Configuration;
 
@@ -23,24 +35,49 @@ namespace GazeMonitoring
     public partial class App : Application
     {
         private TaskbarIcon _taskbarIcon;
-        private static IContainer _container;
+        private SettingsWindow _settingsWindow;
+        private IScreenConfigurationWindowHandler _screenConfigurationWindowHandler;
+        private static IoContainer _container;
         private ILogger _logger;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            try {
-                Init();
-                //create the notifyicon (it's a resource declared in NotifyIconResources.xaml
-                _taskbarIcon = (TaskbarIcon) FindResource("NotifyIcon");
 
-                _logger = _container.Resolve<ILoggerFactory>().GetLogger(typeof(App));
-                _taskbarIcon.DataContext = new NotifyIconViewModel(new Views.MainWindow(_container, new BalloonService(_taskbarIcon)));
+            try
+            {
+                BuildContainer();
+
+                _logger = _container.GetInstance<ILoggerFactory>().GetLogger(typeof(App));
+                _logger.Information("Starting application");
+
+                CreateAppDataFolder(_container.GetInstance<IAppDataHelper>());
+
+                _logger.Information("Starting db seed.");
+                var seeder = _container.GetInstance<IDatabaseSeeder>();
+                seeder.Seed();
+                _logger.Information("Finished db seed.");
+
+                _taskbarIcon = _container.GetInstance<TaskbarIcon>();
+                _taskbarIcon.DataContext = _container.GetInstance<NotifyIconViewModel>();
+
+                // Initialize messaging registrations
+                _settingsWindow = _container.GetInstance<SettingsWindow>();
+                _screenConfigurationWindowHandler = _container.GetInstance<IScreenConfigurationWindowHandler>();
+                _screenConfigurationWindowHandler.Handle();
 
                 SetupExceptionHandling();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger?.Error(ex);
-                MessageBox.Show($"Could not launch GazeMonitoring application.{ex}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                #if DEBUG
+                    MessageBox.Show($"Could not launch GazeMonitoring application.{ex}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                #else
+                    MessageBox.Show($"Could not launch GazeMonitoring application.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                #endif
+
                 Current.Shutdown();
             }
         }
@@ -57,10 +94,9 @@ namespace GazeMonitoring
         }
 
         private void LogUnhandledException(Exception exception, string source) {
-            string message = $"Unhandled exception ({source})";
             try {
-                System.Reflection.AssemblyName assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
-                message = string.Format("Unhandled exception in {0} v{1}", assemblyName.Name, assemblyName.Version);
+                var assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName();
+                var message = $"Unhandled exception in {assemblyName.Name} v{assemblyName.Version}. Source: {source}";
                 _logger.Error(message);
             } catch (Exception ex) {
                 _logger.Error(ex);
@@ -75,30 +111,82 @@ namespace GazeMonitoring
             base.OnExit(e);
         }
 
-        private void Init() {
+        private void BuildContainer() {
             var config = new ConfigurationBuilder();
 
             config.AddJsonFile("config.json");
             var configurationRoot = config.Build();
+
+            var configurationModule = new ConfigurationIoCModule(configurationRoot);
+
             if (!bool.TryParse(configurationRoot["autoDiscover"], out var autoDiscover)) {
                 _logger.Debug("AutoDiscovery set to false");
             }
 
-            var builder = new ContainerBuilder();
-            var module = new ConfigurationModule(configurationRoot);
+            var builder = ContainerBuilderFactory.Create();
+
             builder.RegisterModule<CommonModule>();
-            builder.RegisterModule(module);
-            builder.Register((c, p) => {
-                var parameters = p as Parameter[] ?? p.ToArray();
-                return new GazeDataMonitor(c.Resolve<GazePointStream>(parameters), c.Resolve<IGazeDataWriter>(parameters));
-            }).As<IGazeDataMonitor>();
-            builder.RegisterType<DefaultScreenParameters>().As<IScreenParameters>();
+            builder.RegisterModule(configurationModule);
+            builder.Register<IScreenParameters, DefaultScreenParameters>();
+            builder.Register<IGazeDataMonitorFactory, GazeDataMonitorFactory>();
+            builder.Register<IDatabaseSeeder, DatabaseSeeder>();
 
             if (autoDiscover) {
                 var discoveryManager = new TrackerDiscoveryManager();
                 discoveryManager.Discover(builder);
             }
+
+            var notifyIcon = (TaskbarIcon) FindResource("NotifyIcon");
+
+            if (notifyIcon == null)
+            {
+                throw new Exception("Cannot load notify icon.");
+            }
+
+            builder.RegisterSingleton(notifyIcon);
+            builder.Register<IBalloonService, BalloonService>();
+            builder.Register<MainViewModel>();
+            builder.Register<MainWindow>();
+            builder.Register<NotifyIconViewModel>();
+            builder.Register<IMainSubViewModel, SessionViewModel>();
+            builder.Register<IMainSubViewModel, ProfilesViewModel>();
+            builder.Register<IMainSubViewModel, MainNavigationViewModel>();
+
+            builder.Register<IMessenger, Messenger>(Scope.Singleton);
+            builder.Register<IGlobalHotKeyManager, GlobalHotKeyManager>(Scope.Singleton);
+            builder.Register<IGlobalHotKeyHandlerFactory, GlobalHotKeyHandlerFactory>(Scope.Singleton);
+            builder.Register<IConfigurationRepository, LiteDBConfigurationRepository>(Scope.Singleton);
+            builder.Register<IAppLocalContextManager, AppLocalContextManager>(Scope.Singleton);
+
+            builder.Register<ISettingsSubViewModel, MonitoringConfigurationsViewModel>();
+            builder.Register<ISettingsSubViewModel, OptionsViewModel>();
+            builder.Register<ISettingsSubViewModel, MonitoringConfigurationAddEditViewModel>();
+            builder.Register<SettingsViewModel>();
+            builder.Register<SettingsWindow>();
+
+            builder.Register<IScreenConfigurationWindowHandler, ScreenConfigurationWindowHandler>();
+            builder.Register<IPowerpointParser, PowerpointParser>();
+            builder.Register<IFileDialogService, FileDialogService>();
+            builder.Register<IAppDataHelper, AppDataHelper>();
+            builder.Register<IFolderDialogService, FolderDialogService>();
+            builder.Register<IDataFolderManager, DataFolderManager>();
+
+            builder.Register<IDataAggregationManager, DataAggregationManager>();
+            builder.Register<IDataAggregationService, DataAggregationService>();
+            builder.Register<IReportManager, ReportManager>();
+
             _container = builder.Build();
+        }
+
+        private void CreateAppDataFolder(IAppDataHelper appDataHelper)
+        {
+            var appDataFolderPath = appDataHelper.GetAppDataDirectoryPath();
+
+            if (!Directory.Exists(appDataFolderPath))
+            {
+                _logger.Information($"Creating app data folder. Path {appDataFolderPath}");
+                Directory.CreateDirectory(appDataFolderPath);
+            }
         }
     }
 }

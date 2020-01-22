@@ -19,7 +19,12 @@ namespace GazeMonitoring.Data.CustomExample {
             _writer.Write(saccade);
         }
 
-        public void SaveFixationPoint(FixationPoint point) {
+        public void SaveFixationPoint(FixationPoint fixationPoint) {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
             throw new NotImplementedException();
         }
     }

@@ -4,8 +4,14 @@ using SharpAvi.Codecs;
 using SharpAvi.Output;
 
 namespace GazeMonitoring.ScreenCapture.SharpAvi {
-    public class AviVideoStreamFactory {
-        public IAviVideoStream CreateVideoStream(AviWriter writer, RecorderParams recorderParams, FourCC codec) {
+    public interface IAviVideoStreamFactory
+    {
+        IAviVideoStream Create(AviWriter writer, RecorderParams recorderParams, FourCC codec);
+    }
+
+    public class AviVideoStreamFactory : IAviVideoStreamFactory
+    {
+        public IAviVideoStream Create(AviWriter writer, RecorderParams recorderParams, FourCC codec) {
             if (writer == null) {
                 throw new ArgumentNullException(nameof(writer));
             }

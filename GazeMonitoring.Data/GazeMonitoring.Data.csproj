@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GazeMonitoring.Model, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.Model.1.0.1\lib\netstandard2.0\GazeMonitoring.Model.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,16 +40,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aggregation\Aggregators\SaccadesByDirectionAndDurationAggregator.cs" />
+    <Compile Include="Aggregation\Model\AggregatedData.cs" />
+    <Compile Include="Aggregation\DataAggregationManager.cs" />
+    <Compile Include="Aggregation\DataAggregatorBase.cs" />
+    <Compile Include="Aggregation\Model\SaccadeDirectionCategory.cs" />
+    <Compile Include="Aggregation\Model\FixationPointsAggregatedData.cs" />
+    <Compile Include="Aggregation\Model\FixationPointsAggregatedDataForAoi.cs" />
+    <Compile Include="Aggregation\Model\FixationPointsAggregatedDataForScreenConfiguration.cs" />
+    <Compile Include="Aggregation\IAggregatedDataRepository.cs" />
+    <Compile Include="Aggregation\IDataAggregator.cs" />
+    <Compile Include="Aggregation\Model\MappedFixationPoint.cs" />
+    <Compile Include="Aggregation\Aggregators\MappedFixationPointsDataAggregator.cs" />
+    <Compile Include="Aggregation\Aggregators\SensitiveOrSlowFixationDataAggregator.cs" />
+    <Compile Include="Aggregation\Aggregators\TotalFixationTimesAndCountsByAoiNameDataAggregator.cs" />
+    <Compile Include="Aggregation\Aggregators\TotalFixationTimesAndCountsByScreenConfigurationAndAoiIdDataAggregator.cs" />
+    <Compile Include="Aggregation\Model\SaccadeDurationCategory.cs" />
+    <Compile Include="Aggregation\Model\SaccadeDurationAndDirectionCategoryInfo.cs" />
+    <Compile Include="Aggregation\Model\SaccadesAggregatedDataByDirectionAndDuration.cs" />
+    <Compile Include="CurrentSessionDataFromTemp.cs" />
     <Compile Include="FileName.cs" />
+    <Compile Include="GazeDataRepositoryFactoryBase.cs" />
+    <Compile Include="ICurrentSessionData.cs" />
+    <Compile Include="IGazeDataRepositoryFactory.cs" />
+    <Compile Include="Aggregation\NullAggregatedDataRepository.cs" />
+    <Compile Include="TempGazeDataRepository.cs" />
+    <Compile Include="IReadableGazeDataRepository.cs" />
+    <Compile Include="MultipleSourceGazeDataRepository.cs" />
     <Compile Include="StandardFileNameFormatter.cs" />
     <Compile Include="IFileNameFormatter.cs" />
     <Compile Include="IGazeDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TempGazeDataRepositoryConfiguration.cs" />
     <Compile Include="Writers\FixationPointsWriter.cs" />
     <Compile Include="Writers\GazeDataWriterFactory.cs" />
     <Compile Include="Writers\GazePointWriter.cs" />
     <Compile Include="Writers\IGazeDataWriter.cs" />
     <Compile Include="Writers\MultipleSourcesGazeDataWriter.cs" />
+    <Compile Include="Writers\NullGazeDataWriterFactory.cs" />
     <Compile Include="Writers\SaccadesWriter.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -60,9 +85,11 @@
       <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
       <Name>GazeMonitoring.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
+      <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>
+      <Name>GazeMonitoring.Model</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

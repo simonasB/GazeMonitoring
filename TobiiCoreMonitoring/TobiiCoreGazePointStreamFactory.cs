@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using GazeMonitoring.Common;
 using GazeMonitoring.EyeTracker.Core.Streams;
 using GazeMonitoring.Model;
 using Tobii.Interaction;
+using Tobii.Interaction.Framework;
 using TobiiCoreMonitoring.GazeStreams;
 
 namespace TobiiCoreMonitoring {

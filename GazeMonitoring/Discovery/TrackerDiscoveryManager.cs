@@ -1,17 +1,18 @@
 ﻿using System;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Autofac;
 using GazeMonitoring.EyeTracker.Core.Discovery;
+using GazeMonitoring.IoC;
 
 namespace GazeMonitoring.Discovery {
     public class TrackerDiscoveryManager {
-        public void Discover(ContainerBuilder container) {
-            // Force all referenced assemblies to be loaded into the app domain 
-            //new DirectoryCatalog(".");
+        public void Discover(IoContainerBuilder container) {
+            // Force all referenced assemblies to be loaded into the app domain
+            new DirectoryCatalog(".");
 
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "eyetracker", "custom", "CustomMonitoring.dll");
+            /*var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "eyetracker", "custom", "CustomMonitoring.dll");
 
             if (File.Exists(path))
             {
@@ -23,7 +24,7 @@ namespace GazeMonitoring.Discovery {
                 var tobbiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "eyetracker", "tobii", "TobiiCoreMonitoring.dll");
                 AssemblyName an = AssemblyName.GetAssemblyName(tobbiPath);
                 Assembly.Load(an);
-            }
+            }*/
 
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())

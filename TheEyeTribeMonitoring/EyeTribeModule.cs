@@ -1,14 +1,14 @@
-﻿using Autofac;
-using EyeTribe.ClientSdk;
+﻿using EyeTribe.ClientSdk;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
+using GazeMonitoring.IoC;
 
 namespace TheEyeTribeMonitoring {
-    public class EyeTribeModule : Module {
-        protected override void Load(ContainerBuilder builder) {
+    public class EyeTribeModule : IoCModule {
+        public void Load(IoContainerBuilder builder) {
             GazeManager.Instance.Activate(GazeManagerCore.ApiVersion.VERSION_1_0);
-            builder.RegisterType<EyeTribeGazePointStreamFactory>().As<IGazePointStreamFactory>();
-            builder.RegisterType<EyeTribeStatusProvider>().As<IEyeTrackerStatusProvider>();
+            builder.Register<IGazePointStreamFactory, EyeTribeGazePointStreamFactory>();
+            builder.Register<IEyeTrackerStatusProvider, EyeTribeStatusProvider>();
         }
     }
 }

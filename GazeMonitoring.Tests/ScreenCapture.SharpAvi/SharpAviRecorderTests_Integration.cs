@@ -19,7 +19,7 @@ namespace GazeMonitoring.Tests.ScreenCapture.SharpAvi {
             }
         }
 
-        [Test]
+        /*[Test]
         public void ValidateAviFileCreated() {
             var sharpAviRecorder = new SharpAviRecorder(new RecorderParams(TestFileName, 10, 50), new AviVideoStreamFactory(),
                 new MockGazePointStreamFactory().GetGazePointStream(DataStream.LightlyFilteredGaze));
@@ -29,6 +29,6 @@ namespace GazeMonitoring.Tests.ScreenCapture.SharpAvi {
             sharpAviRecorder.StopRecording();
 
             Assert.True(File.Exists(Path.Combine(Directory.GetCurrentDirectory(), TestFileName)), "Avi file does not exist");
-        }
+        }*/
     }
 }

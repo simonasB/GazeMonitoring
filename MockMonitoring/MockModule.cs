@@ -1,12 +1,15 @@
-﻿using Autofac;
+﻿using GazeMonitoring.EyeTracker.Core.Calibration;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
+using GazeMonitoring.IoC;
 
 namespace MockMonitoring {
-    public class MockModule : Module {
-        protected override void Load(ContainerBuilder builder) {
-            builder.RegisterType<MockGazePointStreamFactory>().As<IGazePointStreamFactory>();
-            builder.RegisterType<MockStatusProvider>().As<IEyeTrackerStatusProvider>();
+    public class MockModule : IoCModule {
+        public void Load(IoContainerBuilder builder)
+        {
+            builder.Register<IGazePointStreamFactory, MockGazePointStreamFactory>();
+            builder.Register<IEyeTrackerStatusProvider, MockStatusProvider>();
+            builder.Register<ICalibrationManager, MockCalibrationManager>();
         }
     }
 }

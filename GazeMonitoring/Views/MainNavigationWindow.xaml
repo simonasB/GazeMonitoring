@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="GazeMonitoring.Views.MainNavigationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Height="420" Width="315"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="12"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+    <Grid HorizontalAlignment="Left" Width="315" Margin="0,0,0,-0.2">
+        <Image Margin="-52,-59,100,324.2">
+            <Image.Source>
+                <BitmapImage  UriSource="/images/gm_logo.png" />
+            </Image.Source>
+        </Image>
+        <ListBox Name="ListBox" Margin="0,121,0,-72.8" BorderThickness="1"
+            BorderBrush="{DynamicResource MaterialDesignDivider}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonUp">
+                    <i:InvokeCommandAction Command="{Binding MenuItemClicked}"
+                                           CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <ListBoxItem x:Name="Settings" BorderThickness="1"
+                         BorderBrush="{DynamicResource MaterialDesignDivider}" Height="98">
+                <TextBlock FontSize="24" Margin="5,10,0,10"><InlineUIContainer>
+                        <materialDesign:PackIcon Kind="SettingsOutline" />
+                    </InlineUIContainer><Run Text=" Settings"/></TextBlock>
+            </ListBoxItem>
+            <ListBoxItem x:Name="Profiles" BorderThickness="1"
+                         BorderBrush="{DynamicResource MaterialDesignDivider}" Height="99">
+                <TextBlock FontSize="24" Margin="5,10,0,10"><InlineUIContainer>
+                        <materialDesign:PackIcon Kind="Account" /> 
+                    </InlineUIContainer><Run Text=" Profiles"/></TextBlock>
+            </ListBoxItem>
+            <ListBoxItem x:Name="StartNewSession" BorderThickness="1"
+                         BorderBrush="{DynamicResource MaterialDesignDivider}" Height="99">
+                <TextBlock FontSize="24" Margin="5,10,0,10"><InlineUIContainer>
+                        <materialDesign:PackIcon Kind="OpenInNew" /> 
+                    </InlineUIContainer><Run Text=" Start new session"/></TextBlock>
+            </ListBoxItem>
+        </ListBox>
+        <TextBlock FontSize="24" HorizontalAlignment="Left" Margin="11,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.356,1.551" Width="149"><Run Text="Eyetracker"/><LineBreak/><Run/></TextBlock>
+        <TextBlock FontSize="24" HorizontalAlignment="Left" Margin="160,64,-29,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.356,1.551" Width="184" Text="Tobii"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,430 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+}
+
+@using System.Collections
+@using Highsoft.Web.Mvc.Charts
+@using Highsoft.Web.Mvc.Charts.Rendering
+
+@{
+    var licenseKey = "";
+}
+
+@{
+    var chartOptionsTotalTimesByAoi =
+        new Highcharts
+        {
+            Chart = new Highsoft.Web.Mvc.Charts.Chart
+            {
+                PlotBackgroundColor = null,
+                PlotBorderWidth = null,
+                PlotShadow = new Shadow
+                {
+                    Enabled = false
+                }
+            },
+            Title = new Title
+            {
+                Text = "Fixation duration total times by area of interest type"
+            },
+            Tooltip = new Tooltip
+            {
+                PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"
+            },
+            PlotOptions = new PlotOptions
+            {
+                Pie = new PlotOptionsPie
+                {
+                    AllowPointSelect = true,
+                    Cursor = PlotOptionsPieCursor.Pointer,
+                    DataLabels = new Hashtable { { "enabled", true }, { "format", "<b>{point.name}</b>: {point.percentage:.1f} %" } }
+                }
+            },
+            Series = new List<Series>
+            {
+                new PieSeries
+                {
+                    Name = "AreaOfInterestType",
+                    Data = @Model.TotalTimesByAoi as List<PieSeriesData>
+                },
+
+                                                    }
+        };
+
+
+    chartOptionsTotalTimesByAoi.ID = "chartTotalTimesByAoi";
+    var rendererTotalTimesByAoi = new HighchartsRenderer(chartOptionsTotalTimesByAoi, licenseKey);
+}
+
+@{
+    var chartOptionsTotalTimesByScreenConfiguration =
+        new Highcharts
+        {
+            Chart = new Highsoft.Web.Mvc.Charts.Chart
+            {
+                PlotBackgroundColor = null,
+                PlotBorderWidth = null,
+                PlotShadow = new Shadow
+                {
+                    Enabled = false
+                }
+            },
+            Title = new Title
+            {
+                Text = "Fixation duration total times by screen configuration"
+            },
+            Tooltip = new Tooltip
+            {
+                PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"
+            },
+            PlotOptions = new PlotOptions
+            {
+                Pie = new PlotOptionsPie
+                {
+                    AllowPointSelect = true,
+                    Cursor = PlotOptionsPieCursor.Pointer,
+                    DataLabels = new Hashtable { { "enabled", true }, { "format", "<b>{point.name}</b>: {point.percentage:.1f} %" } }
+                }
+            },
+            Series = new List<Series>
+            {
+                new PieSeries
+                {
+                    Name = "AreaOfInterestType",
+                    Data = @Model.TotalTimesByScreenConfiguration as List<PieSeriesData>
+                },
+
+                                                    }
+        };
+
+
+    chartOptionsTotalTimesByScreenConfiguration.ID = "chartTotalTimesByScreenConfiguration";
+    var rendererTotalTimesByScreenConfiguration = new HighchartsRenderer(chartOptionsTotalTimesByScreenConfiguration, licenseKey);
+}
+
+@{ var chartOptionsFixationCountsForAoiByName =
+          new Highcharts
+          {
+              Chart = new Highsoft.Web.Mvc.Charts.Chart
+              {
+                  PlotBackgroundColor = null,
+                  PlotBorderWidth = null,
+                  PlotShadow = new Shadow
+                  {
+                      Enabled = false
+                  }
+              },
+              Title = new Title
+              {
+                  Text = "Fixation points counts for area of interest by name"
+              },
+
+
+              YAxis = new List<YAxis>
+                  {
+                new YAxis
+                {
+                    Title = new YAxisTitle
+                    {
+                        Text = "Fixation points count"
+                    }
+                }
+                                                                  },
+              PlotOptions = new PlotOptions
+              {
+                  Pie = new PlotOptionsPie
+                  {
+                      Shadow = new Shadow
+                      {
+                          Enabled = true,
+                          Color = "#000000",
+                          Width = 10,
+                          OffsetX = 0,
+                          OffsetY = 0
+                      },
+                      Center = new string[] { "50%", "50%" },
+                      DataLabels = new Hashtable { { "enabled", true }, { "format", "<b>{point.name}</b>: {point.percentage:.2f} %" } }
+                  }
+              },
+              Tooltip = new Tooltip
+              {
+                  ValueSuffix = "%"
+              },
+              Series = new List<Series>
+                  {
+                new PieSeries
+                {
+                    Name = "Total count",
+                    Size = "60%",
+                    DataLabels = new PieSeriesDataLabels
+                    {
+                        Formatter = "formatBrowserSeriesDataLabels",
+                        AllowOverlap = false
+                    },
+                    Data = @Model.FixationPointsCountForAoiByName.Item1 as List<PieSeriesData>
+                },
+                new PieSeries
+                {
+                    Name = "Split",
+                    Size = "80%",
+                    InnerSize = "60%",
+                    Data = @Model.FixationPointsCountForAoiByName.Item2 as List<PieSeriesData>
+                }
+                                          }
+          };
+
+    chartOptionsFixationCountsForAoiByName.ID = "chartFixationCountsForAoiByName";
+    var rendererFixationCountsForAoiByName = new HighchartsRenderer(chartOptionsFixationCountsForAoiByName, licenseKey);
+}
+
+@{ var chartOptionsFixationCountsForScreenConfigurations =
+          new Highcharts
+          {
+              Chart = new Highsoft.Web.Mvc.Charts.Chart
+              {
+                  PlotBackgroundColor = null,
+                  PlotBorderWidth = null,
+                  PlotShadow = new Shadow
+                  {
+                      Enabled = false
+                  }
+              },
+              Title = new Title
+              {
+                  Text = "Fixation points counts for area of interest by name"
+              },
+
+
+              YAxis = new List<YAxis>
+                  {
+                new YAxis
+                {
+                    Title = new YAxisTitle
+                    {
+                        Text = "Fixation points count"
+                    }
+                }
+                                                                  },
+              PlotOptions = new PlotOptions
+              {
+                  Pie = new PlotOptionsPie
+                  {
+                      Shadow = new Shadow
+                      {
+                          Enabled = true,
+                          Color = "#000000",
+                          Width = 10,
+                          OffsetX = 0,
+                          OffsetY = 0
+                      },
+                      Center = new string[] { "50%", "50%" },
+                      DataLabels = new Hashtable { { "enabled", true }, { "format", "<b>{point.name}</b>: {point.percentage:.2f} %" } }
+                  }
+              },
+              Tooltip = new Tooltip
+              {
+                  ValueSuffix = "%"
+              },
+              Series = new List<Series>
+                  {
+                new PieSeries
+                {
+                    Name = "Total count",
+                    Size = "60%",
+                    DataLabels = new PieSeriesDataLabels
+                    {
+                        Formatter = "formatBrowserSeriesDataLabels",
+                        AllowOverlap = false
+                    },
+                    Data = @Model.FixationPointsCountForScreenConfigurations.Item1 as List<PieSeriesData>
+                },
+                new PieSeries
+                {
+                    Name = "Split",
+                    Size = "80%",
+                    InnerSize = "60%",
+                    Data = @Model.FixationPointsCountForScreenConfigurations.Item2 as List<PieSeriesData>
+                }
+                                          }
+          };
+
+    chartOptionsFixationCountsForScreenConfigurations.ID = "chartFixationCountsForScreenConfigurations";
+    var rendererFixationCountsForScreenConfigurations = new HighchartsRenderer(chartOptionsFixationCountsForScreenConfigurations, licenseKey);
+}
+
+@{ var chartOptionsSaccadesFullDurationWindRose =
+        new Highcharts
+        {
+            Series = @Model.SaccadesSeriesByFullDuration,
+            Chart = new Highsoft.Web.Mvc.Charts.Chart
+            {
+                Polar = true,
+                Type = ChartType.Column,
+                PlotBackgroundColor = null,
+                PlotBorderWidth = null,
+                PlotShadow = new Shadow
+                {
+                    Enabled = false
+                }
+            },
+            Title = new Title
+            {
+                Text = "Saccades direction using full duration",
+            },
+            Pane = new Pane
+            {
+                Size = "85%"
+            },
+            Legend = new Legend
+            {
+                Align = LegendAlign.Right,
+                VerticalAlign = LegendVerticalAlign.Top,
+                Y = 100,
+                Layout = LegendLayout.Vertical
+            },
+            XAxis = new List<XAxis>
+                {
+                new XAxis
+                {
+                    TickmarkPlacement = XAxisTickmarkPlacement.On,
+                    Categories = new List<string> {"N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"}
+                }
+                                                },
+            YAxis = new List<YAxis>
+                {
+                new YAxis
+                {
+                    Min = 0,
+                    EndOnTick = false,
+                    ShowLastLabel = true,
+                    Title = new YAxisTitle
+                    {
+                        Text = "Frequency (%)"
+                    },
+                    Labels = new YAxisLabels
+                    {
+                        Formatter = "formatYAxisLabels"
+                    },
+                    ReversedStacks = false
+                }
+                                                },
+            Tooltip = new Tooltip
+            {
+                ValueSuffix = "%"
+            },
+            PlotOptions = new PlotOptions
+            {
+                Series = new PlotOptionsSeries
+                {
+                    Stacking = PlotOptionsSeriesStacking.Normal,
+                    PointPlacement = new PointPlacement
+                    {
+                        PointPlacementEnum = PointPlacementEnum.On
+                    }
+                }
+            }
+        };
+
+    chartOptionsSaccadesFullDurationWindRose.ID = "chartSaccadesFullDurationWindRose";
+    var rendererSaccadesFullDurationWindRose = new HighchartsRenderer(chartOptionsSaccadesFullDurationWindRose, licenseKey);
+}
+
+@{ var chartOptionsSaccadesByDurationCategoryWindRose =
+        new Highcharts
+        {
+            Series = @Model.SaccadesSeriesByDurationCategory,
+            Chart = new Highsoft.Web.Mvc.Charts.Chart
+            {
+                Polar = true,
+                Type = ChartType.Column,
+                PlotBackgroundColor = null,
+                PlotBorderWidth = null,
+                PlotShadow = new Shadow
+                {
+                    Enabled = false
+                }
+            },
+            Title = new Title
+            {
+                Text = "Saccades direction using duration categories",
+            },
+            Pane = new Pane
+            {
+                Size = "85%"
+            },
+            Legend = new Legend
+            {
+                Align = LegendAlign.Right,
+                VerticalAlign = LegendVerticalAlign.Top,
+                Y = 100,
+                Layout = LegendLayout.Vertical
+            },
+            XAxis = new List<XAxis>
+                {
+                new XAxis
+                {
+                    TickmarkPlacement = XAxisTickmarkPlacement.On,
+                    Categories = new List<string> {"N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"}
+                }
+                                                },
+            YAxis = new List<YAxis>
+                {
+                new YAxis
+                {
+                    Min = 0,
+                    EndOnTick = false,
+                    ShowLastLabel = true,
+                    Title = new YAxisTitle
+                    {
+                        Text = "Frequency (%)"
+                    },
+                    Labels = new YAxisLabels
+                    {
+                        Formatter = "formatYAxisLabels"
+                    },
+                    ReversedStacks = false
+                }
+                                                },
+            Tooltip = new Tooltip
+            {
+                ValueSuffix = "%"
+            },
+            PlotOptions = new PlotOptions
+            {
+                Series = new PlotOptionsSeries
+                {
+                    Stacking = PlotOptionsSeriesStacking.Normal,
+                    PointPlacement = new PointPlacement
+                    {
+                        PointPlacementEnum = PointPlacementEnum.On
+                    }
+                }
+            }
+        };
+
+    chartOptionsSaccadesByDurationCategoryWindRose.ID = "chartSaccadesByDurationCategoryWindRose";
+    var rendererSaccadesByDurationCategoryWindRose = new HighchartsRenderer(chartOptionsSaccadesByDurationCategoryWindRose, licenseKey);
+}
+
+@Raw(rendererTotalTimesByAoi.RenderHtml(true))
+@Raw(rendererTotalTimesByScreenConfiguration.RenderHtml(true))
+@Raw(rendererFixationCountsForAoiByName.RenderHtml(true))
+@Raw(rendererFixationCountsForScreenConfigurations.RenderHtml(true))
+@Raw(rendererSaccadesFullDurationWindRose.RenderHtml(true))
+@Raw(rendererSaccadesByDurationCategoryWindRose.RenderHtml(true))
+
+<script type="text/javascript">
+    function formatYAxisLabels() {
+        return this.value + '%';
+    }
+
+    function formatBrowserSeriesDataLabels() {
+        return this.y > 5 ? '<b>' + this.point.name + ':</b> ' + this.y + '%' : null;
+    }
+
+    function formatVersionsSeriesDataLabels() {
+        // display only if larger than 1
+        return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + this.y + '%' : null;
+    }
+
+</script>

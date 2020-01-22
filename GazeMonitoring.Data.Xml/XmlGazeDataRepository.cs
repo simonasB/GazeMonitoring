@@ -5,16 +5,16 @@ using System.Xml.Serialization;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Xml {
-    public class XmlGazeDataRepository : IGazeDataRepository, IDisposable {
+    public class XmlGazeDataRepository : IGazeDataRepository {
         private readonly Dictionary<Type, XmlWriterWrapper> _xmlWriterWrappers;
         private readonly Dictionary<Type, XmlSerializer> _xmlSerializers;
 
-        public XmlGazeDataRepository(IXmlWritersFactory xmlWritersFactory, DataStream dataStream) {
-            if (xmlWritersFactory == null) {
-                throw new ArgumentNullException(nameof(xmlWritersFactory));
+        public XmlGazeDataRepository(Dictionary<Type, XmlWriterWrapper> xmlWriterWrappers) {
+            if (xmlWriterWrappers == null) {
+                throw new ArgumentNullException(nameof(xmlWriterWrappers));
             }
 
-            _xmlWriterWrappers = xmlWritersFactory.GetXmlWriters(dataStream);
+            _xmlWriterWrappers = xmlWriterWrappers;
             _xmlSerializers = _xmlWriterWrappers.ToDictionary(kvp => kvp.Key, kvp => new XmlSerializer(kvp.Key, new XmlRootAttribute(kvp.Key.Name)));
         }
 
@@ -34,8 +34,13 @@ namespace GazeMonitoring.Data.Xml {
             Write(saccade);
         }
 
-        public void SaveFixationPoint(FixationPoint point) {
-            throw new NotImplementedException();
+        public void SaveFixationPoint(FixationPoint fixationPoint) {
+            if (fixationPoint == null)
+            {
+                throw new ArgumentNullException(nameof(fixationPoint));
+            }
+
+            Write(fixationPoint);
         }
 
         public void Dispose() {

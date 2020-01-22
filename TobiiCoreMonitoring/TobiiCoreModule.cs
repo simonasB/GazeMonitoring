@@ -1,15 +1,17 @@
-﻿using Autofac;
-using GazeMonitoring.EyeTracker.Core;
+﻿using GazeMonitoring.EyeTracker.Core.Calibration;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
+using GazeMonitoring.IoC;
 using Tobii.Interaction;
 
 namespace TobiiCoreMonitoring {
-    public class TobiiCoreModule : Module {
-        protected override void Load(ContainerBuilder builder) {
-            builder.RegisterInstance(new Host()).SingleInstance();
-            builder.RegisterType<TobiiCoreGazePointStreamFactory>().As<IGazePointStreamFactory>();
-            builder.RegisterType<TobiiStatusProvider>().As<IEyeTrackerStatusProvider>();
+    public class TobiiCoreModule : IoCModule {
+        public void Load(IoContainerBuilder builder)
+        {
+            builder.RegisterSingleton(new Host());
+            builder.Register<IGazePointStreamFactory, TobiiCoreGazePointStreamFactory>();
+            builder.Register<IEyeTrackerStatusProvider, TobiiStatusProvider>();
+            builder.Register<ICalibrationManager, TobiiCalibrationManager>();
         }
     }
 }

@@ -5,7 +5,8 @@ using Tobii.Interaction.Framework;
 
 namespace TobiiCoreMonitoring.GazeStreams {
     public sealed class LightlyFilteredGazeStream : TobiiCoreBaseGazeStream {
-        public LightlyFilteredGazeStream(Host host, IScreenParameters screenParameters) : base(screenParameters) {
+        public LightlyFilteredGazeStream(Host host, IScreenParameters screenParameters) : base(screenParameters)
+        {
             host.Streams.CreateGazePointDataStream(GazePointDataMode.LightlyFiltered).Next += (sender, data) => {
                 OnGazePointReceived(new GazePointReceivedEventArgs {
                     GazePoint = new GazePoint {

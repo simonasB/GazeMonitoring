@@ -4,37 +4,45 @@ using GazeMonitoring.Common.Calculations;
 using GazeMonitoring.Model;
 
 namespace GazeMonitoring.Data.Writers {
-    public class GazeDataWriterFactory {
-        private readonly IGazeDataRepository _repository;
+    public interface IGazeDataWriterFactory
+    {
+        IGazeDataWriter Create(IMonitoringContext monitoringContext);
+    }
+
+    public class GazeDataWriterFactory : IGazeDataWriterFactory
+    {
+        private readonly IGazeDataRepositoryFactory _dataRepositoryFactory;
         private readonly ISaccadeCalculator _saccadeCalculator;
 
-        public GazeDataWriterFactory(IGazeDataRepository repository, ISaccadeCalculator saccadeCalculator) {
-            if (repository == null) {
-                throw new ArgumentNullException(nameof(repository));
+        public GazeDataWriterFactory(IGazeDataRepositoryFactory dataRepositoryFactory, ISaccadeCalculator saccadeCalculator) {
+            if (dataRepositoryFactory == null) {
+                throw new ArgumentNullException(nameof(dataRepositoryFactory));
             }
 
             if (saccadeCalculator == null) {
                 throw new ArgumentNullException(nameof(saccadeCalculator));
             }
 
-            _repository = repository;
+            _dataRepositoryFactory = dataRepositoryFactory;
             _saccadeCalculator = saccadeCalculator;
         }
 
-        public IGazeDataWriter GetGazeDataWriter(DataStream dataStream) {
-            switch (dataStream) {
+        public IGazeDataWriter Create(IMonitoringContext monitoringContext)
+        {
+            var repository = _dataRepositoryFactory.Create(monitoringContext);
+            switch (monitoringContext.DataStream) {
                 case DataStream.UnfilteredGaze:
-                    return new GazePointWriter(_repository);;
+                    return new GazePointWriter(repository);
                 case DataStream.LightlyFilteredGaze:
-                    return new GazePointWriter(_repository);
+                    return new GazePointWriter(repository);
                 case DataStream.SensitiveFixation:
                 case DataStream.SlowFixation:
                     var gazeDataWriters = new List<IGazeDataWriter>();
-                    gazeDataWriters.Add(new FixationPointsWriter(_repository));
-                    gazeDataWriters.Add(new SaccadesWriter(_repository, _saccadeCalculator));
+                    gazeDataWriters.Add(new FixationPointsWriter(repository));
+                    gazeDataWriters.Add(new SaccadesWriter(repository, _saccadeCalculator));
                     return new MultipleSourcesGazeDataWriter(gazeDataWriters);
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(dataStream), dataStream, null);
+                    throw new ArgumentOutOfRangeException(nameof(monitoringContext.DataStream), monitoringContext.DataStream, null);
             }
         }
     }

@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using System.Collections
+@using Highsoft.Web.Mvc.Charts
+@using Highsoft.Web.Mvc.Charts.Rendering
+
+@{
+    var chartOptions =
+        new Highcharts
+        {
+            Chart = new Highsoft.Web.Mvc.Charts.Chart
+            {
+                PlotBackgroundColor = null,
+                PlotBorderWidth = null,
+                PlotShadow = new Shadow
+                {
+                    Enabled = false
+                }
+            },
+            Title = new Title
+            {
+                Text = "Browser market shares at a specific website, 2014"
+            },
+            Tooltip = new Tooltip
+            {
+                PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"
+            },
+            PlotOptions = new PlotOptions
+            {
+                Pie = new PlotOptionsPie
+                {
+                    AllowPointSelect = true,
+                    Cursor = PlotOptionsPieCursor.Pointer,
+                    DataLabels = new Hashtable { { "enabled", true }, { "format", "<b>{point.name}</b>: {point.percentage:.1f} %" } }
+                }
+            },
+            Series = new List<Series>
+            {
+                new PieSeries
+                {
+                    Name = "Browser Share",
+                    Data = @ViewData["pieData"] as List<PieSeriesData>
+                },
+
+            }
+        };
+    
+
+    chartOptions.ID = "chart";
+    var renderer = new HighchartsRenderer(chartOptions, "MDcwMjAyMDAxMDUxMDAwMDAwMDE=");
+
+
+}
+
+@Html.Raw(renderer.RenderHtml(true))

@@ -35,79 +35,158 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\gm_logo32.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="Autofac.Configuration, Version=4.0.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.Configuration.4.0.1\lib\net45\Autofac.Configuration.dll</HintPath>
+    <Reference Include="BlurryControls, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BlurryControls.1.0.24\lib\net452\BlurryControls.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="CalcBinding, Version=2.3.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CalcBinding.2.3.0.1\lib\net45\CalcBinding.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="DynamicExpresso.Core, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicExpresso.Core.1.3.0.0\lib\net40\DynamicExpresso.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="GazeMonitoring.EyeTracker.Core, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.EyeTracker.Core.1.0.1\lib\netstandard2.0\GazeMonitoring.EyeTracker.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="GazeMonitoring.Model, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.Model.1.0.1\lib\netstandard2.0\GazeMonitoring.Model.dll</HintPath>
+    <Reference Include="GongSolutions.WPF.DragDrop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
+      <HintPath>..\packages\gong-wpf-dragdrop.2.2.0\lib\net46\GongSolutions.WPF.DragDrop.dll</HintPath>
     </Reference>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.2.0.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
+    <Reference Include="MaterialDesignColors, Version=1.2.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.0\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.0.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.FileExtensions, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.FileExtensions.2.0.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.FileExtensions.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Json, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Json.2.0.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.Json.dll</HintPath>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk.WPF.1.0.1\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.2.0.1\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.FileProviders.Physical, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Physical.2.0.1\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Physical.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Extensions.FileSystemGlobbing, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.FileSystemGlobbing.2.0.1\lib\netstandard2.0\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Primitives, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration.FileExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.FileExtensions.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.FileExtensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Configuration.Json, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Json.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.3.0.0\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Physical, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Physical.3.0.0\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Physical.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileSystemGlobbing, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileSystemGlobbing.3.0.0\lib\netstandard2.0\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.PowerPoint, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <HintPath>..\packages\Microsoft.Office.Interop.PowerPoint.12.0.4518.1014\lib\net20\Microsoft.Office.Interop.PowerPoint.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Office, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Ookii.Dialogs.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=66aa232afad40158, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ookii.Dialogs.Wpf.1.1.0\lib\net45\Ookii.Dialogs.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.6.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.6.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.4.6.0\lib\net461\System.Text.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk.WPF.1.0.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Xceed.Wpf.AvalonDock, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.DataGrid, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.Toolkit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -115,35 +194,166 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BalloonService.cs" />
+    <Compile Include="Addorners\ResizeRotateAddorner.cs" />
+    <Compile Include="Addorners\ResizeRotateChrome.cs" />
+    <Compile Include="Balloon\BalloonService.cs" />
+    <Compile Include="Base\AppLocalContext.cs" />
+    <Compile Include="Base\AppLocalContextManager.cs" />
+    <Compile Include="Base\Hotkey.cs" />
+    <Compile Include="Base\ISettingsSubViewModel.cs" />
+    <Compile Include="Base\ViewModelBase.cs" />
+    <Compile Include="Base\SelectedProfileVisibilityConverter.cs" />
     <Compile Include="Commands\AwaitableDelegateCommand.cs" />
     <Compile Include="Base\BindableBase.cs" />
     <Compile Include="Base\BooleanAndConverter.cs" />
     <Compile Include="Commands\CommandExtensions.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Base\CommonConstants.cs" />
-    <Compile Include="DefaultScreenParameters.cs" />
+    <Compile Include="Controls\DesignerItemDecorator.cs" />
+    <Compile Include="Controls\MoveThumb.cs" />
+    <Compile Include="Controls\ResizeThumb.cs" />
+    <Compile Include="Base\DefaultScreenParameters.cs" />
     <Compile Include="Discovery\TrackerDiscoveryManager.cs" />
-    <Compile Include="IBalloonService.cs" />
-    <Compile Include="Wrappers\EyeTrackerStatusWrapper.cs" />
+    <Compile Include="Extensions\MiscExtensions.cs" />
+    <Compile Include="Balloon\IBalloonService.cs" />
+    <Compile Include="IoC\CommonModule.cs" />
+    <Compile Include="IoC\ContainerBuilderFactory.cs" />
+    <Compile Include="IO\DataFolderManager.cs" />
+    <Compile Include="IO\FileDialogService.cs" />
+    <Compile Include="IO\FolderDialogService.cs" />
+    <Compile Include="Messaging\IMessage.cs" />
+    <Compile Include="Messaging\Messages\AddScreenConfigurationWithHotKeyMessage.cs" />
+    <Compile Include="Messaging\Messages\HideSettingsMessage.cs" />
+    <Compile Include="Messaging\Messages\IsBusyChangedMessage.cs" />
+    <Compile Include="Messaging\Messages\MainSubViewModelChangedMessage.cs" />
+    <Compile Include="Messaging\Messages\SettingsSubViewModelChangedMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowCreateScreenConfigurationMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowEditScreenConfigurationMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowMainNavigationMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowMonitoringConfigurationsMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowProfilesMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowStartNewSessionMessage.cs" />
+    <Compile Include="Messaging\Messenger.cs" />
+    <Compile Include="Messaging\Messages\ShowAddMonitoringConfigurationMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowEditMonitoringConfigurationMessage.cs" />
+    <Compile Include="Messaging\Messages\ShowSettingsMessage.cs" />
+    <Compile Include="Messaging\MessengerExtensions.cs" />
+    <Compile Include="Monitor\DataAggregationService.cs" />
+    <Compile Include="Monitor\GazeDataMonitorFactory.cs" />
+    <Compile Include="Powerpoint\PowerpointParser.cs" />
+    <Compile Include="Resources\HotkeyEditorControl.xaml.cs">
+      <DependentUpon>HotkeyEditorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Seeding\DatabaseSeeder.cs" />
+    <Compile Include="HotKeys\Global\Handlers\CreateScreenConfigurationHandler.cs" />
+    <Compile Include="HotKeys\Global\Handlers\EditScreenConfigurationHandler.cs" />
+    <Compile Include="HotKeys\Global\GlobalHotKey.cs" />
+    <Compile Include="HotKeys\Global\Handlers\GlobalHotKeyHandlerFactory.cs" />
+    <Compile Include="HotKeys\Global\GlobalHotKeyEntity.cs" />
+    <Compile Include="HotKeys\Global\Handlers\IGlobalHotKeyHandler.cs" />
+    <Compile Include="HotKeys\Global\GlobalHotKeyManager.cs" />
+    <Compile Include="Validation\SessionTimeAttribute.cs" />
+    <Compile Include="ViewModels\EMainSubViewModel.cs" />
+    <Compile Include="ViewModels\ESettingsSubViewModel.cs" />
+    <Compile Include="ViewModels\IMainSubViewModel.cs" />
+    <Compile Include="ViewModels\MainNavigationViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MonitoringConfigurationAddEditViewModel.cs" />
+    <Compile Include="ViewModels\MonitoringConfigurationsViewModel.cs" />
+    <Compile Include="ViewModels\OptionsViewModel.cs" />
+    <Compile Include="ViewModels\ProfilesViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\MainNavigationWindow.xaml.cs">
+      <DependentUpon>MainNavigationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MonitoringConfigurationAddEditWindow.xaml.cs">
+      <DependentUpon>MonitoringConfigurationAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MonitoringConfigurationsWindow.xaml.cs">
+      <DependentUpon>MonitoringConfigurationsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OptionsWindow.xaml.cs">
+      <DependentUpon>OptionsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProfilesWindow.xaml.cs">
+      <DependentUpon>ProfilesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScreenConfigurationWindow.xaml.cs">
+      <DependentUpon>ScreenConfigurationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScreenConfigurationWindowHandler.cs" />
+    <Compile Include="Views\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModels\EyeTrackerStatusWindowModel.cs" />
     <Compile Include="Commands\IAsyncCommand.cs" />
     <Compile Include="Commands\IRaiseCanExecuteChanged.cs" />
-    <Compile Include="IGazeDataMonitor.cs" />
-    <Compile Include="Views\MainWindow.xaml.cs" />
+    <Compile Include="Monitor\IGazeDataMonitor.cs" />
+    <Compile Include="Views\SessionWindow.xaml.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Wrappers\SubjectInfoWrapper.cs" />
+    <Compile Include="WindowModels\MonitoringConfigurationWindowModel.cs" />
+    <Compile Include="WindowModels\ProfileWindowModel.cs" />
+    <Compile Include="WindowModels\ScreenConfigurationWindowModel.cs" />
+    <Compile Include="WindowModels\SessionWindowModel.cs" />
     <Compile Include="Base\ValidatableBindableBase.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GazeDataMonitor.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Monitor\GazeDataMonitor.cs" />
+    <Compile Include="ViewModels\SessionViewModel.cs" />
+    <Page Include="Resources\DesignerItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\HotkeyEditorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ResizeRotateChrome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainNavigationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProfilesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SessionWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\MonitoringConfigurationAddEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MonitoringConfigurationsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\NotifyIconResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OptionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScreenConfigurationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -192,13 +402,33 @@
       <Project>{B6FE1338-3086-4B01-B2F7-DA0CB1679175}</Project>
       <Name>GazeMonitoring.Data.PostgreSQL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Data.Reporting\GazeMonitoring.Data.Reporting.csproj">
+      <Project>{F2F03B7F-0378-4C23-99E4-CF59CDF1B9FC}</Project>
+      <Name>GazeMonitoring.Data.Reporting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.Data.Xml\GazeMonitoring.Data.Xml.csproj">
       <Project>{1bb84589-22ea-4f07-bf68-c39577aebc21}</Project>
       <Name>GazeMonitoring.Data.Xml</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.DataAccess.LiteDB\GazeMonitoring.DataAccess.LiteDB.csproj">
+      <Project>{5bf39365-1886-4121-a6e8-3590d585763c}</Project>
+      <Name>GazeMonitoring.DataAccess.LiteDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.DataAccess\GazeMonitoring.DataAccess.csproj">
+      <Project>{539396b0-6231-4fc6-a671-65a4cb83aeed}</Project>
+      <Name>GazeMonitoring.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
       <Project>{A425261F-E463-4EB1-B237-597509E25C39}</Project>
       <Name>GazeMonitoring.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj">
+      <Project>{24F906AF-DF04-4A59-9215-47186318F9B5}</Project>
+      <Name>GazeMonitoring.EyeTracker.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.IoC.Autofac\GazeMonitoring.IoC.Autofac.csproj">
+      <Project>{99912DFA-B20E-4019-BDF8-91D098AB664C}</Project>
+      <Name>GazeMonitoring.IoC.Autofac</Name>
     </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.IoC\GazeMonitoring.IoC.csproj">
       <Project>{3B15219E-FEB5-471D-BA9B-06EC67320A52}</Project>
@@ -212,6 +442,10 @@
       <Project>{D54C6080-859C-4E1E-A4CE-B5407E474326}</Project>
       <Name>GazeMonitoring.Logging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
+      <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>
+      <Name>GazeMonitoring.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.ScreenCapture.SharpAvi\GazeMonitoring.ScreenCapture.SharpAvi.csproj">
       <Project>{70ff8f72-379e-4e23-b864-892fcb8af93d}</Project>
       <Name>GazeMonitoring.ScreenCapture.SharpAvi</Name>
@@ -219,6 +453,14 @@
     <ProjectReference Include="..\GazeMonitoring.ScreenCapture\GazeMonitoring.ScreenCapture.csproj">
       <Project>{1368F8C5-AB06-4211-94A2-A44CA3A1E291}</Project>
       <Name>GazeMonitoring.ScreenCapture</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MockMonitoring\MockMonitoring.csproj">
+      <Project>{60f20997-4a0b-4769-879b-d270b35ac149}</Project>
+      <Name>MockMonitoring</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TobiiCoreMonitoring\TobiiCoreMonitoring.csproj">
+      <Project>{523c4922-424a-4843-b560-0cb2781722d3}</Project>
+      <Name>TobiiCoreMonitoring</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -233,5 +475,17 @@
   <ItemGroup>
     <Content Include="Images\gm_logoi.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,183 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:System="clr-namespace:System;assembly=mscorlib"
-        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:local="clr-namespace:GazeMonitoring"
-        xmlns:entities1="clr-namespace:GazeMonitoring.Model;assembly=GazeMonitoring.Model"
-        xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
         mc:Ignorable="d"
         WindowStyle="None"
-        Title="MainWindow" Height="420" Width="315
-        "
+        Title="MainWindow" Height="420" Width="315"
         Deactivated="Window_Deactivated"
         Loaded="Window_Loaded"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner">
-    <Window.Resources>
-        <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
-                            ObjectType="{x:Type System:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="entities1:DataStream"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-        <Style TargetType="TextBox">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError"
-                         Value="true">
-                    <Setter Property="ToolTip"
-                            Value="{Binding RelativeSource={x:Static RelativeSource.Self}, 
-                                    Path=(Validation.Errors).CurrentItem.ErrorContent}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style TargetType="Button" x:Key="DisabledButtonStyle">
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid Background="{TemplateBinding Background}">
-                            <ContentPresenter x:Name="MyContentPresenter" 
-                                          Content="{TemplateBinding Content}"
-                                          HorizontalAlignment="Center" 
-                                          VerticalAlignment="Center" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border>
-                            <Border.Style>
-                                <Style TargetType="{x:Type Border}">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Background" Value="#4D4D4D"/>
-                                        </Trigger>
-                                        <Trigger Property="IsEnabled" Value="True">
-                                            <Setter Property="Background">
-                                                <Setter.Value>
-                                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                        <GradientStop Color="#666666" Offset="0"/>
-                                                        <GradientStop Color="#595959" Offset="1"/>
-                                                    </LinearGradientBrush>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" >
-                                                <Setter.Value>
-                                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                        <GradientStop Color="#808080" Offset="0"/>
-                                                        <GradientStop Color="#737373" Offset="1"/>
-                                                    </LinearGradientBrush>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <Grid Background="Transparent">
-                                <ContentPresenter x:Name="MyContentPresenter2" 
-                                          Content="{TemplateBinding Content}"
-                                          HorizontalAlignment="Center" 
-                                          VerticalAlignment="Center" />
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Foreground" Value="White"/>
-            <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="FontFamily" Value="Segoe UI"/>
-                    <Setter Property="Foreground" Value="#999999"/>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="True">
-                    <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="ComboBoxTest2" TargetType="{x:Type ComboBox}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ComboBox">
-                        <Grid>
-                            <ToggleButton Grid.Column="2" Focusable="false" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" >
-                                <ToggleButton.Template>
-                                    <ControlTemplate>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="8*" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Border x:Name="Border"  Grid.ColumnSpan="2" Background="#666666" BorderBrush="#FFADADAD" BorderThickness="1" />
-                                            <Border Grid.Column="0"  Margin="1"  Background="#373737"  BorderBrush="Black" BorderThickness="0,0,1,0" />
-                                            <Path x:Name="Arrow" Grid.Column="1"  Fill="#373737" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z"/>
-                                        </Grid>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                                                <Setter TargetName="Border" Property="Background" Value="#737373" />
-                                            </Trigger>
-                                            <Trigger Property="ToggleButton.IsChecked" Value="true">
-                                                <Setter TargetName="Border" Property="Background" Value="#737373" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </ToggleButton.Template>
-                            </ToggleButton>
-                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="3"  />
-                            <TextBox x:Name="PART_EditableTextBox" Visibility="Hidden" IsReadOnly="{TemplateBinding IsReadOnly}"/>
-                            <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True"  Focusable="False" PopupAnimation="Slide">
-                                <Grid  Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                                    <Border x:Name="DropDownBorder" Background="#373737" />
-                                    <ScrollViewer SnapsToDevicePixels="True">
-                                        <StackPanel IsItemsHost="True" />
-                                    </ScrollViewer>
-                                </Grid>
-                            </Popup>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
+        WindowStartupLocation="CenterOwner"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="12">
     <xctk:BusyIndicator IsBusy="{Binding IsBusy}" x:Name="BusyIndicator" Margin="0,0,0.4,-0.6">
-        <Grid Background="#FF464646" HorizontalAlignment="Left" Width="315" Margin="0,0,0,-0.2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="315*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <Image Margin="0,-50,170.6,329">
-                <Image.Source>
-                    <BitmapImage  UriSource="/images/gm_logo.png" />
-                </Image.Source>
-            </Image>
-            <ComboBox Style="{StaticResource ComboBoxTest2}" Name="CmbDataStreams" IsEnabled="{c:Binding '!IsStarted and EyeTrackerStatusWrapper.IsAvailable'}" SelectedItem="{Binding SubjectInfoWrapper.DataStream}" HorizontalAlignment="Left" Margin="21,327,0,0" VerticalAlignment="Top" Width="259" SelectedIndex="0" Height="22" ItemsSource="{Binding Source={StaticResource dataFromEnum}}" Foreground="#FFADADAD" />
-            <Button Style="{StaticResource DisabledButtonStyle}" Name="BtnStart" Command="{Binding StartCommand}" Content="Start" HorizontalAlignment="Left" Margin="35,370,0,0" VerticalAlignment="Top" Width="85" Height="25" BorderBrush="#FF4D4D4D" FontSize="14"></Button>
-            <Button Style="{StaticResource DisabledButtonStyle}" Name ="BtnStop" Command="{Binding StopCommand}" Content="Stop" HorizontalAlignment="Left" Margin="176,370,0,0" VerticalAlignment="Top" Width="85" Height="25" BorderBrush="#FF4D4D4D" FontSize="14"></Button>
-            <CheckBox Name="CheckBoxAnonymous" IsEnabled="{c:Binding '!IsStarted and EyeTrackerStatusWrapper.IsAvailable'}" IsChecked="{Binding IsAnonymous}" Content="Anonymous" HorizontalAlignment="Left" Margin="21,92,0,0" VerticalAlignment="Top" Height="15" Width="83" Foreground="#FFADADAD" />
-            <TextBlock Name="TextBlockName" HorizontalAlignment="Left" Margin="25,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" Width="79" Foreground="#FFADADAD"><Run Text="Name"/><LineBreak/><Run/></TextBlock>
-            <TextBox Name="TextBoxName" IsEnabled="{c:Binding '!IsStarted and !IsAnonymous and !IsBusy and EyeTrackerStatusWrapper.IsAvailable'}" Text="{Binding SubjectInfoWrapper.Name, ValidatesOnNotifyDataErrors=true}" HorizontalAlignment="Left" Height="26" Margin="104,125
-                     ,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" Background="#FF373737" BorderBrush="#FFADADAD" Foreground="White"></TextBox>
-            <TextBlock Name="TextBlockAge" HorizontalAlignment="Left" Margin="25,160,0,0" TextWrapping="Wrap" Text="Age" VerticalAlignment="Top" Foreground="#FFADADAD" RenderTransformOrigin="1.366,0.965" Width="79" Height="25"/>
-            <TextBox Name="TextBoxAge" IsEnabled="{c:Binding '!IsStarted and !IsAnonymous and !IsBusy and EyeTrackerStatusWrapper.IsAvailable'}" Text="{Binding SubjectInfoWrapper.Age, ValidatesOnNotifyDataErrors=true}" HorizontalAlignment="Left" Height="25" Margin="104,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" Background="#FF373737" BorderBrush="#FFADADAD" Foreground="White"/>
-            <TextBlock x:Name="TextBlockDetails" HorizontalAlignment="Left" Margin="25,195,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="57" Width="79" Foreground="#FFADADAD"><Run Text="Details">
-                    <Run.Background>
-                        <ImageBrush/>
-                    </Run.Background>
-                </Run><LineBreak/><Run/></TextBlock>
-            <TextBox Name="TextBoxDetails" IsEnabled="{c:Binding '!IsStarted and !IsAnonymous and !IsBusy and EyeTrackerStatusWrapper.IsAvailable'}" Text="{Binding SubjectInfoWrapper.Details, ValidatesOnNotifyDataErrors=true}" HorizontalAlignment="Left" Height="57" Margin="104,195,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" Background="#FF373737" BorderBrush="#FFADADAD" Foreground="White"/>
-            <CheckBox x:Name="CheckBoxRecordScreen" IsEnabled="{c:Binding '!IsStarted and EyeTrackerStatusWrapper.IsAvailable'}" IsChecked="{Binding IsScreenRecorded}" Content="Record screen" HorizontalAlignment="Left" Margin="21,268,0,0" VerticalAlignment="Top" Foreground="#FFADADAD"/>
-            <TextBlock HorizontalAlignment="Left" Text="Data stream type" Margin="21,298,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FFADADAD"/>
-            <TextBlock HorizontalAlignment="Left" Margin="25,40,0,0" TextWrapping="Wrap" Text="EyeTracker" VerticalAlignment="Top" Height="18" Width="75" Foreground="#FFADADAD" FontSize="14"/>
-            <TextBlock HorizontalAlignment="Left" Margin="104,40,0,0" TextWrapping="Wrap" Text="{Binding EyeTrackerStatusWrapper.EyeTrackerName}" VerticalAlignment="Top" Width="176" Height="18" Foreground="#FFADADAD" FontSize="14" FontFamily="Segoe UI Semibold"/>
-            <Rectangle HorizontalAlignment="Stretch" Fill="#FF575757" Height="1" Grid.ColumnSpan="2" Margin="0,75,1.2,345"/>
+        <Grid HorizontalAlignment="Left" Width="315" Margin="0,0,0,-0.2">
+            <ContentControl Content="{Binding CurrentViewModel}" />
         </Grid>
     </xctk:BusyIndicator>
 </Window>

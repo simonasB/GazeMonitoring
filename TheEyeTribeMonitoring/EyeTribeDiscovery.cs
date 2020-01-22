@@ -1,20 +1,24 @@
-﻿using Autofac;
-using EyeTribe.ClientSdk;
+﻿using EyeTribe.ClientSdk;
 using GazeMonitoring.EyeTracker.Core.Discovery;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
+using GazeMonitoring.IoC;
 
 namespace TheEyeTribeMonitoring {
     public class EyeTribeDiscovery : IDiscoverable {
-        public DiscoveryResult Discover(ContainerBuilder container) {
+        public DiscoveryResult Discover(IoContainerBuilder container)
+        {
             var discoveryResult = new DiscoveryResult();
             GazeManager.Instance.Activate(GazeManagerCore.ApiVersion.VERSION_1_0);
 
-            if (GazeManager.Instance.Trackerstate == GazeManagerCore.TrackerState.TRACKER_CONNECTED) {
+            if (GazeManager.Instance.Trackerstate == GazeManagerCore.TrackerState.TRACKER_CONNECTED)
+            {
                 discoveryResult.IsActive = true;
-                container.RegisterType<EyeTribeGazePointStreamFactory>().As<IGazePointStreamFactory>();
-                container.RegisterType<EyeTribeStatusProvider>().As<IEyeTrackerStatusProvider>();
-            } else {
+                container.Register<IGazePointStreamFactory, EyeTribeGazePointStreamFactory>();
+                container.Register<IEyeTrackerStatusProvider, EyeTribeStatusProvider>();
+            }
+            else
+            {
                 discoveryResult.IsActive = false;
                 GazeManager.Instance.Deactivate();
             }

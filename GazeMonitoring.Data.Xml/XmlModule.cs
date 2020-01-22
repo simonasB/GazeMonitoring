@@ -1,23 +1,12 @@
-﻿using System.Linq;
-using Autofac;
-using Autofac.Core;
-using GazeMonitoring.Common;
-using GazeMonitoring.Model;
+﻿using GazeMonitoring.IoC;
 
 namespace GazeMonitoring.Data.Xml {
-    public class XmlModule : Module {
-        protected override void Load(ContainerBuilder builder)
+    public class XmlModule : IoCModule {
+        public void Load(IoContainerBuilder builder)
         {
-            builder.RegisterType<XmlFileNameFormatter>().As<IFileNameFormatter>();
-            builder.RegisterType(typeof(XmlWritersFactory));
-            builder.Register((c, p) => new XmlWritersFactory(c.Resolve<IFileNameFormatter>(), p.Named<SubjectInfo>(Constants.SubjectInfoParameterName))).As<IXmlWritersFactory>();
-            builder.Register((c, p) => {
-                    var parameters = p as Parameter[] ?? p.ToArray();
-                    return new XmlGazeDataRepository(
-                        c.Resolve<XmlWritersFactory>(new NamedParameter(Constants.SubjectInfoParameterName, parameters.Named<SubjectInfo>(Constants.SubjectInfoParameterName))),
-                        parameters.Named<DataStream>(Constants.DataStreamParameterName));
-                })
-                .As<IGazeDataRepository>();
+            builder.Register<IFileNameFormatter, XmlFileNameFormatter>();
+            builder.Register<IXmlWritersFactory, XmlWritersFactory>();
+            builder.Register<IGazeDataRepositoryFactory, XmlGazeDataRepositoryFactory>();
         }
     }
 }
