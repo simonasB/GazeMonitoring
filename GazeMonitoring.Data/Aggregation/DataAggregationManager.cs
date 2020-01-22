@@ -22,16 +22,27 @@ namespace GazeMonitoring.Data.Aggregation
         {
             var aggregatedData = new AggregatedData();
 
+            // Gaze points
+            var mappedGazePointsDataAggregator = new MappedGazePointsDataAggregator(_currentSessionData);
+            var gazePointCountsByAoiNameDataAggregator = new GazePointCountsByAoiNameDataAggregator(_currentSessionData);
+            var gazePointCountsByScreenConfigurationAndAoiDataAggregator = new GazePointCountsByScreenConfigurationAndAoiDataAggregator(_currentSessionData);
+
+            // Fixation points
             var mappedFixationPointsDataAggregator = new MappedFixationPointsDataAggregator(_currentSessionData);
             var totalFixationTimesAndCountsByAoiNameDataAggregator = new TotalFixationTimesAndCountsByAoiNameDataAggregator(_currentSessionData);
             var fixationTimesAndCountsByScreenConfigurationAndAoiIdDataAggregator = new TotalFixationTimesAndCountsByScreenConfigurationAndAoiIdDataAggregator(_currentSessionData);
             var saccadesDurationByDirectionAggregator = new SaccadesByDirectionAndDurationAggregator(_currentSessionData);
 
+
             // Set next aggregator
+            mappedGazePointsDataAggregator.SetNext(gazePointCountsByAoiNameDataAggregator);
+            gazePointCountsByAoiNameDataAggregator.SetNext(gazePointCountsByScreenConfigurationAndAoiDataAggregator);
+            gazePointCountsByScreenConfigurationAndAoiDataAggregator.SetNext(mappedFixationPointsDataAggregator);
             mappedFixationPointsDataAggregator.SetNext(totalFixationTimesAndCountsByAoiNameDataAggregator);
             totalFixationTimesAndCountsByAoiNameDataAggregator.SetNext(fixationTimesAndCountsByScreenConfigurationAndAoiIdDataAggregator);
             fixationTimesAndCountsByScreenConfigurationAndAoiIdDataAggregator.SetNext(saccadesDurationByDirectionAggregator);
-            mappedFixationPointsDataAggregator.Aggregate(monitoringContext, aggregatedData);
+
+            mappedGazePointsDataAggregator.Aggregate(monitoringContext, aggregatedData);
 
             return aggregatedData;
         }

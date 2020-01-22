@@ -19,13 +19,34 @@ namespace GazeMonitoring.Data.Reporting
     {
         public async Task GenerateReport(AggregatedData aggregatedData, IMonitoringContext monitoringContext)
         {
+            var reportsFolderPath = Path.Combine(monitoringContext.DataFilesPath, "Reports");
 
+            if (!Directory.Exists(reportsFolderPath))
+                Directory.CreateDirectory(reportsFolderPath);
 
             var engine = new RazorLightEngineBuilder()
                 .UseFileSystemProject(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Templates"))
                 .UseMemoryCachingProvider()
                 .Build();
 
+            string result;
+
+            if (monitoringContext.DataStream == DataStream.LightlyFilteredGaze ||
+                monitoringContext.DataStream == DataStream.UnfilteredGaze)
+            {
+                result = await GenerateGazePointsReport(aggregatedData, engine);
+            }
+            else
+            {
+                result = await GenerateFixationPointsReport(aggregatedData, monitoringContext, engine);
+
+            }
+
+            File.WriteAllText(Path.Combine(reportsFolderPath, "report.html"), result);
+        }
+
+        private async Task<string> GenerateFixationPointsReport(AggregatedData aggregatedData, IMonitoringContext monitoringContext, RazorLightEngine engine)
+        {
             var totalTimesByAoiPieData = new List<PieSeriesData>();
             var totalTimesByScreenConfigurationPieData = new List<PieSeriesData>();
 
@@ -42,12 +63,12 @@ namespace GazeMonitoring.Data.Reporting
                 totalTimesByScreenConfigurationPieData.Add(new PieSeriesData { Name = o.IdentifierReadableName, Y = o.FixationPointsDuration.TotalMilliseconds * 100 / totalSessionTimeInMillis });
             });
             var fixationPointsCountDataForAoiByName = GetFixationPointsCountData(aggregatedData.FixationPointsAggregatedDataForAoiByName.Cast<FixationPointsAggregatedData>().ToList(),
-                aggregatedData.FixationPointsAggregatedDataForAoiByName.Sum(o => o.FixationPointsCount));
+                aggregatedData.FixationPointsAggregatedDataForAoiByName.Sum(o => o.PointsCount));
 
             var fixationPointsCountDataForScreenConfigurations = GetFixationPointsCountData(aggregatedData.FixationPointsAggregatedDataForScreenConfigurations.Cast<FixationPointsAggregatedData>().ToList(),
-                aggregatedData.FixationPointsAggregatedDataForScreenConfigurations.Sum(o => o.FixationPointsCount));
+                aggregatedData.FixationPointsAggregatedDataForScreenConfigurations.Sum(o => o.PointsCount));
 
-            string result = await engine.CompileRenderAsync("Main.cshtml", 
+            string result = await engine.CompileRenderAsync("FixationPoints.cshtml",
                 new
                 {
                     TotalTimesByAoi = totalTimesByAoiPieData,
@@ -58,12 +79,39 @@ namespace GazeMonitoring.Data.Reporting
                     SaccadesSeriesByDurationCategory = SaccadesSeriesByDurationCategory(aggregatedData.SaccadesAggregatedDataByDirectionAndDuration),
                 });
 
-            var reportsFolderPath = Path.Combine(monitoringContext.DataFilesPath, "Reports");
+            return result;
+        }
 
-            if (!Directory.Exists(reportsFolderPath))
-                Directory.CreateDirectory(reportsFolderPath);
+        private async Task<string> GenerateGazePointsReport(AggregatedData aggregatedData, RazorLightEngine engine)
+        {
+            var totalTimesByAoiPieData = new List<PieSeriesData>();
+            var totalTimesByScreenConfigurationPieData = new List<PieSeriesData>();
 
-            File.WriteAllText(Path.Combine(reportsFolderPath, "report.html"), result);
+            aggregatedData.GazePointsAggregateDataForAoiByName.ForEach(o =>
+            {
+                totalTimesByAoiPieData.Add(new PieSeriesData
+                {
+                    Name = string.IsNullOrWhiteSpace(o.IdentifierReadableName) ? "None" : o.IdentifierReadableName,
+                    Y = o.PointsCount * 100 / aggregatedData.GazePointsAggregateDataForAoiByName.Sum(x => x.PointsCount)
+                });
+            });
+            aggregatedData.GazePointsAggregateDataForScreenConfigurations.ForEach(o =>
+            {
+                totalTimesByScreenConfigurationPieData.Add(new PieSeriesData
+                {
+                    Name = o.IdentifierReadableName,
+                    Y = o.PointsCount * 100 / aggregatedData.GazePointsAggregateDataForScreenConfigurations.Sum(x => x.PointsCount)
+                });
+            });
+
+            string result = await engine.CompileRenderAsync("GazePoints.cshtml",
+                new
+                {
+                    TotalCountsByAoi = totalTimesByAoiPieData,
+                    TotalCountsByScreenConfiguration = totalTimesByScreenConfigurationPieData
+                });
+
+            return result;
         }
 
         private static (List<PieSeriesData> FullFixationPointsCountData, List<PieSeriesData> LongAndShortFixationPointsCountData) GetFixationPointsCountData(List<FixationPointsAggregatedData> aggregatedData, int totalFixationPointCount)
@@ -73,7 +121,7 @@ namespace GazeMonitoring.Data.Reporting
 
             aggregatedData.ForEach(o =>
             {
-                fullFixationPointsCountData.Add(new PieSeriesData {Name = string.IsNullOrWhiteSpace(o.IdentifierReadableName) ? "None" : o.IdentifierReadableName, Y = o.FixationPointsCount * 100.0 / totalFixationPointCount});
+                fullFixationPointsCountData.Add(new PieSeriesData {Name = string.IsNullOrWhiteSpace(o.IdentifierReadableName) ? "None" : o.IdentifierReadableName, Y = o.PointsCount * 100.0 / totalFixationPointCount});
                 longAndShortFixationPointsCountData.Add(new PieSeriesData { Name = "LongFixationsCount", Y = o.LongFixationPointsCount * 100.0 / totalFixationPointCount });
                 longAndShortFixationPointsCountData.Add(new PieSeriesData { Name = "ShortFixationsCount", Y = o.ShortFixationPointsCount * 100.0 / totalFixationPointCount });
             });

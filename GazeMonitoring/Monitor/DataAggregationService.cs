@@ -25,6 +25,9 @@ namespace GazeMonitoring.Monitor
 
         public async Task Run(IMonitoringContext monitoringContext)
         {
+            if (monitoringContext.MonitoringConfiguration == null)
+                return;
+
             var aggregatedData = _dataAggregationManager.Aggregate(monitoringContext);
 
             await _dataRepository.Save(aggregatedData, monitoringContext);

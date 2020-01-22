@@ -38,9 +38,9 @@ namespace GazeMonitoring.Data.Aggregation.Aggregators
                     {
                         fixationPointsDurationInMillisForScreenConfiguration += mappedFixationPoint.DurationInMillis;
                         fixationPointsDurationInMillisForAoi += mappedFixationPoint.DurationInMillis;
-                        fixationPointsAggregatedDataForScreenConfiguration.FixationPointsCount += 1;
-                        fixationPointsAggregatedDataForAoi.FixationPointsCount += 1;
-                        if (mappedFixationPoint.DurationInMillis > 100)
+                        fixationPointsAggregatedDataForScreenConfiguration.PointsCount += 1;
+                        fixationPointsAggregatedDataForAoi.PointsCount += 1;
+                        if (mappedFixationPoint.DurationInMillis > 200)
                         {
                             fixationPointsAggregatedDataForScreenConfiguration.LongFixationPointsCount += 1;
                             fixationPointsAggregatedDataForAoi.LongFixationPointsCount += 1;
@@ -54,6 +54,11 @@ namespace GazeMonitoring.Data.Aggregation.Aggregators
                         if (fixationPointsAggregatedDataForScreenConfiguration.IdentifierReadableName == null)
                         {
                             fixationPointsAggregatedDataForScreenConfiguration.IdentifierReadableName = mappedFixationPoint.ScreenConfigurationName;
+                        }
+                        if (fixationPointsAggregatedDataForAoi.IdentifierReadableName == null)
+                        {
+                            fixationPointsAggregatedDataForAoi.IdentifierReadableName =
+                                mappedFixationPoint.AreaOfInterestName;
                         }
                     }
                     fixationPointsAggregatedDataForAoi.FixationPointsDuration = TimeSpan.FromMilliseconds(fixationPointsDurationInMillisForAoi);

@@ -1,0 +1,123 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+}
+
+@using System.Collections
+@using Highsoft.Web.Mvc.Charts
+@using Highsoft.Web.Mvc.Charts.Rendering
+
+@{
+    var licenseKey = "";
+}
+
+@{
+    var chartOptionsTotalCountsByAoi =
+        new Highcharts
+        {
+            Chart = new Highsoft.Web.Mvc.Charts.Chart
+            {
+                PlotBackgroundColor = null,
+                PlotBorderWidth = null,
+                PlotShadow = new Shadow
+                {
+                    Enabled = false
+                }
+            },
+            Title = new Title
+            {
+                Text = "Gaze points total count by area of interest type"
+            },
+            Tooltip = new Tooltip
+            {
+                PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"
+            },
+            PlotOptions = new PlotOptions
+            {
+                Pie = new PlotOptionsPie
+                {
+                    AllowPointSelect = true,
+                    Cursor = PlotOptionsPieCursor.Pointer,
+                    DataLabels = new Hashtable { { "enabled", true }, { "format", "<b>{point.name}</b>: {point.percentage:.1f} %" } }
+                }
+            },
+            Series = new List<Series>
+            {
+                new PieSeries
+                {
+                    Name = "AreaOfInterestType",
+                    Data = @Model.TotalCountsByAoi as List<PieSeriesData>
+                },
+
+                                                    }
+        };
+
+
+    chartOptionsTotalCountsByAoi.ID = "chartTotalCountsByAoi";
+    var rendererTotalCountsByAoi = new HighchartsRenderer(chartOptionsTotalCountsByAoi, licenseKey);
+}
+
+@{
+    var chartOptionsTotalCountsByScreenConfiguration =
+        new Highcharts
+        {
+            Chart = new Highsoft.Web.Mvc.Charts.Chart
+            {
+                PlotBackgroundColor = null,
+                PlotBorderWidth = null,
+                PlotShadow = new Shadow
+                {
+                    Enabled = false
+                }
+            },
+            Title = new Title
+            {
+                Text = "Gaze points total count by screen configuration"
+            },
+            Tooltip = new Tooltip
+            {
+                PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"
+            },
+            PlotOptions = new PlotOptions
+            {
+                Pie = new PlotOptionsPie
+                {
+                    AllowPointSelect = true,
+                    Cursor = PlotOptionsPieCursor.Pointer,
+                    DataLabels = new Hashtable { { "enabled", true }, { "format", "<b>{point.name}</b>: {point.percentage:.1f} %" } }
+                }
+            },
+            Series = new List<Series>
+            {
+                new PieSeries
+                {
+                    Name = "AreaOfInterestType",
+                    Data = @Model.TotalCountsByScreenConfiguration as List<PieSeriesData>
+                },
+
+                                                    }
+        };
+
+
+    chartOptionsTotalCountsByScreenConfiguration.ID = "chartTotalCountsByScreenConfiguration";
+    var rendererTotalCountsByScreenConfiguration = new HighchartsRenderer(chartOptionsTotalCountsByScreenConfiguration, licenseKey);
+}
+
+
+@Raw(rendererTotalCountsByAoi.RenderHtml(true))
+@Raw(rendererTotalCountsByScreenConfiguration.RenderHtml(true))
+
+<script type="text/javascript">
+    function formatYAxisLabels() {
+        return this.value + '%';
+    }
+
+    function formatBrowserSeriesDataLabels() {
+        return this.y > 5 ? '<b>' + this.point.name + ':</b> ' + this.y + '%' : null;
+    }
+
+    function formatVersionsSeriesDataLabels() {
+        // display only if larger than 1
+        return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + this.y + '%' : null;
+    }
+
+</script>

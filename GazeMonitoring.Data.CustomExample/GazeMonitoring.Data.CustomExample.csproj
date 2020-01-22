@@ -36,9 +36,6 @@
     <Reference Include="GazeMonitoring.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GazeMonitoring.Common.1.0.0\lib\netstandard2.0\GazeMonitoring.Common.dll</HintPath>
     </Reference>
-    <Reference Include="GazeMonitoring.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.Data.1.0.0\lib\netstandard2.0\GazeMonitoring.Data.dll</HintPath>
-    </Reference>
     <Reference Include="GazeMonitoring.IoC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GazeMonitoring.IoC.1.0.0\lib\netstandard2.0\GazeMonitoring.IoC.dll</HintPath>
     </Reference>
@@ -88,6 +85,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
+      <Project>{3C6B4B0B-DA7A-4C00-9DF0-BDD918213D4E}</Project>
+      <Name>GazeMonitoring.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

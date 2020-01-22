@@ -54,9 +54,6 @@
     <Reference Include="GazeMonitoring.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GazeMonitoring.Common.1.0.0\lib\netstandard2.0\GazeMonitoring.Common.dll</HintPath>
     </Reference>
-    <Reference Include="GazeMonitoring.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GazeMonitoring.Data.1.0.0\lib\netstandard2.0\GazeMonitoring.Data.dll</HintPath>
-    </Reference>
     <Reference Include="GazeMonitoring.IoC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GazeMonitoring.IoC.1.0.0\lib\netstandard2.0\GazeMonitoring.IoC.dll</HintPath>
     </Reference>
@@ -425,6 +422,10 @@
     <ProjectReference Include="..\GazeMonitoring.DataAccess\GazeMonitoring.DataAccess.csproj">
       <Project>{539396b0-6231-4fc6-a671-65a4cb83aeed}</Project>
       <Name>GazeMonitoring.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
+      <Project>{3C6B4B0B-DA7A-4C00-9DF0-BDD918213D4E}</Project>
+      <Name>GazeMonitoring.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\GazeMonitoring.EyeTracker.Core\GazeMonitoring.EyeTracker.Core.csproj">
       <Project>{24F906AF-DF04-4A59-9215-47186318F9B5}</Project>

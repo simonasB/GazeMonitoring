@@ -12,6 +12,57 @@ namespace GazeMonitoring.Data.Csv
     {
         public Task Save(AggregatedData aggregatedData, IMonitoringContext monitoringContext)
         {
+            SaveGazePoints(aggregatedData, monitoringContext);
+            SaveFixationPoints(aggregatedData, monitoringContext);
+
+            return Task.CompletedTask;
+        }
+
+        private void SaveGazePoints(AggregatedData aggregatedData, IMonitoringContext monitoringContext)
+        {
+            if (aggregatedData.MappedGazePoints != null)
+            {
+                using (var writer = new StreamWriter(Path.Combine(monitoringContext.DataFilesPath, Constants.FolderName, "MappedGazePoints.csv")))
+                using (var csv = new CsvWriter(writer))
+                {
+                    csv.WriteRecords(aggregatedData.MappedGazePoints);
+                }
+            }
+
+            if (aggregatedData.GazePointsAggregateDataForScreenConfigurations != null)
+            {
+                using (var writer = new StreamWriter(Path.Combine(monitoringContext.DataFilesPath, Constants.FolderName,
+                    "GazePointsAggregatedDataForScreenConfigurations.csv")))
+                using (var csv = new CsvWriter(writer))
+                {
+                    csv.WriteRecords(aggregatedData.GazePointsAggregateDataForScreenConfigurations);
+                }
+
+                aggregatedData.GazePointsAggregateDataForScreenConfigurations.ForEach(o =>
+                {
+                    var screenConfiguration = monitoringContext.MonitoringConfiguration.ScreenConfigurations
+                        .First(x => x.Id == o.Identifier);
+                    using (var writer = new StreamWriter(Path.Combine(monitoringContext.DataFilesPath, Constants.FolderName,
+                        $"GazePointsAggregatedDataForAoisByScreenConfiguration_{screenConfiguration.Number}_{screenConfiguration.Name}.csv")))
+                    using (var csv = new CsvWriter(writer))
+                    {
+                        csv.WriteRecords(o.AggregatedDataForAois);
+                    }
+                });
+            }
+
+            if (aggregatedData.GazePointsAggregateDataForAoiByName != null)
+            {
+                using (var writer = new StreamWriter(Path.Combine(monitoringContext.DataFilesPath, Constants.FolderName, "GazePointsAggregatedDataForAoiByName.csv")))
+                using (var csv = new CsvWriter(writer))
+                {
+                    csv.WriteRecords(aggregatedData.GazePointsAggregateDataForAoiByName);
+                }
+            }
+        }
+
+        private void SaveFixationPoints(AggregatedData aggregatedData, IMonitoringContext monitoringContext)
+        {
             if (aggregatedData.MappedFixationPoints != null)
             {
                 using (var writer = new StreamWriter(Path.Combine(monitoringContext.DataFilesPath, Constants.FolderName, "MappedFixationPoint.csv")))
@@ -35,7 +86,7 @@ namespace GazeMonitoring.Data.Csv
                     var screenConfiguration = monitoringContext.MonitoringConfiguration.ScreenConfigurations
                         .First(x => x.Id == o.Identifier);
                     using (var writer = new StreamWriter(Path.Combine(monitoringContext.DataFilesPath, Constants.FolderName,
-                        $"AggregatedDataForAoisByScreenConfiguration_{screenConfiguration.Number}_{screenConfiguration.Name}.csv")))
+                        $"FixationPointsAggregatedDataForAoisByScreenConfiguration_{screenConfiguration.Number}_{screenConfiguration.Name}.csv")))
                     using (var csv = new CsvWriter(writer))
                     {
                         csv.WriteRecords(o.AggregatedDataForAois);
@@ -43,7 +94,7 @@ namespace GazeMonitoring.Data.Csv
                 });
             }
 
-            if (aggregatedData.FixationPointsAggregatedDataForScreenConfigurations != null)
+            if (aggregatedData.FixationPointsAggregatedDataForAoiByName != null)
             {
                 using (var writer = new StreamWriter(Path.Combine(monitoringContext.DataFilesPath, Constants.FolderName, "FixationPointsAggregatedDataForAoiByName.csv")))
                 using (var csv = new CsvWriter(writer))
@@ -60,8 +111,6 @@ namespace GazeMonitoring.Data.Csv
                     csv.WriteRecords(aggregatedData.SaccadesAggregatedDataByDirectionAndDuration);
                 }
             }
-
-            return Task.CompletedTask;
         }
     }
 }
