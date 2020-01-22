@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using GazeMonitoring.Balloon;
 using GazeMonitoring.Base;
 using GazeMonitoring.Common;
@@ -11,6 +9,7 @@ using GazeMonitoring.Data.Aggregation;
 using GazeMonitoring.Data.Reporting;
 using GazeMonitoring.DataAccess;
 using GazeMonitoring.DataAccess.LiteDB;
+using GazeMonitoring.DI;
 using GazeMonitoring.Discovery;
 using GazeMonitoring.HotKeys.Global;
 using GazeMonitoring.HotKeys.Global.Handlers;

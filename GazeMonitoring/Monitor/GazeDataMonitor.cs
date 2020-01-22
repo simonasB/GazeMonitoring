@@ -62,7 +62,10 @@ namespace GazeMonitoring.Monitor {
             });
 
             await Task.WhenAll(finalizationTask, stopRecordingTask).ConfigureAwait(false);
-            await _dataAggregationService.Run(_monitoringContext).ConfigureAwait(false);
+            if (_monitoringContext.MonitoringConfiguration != null)
+            {
+                await _dataAggregationService.Run(_monitoringContext).ConfigureAwait(false);
+            }
         }
 
         private void OnGazePointReceived(object sender, GazePointReceivedEventArgs args)

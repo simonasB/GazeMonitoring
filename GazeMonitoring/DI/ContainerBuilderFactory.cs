@@ -1,6 +1,7 @@
-﻿using GazeMonitoring.IoC.Autofac;
+﻿using GazeMonitoring.IoC;
+using GazeMonitoring.IoC.Autofac;
 
-namespace GazeMonitoring.IoC
+namespace GazeMonitoring.DI
 {
     public static class ContainerBuilderFactory
     {

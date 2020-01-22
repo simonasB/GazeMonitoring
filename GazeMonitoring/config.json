@@ -5,9 +5,6 @@
       "type": "GazeMonitoring.Data.Csv.CsvModule, GazeMonitoring.Data.Csv"
     },
     {
-      "type": "GazeMonitoring.Data.PostgreSQL.PostgreSQLModule, GazeMonitoring.Data.PostgreSQL"
-    },
-    {
       "type": "GazeMonitoring.ScreenCapture.SharpAvi.SharpAviModule, GazeMonitoring.ScreenCapture.SharpAvi"
     }
   ],

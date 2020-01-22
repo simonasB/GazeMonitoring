@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GazeMonitoring.Model, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GazeMonitoring.Model.1.0.4\lib\netstandard2.0\GazeMonitoring.Model.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -47,10 +50,7 @@
     <Compile Include="RecorderParams.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
-      <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>
-      <Name>GazeMonitoring.Model</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,10 +8,11 @@
     <ProjectGuid>{24F906AF-DF04-4A59-9215-47186318F9B5}</ProjectGuid>
     <Authors>Simonas Baltulionis</Authors>
     <Product>GazeMonitoring</Product>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GazeMonitoring.IoC\GazeMonitoring.IoC.csproj" />
-    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj" />
+    <PackageReference Include="GazeMonitoring.IoC" Version="1.0.0" />
+    <PackageReference Include="GazeMonitoring.Model" Version="1.0.4" />
   </ItemGroup>
 </Project>

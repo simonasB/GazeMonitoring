@@ -1,95 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A425261F-E463-4EB1-B237-597509E25C39}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GazeMonitoring.Data</RootNamespace>
-    <AssemblyName>GazeMonitoring.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="GazeMonitoring.Common" Version="1.0.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Aggregation\Aggregators\SaccadesByDirectionAndDurationAggregator.cs" />
-    <Compile Include="Aggregation\Model\AggregatedData.cs" />
-    <Compile Include="Aggregation\DataAggregationManager.cs" />
-    <Compile Include="Aggregation\DataAggregatorBase.cs" />
-    <Compile Include="Aggregation\Model\SaccadeDirectionCategory.cs" />
-    <Compile Include="Aggregation\Model\FixationPointsAggregatedData.cs" />
-    <Compile Include="Aggregation\Model\FixationPointsAggregatedDataForAoi.cs" />
-    <Compile Include="Aggregation\Model\FixationPointsAggregatedDataForScreenConfiguration.cs" />
-    <Compile Include="Aggregation\IAggregatedDataRepository.cs" />
-    <Compile Include="Aggregation\IDataAggregator.cs" />
-    <Compile Include="Aggregation\Model\MappedFixationPoint.cs" />
-    <Compile Include="Aggregation\Aggregators\MappedFixationPointsDataAggregator.cs" />
-    <Compile Include="Aggregation\Aggregators\SensitiveOrSlowFixationDataAggregator.cs" />
-    <Compile Include="Aggregation\Aggregators\TotalFixationTimesAndCountsByAoiNameDataAggregator.cs" />
-    <Compile Include="Aggregation\Aggregators\TotalFixationTimesAndCountsByScreenConfigurationAndAoiIdDataAggregator.cs" />
-    <Compile Include="Aggregation\Model\SaccadeDurationCategory.cs" />
-    <Compile Include="Aggregation\Model\SaccadeDurationAndDirectionCategoryInfo.cs" />
-    <Compile Include="Aggregation\Model\SaccadesAggregatedDataByDirectionAndDuration.cs" />
-    <Compile Include="CurrentSessionDataFromTemp.cs" />
-    <Compile Include="FileName.cs" />
-    <Compile Include="GazeDataRepositoryFactoryBase.cs" />
-    <Compile Include="ICurrentSessionData.cs" />
-    <Compile Include="IGazeDataRepositoryFactory.cs" />
-    <Compile Include="Aggregation\NullAggregatedDataRepository.cs" />
-    <Compile Include="TempGazeDataRepository.cs" />
-    <Compile Include="IReadableGazeDataRepository.cs" />
-    <Compile Include="MultipleSourceGazeDataRepository.cs" />
-    <Compile Include="StandardFileNameFormatter.cs" />
-    <Compile Include="IFileNameFormatter.cs" />
-    <Compile Include="IGazeDataRepository.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TempGazeDataRepositoryConfiguration.cs" />
-    <Compile Include="Writers\FixationPointsWriter.cs" />
-    <Compile Include="Writers\GazeDataWriterFactory.cs" />
-    <Compile Include="Writers\GazePointWriter.cs" />
-    <Compile Include="Writers\IGazeDataWriter.cs" />
-    <Compile Include="Writers\MultipleSourcesGazeDataWriter.cs" />
-    <Compile Include="Writers\NullGazeDataWriterFactory.cs" />
-    <Compile Include="Writers\SaccadesWriter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GazeMonitoring.Common\GazeMonitoring.Common.csproj">
-      <Project>{ACBA8D12-A538-4AB9-9D12-59227821E7AA}</Project>
-      <Name>GazeMonitoring.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
-      <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>
-      <Name>GazeMonitoring.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

@@ -12,7 +12,7 @@ namespace GazeMonitoring.Discovery {
             // Force all referenced assemblies to be loaded into the app domain
             new DirectoryCatalog(".");
 
-            /*var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "eyetracker", "custom", "CustomMonitoring.dll");
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "eyetracker", "custom", "CustomMonitoring.dll");
 
             if (File.Exists(path))
             {
@@ -24,7 +24,7 @@ namespace GazeMonitoring.Discovery {
                 var tobbiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "eyetracker", "tobii", "TobiiCoreMonitoring.dll");
                 AssemblyName an = AssemblyName.GetAssemblyName(tobbiPath);
                 Assembly.Load(an);
-            }*/
+            }
 
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())

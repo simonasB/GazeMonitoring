@@ -5,10 +5,11 @@ using GazeMonitoring.Data.Aggregation;
 using GazeMonitoring.Data.Writers;
 using GazeMonitoring.EyeTracker.Core.Status;
 using GazeMonitoring.EyeTracker.Core.Streams;
+using GazeMonitoring.IoC;
 using GazeMonitoring.Logging;
 using GazeMonitoring.Logging.Log4Net;
 
-namespace GazeMonitoring.IoC
+namespace GazeMonitoring.DI
 {
     public class CommonModule : IoCModule
     {

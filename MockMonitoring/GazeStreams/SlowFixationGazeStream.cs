@@ -1,6 +1,4 @@
-﻿using GazeMonitoring.Common;
-
-namespace MockMonitoring.GazeStreams {
+﻿namespace MockMonitoring.GazeStreams {
     public sealed class SlowFixationGazeStream : BaseMockGazeStream
     {
     }

@@ -11,7 +11,7 @@ namespace GazeMonitoring.Data.Aggregation.Aggregators
 
         protected override bool IsPossibleToAggregate(IMonitoringContext monitoringContext, AggregatedData aggregatedData)
         {
-            return monitoringContext.DataStream == DataStream.SlowFixation || monitoringContext.DataStream == DataStream.SensitiveFixation;
+            return monitoringContext.MonitoringConfiguration != null && monitoringContext.DataStream == DataStream.SlowFixation || monitoringContext.DataStream == DataStream.SensitiveFixation;
         }
     }
 }

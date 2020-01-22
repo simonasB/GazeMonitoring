@@ -15,6 +15,9 @@ namespace GazeMonitoring.Data.Aggregation
 
         public void Aggregate(IMonitoringContext monitoringContext, AggregatedData aggregatedData)
         {
+            if (monitoringContext.MonitoringConfiguration == null)
+                return;
+
             if (!IsPossibleToAggregate(monitoringContext, aggregatedData))
             {
                 _next?.Aggregate(monitoringContext, aggregatedData);

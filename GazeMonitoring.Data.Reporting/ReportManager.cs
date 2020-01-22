@@ -19,6 +19,8 @@ namespace GazeMonitoring.Data.Reporting
     {
         public async Task GenerateReport(AggregatedData aggregatedData, IMonitoringContext monitoringContext)
         {
+
+
             var engine = new RazorLightEngineBuilder()
                 .UseFileSystemProject(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Templates"))
                 .UseMemoryCachingProvider()

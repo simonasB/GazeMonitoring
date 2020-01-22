@@ -35,6 +35,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GazeMonitoring.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GazeMonitoring.Common.1.0.0\lib\netstandard2.0\GazeMonitoring.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="GazeMonitoring.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GazeMonitoring.Data.1.0.0\lib\netstandard2.0\GazeMonitoring.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="GazeMonitoring.Model, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GazeMonitoring.Model.1.0.4\lib\netstandard2.0\GazeMonitoring.Model.dll</HintPath>
+    </Reference>
     <Reference Include="Highcharts, Version=7.2.0.1, Culture=neutral, PublicKeyToken=90b74bd27a557bd3, processorArchitecture=MSIL">
       <HintPath>..\packages\Highsoft.Highcharts.7.2.0\lib\netstandard2.0\Highcharts.dll</HintPath>
     </Reference>
@@ -268,16 +277,6 @@
   <ItemGroup>
     <Compile Include="ReportManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GazeMonitoring.Data\GazeMonitoring.Data.csproj">
-      <Project>{A425261F-E463-4EB1-B237-597509E25C39}</Project>
-      <Name>GazeMonitoring.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GazeMonitoring.Model\GazeMonitoring.Model.csproj">
-      <Project>{7AB3272C-2C51-440D-8C40-EA88D3B8501A}</Project>
-      <Name>GazeMonitoring.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
