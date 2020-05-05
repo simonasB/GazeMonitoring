@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using CsvHelper;
 using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
 using GazeMonitoring.Model;
 
 namespace MetricAnalysisApp {
@@ -39,7 +41,7 @@ namespace MetricAnalysisApp {
             public double X { get; set; }
             public double Y { get; set; }
             public long Timestamp { get; set; }
-            public long DurationInMillis { get; set; }
+            //public long DurationInMillis { get; set; }
 
             public int? SlideNumber { get; set; }
             public SlideObjectType? Type { get; set; }
@@ -53,14 +55,66 @@ namespace MetricAnalysisApp {
             Formula = 4
         }
 
-        public static void Main(string[] args) {
+        public class FixationTimes
+        {
+            public TimeSpan FixationPointsDuration { get; set; }
+            public int LongFixationPointsCount { get; set; }
+            public int ShortFixationPointsCount { get; set; }
+            public string Identifier { get; set; }
+            public string IdentifierReadableName { get; set; }
+            public int PointsCount { get; set; }
+        }
+
+        public class Vark
+        {
+            public int Visual { get; set; }
+            public int Auditory { get; set; }
+            [Name("Read/Write")]
+            public int ReadWrite { get; set; }
+            public int Kinesthetic { get; set; }
+            public string LearningPreference { get; set; }
+        }
+
+        public class SummaryResult
+        {
+            public string Name { get; set; }
+            public int TotalTitleTime { get; set; }
+            public int TotalTextTime { get; set; }
+            public int TotalGraphTime { get; set; }
+            public int TotalFormulaTime { get; set; }
+            public int TotalTimeSpentOnAoi { get; set; }
+            public int TotalTimeSpentNotFocusedOnAoi { get; set; }
+            public int TotalTitleFixationsCount { get; set; }
+            public int TotalTextFixationsCount { get; set; }
+            public int TotalGraphFixationsCount { get; set; }
+            public int TotalFormulaFixationsCount { get; set; }
+            public int TotalFixationsCountOnAoi { get; set; }
+            public int TotalFixationsCountNotFocusedOnAoi { get; set; }
+            public int TotalTitleGazePointsCount { get; set; }
+            public int TotalTextGazePointsCount { get; set; }
+            public int TotalGraphGazePointsCount { get; set; }
+            public int TotalFormulaGazePointsCount { get; set; }
+            public int TotalGazePointsCountOnAoi { get; set; }
+            public int TotalGazePointsNotFocusedOnAoi { get; set; }
+            public int Visual { get; set; }
+            public int Auditory { get; set; }
+            public int ReadWrite { get; set; }
+            public int Kinesthetic { get; set; }
+            public string LearningPreference { get; set; }
+        }
+
+        public static void Main(string[] args)
+        {
+            var dirs = Directory.EnumerateDirectories(@"C:\Users\s.baltulionis\OneDrive\Main\Master\magistras\LO tyrimas\spring\1");
+
+            var summaryResults = new List<SummaryResult>();
+
             // Read AOIs
             List<AreaOfInterest> areasOfInterest;
-            var aoisFilePath = @"C:\Users\baltus\OneDrive - Dell Inc\Master\magistras\LO tyrimas\aoi_darbe.txt";
-            var fixationsFilesDir = @"C:\java_dev\spool\GazeMonitoring\GazeMonitoring\bin\Debug\data_csv\New folder";
-            var resultsDirPath = @"C:\Users\baltus\OneDrive - Dell Inc\Master\magistras\LO tyrimas\results2";
+            var aoisFilePath = @"C:\Users\s.baltulionis\OneDrive\Main\Master\magistras\LO tyrimas\spring\1\aoi.txt";
             using (var reader = new StreamReader(aoisFilePath))
-            using (var csv = new CsvReader(reader)) {
+            using (var csv = new CsvReader(reader))
+            {
                 csv.Configuration.HeaderValidated = (b, strings, arg3, arg4) => { };
                 csv.Configuration.MissingFieldFound = (strings, i, arg3) => { };
                 areasOfInterest = csv.GetRecords<AreaOfInterest>().ToList();
@@ -71,110 +125,136 @@ namespace MetricAnalysisApp {
                 aoi.Id = id++;
             });
 
-            // Read fixations
-            foreach (string file in Directory.EnumerateFiles(fixationsFilesDir, "*.csv")) {
-                using (var reader = new StreamReader(file))
-                using (var csv = new CsvReader(reader)) {
+            foreach (var dir in dirs)
+            {
+                var dataFilePath = Path.Combine(dir, "data_csv", "FixationPointsAggregatedDataForAoiByName.csv");
+                var varkFilePath = Path.Combine(dir, "data_csv", "vark.csv");
+                var gazePointsFilePath = Path.Combine(dir, "data_csv", "gazepoints.csv");
+
+                var summaryResult = new SummaryResult();
+
+                using (var reader = new StreamReader(dataFilePath))
+                using (var csv = new CsvReader(reader))
+                {
+                    var fixationTimes = csv.GetRecords<FixationTimes>().ToList();
+                    var totalFixationPointsCount = 0;
+                    fixationTimes.ForEach(o =>
+                    {
+                        var totalMillis = (int) o.FixationPointsDuration.TotalMilliseconds;
+                        totalFixationPointsCount += o.PointsCount;
+                        switch (o.Identifier)
+                        {
+                            case "Text":
+                                summaryResult.TotalTextTime = totalMillis;
+                                summaryResult.TotalTextFixationsCount = o.PointsCount;
+                                break;
+                            case "Title":
+                                summaryResult.TotalTitleTime = totalMillis;
+                                summaryResult.TotalTitleFixationsCount = o.PointsCount;
+                                break;
+                            case "Graph":
+                                summaryResult.TotalGraphTime = totalMillis;
+                                summaryResult.TotalGraphFixationsCount = o.PointsCount;
+                                break;
+                            case "Formula":
+                                summaryResult.TotalFormulaTime = totalMillis;
+                                summaryResult.TotalFormulaFixationsCount = o.PointsCount;
+                                break;
+                            default:
+                                summaryResult.TotalFixationsCountNotFocusedOnAoi = o.PointsCount;
+                                break;
+                        }
+                    });
+                    summaryResult.TotalTimeSpentOnAoi = summaryResult.TotalTextTime + summaryResult.TotalTitleTime + summaryResult.TotalGraphTime + summaryResult.TotalFormulaTime;
+                    summaryResult.TotalTimeSpentNotFocusedOnAoi = (int)TimeSpan.FromSeconds(140).TotalMilliseconds - summaryResult.TotalTimeSpentOnAoi;
+                    summaryResult.TotalFixationsCountOnAoi = totalFixationPointsCount - summaryResult.TotalFixationsCountNotFocusedOnAoi;
+                }
+
+                using (var reader = new StreamReader(varkFilePath))
+                using (var csv = new CsvReader(reader))
+                {
+                    var fixationTimes = csv.GetRecords<Vark>().ToList();
+                    summaryResult.Visual = fixationTimes[0].Visual;
+                    summaryResult.Auditory = fixationTimes[0].Auditory;
+                    summaryResult.ReadWrite = fixationTimes[0].ReadWrite;
+                    summaryResult.Kinesthetic = fixationTimes[0].Kinesthetic;
+                    summaryResult.LearningPreference = fixationTimes[0].LearningPreference;
+                }
+
+                using (var reader = new StreamReader(gazePointsFilePath))
+                using (var csv = new CsvReader(reader))
+                {
                     var subjectInfo = new SubjectInfo();
-                    var fixationPoints = new List<FixationPoint>();
+                    var fixationPoints = new List<GazePoint>();
                     csv.Configuration.IgnoreBlankLines = false;
                     csv.Configuration.RegisterClassMap<SubjectInfoMap>();
                     csv.Configuration.RegisterClassMap<FixationPointMap>();
+                    csv.Configuration.CultureInfo = new CultureInfo("en-US", false);
+
+                    csv.Read();
+                    csv.ReadHeader();
+                    csv.Read();
+                    subjectInfo = csv.GetRecord<SubjectInfo>();
+                    csv.Read();
+                    csv.ReadHeader();
                     var isHeader = true;
-                    while (csv.Read()) {
-                        if (isHeader) {
-                            csv.ReadHeader();
-                            isHeader = false;
-                            continue;
-                        }
-
-                        if (string.IsNullOrEmpty(csv.GetField(0))) {
-                            isHeader = true;
-                            continue;
-                        }
-
-                        switch (csv.Context.HeaderRecord[0]) {
-                            case "Age":
-                                subjectInfo = csv.GetRecord<SubjectInfo>();
-                                break;
-                            case "DurationInMillis":
-                                fixationPoints.Add(csv.GetRecord<FixationPoint>());
-                                break;
-                            default:
-                                throw new InvalidOperationException("Unknown record type.");
-                        }
+                    while (csv.Read())
+                    {
+                        fixationPoints.Add(csv.GetRecord<GazePoint>());
                     }
                     //var sessionStartTime = File.GetCreationTime(file).ToUniversalTime();
                     var sessionStartTime = DateTimeOffset.FromUnixTimeMilliseconds(fixationPoints[0].Timestamp).UtcDateTime;
                     // Map Fixations with AOI
-                    var metricCalculationService = new MetricCalculationService(sessionStartTime, TimeSpan.FromSeconds(30), areasOfInterest);
+                    var metricCalculationService = new MetricCalculationService(sessionStartTime, TimeSpan.FromSeconds(20), areasOfInterest);
                     metricCalculationService.MapFixationPointToAreaOfInterest(fixationPoints);
-                    
+
                     var results = metricCalculationService.GetResults();
 
-                    double totalTitleTime = 0.0,
-                        totalTextTime = 0.0,
-                        totalGraphTime = 0.0,
-                        totalFormulaTime = 0.0;
-
                     results.ForEach(r => {
-                        switch (r.Type) {
+                        switch (r.Type)
+                        {
                             case SlideObjectType.Unknown:
+                                summaryResult.TotalGazePointsNotFocusedOnAoi = r.FixationCount;
                                 break;
                             case SlideObjectType.Title:
-                                totalTitleTime += r.FixationsDurationInMillis;
+                                summaryResult.TotalTitleGazePointsCount += r.FixationCount;
                                 break;
                             case SlideObjectType.Text:
-                                totalTextTime += r.FixationsDurationInMillis;
+                                summaryResult.TotalTextGazePointsCount += r.FixationCount;
                                 break;
                             case SlideObjectType.Graph:
-                                totalGraphTime += r.FixationsDurationInMillis;
+                                summaryResult.TotalGraphGazePointsCount += r.FixationCount;
                                 break;
                             case SlideObjectType.Formula:
-                                totalFormulaTime += r.FixationsDurationInMillis;
+                                summaryResult.TotalFormulaGazePointsCount += r.FixationCount;
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
                     });
+                    summaryResult.TotalGazePointsCountOnAoi = summaryResult.TotalTitleGazePointsCount + summaryResult.TotalTextGazePointsCount + summaryResult.TotalGraphGazePointsCount +
+                                                              summaryResult.TotalFormulaGazePointsCount;
 
-                    var totalTimeSpentOnAoi = totalTitleTime + totalTextTime + totalGraphTime + totalFormulaTime;
-
-                    using (var writer = new StreamWriter($@"{resultsDirPath}\averages_{subjectInfo.Name?.Replace(" ", "_")}_{subjectInfo.Age}_{subjectInfo.Details?.Replace(" ", "_")}"))
-                    using (var csvWriter = new CsvWriter(writer)) {
-                        csvWriter.WriteRecords(results);
-                        var a = new {
-                            TotalTitleTime = totalTitleTime,
-                            TotalTextTime = totalTextTime,
-                            TotalGraphTime = totalGraphTime,
-                            TotalFormulaTime = totalFormulaTime,
-                            TotalTimeSpentOnAoi = totalTimeSpentOnAoi,
-                            TotalTimeSpentNotFocusedOnAoi = TimeSpan.FromSeconds(210).TotalMilliseconds - totalTimeSpentOnAoi
-                        };
-                        csvWriter.WriteHeader(a.GetType());
-                        csvWriter.NextRecord();
-                        csvWriter.WriteRecord(new {
-                            TotalTitleTime = totalTitleTime,
-                            TotalTextTime = totalTextTime,
-                            TotalGraphTime = totalGraphTime,
-                            TotalFormulaTime = totalFormulaTime,
-                            TotalTimeSpentOnAoi = totalTimeSpentOnAoi,
-                            TotalTimeSpentNotFocusedOnAoi = TimeSpan.FromSeconds(210).TotalMilliseconds - totalTimeSpentOnAoi
-                        });
-                    }
-
-                    using(var writer = new StreamWriter($@"{resultsDirPath}\fixations_{subjectInfo.Name?.Replace(" ", "_")}_{subjectInfo.Age}_{subjectInfo.Details?.Replace(" ", "_")}"))
-                    using (var csvWriter = new CsvWriter(writer))
-                    {
-                        csvWriter.WriteRecords(metricCalculationService.MappedFixationPoints);
-                    }
+                    summaryResult.TotalGazePointsNotFocusedOnAoi = fixationPoints.Count - summaryResult.TotalGazePointsCountOnAoi;
                 }
+
+                summaryResult.TotalGazePointsCountOnAoi = summaryResult.TotalTitleGazePointsCount + summaryResult.TotalTextGazePointsCount + summaryResult.TotalGraphGazePointsCount +
+                                                          summaryResult.TotalFormulaGazePointsCount;
+
+                summaryResult.Name = new DirectoryInfo(dir).Name.Split('_')[0];
+                summaryResults.Add(summaryResult);
+            }
+
+            using (var writer = new StreamWriter(@"C:\Users\s.baltulionis\OneDrive\Main\Master\magistras\LO tyrimas\spring\1\summary2.csv"))
+            using (var csv = new CsvWriter(writer))
+            {
+                csv.WriteRecords(summaryResults);
             }
         }
 
         public class MetricCalculationService {
             public MetricCalculationService(DateTime sessionStartTime, TimeSpan timeForEachAoi, List<AreaOfInterest> areasOfInterest) {
-                FixationPointsByAreaOfInterest = new SortedDictionary<AreaOfInterest, List<FixationPoint>>();
+                FixationPointsByAreaOfInterest = new SortedDictionary<AreaOfInterest, List<GazePoint>>();
                 var starTimeInterval = sessionStartTime;
                 var endTimeInterval = starTimeInterval.Add(timeForEachAoi);
                 var slideNumber = 1;
@@ -186,15 +266,15 @@ namespace MetricAnalysisApp {
                     }
                     aoi.StartTimeInterval = starTimeInterval;
                     aoi.EndTimeInterval = endTimeInterval;
-                    FixationPointsByAreaOfInterest.Add(aoi, new List<FixationPoint>());
+                    FixationPointsByAreaOfInterest.Add(aoi, new List<GazePoint>());
                 });
             }
 
-            public SortedDictionary<AreaOfInterest, List<FixationPoint>> FixationPointsByAreaOfInterest { get; }
+            public SortedDictionary<AreaOfInterest, List<GazePoint>> FixationPointsByAreaOfInterest { get; }
 
             public List<MappedFixationPoint> MappedFixationPoints { get; private set; }
 
-            public void MapFixationPointToAreaOfInterest(List<FixationPoint> fixationPoints) {
+            public void MapFixationPointToAreaOfInterest(List<GazePoint> fixationPoints) {
                 MappedFixationPoints = new List<MappedFixationPoint>();
                 fixationPoints.ForEach(fixationPoint => {
                     bool isMapped = false;
@@ -206,7 +286,6 @@ namespace MetricAnalysisApp {
                                 X = fixationPoint.X,
                                 Y = fixationPoint.Y,
                                 Timestamp = fixationPoint.Timestamp,
-                                DurationInMillis = fixationPoint.DurationInMillis,
                                 SlideNumber = aoi.SlideNumber,
                                 Type = aoi.Type
                             });
@@ -220,7 +299,6 @@ namespace MetricAnalysisApp {
                             X = fixationPoint.X,
                             Y = fixationPoint.Y,
                             Timestamp = fixationPoint.Timestamp,
-                            DurationInMillis = fixationPoint.DurationInMillis
                         });
                     }
                     //Console.WriteLine($"Fixation point - x:{fixationPoint.X}, y:{fixationPoint.Y}, Duration:{fixationPoint.DurationInMillis} is not in the any areas of interest. ");
@@ -237,8 +315,7 @@ namespace MetricAnalysisApp {
                     results.Add(new Result {
                         SlideNumber = aoi.SlideNumber,
                         Type = aoi.Type,
-                        FixationCount = fixationPoints.Count,
-                        FixationsDurationInMillis = fixationPoints.Sum(o => o.DurationInMillis)
+                        FixationCount = fixationPoints.Count
                     });
                 }
 
@@ -256,9 +333,9 @@ namespace MetricAnalysisApp {
             }
         }
 
-        public sealed class FixationPointMap : ClassMap<FixationPoint> {
+        public sealed class FixationPointMap : ClassMap<GazePoint> {
             public FixationPointMap() {
-                Map(m => m.DurationInMillis);
+                //Map(m => m.DurationInMillis);
                 Map(m => m.X);
                 Map(m => m.Y);
                 Map(m => m.Timestamp);
@@ -268,9 +345,7 @@ namespace MetricAnalysisApp {
         public class Result {
             public int SlideNumber { get; set; }
             public SlideObjectType Type { get; set; }
-            public long FixationsDurationInMillis { get; set; }
-            public long FixationCount { get; set; }
-            public double AverageFixationInMillis => (double) FixationsDurationInMillis / FixationCount;
+            public int FixationCount { get; set; }
         }
     }
 }
